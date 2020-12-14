@@ -101,7 +101,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidth = 111.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 75.0;
-      styleFieldPadding = 5.0;
+      styleFieldPadding = 3.0;
       styleFieldPaddingSides = 3.0;
       styleFieldWidthFacing = 154;
       styleImgFieldWidth = 250;
@@ -111,11 +111,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidth = 150.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 100.0;
-      styleFieldPadding = 5.0;
+      styleFieldPadding = 3.0;
       styleFieldPaddingSides = 10.0;
       styleFieldWidthFacing = 200;
       styleImgFieldWidth = 400;
-      styleFieldWidthTeam = 300;
+      styleFieldWidthTeam = 400;
     }
 
     return Scaffold(
@@ -167,11 +167,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                 ),
                 padding: EdgeInsets.all(styleFieldPadding),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
@@ -179,6 +180,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
                               width: styleFieldMatchNumber,
+                              height: 58,
                               child: TextField(
                                 controller: _txtMatchNumber,
                                 keyboardType: TextInputType.number,
@@ -199,6 +201,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
                               width: styleFieldAlliance,
+                              height: 58,
                               child: DropdownButtonFormField<String>(
                                 isExpanded: true,
                                 decoration: InputDecoration(
@@ -228,6 +231,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
                               width: styleFieldWidth,
+                              height: 58,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   labelText: 'Drive Station',
@@ -250,7 +254,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             ),
                           ]),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
@@ -258,6 +262,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
                               width: styleFieldWidthTeam,
+                              height: 58,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   labelText: 'Team',
@@ -280,7 +285,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             ),
                           ]),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(

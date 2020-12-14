@@ -4,9 +4,12 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LocalDB {
-  final String tblEvents = "CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
-  final String tblDevice = "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
-  final String tblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData(id INTEGER PRIMARY KEY, scoutName TEXT, matchNumber INTEGER, alliance TEXT, driveStation TEXT, team TEXT, facing TEXT, robotPosition TEXT, startingCells INTEGER)";
+  final String tblEvents =
+      "CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
+  final String tblDevice =
+      "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
+  final String tblScoringData =
+      "CREATE TABLE IF NOT EXISTS ScoringData(id INTEGER PRIMARY KEY, scoutName TEXT, matchNumber INTEGER, alliance TEXT, driveStation TEXT, team TEXT, facing TEXT, robotPosition TEXT, startingCells INTEGER)";
 
   createTables(Database db) async {
     db.execute(tblEvents);
@@ -31,8 +34,6 @@ class LocalDB {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
-
-
 
   Future<void> insertScoringData(ScoringData scoringData) async {
     final Future<Database> database = openDatabase(
@@ -65,7 +66,7 @@ class LocalDB {
     );
     // Get a reference to the database.
     final Database db = await database;
-  //update device Record
+    //update device Record
     await db.insert(
       'Device',
       deviceName.toMap(),
@@ -122,7 +123,6 @@ class LocalDB {
       );
     });
   }
-
 }
 
 class Event {

@@ -20,12 +20,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   final TextEditingController _txtStartingCells = TextEditingController();
   String _selectedAlliance;
   final List<String> _listAlliance = ['Red', 'Blue'];
-  double styleFieldWidth = 99.0;
-  double styleFieldMatchNumber = 85.0;
-  double styleFieldAlliance = 75.0;
-  double styleFieldPadding = 5.0;
-  double styleFieldPaddingSides = 10.0;
-  double styleFieldWidthFacing = 90;
+
+
 
   String _selectedDriveStation;
   List<String> _listDriveStation = [
@@ -62,6 +58,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   int _selectedTab = 0;
 
+  //style
+  double styleFieldWidth = 99.0;
+  double styleFieldMatchNumber = 85.0;
+  double styleFieldAlliance = 75.0;
+  double styleFieldPadding = 5.0;
+  double styleFieldPaddingSides = 10.0;
+  double styleFieldWidthFacing = 90;
+  double styleFieldWidthTeam = 90;
+  double styleImgFieldWidth = 90;
+
   getDriveStationsByTeam(team) {
     if (team == "Blue") {
       setState(() {
@@ -93,11 +99,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     print(width);
     if (width < 500) {
       styleFieldWidth = 111.0;
-      styleFieldMatchNumber = 85.0;
+      styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 75.0;
       styleFieldPadding = 5.0;
       styleFieldPaddingSides = 3.0;
       styleFieldWidthFacing = 154;
+      styleImgFieldWidth = 250;
+      styleFieldWidthTeam = 300;
     }
     if (width >= 600) {
       styleFieldWidth = 150.0;
@@ -106,6 +114,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldPadding = 5.0;
       styleFieldPaddingSides = 10.0;
       styleFieldWidthFacing = 200;
+      styleImgFieldWidth = 400;
+      styleFieldWidthTeam = 300;
     }
 
     return Scaffold(
@@ -238,11 +248,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 }).toList(),
                               ),
                             ),
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
                             Container(
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
-                              width: styleFieldWidth,
+                              width: styleFieldWidthTeam,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   labelText: 'Team',
@@ -483,6 +498,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
         ),
         child: Column(children: <Widget>[
           Container(
@@ -498,84 +518,109 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           //Image.asset('assets/imgs/field.png'),
           Container(
             decoration: BoxDecoration(
-              //border: Border.all(color: Colors.black),
-              //image: DecorationImage(
-              // image: AssetImage("assets/imgs/field.png"),
-              // fit: BoxFit.cover,
-              //),
-            ),
+                //border: Border.all(color: Colors.black),
+                //image: DecorationImage(
+                // image: AssetImage("assets/imgs/field.png"),
+                // fit: BoxFit.cover,
+                //),
+                ),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-
-              Column(children: <Widget>[
-                Row(
-
-                    children: <Widget>[
-                  Text(
-                    "Blue 1",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ]),
-                Container(
-                  child: Row(children: <Widget>[
-                    Text(
-                      "Blue 2",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ]),
-                ),
-                Container(
-                  child: Row(children: <Widget>[
-                    Text(
-                      "Blue 3",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ]),
-                ),
-              ]),
-              Column(children: <Widget>[
-                SizedBox(
-                  width: 400,
-                  height: 200,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.grey,
-                    ),
-                    child: Image.asset("assets/imgs/field.png"),
-                  ),
-                ),
-              ]),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Row(children: <Widget>[
-                      Text(
-                        "Red 1",
+                  Column(children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.all(5.0),
+                      padding: EdgeInsets.all(4.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        color: Colors.blue,
+                      ),
+                      child: Text(
+                        "1",
                         style: TextStyle(fontSize: 18),
                       ),
-                    ]),
-                    Container(
-                      child: Row(children: <Widget>[
-                        Text(
-                          "Red 2",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ]),
                     ),
                     Container(
-                      child: Row(children: <Widget>[
-                        Text(
-                          "Red 3",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ]),
+                      margin: const EdgeInsets.all(5.0),
+                      padding: EdgeInsets.all(4.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        color: Colors.blue,
+                      ),
+                      child: Text(
+                        "2",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(5.0),
+                      padding: EdgeInsets.all(4.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        color: Colors.blue,
+                      ),
+                      child: Text(
+                        "3",
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ]),
-            ]),
+                  Column(children: <Widget>[
+                    SizedBox(
+                      width: styleImgFieldWidth,
+                      height: (styleImgFieldWidth * 0.5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          color: Colors.grey,
+                        ),
+                        child: Image.asset("assets/imgs/field.png"),
+                      ),
+                    ),
+                  ]),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            color: Colors.red,
+                          ),
+                          child: Text(
+                            "1",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            color: Colors.red,
+                          ),
+                          child: Text(
+                            "2",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            color: Colors.red,
+                          ),
+                          child: Text(
+                            "3",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ]),
+                ]),
           ),
         ]),
       );

@@ -5,6 +5,7 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting.dart';
+import 'package:projectb/webapi.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   //String dropdownValue = '';
   LocalDB localDB = new LocalDB();
+  WebAPI webAPI = new WebAPI();
   final TextEditingController _txtDeviceName = TextEditingController();
   final List<String> _locations = [
     'Australia',
@@ -66,9 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
     'Taiwan',
     'Turkey'
   ];
+
+  List<EventData> events;
+  List<EventData> eventsForLocation;
+  List<EventsList> eventsList = [];
+  List<DropdownMenuItem<String>> eventListDropDown = [];
+  EventData currentEvent;
   String locationDropDown;
 
   void _incrementCounter() {
+    //used for testing only
     setState(() {
       _counter++;
       Event event = Event(
@@ -81,9 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
         team: "team " + _counter.toString(),
         scoutName: "Aiden",
       );
-      localDB.insertEvent(event);
-      localDB.insertScoringData(scoringData);
-      printEvents();
+      //localDB.insertEvent(event);
+      //localDB.insertScoringData(scoringData);
+      updateEventsFromAPI();
+
+
     });
   }
 
@@ -93,12 +104,40 @@ class _MyHomePageState extends State<MyHomePage> {
       name: _txtDeviceName.text,
       location: "Australia",
     );
-    localDB.updateDeviceDetails(deviceName);
+    //localDB.updateDeviceDetails(deviceName);
   }
 
-  void printEvents() async {
+  void updateEventsFromAPI() async {
     print(await localDB.listEvents());
     print(await localDB.listScoringData());
+    events = await webAPI.getEventsByYear(2020);
+
+
+    setEventItems();
+  }
+
+  setEventItems() {
+    setState(() {
+      currentEvent = null;
+      eventListDropDown.clear();
+    });
+
+    eventsForLocation = events.where((i) => i.country == locationDropDown).toList();
+    eventsList.clear();
+    eventsForLocation.forEach((i) {
+      eventsList.add(EventsList(name: i.shortName, key: i.key));
+    });
+
+    for (EventsList event in eventsList) {
+      setState(() {
+        eventListDropDown.add(new DropdownMenuItem(
+            value: event.key,
+            child: Text(
+              event.name,
+              style: TextStyle(fontSize: 20),
+            )));
+      });
+    }
   }
 
   @override
@@ -109,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -118,10 +158,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
+        child: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+
             Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
               SizedBox(
                 width: 100,
@@ -143,9 +185,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   hint: Text('Please choose a location'),
                   value: locationDropDown,
                   onChanged: (String newValue) {
+
                     setState(() {
                       locationDropDown = newValue;
                     });
+                    setEventItems();
                   },
                   items: _locations.map((location) {
                     return DropdownMenuItem(
@@ -163,19 +207,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Expanded(
                 child: DropdownButton<String>(
+                  isExpanded: true,
                   hint: Text('Please choose a event'),
-                  value: locationDropDown,
-                  onChanged: (String newValue) {
+                  value: currentEvent == null ? null : currentEvent.key,
+                  onChanged: (item) {
                     setState(() {
-                      locationDropDown = newValue;
+              currentEvent = eventsForLocation.firstWhere(
+              (loc) => loc.key == item,
+              orElse: () => eventsForLocation.first);
                     });
                   },
-                  items: _locations.map((location) {
-                    return DropdownMenuItem(
-                      child: new Text(location),
-                      value: location,
-                    );
-                  }).toList(),
+                  items: eventListDropDown,
                 ),
               ),
             ]),
@@ -208,6 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+        ),
       ),
 
       floatingActionButton: FloatingActionButton(
@@ -236,4 +279,11 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute(builder: (context) => MatchScoutingScreen()),
     );
   }
+}
+
+class EventsList {
+  final String key;
+  final String name;
+
+  EventsList({this.key, this.name});
 }

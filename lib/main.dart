@@ -41,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   LocalDB localDB = new LocalDB();
   WebAPI webAPI = new WebAPI();
   final TextEditingController _txtDeviceName = TextEditingController();
+
+  String locationDropDown;
   final List<String> _locations = [
     'Australia',
     'Canada',
@@ -52,12 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
     'Turkey'
   ];
 
-  List<EventData> events;
+  //used to store all events from API
+  List<EventData> allEvents;
+  //used to store events for a location
   List<EventData> eventsForLocation;
+  //used to fill the dropdown box
   List<EventsList> eventsList = [];
   List<DropdownMenuItem<String>> eventListDropDown = [];
+  //used to store the current selected event
   EventData currentEvent;
-  String locationDropDown;
+
 
   void _incrementCounter() {
     //used for testing only
@@ -75,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
       );
       //localDB.insertEvent(event);
       //localDB.insertScoringData(scoringData);
+
+      //needs to be moved to a update button
       updateEventsFromAPI();
 
 
@@ -91,25 +99,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateEventsFromAPI() async {
-    print(await localDB.listEvents());
-    print(await localDB.listScoringData());
-    events = await webAPI.getEventsByYear(2020);
-
+    //print(await localDB.listEvents());
+    //print(await localDB.listScoringData());
+    //gets all events from API
+    allEvents = await webAPI.getEventsByYear(2020);
     setEventItems();
   }
 
   setEventItems() {
+    //clear current selected event and dropdown box
     setState(() {
       currentEvent = null;
       eventListDropDown.clear();
     });
-
-    eventsForLocation = events.where((i) => i.country == locationDropDown).toList();
+    //get events based on location
+    eventsForLocation = allEvents.where((i) => i.country == locationDropDown).toList();
+    //clear event list and update it with new events
     eventsList.clear();
     eventsForLocation.forEach((i) {
       eventsList.add(EventsList(name: i.shortName, key: i.key));
     });
-
+    //update dropdown box with the new events
     for (EventsList event in eventsList) {
       setState(() {
         eventListDropDown.add(new DropdownMenuItem(

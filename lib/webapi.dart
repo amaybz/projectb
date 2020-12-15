@@ -171,6 +171,10 @@ class EventData {
     data['year'] = this.year;
     return data;
   }
+  @override
+  String toString() {
+    return 'event{id: $key, shortName: $shortName, location: $country}';
+  }
 }
 
 class WebCasts {
@@ -190,4 +194,6 @@ class WebCasts {
     data['type'] = this.type;
     return data;
   }
+
+
 }

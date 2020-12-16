@@ -103,16 +103,20 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(2020);
-    setEventItems();
+    //setEventItems();
   }
 
-  setEventItems() {
+  setEventItems() async {
     //clear current selected event and dropdown box
     setState(() {
       currentEvent = null;
       eventListDropDown.clear();
     });
     //get events based on location
+    if(allEvents == null)
+      {
+        updateEventsFromAPI();
+      }
     eventsForLocation = allEvents.where((i) => i.country == locationDropDown).toList();
     //clear event list and update it with new events
     eventsList.clear();
@@ -216,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: FlatButton(
-                child: Text("Submit"),
+                child: Text("Saved Records"),
                 onPressed: () {
                   updateDeviceName();
                   _navigateToStoredData(context);
@@ -248,7 +252,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.refresh),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

@@ -4,6 +4,11 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LocalDB {
+
+  static final _databaseName = "local_database.db";
+  // Increment this version when you need to change the schema.
+  static final _databaseVersion = 1;
+
   final String tblEvents =
       "CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
   final String tblDevice =
@@ -17,14 +22,26 @@ class LocalDB {
     db.execute(tblDevice);
   }
 
+  static Database _database;
+  Future<Database> get database async {
+    if (_database != null) return _database;
+    _database = await _initDatabase();
+    return _database;
+  }
+
+  // open the database
+  _initDatabase() async {
+    // The path_provider plugin gets the right directory for Android or iOS.
+    String path = join(await getDatabasesPath(), _databaseName);
+    // Open the database. Can also add an onUpdate callback parameter.
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: (db, version) {
+          return createTables(db);
+        },);
+  }
+
   Future<void> insertEvent(Event event) async {
-    final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'local_database.db'),
-      onCreate: (db, version) {
-        return createTables(db);
-      },
-      version: 1,
-    );
     // Get a reference to the database.
     final Database db = await database;
     //insert data to DB
@@ -36,13 +53,6 @@ class LocalDB {
   }
 
   Future<void> insertScoringData(ScoringData scoringData) async {
-    final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'local_database.db'),
-      onCreate: (db, version) {
-        return createTables(db);
-      },
-      version: 1,
-    );
     // Get a reference to the database.
     final Database db = await database;
 
@@ -57,13 +67,6 @@ class LocalDB {
   }
 
   Future<void> updateDeviceDetails(DeviceName deviceName) async {
-    final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'local_database.db'),
-      onCreate: (db, version) {
-        return createTables(db);
-      },
-      version: 1,
-    );
     // Get a reference to the database.
     final Database db = await database;
     //update device Record
@@ -75,14 +78,6 @@ class LocalDB {
   }
 
   Future<List<Event>> listEvents() async {
-    // Get a reference to the database.
-    final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'local_database.db'),
-      onCreate: (db, version) {
-        return createTables(db);
-      },
-      version: 1,
-    );
     // Get a reference to the database.
     final Database db = await database;
 
@@ -100,14 +95,6 @@ class LocalDB {
   }
 
   Future<List<ScoringData>> listScoringData() async {
-    // Get a reference to the database.
-    final Future<Database> database = openDatabase(
-      join(await getDatabasesPath(), 'local_database.db'),
-      onCreate: (db, version) {
-        return createTables(db);
-      },
-      version: 1,
-    );
     // Get a reference to the database.
     final Database db = await database;
 

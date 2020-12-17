@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting.dart';
 import 'package:projectb/webapi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
@@ -79,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
         team: "team " + _counter.toString(),
         scoutName: "Aiden",
       );
-      //localDB.insertEvent(event);
-      //localDB.insertScoringData(scoringData);
+      localDB.insertEvent(event);
+      localDB.insertScoringData(scoringData);
 
       //needs to be moved to a update button
       updateEventsFromAPI();
@@ -252,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
-        child: Icon(Icons.refresh),
+        child: Icon(Icons.download_outlined),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

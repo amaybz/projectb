@@ -12,7 +12,7 @@ class ScoringDataScreen extends StatefulWidget {
 }
 
 class _ScoringDataScreenState extends State<ScoringDataScreen> {
-  LocalDB localDB = new LocalDB();
+  LocalDB localDB = LocalDB.instance;
   List unitMemberList;
   List<ScoringData> dataList;
 

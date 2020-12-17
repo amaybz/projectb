@@ -16,6 +16,10 @@ class LocalDB {
   final String tblScoringData =
       "CREATE TABLE IF NOT EXISTS ScoringData(id INTEGER PRIMARY KEY, scoutName TEXT, matchNumber INTEGER, alliance TEXT, driveStation TEXT, team TEXT, facing TEXT, robotPosition TEXT, startingCells INTEGER)";
 
+  // Make this a singleton class.
+  LocalDB._privateConstructor();
+  static final LocalDB instance = LocalDB._privateConstructor();
+
   createTables(Database db) async {
     db.execute(tblEvents);
     db.execute(tblScoringData);

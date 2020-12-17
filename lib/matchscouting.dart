@@ -14,7 +14,7 @@ class MatchScoutingScreen extends StatefulWidget {
 }
 
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
-  LocalDB localDB = new LocalDB();
+  LocalDB localDB = LocalDB.instance;
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
   final TextEditingController _txtStartingCells = TextEditingController();

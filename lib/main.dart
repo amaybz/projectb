@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //String dropdownValue = '';
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
-  final TextEditingController _txtDeviceName = TextEditingController();
+  TextEditingController _txtDeviceName = TextEditingController();
 
   String locationDropDown;
   final List<String> _locations = [
@@ -65,6 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
   //used to store the current selected event
   EventData currentEvent;
 
+  @override
+  void initState() {
+    super.initState();
+    //update device name from local db
+    getDeviceName();
+  }
+
 
   void _incrementCounter() {
     //used for testing only
@@ -85,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       //needs to be moved to a update button
       updateEventsFromAPI();
+      updateDeviceName();
 
 
     });
@@ -94,9 +102,24 @@ class _MyHomePageState extends State<MyHomePage> {
     DeviceName deviceName = DeviceName(
       id: 1,
       name: _txtDeviceName.text,
-      location: "Australia",
+      location: currentEvent.locationName,
     );
-    //localDB.updateDeviceDetails(deviceName);
+    localDB.updateDeviceDetails(deviceName);
+  }
+
+  void getDeviceName() async {
+
+    DeviceName deviceName = await localDB.getDeviceName();
+    if(deviceName == null) {
+      setState(() {
+        _txtDeviceName.text = "";
+      });
+    }
+    else {
+      setState(() {
+        _txtDeviceName.text = deviceName.name;
+      });
+    }
   }
 
   void updateEventsFromAPI() async {

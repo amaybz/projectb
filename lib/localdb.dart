@@ -81,6 +81,18 @@ class LocalDB {
     );
   }
 
+  Future<DeviceName> getDeviceName() async {
+    Database db = await database;
+    List<Map> maps = await db.query("Device",
+        columns: ['id', 'name', 'location'],
+        where: 'id = ?',
+        whereArgs: [1]);
+    if (maps.length > 0) {
+      return DeviceName.fromMap(maps.first);
+    }
+    return null;
+  }
+
   Future<List<Event>> listEvents() async {
     // Get a reference to the database.
     final Database db = await database;
@@ -163,9 +175,9 @@ class ScoringData {
 }
 
 class DeviceName {
-  final int id;
-  final String name;
-  final String location;
+   int id;
+   String name;
+   String location;
 
   DeviceName({this.id, this.name, this.location});
 
@@ -175,6 +187,13 @@ class DeviceName {
       'name': name,
       'location': location,
     };
+
+  }
+
+   DeviceName.fromMap(Map<String, dynamic> map) {
+    id = map['id'];
+    name = map['name'];
+    location = map['location'];
   }
 
   @override

@@ -67,6 +67,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthFacing = 90;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
+  double styleFontSizeBody = 20;
 
   getDriveStationsByTeam(team) {
     if (team == "Blue") {
@@ -103,9 +104,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldAlliance = 75.0;
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 3.0;
-      styleFieldWidthFacing = 154;
+      styleFieldWidthFacing = 140;
       styleImgFieldWidth = 250;
       styleFieldWidthTeam = 300;
+      styleFontSizeBody = 12;
     }
     if (width >= 600) {
       styleFieldWidth = 150.0;
@@ -116,6 +118,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthFacing = 200;
       styleImgFieldWidth = 400;
       styleFieldWidthTeam = 400;
+      styleFontSizeBody = 16;
     }
 
     return Scaffold(
@@ -182,6 +185,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               width: styleFieldMatchNumber,
                               height: 58,
                               child: TextField(
+                                style: TextStyle(fontSize: styleFontSizeBody),
                                 controller: _txtMatchNumber,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -203,8 +207,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               width: styleFieldAlliance,
                               height: 58,
                               child: DropdownButtonFormField<String>(
+                                //
                                 isExpanded: true,
                                 decoration: InputDecoration(
+                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
                                   labelText: 'Alliance',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -219,7 +225,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listAlliance.map((location) {
                                   return DropdownMenuItem(
-                                    child: new Text(location),
+                                    child: new Text(location,
+                                        style: TextStyle(fontSize: styleFontSizeBody),
+                                  ),
                                     value: location,
                                   );
                                 }).toList(),
@@ -235,6 +243,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   labelText: 'Drive Station',
+                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -244,10 +253,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     _selectedDriveStation = newValue;
                                   });
                                 },
-                                items: _listDriveStation.map((location) {
+                                items: _listDriveStation.map((driveStation) {
                                   return DropdownMenuItem(
-                                    child: new Text(location),
-                                    value: location,
+                                    child: new Text(driveStation,
+                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    value: driveStation,
                                   );
                                 }).toList(),
                               ),
@@ -265,6 +275,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               height: 58,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
+                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
                                   labelText: 'Team',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -275,10 +286,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     _selectedTeam = newValue;
                                   });
                                 },
-                                items: _listTeams.map((location) {
+                                items: _listTeams.map((value) {
                                   return DropdownMenuItem(
-                                    child: new Text(location),
-                                    value: location,
+                                    child: new Text(value,
+                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    value: value,
                                   );
                                 }).toList(),
                               ),
@@ -307,7 +319,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listFacing.map((value) {
                                   return DropdownMenuItem(
-                                    child: new Text(value),
+                                    child: new Text(value,
+                                      style: TextStyle(fontSize: styleFontSizeBody),),
                                     value: value,
                                   );
                                 }).toList(),
@@ -320,6 +333,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               width: styleFieldWidth,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
+                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
                                   labelText: 'Robot Position',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -330,10 +344,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     _selectedRobotPosition = newValue;
                                   });
                                 },
-                                items: _listRobotPosition.map((location) {
+                                items: _listRobotPosition.map((value) {
                                   return DropdownMenuItem(
-                                    child: new Text(location),
-                                    value: location,
+                                    child: new Text(value,
+                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    value: value,
                                   );
                                 }).toList(),
                               ),
@@ -344,6 +359,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   horizontal: styleFieldPaddingSides),
                               width: styleFieldWidth,
                               child: TextField(
+                                style: TextStyle(fontSize: styleFontSizeBody),
                                 controller: _txtStartingCells,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -351,6 +367,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Starting Cells",
+                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),

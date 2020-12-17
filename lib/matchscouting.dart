@@ -84,7 +84,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
-  List unitMemberList;
   List<ScoringData> dataList;
 
   _getScoringData() async {

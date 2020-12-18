@@ -9,11 +9,15 @@ class LocalDB {
   // Increment this version when you need to change the schema.
   static final _databaseVersion = 1;
 
-  final String tblEvents =
+  final String tblEvents = "events";
+  final String tblDevice = "Device";
+  final String tblScoringData = "ScoringData";
+
+  final String createTblEvents =
       "CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
-  final String tblDevice =
+  final String createTblDevice =
       "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
-  final String tblScoringData =
+  final String createTblScoringData =
       "CREATE TABLE IF NOT EXISTS ScoringData(id INTEGER PRIMARY KEY, scoutName TEXT, matchNumber INTEGER, alliance TEXT, driveStation TEXT, team TEXT, facing TEXT, robotPosition TEXT, startingCells INTEGER)";
 
   // Make this a singleton class.
@@ -21,9 +25,9 @@ class LocalDB {
   static final LocalDB instance = LocalDB._privateConstructor();
 
   createTables(Database db) async {
-    db.execute(tblEvents);
-    db.execute(tblScoringData);
-    db.execute(tblDevice);
+    db.execute(createTblEvents);
+    db.execute(createTblScoringData);
+    db.execute(createTblDevice);
   }
 
   static Database _database;
@@ -50,7 +54,7 @@ class LocalDB {
     final Database db = await database;
     //insert data to DB
     await db.insert(
-      'events',
+      tblEvents,
       event.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -64,7 +68,7 @@ class LocalDB {
     // `conflictAlgorithm`. In this case, if the same dog is inserted
     // multiple times, it replaces the previous data.
     await db.insert(
-      'ScoringData',
+      tblScoringData,
       scoringData.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -75,7 +79,7 @@ class LocalDB {
     final Database db = await database;
     //update device Record
     await db.insert(
-      'Device',
+      tblDevice,
       deviceName.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -83,7 +87,7 @@ class LocalDB {
 
   Future<DeviceName> getDeviceName() async {
     Database db = await database;
-    List<Map> maps = await db.query("Device",
+    List<Map> maps = await db.query(tblDevice,
         columns: ['id', 'name', 'location'],
         where: 'id = ?',
         whereArgs: [1]);
@@ -97,8 +101,8 @@ class LocalDB {
     // Get a reference to the database.
     final Database db = await database;
 
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query('events');
+    // Query the table for all records.
+    final List<Map<String, dynamic>> maps = await db.query(tblEvents);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
@@ -115,7 +119,7 @@ class LocalDB {
     final Database db = await database;
 
     // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query('ScoringData');
+    final List<Map<String, dynamic>> maps = await db.query(tblScoringData);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {

@@ -66,10 +66,13 @@ class _MyHomePageState extends State<MyHomePage> {
   EventData currentEvent;
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
+    //get events from API
+    updateEventsFromAPI();
     //update device name from local db
     getDeviceName();
+
   }
 
 
@@ -102,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DeviceName deviceName = DeviceName(
       id: 1,
       name: _txtDeviceName.text,
-      location: currentEvent.locationName,
+      location: locationDropDown,
     );
     localDB.updateDeviceDetails(deviceName);
   }
@@ -118,11 +121,12 @@ class _MyHomePageState extends State<MyHomePage> {
     else {
       setState(() {
         _txtDeviceName.text = deviceName.name;
+        //locationDropDown = deviceName.location;
       });
     }
   }
 
-  void updateEventsFromAPI() async {
+  Future<void> updateEventsFromAPI() async {
     //print(await localDB.listEvents());
     //print(await localDB.listScoringData());
     //gets all events from API

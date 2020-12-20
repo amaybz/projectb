@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting.dart';
 import 'package:projectb/webapi.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() {
   runApp(MyApp());

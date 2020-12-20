@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:projectb/sharedprefs.dart';
 
 class TeleOpScreen extends StatefulWidget {
   @override
@@ -11,11 +12,54 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   final TextEditingController _txtCellAttempts = TextEditingController();
   final TextEditingController _txtCellSuccess = TextEditingController();
 
+  MySharedPrefs mySharedPrefs = new MySharedPrefs();
+
+  @override
+  void initState()  {
+    super.initState();
+    //get events from API
+    updateValuesFromSP();
+
+  }
+
+  updateValuesFromSP() async{
+    intCellAttempts = await mySharedPrefs.readInt("CellAttempts");
+    setState(() {
+      _txtCellAttempts.text = intCellAttempts.toString();
+    });
+
+  }
+
+  int intCellAttempts = 0;
+  int intCellSuccess = 0;
   //style
   double styleFieldCellsWidth = 40.0;
   double styleFieldPadding = 5.0;
   double styleFieldPaddingSides = 10.0;
   double styleFontSizeBody = 12;
+
+  _increaseCellAttempts() async {
+    intCellAttempts = intCellAttempts + 1;
+    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
+    setState(() {
+      _txtCellAttempts.text = intCellAttempts.toString();
+    });
+  }
+
+  _decreaseCellAttempts() async {
+    intCellAttempts = intCellAttempts - 1;
+    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
+    setState(() {
+      _txtCellAttempts.text = intCellAttempts.toString();
+    });
+  }
+
+  _updateCellAttempts()  {
+    if (_txtCellAttempts.text == "")
+    {_txtCellAttempts.text = "0";}
+    intCellAttempts = int.parse(_txtCellAttempts.text);
+    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +71,19 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     {_txtCellSuccess.text = "0";}
 
     if (width < 500) {
-      styleFieldCellsWidth = 25.0;
+      styleFieldCellsWidth = 38.0;
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 3.0;
       styleFontSizeBody = 12;
     }
     if (width >= 600) {
-      styleFieldCellsWidth = 30.0;
+      styleFieldCellsWidth = 40.0;
       styleFieldPadding = 3.0;
-      styleFieldPaddingSides = 10.0;
+      styleFieldPaddingSides = 5.0;
       styleFontSizeBody = 16;
     }
+
+
 
     return Column(children: [
       FractionallySizedBox(
@@ -75,7 +121,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           padding: const EdgeInsets.only(left: 2.0, right: 2.0),
                           child: FlatButton(
                             child: Text("+"),
-                            onPressed: () {},
+                            onPressed: () {_increaseCellAttempts();},
                           ),
                         ),
                         Container(
@@ -90,6 +136,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly
                             ],
+                            onChanged: _updateCellAttempts(),
                             decoration: InputDecoration(
                               //labelText: "Starting Cells",
                               labelStyle: TextStyle(fontSize: styleFontSizeBody),
@@ -102,7 +149,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           padding: const EdgeInsets.only(left: 2.0, right: 2.0),
                           child: FlatButton(
                             child: Text("-"),
-                            onPressed: () {},
+                            onPressed: () {_decreaseCellAttempts();},
                           ),
                         ),
                       ]),

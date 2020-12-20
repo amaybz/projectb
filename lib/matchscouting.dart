@@ -649,16 +649,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 1) {
       return Container(
-        child: Column(children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              color: Colors.grey,
-            ),
+
             child: TeleOpScreen(),
-          ),
           //Image.asset('assets/imgs/field.png'),
-        ]),
       );
     }
     if (index == 2) {

@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
+import 'package:projectb/teleoptab.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   @override
@@ -654,10 +655,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
               border: Border.all(color: Colors.grey),
               color: Colors.grey,
             ),
-            child: Text(
-              "Power Port",
-              style: TextStyle(fontSize: 18),
-            ),
+            child: TeleOpScreen(),
           ),
           //Image.asset('assets/imgs/field.png'),
         ]),

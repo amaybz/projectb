@@ -17,7 +17,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   @override
   void initState()  {
     super.initState();
-    //get events from API
+    //get values from SharedPrefs
     updateValuesFromSP();
 
   }

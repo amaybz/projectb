@@ -477,13 +477,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                     ]),
               ]),
             )),
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Container(
-              margin: const EdgeInsets.all(5.0),
-              padding: EdgeInsets.all(4.0),
+        Container(
+              margin: const EdgeInsets.all(0.0),
+              padding: EdgeInsets.all(0.0),
               child: _showTab(_selectedTab)),
-        ),
+
       ]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -648,11 +646,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       );
     }
     if (index == 1) {
-      return Container(
-
-            child: TeleOpScreen(),
+      return TeleOpScreen();
           //Image.asset('assets/imgs/field.png'),
-      );
+
     }
     if (index == 2) {
       return Container(

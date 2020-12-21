@@ -24,8 +24,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   updateValuesFromSP() async{
     intCellAttempts = await mySharedPrefs.readInt("CellAttempts");
+    intCellSuccess = await mySharedPrefs.readInt("CellSuccess");
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
+      _txtCellSuccess.text = intCellSuccess.toString();
     });
 
   }
@@ -59,6 +61,24 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     {_txtCellAttempts.text = "0";}
     intCellAttempts = int.parse(_txtCellAttempts.text);
     mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
+  }
+
+  _increaseCellSuccess() async {
+    intCellSuccess = intCellSuccess + 1;
+    intCellAttempts = intCellAttempts + 1;
+    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
+    setState(() {
+      _txtCellSuccess.text = intCellSuccess.toString();
+      _txtCellAttempts.text = intCellAttempts.toString();
+    });
+  }
+
+  _decreaseCellSuccess() async {
+    intCellSuccess = intCellSuccess - 1;
+    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
+    setState(() {
+      _txtCellSuccess.text = intCellSuccess.toString();
+    });
   }
 
   @override
@@ -159,7 +179,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           padding: const EdgeInsets.only(left: 2.0, right: 2.0),
                           child: FlatButton(
                             child: Text("+"),
-                            onPressed: () {},
+                            onPressed: () {_increaseCellSuccess();},
                           ),
                         ),
                         Container(
@@ -186,7 +206,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           padding: const EdgeInsets.only(left: 2.0, right: 2.0),
                           child: FlatButton(
                             child: Text("-"),
-                            onPressed: () {},
+                            onPressed: () {_decreaseCellSuccess();},
                           ),
                         ),
                       ])

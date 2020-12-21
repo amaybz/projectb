@@ -22,8 +22,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   String _selectedAlliance;
   final List<String> _listAlliance = ['Red', 'Blue'];
 
-
-
   String _selectedDriveStation;
   List<String> _listDriveStation = [
     'none',
@@ -174,7 +172,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Row(
-
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
@@ -210,7 +207,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 //
                                 isExpanded: true,
                                 decoration: InputDecoration(
-                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
+                                  labelStyle:
+                                      TextStyle(fontSize: styleFontSizeBody),
                                   labelText: 'Alliance',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -225,9 +223,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listAlliance.map((location) {
                                   return DropdownMenuItem(
-                                    child: new Text(location,
-                                        style: TextStyle(fontSize: styleFontSizeBody),
-                                  ),
+                                    child: new Text(
+                                      location,
+                                      style: TextStyle(
+                                          fontSize: styleFontSizeBody),
+                                    ),
                                     value: location,
                                   );
                                 }).toList(),
@@ -243,7 +243,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
                                   labelText: 'Drive Station',
-                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
+                                  labelStyle:
+                                      TextStyle(fontSize: styleFontSizeBody),
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -255,8 +256,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listDriveStation.map((driveStation) {
                                   return DropdownMenuItem(
-                                    child: new Text(driveStation,
-                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    child: new Text(
+                                      driveStation,
+                                      style: TextStyle(
+                                          fontSize: styleFontSizeBody),
+                                    ),
                                     value: driveStation,
                                   );
                                 }).toList(),
@@ -275,7 +279,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               height: 58,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
-                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
+                                  labelStyle:
+                                      TextStyle(fontSize: styleFontSizeBody),
                                   labelText: 'Team',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -288,8 +293,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listTeams.map((value) {
                                   return DropdownMenuItem(
-                                    child: new Text(value,
-                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    child: new Text(
+                                      value,
+                                      style: TextStyle(
+                                          fontSize: styleFontSizeBody),
+                                    ),
                                     value: value,
                                   );
                                 }).toList(),
@@ -319,8 +327,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listFacing.map((value) {
                                   return DropdownMenuItem(
-                                    child: new Text(value,
-                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    child: new Text(
+                                      value,
+                                      style: TextStyle(
+                                          fontSize: styleFontSizeBody),
+                                    ),
                                     value: value,
                                   );
                                 }).toList(),
@@ -333,7 +344,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               width: styleFieldWidth,
                               child: DropdownButtonFormField<String>(
                                 decoration: InputDecoration(
-                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
+                                  labelStyle:
+                                      TextStyle(fontSize: styleFontSizeBody),
                                   labelText: 'Robot Position',
                                   border: InputBorder.none,
                                   isDense: true,
@@ -346,8 +358,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 },
                                 items: _listRobotPosition.map((value) {
                                   return DropdownMenuItem(
-                                    child: new Text(value,
-                                      style: TextStyle(fontSize: styleFontSizeBody),),
+                                    child: new Text(
+                                      value,
+                                      style: TextStyle(
+                                          fontSize: styleFontSizeBody),
+                                    ),
                                     value: value,
                                   );
                                 }).toList(),
@@ -367,7 +382,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Starting Cells",
-                                  labelStyle: TextStyle(fontSize: styleFontSizeBody),
+                                  labelStyle:
+                                      TextStyle(fontSize: styleFontSizeBody),
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -478,10 +494,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
               ]),
             )),
         Container(
-              margin: const EdgeInsets.all(0.0),
-              padding: EdgeInsets.all(0.0),
-              child: _showTab(_selectedTab)),
-
+            margin: const EdgeInsets.all(0.0),
+            padding: EdgeInsets.all(0.0),
+            child: _showTab(_selectedTab)),
       ]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -515,7 +530,59 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   _showTab(int index) {
     if (index == 0) {
+      return AutoTab(styleImgFieldWidth: styleImgFieldWidth);
+    }
+    if (index == 1) {
+      return TeleOpScreen();
+      //Image.asset('assets/imgs/field.png'),
+
+    }
+    if (index == 2) {
       return Container(
+        child: Text(
+          "Quick Ratings",
+          style: TextStyle(fontSize: 18),
+        ),
+      );
+    }
+    if (index == 3) {
+      return Container(
+        child: Text(
+          "Required Fields",
+          style: TextStyle(fontSize: 18),
+        ),
+      );
+    } else {
+      return Container(
+        child: Text(
+          "Other Tab",
+          style: TextStyle(fontSize: 18),
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the getJSONData() method when the app initializes
+    _getScoringData();
+  }
+}
+
+class AutoTab extends StatelessWidget {
+  const AutoTab({
+    Key key,
+    @required this.styleImgFieldWidth,
+  }) : super(key: key);
+
+  final double styleImgFieldWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return FractionallySizedBox(
+      widthFactor: 0.99,
+      child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.only(
@@ -643,42 +710,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                 ]),
           ),
         ]),
-      );
-    }
-    if (index == 1) {
-      return TeleOpScreen();
-          //Image.asset('assets/imgs/field.png'),
-
-    }
-    if (index == 2) {
-      return Container(
-        child: Text(
-          "Quick Ratings",
-          style: TextStyle(fontSize: 18),
-        ),
-      );
-    }
-    if (index == 3) {
-      return Container(
-        child: Text(
-          "Required Fields",
-          style: TextStyle(fontSize: 18),
-        ),
-      );
-    } else {
-      return Container(
-        child: Text(
-          "Other Tab",
-          style: TextStyle(fontSize: 18),
-        ),
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Call the getJSONData() method when the app initializes
-    _getScoringData();
+      ),
+    );
   }
 }

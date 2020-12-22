@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:projectb/sharedprefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
@@ -16,6 +16,7 @@ class MatchScoutingScreen extends StatefulWidget {
 
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
+  MySharedPrefs mySharedPrefs = new MySharedPrefs();
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
   final TextEditingController _txtStartingCells = TextEditingController();
@@ -92,6 +93,32 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
   }
 
+  void handleClick(String value) async {
+    switch (value) {
+      case 'Clear Match':
+        print( "clear Match Selected");
+        mySharedPrefs.saveInt("CellAttempts", 0);
+        mySharedPrefs.saveInt("CellSuccess", 0);
+        mySharedPrefs.saveInt("PenalAttempts", 0);
+        mySharedPrefs.saveInt("PenalSuccess", 0);
+        setState(() {
+          _selectedDriveStation = null;
+          _selectedDriveStation = null;
+          _selectedTab = 0;
+          _selectedRobotPosition = null;
+          _selectedFacing = null;
+          _selectedTeam = null;
+          _selectedAlliance = null;
+          _txtStartingCells.text = '0';
+          _txtMatchNumber.text = '0';
+        });
+        break;
+      case 'Settings':
+        print( "Settings Selected");
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -120,9 +147,18 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Match Scouting'),
-      ),
+      appBar: AppBar(title: Text('Match Scouting'), actions: <Widget>[
+        PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+          return {'Clear Match', 'Settings'}.map((String choice) {
+            return PopupMenuItem<String>(
+              value: choice,
+              child: Text(choice),
+            );
+          }).toList();
+        }),
+      ]),
       body: ListView(children: <Widget>[
         FractionallySizedBox(
             widthFactor: 0.99,

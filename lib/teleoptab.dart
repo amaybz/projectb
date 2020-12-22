@@ -25,6 +25,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     intCellAttempts = await mySharedPrefs.readInt("CellAttempts");
     intCellSuccess = await mySharedPrefs.readInt("CellSuccess");
     intPenalAttempts = await mySharedPrefs.readInt("PenalAttempts");
+    intPenalSuccess = await mySharedPrefs.readInt("PenalSuccess");
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
       _txtCellSuccess.text = intCellSuccess.toString();
@@ -35,7 +36,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intCellAttempts = 0;
   int intCellSuccess = 0;
   int intPenalAttempts = 0;
-  int intPenalSuccess  = 0;
+  int intPenalSuccess = 0;
 
   //style
   double styleFieldCellsWidth = 40.0;
@@ -50,11 +51,26 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     });
     mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
   }
+
   _decreasePenalAttempts() async {
     setState(() {
       intPenalAttempts = intPenalAttempts - 1;
     });
     mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
+  }
+
+  _increasePenalSuccess() async {
+    setState(() {
+      intPenalSuccess = intPenalSuccess + 1;
+    });
+    mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
+  }
+
+  _decreasePenalSuccess() async {
+    setState(() {
+      intPenalSuccess = intPenalSuccess - 1;
+    });
+    mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
   }
 
   _increaseCellAttempts() async {
@@ -82,6 +98,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     intCellSuccess = intCellSuccess + 1;
     intCellAttempts = intCellAttempts + 1;
     mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
+    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
     setState(() {
       _txtCellSuccess.text = intCellSuccess.toString();
       _txtCellAttempts.text = intCellAttempts.toString();
@@ -183,25 +200,40 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           _updateCellSuccess(value);
                         },
                       ),
-
                     ]),
                     Column(children: [
                       Row(children: [
-                        Text("Picture"),
+                        SizedBox(
+                          width: styleImgFieldWidth,
+                          height: (styleImgFieldWidth * 0.5),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                //border: Border.all(color: Colors.grey),
+                                //color: Colors.white,
+                                ),
+                            child: Image.asset("assets/imgs/ports.png"),
+                          ),
+                        ),
                       ])
                     ]),
                     Column(children: [
                       Row(children: [
                         Text("Outer"),
-                        Text("0"),
+                        Switch(
+                          value: true,
+                        ),
                       ]),
                       Row(children: [
                         Text("Inner"),
-                        Text("0"),
+                        Switch(
+                          value: true,
+                        ),
                       ]),
                       Row(children: [
                         Text("Lower"),
-                        Text("0"),
+                        Switch(
+                          value: true,
+                        ),
                       ]),
                     ]),
                   ]),
@@ -238,9 +270,18 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(children: [
-                      Row(children: [Text("Rotation Control:"), Text("0")]),
-                      Row(children: [Text("Time Taken:"), Text("0")]),
-
+                      Row(children: [
+                        Text("Rotation Control:"),
+                        Switch(
+                          value: true,
+                        ),
+                      ]),
+                      Row(children: [
+                        Text("Time Taken:"),
+                        Switch(
+                          value: true,
+                        ),
+                      ]),
                       CounterWidget(
                         value: intPenalAttempts,
                         title: "Panel Attempts",
@@ -252,7 +293,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           _decreasePenalAttempts();
                         },
                         onSetValue: (int value) {
-                         //_updateCellAttempts(value);
+                          //_updateCellAttempts(value);
                         },
                       ),
                       CounterWidget(
@@ -260,29 +301,37 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         title: "Panel Success",
                         styleFontSize: styleFontSizeBody,
                         onIncreaseStateChanged: (int increase) {
-                          //_increasePenalAttempts();
+                          _increasePenalSuccess();
                         },
                         onDecreaseStateChanged: (int decrease) {
-                          //_decreasePenalAttempts();
+                          _decreasePenalSuccess();
                         },
                         onSetValue: (int value) {
                           //_updateCellAttempts(value);
                         },
                       ),
-
                     ]),
-
                     Column(children: [
-                      Row(children: [Text("Position Control:"), Text("0")]),
-                      Row(children: [Text("Time Taken:"), Text("0")]),
+                      Row(children: [
+                        Text("Position Control:"),
+                        Switch(
+                          value: true,
+                        ),
+                      ]),
+                      Row(children: [
+                        Text("Time Taken:"),
+                        Switch(
+                          value: true,
+                        ),
+                      ]),
                       SizedBox(
                         width: styleImgFieldWidth,
                         height: (styleImgFieldWidth * 0.5),
                         child: Container(
                           decoration: BoxDecoration(
-                            //border: Border.all(color: Colors.grey),
-                            //color: Colors.white,
-                          ),
+                              //border: Border.all(color: Colors.grey),
+                              //color: Colors.white,
+                              ),
                           child: Image.asset("assets/imgs/tele.png"),
                         ),
                       ),

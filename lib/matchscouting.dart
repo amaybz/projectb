@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/teleoptab.dart';
+import 'package:projectb/dropdown_widget.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   @override
@@ -96,7 +97,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   void handleClick(String value) async {
     switch (value) {
       case 'Clear Match':
-        print( "clear Match Selected");
+        print("clear Match Selected");
         mySharedPrefs.saveInt("CellAttempts", 0);
         mySharedPrefs.saveInt("CellSuccess", 0);
         mySharedPrefs.saveInt("PenalAttempts", 0);
@@ -117,7 +118,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         });
         break;
       case 'Settings':
-        print( "Settings Selected");
+        print("Settings Selected");
         break;
     }
   }
@@ -154,13 +155,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         PopupMenuButton<String>(
             onSelected: handleClick,
             itemBuilder: (BuildContext context) {
-          return {'Clear Match', 'Settings'}.map((String choice) {
-            return PopupMenuItem<String>(
-              value: choice,
-              child: Text(choice),
-            );
-          }).toList();
-        }),
+              return {'Clear Match', 'Settings'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            }),
       ]),
       body: ListView(children: <Widget>[
         FractionallySizedBox(
@@ -236,75 +237,35 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             ),
                             //Expanded(
                             //child:
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldAlliance,
-                              height: 58,
-                              child: DropdownButtonFormField<String>(
-                                //
-                                isExpanded: true,
-                                decoration: InputDecoration(
-                                  labelStyle:
-                                      TextStyle(fontSize: styleFontSizeBody),
-                                  labelText: 'Alliance',
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                            DropDownWidget(
                                 value: _selectedAlliance,
-                                onChanged: (String newValue) {
+                                title: "Alliance",
+                                list: _listAlliance,
+                                styleFontSize: styleFontSizeBody,
+                                styleFieldWidth: styleFieldAlliance,
+                                styleFieldPadding: styleFieldPadding,
+                                styleFieldPaddingSides: styleFieldPaddingSides,
+                                onStateChanged: (String newValue) {
                                   setState(() {
                                     _selectedAlliance = newValue;
                                   });
                                   getDriveStationsByTeam(newValue);
                                   print(_selectedAlliance);
-                                },
-                                items: _listAlliance.map((location) {
-                                  return DropdownMenuItem(
-                                    child: new Text(
-                                      location,
-                                      style: TextStyle(
-                                          fontSize: styleFontSizeBody),
-                                    ),
-                                    value: location,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                            // ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldWidth,
-                              height: 58,
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelText: 'Drive Station',
-                                  labelStyle:
-                                      TextStyle(fontSize: styleFontSizeBody),
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                                }),
+
+                            DropDownWidget(
                                 value: _selectedDriveStation,
-                                onChanged: (String newValue) {
+                                title: "Drive Station",
+                                list: _listDriveStation,
+                                styleFontSize: styleFontSizeBody,
+                                styleFieldWidth: styleFieldWidth,
+                                styleFieldPadding: styleFieldPadding,
+                                styleFieldPaddingSides: styleFieldPaddingSides,
+                                onStateChanged: (String newValue) {
                                   setState(() {
                                     _selectedDriveStation = newValue;
                                   });
-                                },
-                                items: _listDriveStation.map((driveStation) {
-                                  return DropdownMenuItem(
-                                    child: new Text(
-                                      driveStation,
-                                      style: TextStyle(
-                                          fontSize: styleFontSizeBody),
-                                    ),
-                                    value: driveStation,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                                }),
                           ]),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

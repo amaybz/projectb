@@ -26,6 +26,9 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     intCellSuccess = await mySharedPrefs.readInt("CellSuccess");
     intPenalAttempts = await mySharedPrefs.readInt("PenalAttempts");
     intPenalSuccess = await mySharedPrefs.readInt("PenalSuccess");
+    selectedLower = await mySharedPrefs.readBool("selectedLower");
+    selectedOuter = await mySharedPrefs.readBool("selectedOuter");
+    selectedInner = await mySharedPrefs.readBool("selectedInner");
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
       _txtCellSuccess.text = intCellSuccess.toString();
@@ -37,6 +40,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intCellSuccess = 0;
   int intPenalAttempts = 0;
   int intPenalSuccess = 0;
+
+  //varibles
+  bool selectedOuter = false;
+  bool selectedInner = false;
+  bool selectedLower = false;
 
   //style
   double styleFieldCellsWidth = 40.0;
@@ -65,6 +73,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     });
     mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
   }
+
 
   _decreasePenalSuccess() async {
     setState(() {
@@ -220,20 +229,35 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Outer"),
                         Switch(
-                          value: true,
-                        ),
+                            value: selectedOuter,
+                            onChanged: (value) {
+                              mySharedPrefs.saveBool("selectedOuter", value);
+                              setState(() {
+                                selectedOuter = value;
+                              });
+                            }),
                       ]),
                       Row(children: [
                         Text("Inner"),
                         Switch(
-                          value: true,
-                        ),
+                            value: selectedInner,
+                            onChanged: (value) {
+                              mySharedPrefs.saveBool("selectedInner", value);
+                              setState(() {
+                                selectedInner = value;
+                              });
+                            }),
                       ]),
                       Row(children: [
                         Text("Lower"),
                         Switch(
-                          value: true,
-                        ),
+                            value: selectedLower,
+                            onChanged: (value) {
+                              mySharedPrefs.saveBool("selectedLower", value);
+                              setState(() {
+                                selectedLower = value;
+                              });
+                            }),
                       ]),
                     ]),
                   ]),

@@ -17,6 +17,13 @@ class MySharedPrefs {
     return value;
   }
 
+  Future<bool> readBool(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final value = prefs.getBool(key) ?? false;
+    print('read: $key Value: $value');
+    return value;
+  }
+
   saveStr(String key, String data) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, data);
@@ -26,6 +33,12 @@ class MySharedPrefs {
   saveInt(String key, int data) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, data);
+    print('saved: $key Value: $data');
+  }
+
+  saveBool(String key, bool data) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, data);
     print('saved: $key Value: $data');
   }
 

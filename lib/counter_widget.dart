@@ -11,11 +11,11 @@ class CounterWidget extends StatefulWidget {
     this.onSetValue,
     this.styleFieldPaddingSides = 10,
     this.styleFieldCellsWidth = 40.0,
-    this.styleFieldPadding = 5.0,
+    this.styleFieldPadding = 2.0,
     this.styleFontSize = 12,
   }) : super(key: key);
 
-  final String value;
+  final int value;
   final String title;
   final ValueChanged<int> onIncreaseStateChanged;
   final ValueChanged<int> onDecreaseStateChanged;
@@ -32,10 +32,9 @@ class CounterWidget extends StatefulWidget {
 
 class _CounterWidgetState extends State<CounterWidget> {
 
-
   @override
   Widget build(BuildContext context) {
-    widget.txtCounterValue.text = widget.value;
+    widget.txtCounterValue.text = widget.value.toString();
     return Column(children: [
       Text(widget.title),
       Row(children: [
@@ -65,7 +64,6 @@ class _CounterWidgetState extends State<CounterWidget> {
               }
               widget.onSetValue(newValue);},
             decoration: InputDecoration(
-//labelText: "Starting Cells",
               labelStyle: TextStyle(fontSize: widget.styleFontSize),
               border: InputBorder.none,
               isDense: true,

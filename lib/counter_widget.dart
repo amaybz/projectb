@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,10 @@ class _CounterWidgetState extends State<CounterWidget> {
   @override
   Widget build(BuildContext context) {
     widget.txtCounterValue.text = widget.value.toString();
-    return Column(children: [
+    return Column(
+        //mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
       Text(widget.title,
         style: TextStyle(fontWeight: FontWeight.bold),),
       Row(children: [

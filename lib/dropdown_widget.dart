@@ -10,8 +10,8 @@ class DropDownWidget extends StatefulWidget {
     @required this.title,
     @required this.list,
     this.onStateChanged,
-    this.styleFieldPaddingSides = 10,
-    this.styleFieldWidth = 100.0,
+    this.styleFieldPaddingSides = 2,
+    this.styleFieldWidth = 200.0,
     this.styleFieldPadding = 2.0,
     this.styleFontSize = 12,
   }) : super(key: key);
@@ -41,7 +41,6 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       width: widget.styleFieldWidth,
       height: 58,
       child: DropdownButtonFormField<String>(
-//
         isExpanded: true,
         decoration: InputDecoration(
           labelStyle:

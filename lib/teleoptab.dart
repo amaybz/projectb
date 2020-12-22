@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:projectb/dropdown_widget.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/counter_widget.dart';
 
@@ -60,6 +60,38 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intCellSuccess = 0;
   int intPenalAttempts = 0;
   int intPenalSuccess = 0;
+  int intBuddies = 0;
+
+  //drop down var
+  String _selectedClimb;
+  String _selectedTimeToGrip;
+  String _selectedTimeFromGripToClimb;
+  String _selectedOutcome;
+  String _selectedPreferredPosition;
+
+  //lists
+  final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
+
+  final List<String> listTime = [
+    'NA',
+    'Slow (> 7 Secs)',
+    'Medium ( 3-7 Secs)',
+    'Fast ( <3 Secs)',
+  ];
+
+  final List<String> listOutcomes = [
+    'NA',
+    'Self',
+    'Self + Others',
+    'Others',
+  ];
+
+  final List<String> listPositions = [
+    'NA',
+    'Inner',
+    'Middle',
+    'Outer',
+  ];
 
   //style
   double styleFieldCellsWidth = 40.0;
@@ -67,6 +99,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   double styleFieldPaddingSides = 10.0;
   double styleFontSizeBody = 12;
   double styleImgFieldWidth = 150;
+  double styleFieldControlPanelDropDownsWidth = 550.0;
+  double styleFieldControlPanelDropDownsPaddingSides = 1.0;
 
   _increasePenalAttempts() async {
     setState(() {
@@ -158,6 +192,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 3.0;
       styleFontSizeBody = 12;
+      styleFieldControlPanelDropDownsWidth = 350;
     }
     if (width >= 600) {
       styleFieldCellsWidth = 40.0;
@@ -165,6 +200,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       styleFieldPaddingSides = 5.0;
       styleFontSizeBody = 16;
       styleImgFieldWidth = 200;
+      styleFieldControlPanelDropDownsWidth = 600.0;
     }
 
     return Column(children: [
@@ -419,7 +455,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             ),
             Container(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -434,7 +471,96 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                 });
                               }),
                         ]),
-
+                    DropDownWidget(
+                        value: _selectedClimb,
+                        title: "Climb",
+                        list: listSuccessFailNA,
+                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
+                        onStateChanged: (String newValue) {
+                          setState(() {
+                            _selectedClimb = newValue;
+                          });
+                        }),
+                    DropDownWidget(
+                        value: _selectedTimeToGrip,
+                        title: "Time to Grip",
+                        list: listTime,
+                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
+                        onStateChanged: (String newValue) {
+                          setState(() {
+                            _selectedTimeToGrip = newValue;
+                          });
+                        }),
+                    DropDownWidget(
+                        value: _selectedTimeFromGripToClimb,
+                        title: "Time from Grip to Climb",
+                        list: listTime,
+                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
+                        onStateChanged: (String newValue) {
+                          setState(() {
+                            _selectedTimeFromGripToClimb = newValue;
+                          });
+                        }),
+                    DropDownWidget(
+                        value: _selectedOutcome,
+                        title: "Outcome",
+                        list: listOutcomes,
+                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
+                        onStateChanged: (String newValue) {
+                          setState(() {
+                            _selectedOutcome = newValue;
+                          });
+                        }),
+                    DropDownWidget(
+                        value: _selectedPreferredPosition,
+                        title: "Preferred Position",
+                        list: listPositions,
+                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
+                        onStateChanged: (String newValue) {
+                          setState(() {
+                            _selectedPreferredPosition = newValue;
+                          });
+                        }),
+                    CounterWidget(value: intBuddies, title: 'Buddies'),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Balance:"),
+                          Switch(
+                              value: selectedBalance,
+                              onChanged: (value) {
+                                mySharedPrefs.saveBool("selectedBalance", value);
+                                setState(() {
+                                  selectedBalance = value;
+                                });
+                              }),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Balance Correction:"),
+                          Switch(
+                              value: selectedBalanceCorrection,
+                              onChanged: (value) {
+                                mySharedPrefs.saveBool("selectedBalanceCorrection", value);
+                                setState(() {
+                                  selectedBalanceCorrection = value;
+                                });
+                              }),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Fall:"),
+                          Switch(
+                              value: selectedFall,
+                              onChanged: (value) {
+                                mySharedPrefs.saveBool("selectedFall", value);
+                                setState(() {
+                                  selectedFall = value;
+                                });
+                              }),
+                        ]),
                   ]),
             ),
           ]),

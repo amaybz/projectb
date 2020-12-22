@@ -35,16 +35,21 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     });
   }
 
+  //Switch Varibles
+  bool selectedOuter = false;
+  bool selectedInner = false;
+  bool selectedLower = false;
+  bool selectedPark = false;
+  bool selectedBalance = false;
+  bool selectedBalanceCorrection = false;
+  bool selectedFall = false;
+
   //counters
   int intCellAttempts = 0;
   int intCellSuccess = 0;
   int intPenalAttempts = 0;
   int intPenalSuccess = 0;
 
-  //varibles
-  bool selectedOuter = false;
-  bool selectedInner = false;
-  bool selectedLower = false;
 
   //style
   double styleFieldCellsWidth = 40.0;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/sharedprefs.dart';
+import 'package:projectb/counter_widget.dart';
 
 class TeleOpScreen extends StatefulWidget {
   @override
@@ -57,11 +58,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     });
   }
 
-  _updateCellAttempts() {
-    if (_txtCellAttempts.text == "") {
-      _txtCellAttempts.text = "0";
-    }
-    intCellAttempts = int.parse(_txtCellAttempts.text);
+  _updateCellAttempts(int value) {
+    intCellAttempts = value;
     mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
   }
 
@@ -81,6 +79,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     setState(() {
       _txtCellSuccess.text = intCellSuccess.toString();
     });
+  }
+
+  _updateCellSuccess(int value) {
+    intCellSuccess = value;
+    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
   }
 
   @override
@@ -136,91 +139,35 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Column(children: [
-                      Text("Cell Attempts"),
-                      Row(children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-                          child: FlatButton(
-                            child: Text("+"),
-                            onPressed: () {
-                              _increaseCellAttempts();
-                            },
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: styleFieldPadding,
-                              horizontal: styleFieldPaddingSides),
-                          width: styleFieldCellsWidth,
-                          child: TextField(
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                            controller: _txtCellAttempts,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            onChanged: _updateCellAttempts(),
-                            decoration: InputDecoration(
-                              //labelText: "Starting Cells",
-                              labelStyle:
-                                  TextStyle(fontSize: styleFontSizeBody),
-                              border: InputBorder.none,
-                              isDense: true,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-                          child: FlatButton(
-                            child: Text("-"),
-                            onPressed: () {
-                              _decreaseCellAttempts();
-                            },
-                          ),
-                        ),
-                      ]),
-                      Text("Cell Success"),
-                      Row(children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-                          child: FlatButton(
-                            child: Text("+"),
-                            onPressed: () {
-                              _increaseCellSuccess();
-                            },
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: styleFieldPadding,
-                              horizontal: styleFieldPaddingSides),
-                          width: styleFieldCellsWidth,
-                          child: TextField(
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                            controller: _txtCellSuccess,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            decoration: InputDecoration(
-                              //labelText: "Starting Cells",
-                              labelStyle:
-                                  TextStyle(fontSize: styleFontSizeBody),
-                              border: InputBorder.none,
-                              isDense: true,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-                          child: FlatButton(
-                            child: Text("-"),
-                            onPressed: () {
-                              _decreaseCellSuccess();
-                            },
-                          ),
-                        ),
-                      ])
+                      CounterWidget(
+                        value: intCellAttempts.toString(),
+                        title: "Cell Attempts",
+                        styleFontSize: styleFontSizeBody,
+                        onIncreaseStateChanged: (int increase) {
+                          _increaseCellAttempts();
+                        },
+                        onDecreaseStateChanged: (int decrease) {
+                          _decreaseCellAttempts();
+                        },
+                        onSetValue: (int value) {
+                          _updateCellAttempts(value);
+                        },
+                      ),
+                      CounterWidget(
+                        value: intCellSuccess.toString(),
+                        title: "Cell Success",
+                        styleFontSize: styleFontSizeBody,
+                        onIncreaseStateChanged: (int increase) {
+                          _increaseCellSuccess();
+                        },
+                        onDecreaseStateChanged: (int decrease) {
+                          _decreaseCellSuccess();
+                        },
+                        onSetValue: (int value) {
+                          _updateCellSuccess(value);
+                        },
+                      ),
+
                     ]),
                     Column(children: [
                       Row(children: [
@@ -277,8 +224,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                     Column(children: [
                       Row(children: [Text("Rotation Control:"), Text("0")]),
                       Row(children: [Text("Time Taken:"), Text("0")]),
-
-
                       Text("Panel Attempts"),
                       Row(children: [
                         Padding(
@@ -305,7 +250,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             decoration: InputDecoration(
                               //labelText: "Starting Cells",
                               labelStyle:
-                              TextStyle(fontSize: styleFontSizeBody),
+                                  TextStyle(fontSize: styleFontSizeBody),
                               border: InputBorder.none,
                               isDense: true,
                             ),
@@ -320,11 +265,20 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             },
                           ),
                         ),
-                      ])
-
-
-
-
+                      ]),
+                      CounterWidget(
+                        value: intCellAttempts.toString(),
+                        title: "Testing Widget",
+                        onIncreaseStateChanged: (int increase) {
+                          _increaseCellAttempts();
+                        },
+                        onDecreaseStateChanged: (int decrease) {
+                          _decreaseCellAttempts();
+                        },
+                        onSetValue: (int value) {
+                          _updateCellAttempts(value);
+                        },
+                      )
                     ]),
                     Column(children: [
                       Row(children: [Text("Position Control:"), Text("0")]),

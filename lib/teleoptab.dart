@@ -29,6 +29,15 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     selectedLower = await mySharedPrefs.readBool("selectedLower");
     selectedOuter = await mySharedPrefs.readBool("selectedOuter");
     selectedInner = await mySharedPrefs.readBool("selectedInner");
+    selectedRotationControl =
+        await mySharedPrefs.readBool("selectedRotationControl");
+    selectedPositionControl =
+        await mySharedPrefs.readBool("selectedPositionControl");
+    selectedPark = await mySharedPrefs.readBool("selectedPark");
+    selectedBalance = await mySharedPrefs.readBool("selectedBalance");
+    selectedBalanceCorrection =
+        await mySharedPrefs.readBool("selectedBalanceCorrection");
+    selectedFall = await mySharedPrefs.readBool("selectedFall");
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
       _txtCellSuccess.text = intCellSuccess.toString();
@@ -51,7 +60,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intCellSuccess = 0;
   int intPenalAttempts = 0;
   int intPenalSuccess = 0;
-
 
   //style
   double styleFieldCellsWidth = 40.0;
@@ -76,11 +84,12 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   _increasePenalSuccess() async {
     setState(() {
+      intPenalAttempts = intPenalAttempts + 1;
       intPenalSuccess = intPenalSuccess + 1;
     });
     mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
+    mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
   }
-
 
   _decreasePenalSuccess() async {
     setState(() {
@@ -304,14 +313,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Rotation Control:"),
                         Switch(
-                          value: selectedRotationControl,
+                            value: selectedRotationControl,
                             onChanged: (value) {
-                              mySharedPrefs.saveBool("selectedRotationControl", value);
+                              mySharedPrefs.saveBool(
+                                  "selectedRotationControl", value);
                               setState(() {
                                 selectedRotationControl = value;
                               });
-                            }
-                        ),
+                            }),
                       ]),
                       Row(children: [
                         Text("Time Taken:"),
@@ -352,14 +361,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Position Control:"),
                         Switch(
-                          value: selectedPositionControl,
+                            value: selectedPositionControl,
                             onChanged: (value) {
-                              mySharedPrefs.saveBool("selectedPositionControl", value);
+                              mySharedPrefs.saveBool(
+                                  "selectedPositionControl", value);
                               setState(() {
                                 selectedPositionControl = value;
                               });
-                            }
-                        ),
+                            }),
                       ]),
                       Row(children: [
                         Text("Time Taken:"),
@@ -383,7 +392,54 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             ),
           ]),
         ),
-      )
+      ),
+      FractionallySizedBox(
+        widthFactor: 0.99,
+        child: Container(
+          margin: const EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            //color: Colors.red,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)),
+          ),
+          padding: EdgeInsets.all(4.0),
+          child: Column(children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                color: Colors.grey,
+              ),
+              child: Column(children: [
+                Text("End Game"),
+              ]),
+            ),
+            Container(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Park:"),
+                          Switch(
+                              value: selectedPark,
+                              onChanged: (value) {
+                                mySharedPrefs.saveBool("selectedPark", value);
+                                setState(() {
+                                  selectedPark = value;
+                                });
+                              }),
+                        ]),
+
+                  ]),
+            ),
+          ]),
+        ),
+      ),
     ]);
   }
 }

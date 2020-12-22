@@ -271,103 +271,50 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldWidthTeam,
-                              height: 58,
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelStyle:
-                                      TextStyle(fontSize: styleFontSizeBody),
-                                  labelText: 'Team',
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                            DropDownWidget(
                                 value: _selectedTeam,
-                                onChanged: (String newValue) {
+                                title: "Team",
+                                list: _listTeams,
+                                styleFontSize: styleFontSizeBody,
+                                styleFieldWidth: styleFieldWidthTeam,
+                                styleFieldPadding: styleFieldPadding,
+                                styleFieldPaddingSides: styleFieldPaddingSides,
+                                onStateChanged: (String newValue) {
                                   setState(() {
                                     _selectedTeam = newValue;
                                   });
-                                },
-                                items: _listTeams.map((value) {
-                                  return DropdownMenuItem(
-                                    child: new Text(
-                                      value,
-                                      style: TextStyle(
-                                          fontSize: styleFontSizeBody),
-                                    ),
-                                    value: value,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                                }),
                           ]),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldWidthFacing,
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelText: 'Facing',
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                            DropDownWidget(
                                 value: _selectedFacing,
-                                onChanged: (String newValue) {
+                                title: "Facing",
+                                list: _listFacing,
+                                styleFontSize: styleFontSizeBody,
+                                styleFieldWidth: styleFieldWidthFacing,
+                                styleFieldPadding: styleFieldPadding,
+                                styleFieldPaddingSides: styleFieldPaddingSides,
+                                onStateChanged: (String newValue) {
                                   setState(() {
                                     _selectedFacing = newValue;
                                   });
-                                },
-                                items: _listFacing.map((value) {
-                                  return DropdownMenuItem(
-                                    child: new Text(
-                                      value,
-                                      style: TextStyle(
-                                          fontSize: styleFontSizeBody),
-                                    ),
-                                    value: value,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldWidth,
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelStyle:
-                                      TextStyle(fontSize: styleFontSizeBody),
-                                  labelText: 'Robot Position',
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                                }),
+                            DropDownWidget(
                                 value: _selectedRobotPosition,
-                                onChanged: (String newValue) {
+                                title: "Robot Position",
+                                list: _listRobotPosition,
+                                styleFontSize: styleFontSizeBody,
+                                styleFieldWidth: styleFieldWidth,
+                                styleFieldPadding: styleFieldPadding,
+                                styleFieldPaddingSides: styleFieldPaddingSides,
+                                onStateChanged: (String newValue) {
                                   setState(() {
                                     _selectedRobotPosition = newValue;
                                   });
-                                },
-                                items: _listRobotPosition.map((value) {
-                                  return DropdownMenuItem(
-                                    child: new Text(
-                                      value,
-                                      style: TextStyle(
-                                          fontSize: styleFontSizeBody),
-                                    ),
-                                    value: value,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                                }),
                             Container(
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,

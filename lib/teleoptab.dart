@@ -39,6 +39,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   bool selectedOuter = false;
   bool selectedInner = false;
   bool selectedLower = false;
+  bool selectedRotationControl = false;
+  bool selectedPositionControl = false;
   bool selectedPark = false;
   bool selectedBalance = false;
   bool selectedBalanceCorrection = false;
@@ -302,7 +304,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Rotation Control:"),
                         Switch(
-                          value: true,
+                          value: selectedRotationControl,
+                            onChanged: (value) {
+                              mySharedPrefs.saveBool("selectedRotationControl", value);
+                              setState(() {
+                                selectedRotationControl = value;
+                              });
+                            }
                         ),
                       ]),
                       Row(children: [
@@ -344,7 +352,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Position Control:"),
                         Switch(
-                          value: true,
+                          value: selectedPositionControl,
+                            onChanged: (value) {
+                              mySharedPrefs.saveBool("selectedPositionControl", value);
+                              setState(() {
+                                selectedPositionControl = value;
+                              });
+                            }
                         ),
                       ]),
                       Row(children: [

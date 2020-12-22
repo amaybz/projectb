@@ -105,6 +105,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         mySharedPrefs.saveBool("selectedLower", false);
         mySharedPrefs.saveBool("selectedOuter", false);
         mySharedPrefs.saveBool("selectedInner", false);
+        mySharedPrefs.saveBool("selectedRotationControl", false);
+        mySharedPrefs.saveBool("selectedPositionControl", false);
+        mySharedPrefs.saveBool("selectedPark", false);
+        mySharedPrefs.saveBool("selectedBalance", false);
+        mySharedPrefs.saveBool("selectedBalanceCorrection", false);
+        mySharedPrefs.saveBool("selectedFall", false);
         setState(() {
           _selectedDriveStation = null;
           _selectedDriveStation = null;

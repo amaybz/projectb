@@ -31,20 +31,37 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
-
   @override
   Widget build(BuildContext context) {
     widget.txtCounterValue.text = widget.value.toString();
     return Column(children: [
-      Text(widget.title),
+      Text(widget.title,
+        style: TextStyle(fontWeight: FontWeight.bold),),
       Row(children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-          child: FlatButton(
-            child: Text("+"),
-            onPressed: () {
-              widget.onIncreaseStateChanged(1);
-            },
+        SizedBox(
+          height: 25,
+          width: 30,
+          child: Container(
+            padding: EdgeInsets.zero,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.green),
+              color: Colors.green,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(5),
+                  topRight: Radius.circular(5),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5)),
+            ),
+            child: FlatButton(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
+              child: Text(
+                "+",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                widget.onIncreaseStateChanged(1);
+              },
+            ),
           ),
         ),
         Container(
@@ -62,7 +79,8 @@ class _CounterWidgetState extends State<CounterWidget> {
               if (widget.txtCounterValue.text != "") {
                 newValue = int.parse(widget.txtCounterValue.text);
               }
-              widget.onSetValue(newValue);},
+              widget.onSetValue(newValue);
+            },
             decoration: InputDecoration(
               labelStyle: TextStyle(fontSize: widget.styleFontSize),
               border: InputBorder.none,
@@ -70,13 +88,30 @@ class _CounterWidgetState extends State<CounterWidget> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-          child: FlatButton(
-            child: Text("-"),
-            onPressed: () {
-              widget.onDecreaseStateChanged(-1);
-            },
+        SizedBox(
+          height: 25,
+          width: 30,
+          child: Container(
+            padding: EdgeInsets.zero,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.red),
+              color: Colors.red,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(5),
+                  topRight: Radius.circular(5),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5)),
+            ),
+            child: FlatButton(
+              padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
+              child: Text(
+                "-",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                widget.onDecreaseStateChanged(-1);
+              },
+            ),
           ),
         ),
       ]),

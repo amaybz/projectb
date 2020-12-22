@@ -295,8 +295,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 list: _listFacing,
                                 styleFontSize: styleFontSizeBody,
                                 styleFieldWidth: styleFieldWidthFacing,
-                                styleFieldPadding: styleFieldPadding,
-                                styleFieldPaddingSides: styleFieldPaddingSides,
                                 onStateChanged: (String newValue) {
                                   setState(() {
                                     _selectedFacing = newValue;

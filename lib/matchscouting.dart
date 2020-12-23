@@ -573,4 +573,3 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     _getScoringData();
   }
 }
-

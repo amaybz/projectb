@@ -102,6 +102,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         mySharedPrefs.saveInt("CellSuccess", 0);
         mySharedPrefs.saveInt("PenalAttempts", 0);
         mySharedPrefs.saveInt("PenalSuccess", 0);
+        mySharedPrefs.saveInt("intBuddies", 0);
         mySharedPrefs.saveBool("selectedLower", false);
         mySharedPrefs.saveBool("selectedOuter", false);
         mySharedPrefs.saveBool("selectedInner", false);
@@ -111,6 +112,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         mySharedPrefs.saveBool("selectedBalance", false);
         mySharedPrefs.saveBool("selectedBalanceCorrection", false);
         mySharedPrefs.saveBool("selectedFall", false);
+
         setState(() {
           _selectedDriveStation = null;
           _selectedDriveStation = null;

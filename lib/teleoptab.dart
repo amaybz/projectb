@@ -26,6 +26,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     intCellSuccess = await mySharedPrefs.readInt("CellSuccess");
     intPenalAttempts = await mySharedPrefs.readInt("PenalAttempts");
     intPenalSuccess = await mySharedPrefs.readInt("PenalSuccess");
+    intBuddies = await mySharedPrefs.readInt("intBuddies");
     selectedLower = await mySharedPrefs.readBool("selectedLower");
     selectedOuter = await mySharedPrefs.readBool("selectedOuter");
     selectedInner = await mySharedPrefs.readBool("selectedInner");
@@ -375,7 +376,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           _decreasePenalAttempts();
                         },
                         onSetValue: (int value) {
-                          //_updateCellAttempts(value);
+                          intPenalAttempts = value;
+                          mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
                         },
                       ),
                       CounterWidget(
@@ -389,7 +391,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           _decreasePenalSuccess();
                         },
                         onSetValue: (int value) {
-                          //_updateCellAttempts(value);
+                          intPenalSuccess = value;
+                          mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
                         },
                       ),
                     ]),
@@ -521,7 +524,25 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             _selectedPreferredPosition = newValue;
                           });
                         }),
-                    CounterWidget(value: intBuddies, title: 'Buddies'),
+                    CounterWidget(value: intBuddies, title: 'Buddies',
+                    onIncreaseStateChanged: (int value) {
+                      setState(() {
+                        intBuddies = intBuddies + 1;
+                      });
+                      mySharedPrefs.saveInt("intBuddies", intBuddies);
+                    },
+                      onDecreaseStateChanged: (int value) {
+                        setState(() {
+                          intBuddies = intBuddies - 1;
+                        });
+                        mySharedPrefs.saveInt("intBuddies", intBuddies);
+                      },
+                      onSetValue: (int value) {
+                        intBuddies = value;
+                        mySharedPrefs.saveInt("intBuddies", intBuddies);
+                      },
+
+                      ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

@@ -69,6 +69,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   String _selectedTimeFromGripToClimb;
   String _selectedOutcome;
   String _selectedPreferredPosition;
+  String _selectedTimeTakenRotation;
+  String _selectedTimeTakenPosition;
 
   //lists
   final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
@@ -174,6 +176,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   }
 
   _updateCellSuccess(int value) {
+    intCellSuccess = value;
+    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
+  }
+
+  _showTimeTaken(int value) {
     intCellSuccess = value;
     mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
   }
@@ -359,12 +366,12 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               });
                             }),
                       ]),
-                      Row(children: [
-                        Text("Time Taken:"),
-                        Switch(
-                          value: true,
-                        ),
-                      ]),
+
+                           DropDownWidget(value: _selectedTimeTakenRotation,
+                              title: "Time Taken",
+                              list: listTime),
+
+
                       CounterWidget(
                         value: intPenalAttempts,
                         title: "Panel Attempts",

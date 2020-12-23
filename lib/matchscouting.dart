@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:projectb/autotab.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/localdb.dart';
@@ -540,8 +540,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 1) {
       return TeleOpScreen();
-      //Image.asset('assets/imgs/field.png'),
-
     }
     if (index == 2) {
       return Container(
@@ -576,147 +574,3 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   }
 }
 
-class AutoTab extends StatelessWidget {
-  const AutoTab({
-    Key key,
-    @required this.styleImgFieldWidth,
-  }) : super(key: key);
-
-  final double styleImgFieldWidth;
-
-  @override
-  Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: 0.99,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
-        ),
-        child: Column(children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              color: Colors.grey,
-            ),
-            child: Text(
-              "Driver Position",
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-          //Image.asset('assets/imgs/field.png'),
-          Container(
-            decoration: BoxDecoration(
-                //border: Border.all(color: Colors.black),
-                //image: DecorationImage(
-                // image: AssetImage("assets/imgs/field.png"),
-                // fit: BoxFit.cover,
-                //),
-                ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.all(5.0),
-                      padding: EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        color: Colors.blue,
-                      ),
-                      child: Text(
-                        "1",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(5.0),
-                      padding: EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        color: Colors.blue,
-                      ),
-                      child: Text(
-                        "2",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(5.0),
-                      padding: EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        color: Colors.blue,
-                      ),
-                      child: Text(
-                        "3",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ]),
-                  Column(children: <Widget>[
-                    SizedBox(
-                      width: styleImgFieldWidth,
-                      height: (styleImgFieldWidth * 0.5),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          color: Colors.grey,
-                        ),
-                        child: Image.asset("assets/imgs/field.png"),
-                      ),
-                    ),
-                  ]),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: Colors.red,
-                          ),
-                          child: Text(
-                            "1",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: Colors.red,
-                          ),
-                          child: Text(
-                            "2",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: Colors.red,
-                          ),
-                          child: Text(
-                            "3",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ]),
-                ]),
-          ),
-        ]),
-      ),
-    );
-  }
-}

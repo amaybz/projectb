@@ -20,7 +20,6 @@ class MatchScoutingScreen extends StatefulWidget {
 
   @override
   _MatchScoutingScreenState createState() => _MatchScoutingScreenState();
-
 }
 
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
@@ -29,10 +28,19 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
   final TextEditingController _txtStartingCells = TextEditingController();
-  String _selectedAlliance;
+
   final List<String> _listAlliance = ['Red', 'Blue'];
 
+  String _selectedAlliance;
   String _selectedDriveStation;
+
+  //varibles to control switchs
+  bool _selectedRobotFail = false;
+  bool _selectedYellowCard = false;
+  bool _selectedRedCard = false;
+  bool _selectedOperational = false;
+  bool _selectedEnergised = false;
+
   List<String> _listDriveStation = [
     'none',
   ];
@@ -131,6 +139,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           _selectedAlliance = null;
           _txtStartingCells.text = '0';
           _txtMatchNumber.text = '0';
+          _selectedRobotFail = false;
+          _selectedYellowCard = false;
+          _selectedRedCard = false;
+          _selectedOperational = false;
+          _selectedEnergised = false;
         });
         break;
       case 'Settings':
@@ -180,39 +193,42 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             }),
       ]),
       body: ListView(children: <Widget>[
-        FractionallySizedBox (
+        FractionallySizedBox(
           widthFactor: 0.99,
           child: Center(
-        child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 800.0),
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              padding: EdgeInsets.all(4.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Event Name: " + widget.eventName +
-                        " Scout: ",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: _txtScoutName,
-                        decoration: InputDecoration(
-                            border: InputBorder.none, hintText: 'Scout Name'),
-                      ),
-                    )
-                  ]),
-            )),),),
+            child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 800.0),
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)),
+                  ),
+                  padding: EdgeInsets.all(4.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Event Name: " + widget.eventName + " Scout: ",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: _txtScoutName,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'Scout Name'),
+                          ),
+                        )
+                      ]),
+                )),
+          ),
+        ),
         FractionallySizedBox(
             widthFactor: 0.99,
             child: Container(
@@ -380,7 +396,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       ),
                       Container(
                         child: Switch(
-                          value: false,
+                          value: _selectedRobotFail,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _selectedRobotFail = value;
+                            });
+                          },
                         ),
                       ),
                       Expanded(
@@ -393,7 +414,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               ),
                               Container(
                                 child: Switch(
-                                  value: false,
+                                  value: _selectedYellowCard,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      _selectedYellowCard = value;
+                                    });
+                                  },
                                 ),
                               ),
                             ]),
@@ -408,60 +434,76 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       ),
                       Container(
                         child: Switch(
-                          value: false,
+                          value: _selectedRedCard,
+                          onChanged: (bool value) {
+                            setState(() {
+                              _selectedRedCard = value;
+                            });
+                          },
                         ),
                       ),
                     ]),
               ]),
             )),
         FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.green),
-                color: Colors.green,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              padding: EdgeInsets.all(4.0),
-              child: Column(children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Operational (Hanging)",
-                        style: TextStyle(fontSize: 18),
+          widthFactor: 0.99,
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.green),
+              color: Colors.green,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
+            padding: EdgeInsets.all(4.0),
+            child: Column(children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Operational (Hanging)",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Container(
+                      child: Switch(
+                        value: _selectedOperational,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _selectedOperational = value;
+                          });
+                        },
                       ),
-                      Container(
-                        child: Switch(
-                          value: false,
-                        ),
+                    ),
+                  ]),
+              Row(mainAxisAlignment: MainAxisAlignment.start,
+                  //crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Text(
+                      "Energised (Activated)",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Container(
+                      child: Switch(
+                        value: _selectedEnergised,
+                        onChanged: (bool value) {
+                          setState(() {
+                            _selectedEnergised = value;
+                          });
+                        },
                       ),
-                    ]),
-                Row(mainAxisAlignment: MainAxisAlignment.start,
-                    //crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        "Energised (Activated)",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Container(
-                        child: Switch(
-                          value: false,
-                        ),
-                      ),
-                    ]),
-              ]),
-            ),),
+                    ),
+                  ]),
+            ]),
+          ),
+        ),
         Container(
             margin: const EdgeInsets.all(0.0),
             padding: EdgeInsets.all(0.0),
             child: _showTab(_selectedTab)),
-        ]),
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.blue,

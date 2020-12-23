@@ -372,48 +372,71 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           ]),
                     ]))),
         FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-                color: Colors.red,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              padding: EdgeInsets.all(4.0),
-              child: Column(children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Total Robot Failure ",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Container(
-                        child: Switch(
-                          value: _selectedRobotFail,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _selectedRobotFail = value;
-                            });
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+          widthFactor: 0.99,
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              //border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
+            padding: EdgeInsets.all(0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(
+                    left: 0.0,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.red),
+                    color: Colors.red,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(0),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(0)),
+                  ),
+                  padding: EdgeInsets.all(4.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
-                                "Yellow Card ",
-                                style: TextStyle(fontSize: 18),
+                                "Total Robot Failure ",
+                                style: TextStyle(
+                                    fontSize: styleFontSizeBody,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Container(
                                 child: Switch(
+                                  value: _selectedRobotFail,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      _selectedRobotFail = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Yellow Card ",
+                                style: TextStyle(
+                                    fontSize: styleFontSizeBody,
+                                    fontWeight: FontWeight.bold),
+                              ),
+
+                                 Switch(
                                   value: _selectedYellowCard,
                                   onChanged: (bool value) {
                                     setState(() {
@@ -421,82 +444,85 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     });
                                   },
                                 ),
+
+                            ]),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Red Card ",
+                                style: TextStyle(
+                                    fontSize: styleFontSizeBody,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Switch(
+                                value: _selectedRedCard,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    _selectedRedCard = value;
+                                  });
+                                },
                               ),
                             ]),
-                      ),
-                    ]),
-                Row(mainAxisAlignment: MainAxisAlignment.end,
-                    //crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        "Red Card ",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Container(
-                        child: Switch(
-                          value: _selectedRedCard,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _selectedRedCard = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ]),
-              ]),
-            )),
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.green),
-              color: Colors.green,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
+                      ]),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.green),
+                    color: Colors.green,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(10)),
+                  ),
+                  padding: EdgeInsets.all(4.0),
+                  child: Column(children: <Widget>[
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Operational (Hanging)",
+                            style: TextStyle(
+                                fontSize: styleFontSizeBody,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            child: Switch(
+                              value: _selectedOperational,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _selectedOperational = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ]),
+                    Row(mainAxisAlignment: MainAxisAlignment.start,
+                        //crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            "Energised (Activated)",
+                            style: TextStyle(
+                                fontSize: styleFontSizeBody,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            child: Switch(
+                              value: _selectedEnergised,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _selectedEnergised = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ]),
+                  ]),
+                ),
+              ],
             ),
-            padding: EdgeInsets.all(4.0),
-            child: Column(children: <Widget>[
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Operational (Hanging)",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Container(
-                      child: Switch(
-                        value: _selectedOperational,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _selectedOperational = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
-              Row(mainAxisAlignment: MainAxisAlignment.start,
-                  //crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      "Energised (Activated)",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Container(
-                      child: Switch(
-                        value: _selectedEnergised,
-                        onChanged: (bool value) {
-                          setState(() {
-                            _selectedEnergised = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
-            ]),
           ),
         ),
         Container(

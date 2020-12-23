@@ -300,7 +300,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => MatchScoutingScreen()),
+      MaterialPageRoute(builder: (context) => MatchScoutingScreen(eventName: currentEvent.shortName)),
     );
   }
 }

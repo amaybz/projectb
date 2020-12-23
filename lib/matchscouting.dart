@@ -11,8 +11,16 @@ import 'package:projectb/teleoptab.dart';
 import 'package:projectb/dropdown_widget.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
+  MatchScoutingScreen({
+    Key key,
+    @required this.eventName,
+  }) : super(key: key);
+
+  final String eventName;
+
   @override
   _MatchScoutingScreenState createState() => _MatchScoutingScreenState();
+
 }
 
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
@@ -172,8 +180,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             }),
       ]),
       body: ListView(children: <Widget>[
-        FractionallySizedBox(
-            widthFactor: 0.99,
+        FractionallySizedBox (
+          widthFactor: 0.99,
+          child: Center(
+        child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 800.0),
             child: Container(
               margin: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
@@ -189,8 +200,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      "Event Name: Testing  Scout: ",
+                    Text("Event Name: " + widget.eventName +
+                        " Scout: ",
                       style: TextStyle(fontSize: 18),
                     ),
                     Expanded(
@@ -201,7 +212,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       ),
                     )
                   ]),
-            )),
+            )),),),
         FractionallySizedBox(
             widthFactor: 0.99,
             child: Container(
@@ -445,12 +456,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       ),
                     ]),
               ]),
-            )),
+            ),),
         Container(
             margin: const EdgeInsets.all(0.0),
             padding: EdgeInsets.all(0.0),
             child: _showTab(_selectedTab)),
-      ]),
+        ]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.blue,

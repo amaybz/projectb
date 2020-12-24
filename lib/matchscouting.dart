@@ -85,6 +85,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
   double styleFontSizeBody = 20;
+  double styleRedBoxSize = 300;
 
   getDriveStationsByTeam(team) {
     if (team == "Blue") {
@@ -166,6 +167,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleImgFieldWidth = 250;
       styleFieldWidthTeam = 300;
       styleFontSizeBody = 12;
+      styleRedBoxSize = 180;
     }
     if (width >= 600) {
       styleFieldWidth = 150.0;
@@ -230,147 +232,149 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           ),
         ),
         FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-                margin: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blueAccent),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10)),
-                ),
-                padding: EdgeInsets.all(styleFieldPadding),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldMatchNumber,
-                              height: 58,
-                              child: TextField(
-                                style: TextStyle(fontSize: styleFontSizeBody),
-                                controller: _txtMatchNumber,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                  labelText: "Match #",
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
-                              ),
+          widthFactor: 0.99,
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blueAccent),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
+            padding: EdgeInsets.all(styleFieldPadding),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides),
+                          width: styleFieldMatchNumber,
+                          height: 58,
+                          child: TextField(
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                            controller: _txtMatchNumber,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: InputDecoration(
+                              labelText: "Match #",
+                              border: InputBorder.none,
+                              isDense: true,
                             ),
-                            //Expanded(
-                            //child:
-                            DropDownWidget(
-                                value: _selectedAlliance,
-                                title: "Alliance",
-                                list: _listAlliance,
-                                styleFontSize: styleFontSizeBody,
-                                styleFieldWidth: styleFieldAlliance,
-                                styleFieldPadding: styleFieldPadding,
-                                styleFieldPaddingSides: styleFieldPaddingSides,
-                                onStateChanged: (String newValue) {
-                                  setState(() {
-                                    _selectedAlliance = newValue;
-                                  });
-                                  getDriveStationsByTeam(newValue);
-                                  print(_selectedAlliance);
-                                }),
+                          ),
+                        ),
+                        //Expanded(
+                        //child:
+                        DropDownWidget(
+                            value: _selectedAlliance,
+                            title: "Alliance",
+                            list: _listAlliance,
+                            styleFontSize: styleFontSizeBody,
+                            styleFieldWidth: styleFieldAlliance,
+                            styleFieldPadding: styleFieldPadding,
+                            styleFieldPaddingSides: styleFieldPaddingSides,
+                            onStateChanged: (String newValue) {
+                              setState(() {
+                                _selectedAlliance = newValue;
+                              });
+                              getDriveStationsByTeam(newValue);
+                              print(_selectedAlliance);
+                            }),
 
-                            DropDownWidget(
-                                value: _selectedDriveStation,
-                                title: "Drive Station",
-                                list: _listDriveStation,
-                                styleFontSize: styleFontSizeBody,
-                                styleFieldWidth: styleFieldWidth,
-                                styleFieldPadding: styleFieldPadding,
-                                styleFieldPaddingSides: styleFieldPaddingSides,
-                                onStateChanged: (String newValue) {
-                                  setState(() {
-                                    _selectedDriveStation = newValue;
-                                  });
-                                }),
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            DropDownWidget(
-                                value: _selectedTeam,
-                                title: "Team",
-                                list: _listTeams,
-                                styleFontSize: styleFontSizeBody,
-                                styleFieldWidth: styleFieldWidthTeam,
-                                styleFieldPadding: styleFieldPadding,
-                                styleFieldPaddingSides: styleFieldPaddingSides,
-                                onStateChanged: (String newValue) {
-                                  setState(() {
-                                    _selectedTeam = newValue;
-                                  });
-                                }),
-                          ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            DropDownWidget(
-                                value: _selectedFacing,
-                                title: "Facing",
-                                list: _listFacing,
-                                styleFontSize: styleFontSizeBody,
-                                styleFieldWidth: styleFieldWidthFacing,
-                                onStateChanged: (String newValue) {
-                                  setState(() {
-                                    _selectedFacing = newValue;
-                                  });
-                                }),
-                            DropDownWidget(
-                                value: _selectedRobotPosition,
-                                title: "Robot Position",
-                                list: _listRobotPosition,
-                                styleFontSize: styleFontSizeBody,
-                                styleFieldWidth: styleFieldWidth,
-                                styleFieldPadding: styleFieldPadding,
-                                styleFieldPaddingSides: styleFieldPaddingSides,
-                                onStateChanged: (String newValue) {
-                                  setState(() {
-                                    _selectedRobotPosition = newValue;
-                                  });
-                                }),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: styleFieldWidth,
-                              child: TextField(
-                                style: TextStyle(fontSize: styleFontSizeBody),
-                                controller: _txtStartingCells,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                  labelText: "Starting Cells",
-                                  labelStyle:
-                                      TextStyle(fontSize: styleFontSizeBody),
-                                  border: InputBorder.none,
-                                  isDense: true,
-                                ),
-                              ),
+                        DropDownWidget(
+                            value: _selectedDriveStation,
+                            title: "Drive Station",
+                            list: _listDriveStation,
+                            styleFontSize: styleFontSizeBody,
+                            styleFieldWidth: styleFieldWidth,
+                            styleFieldPadding: styleFieldPadding,
+                            styleFieldPaddingSides: styleFieldPaddingSides,
+                            onStateChanged: (String newValue) {
+                              setState(() {
+                                _selectedDriveStation = newValue;
+                              });
+                            }),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        DropDownWidget(
+                            value: _selectedTeam,
+                            title: "Team",
+                            list: _listTeams,
+                            styleFontSize: styleFontSizeBody,
+                            styleFieldWidth: styleFieldWidthTeam,
+                            styleFieldPadding: styleFieldPadding,
+                            styleFieldPaddingSides: styleFieldPaddingSides,
+                            onStateChanged: (String newValue) {
+                              setState(() {
+                                _selectedTeam = newValue;
+                              });
+                            }),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        DropDownWidget(
+                            value: _selectedFacing,
+                            title: "Facing",
+                            list: _listFacing,
+                            styleFontSize: styleFontSizeBody,
+                            styleFieldWidth: styleFieldWidthFacing,
+                            onStateChanged: (String newValue) {
+                              setState(() {
+                                _selectedFacing = newValue;
+                              });
+                            }),
+                        DropDownWidget(
+                            value: _selectedRobotPosition,
+                            title: "Robot Position",
+                            list: _listRobotPosition,
+                            styleFontSize: styleFontSizeBody,
+                            styleFieldWidth: styleFieldWidth,
+                            styleFieldPadding: styleFieldPadding,
+                            styleFieldPaddingSides: styleFieldPaddingSides,
+                            onStateChanged: (String newValue) {
+                              setState(() {
+                                _selectedRobotPosition = newValue;
+                              });
+                            }),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides),
+                          width: styleFieldWidth,
+                          child: TextField(
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                            controller: _txtStartingCells,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            decoration: InputDecoration(
+                              labelText: "Starting Cells",
+                              labelStyle:
+                                  TextStyle(fontSize: styleFontSizeBody),
+                              border: InputBorder.none,
+                              isDense: true,
                             ),
-                          ]),
-                    ]))),
+                          ),
+                        ),
+                      ]),
+                ]),
+          ),
+        ),
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(
@@ -401,22 +405,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(0)),
                   ),
+                  constraints: BoxConstraints.expand(
+                      width: styleRedBoxSize, height: 160.0),
                   padding: EdgeInsets.all(4.0),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "Total Robot Failure ",
-                                style: TextStyle(
-                                    fontSize: styleFontSizeBody,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Container(
-                                child: Switch(
+                        Container(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Total Robot Failure ",
+                                  style: TextStyle(
+                                      fontSize: styleFontSizeBody,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Switch(
                                   value: _selectedRobotFail,
                                   onChanged: (bool value) {
                                     setState(() {
@@ -424,8 +430,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     });
                                   },
                                 ),
-                              ),
-                            ]),
+                              ]),
+                        ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -435,19 +441,17 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     fontSize: styleFontSizeBody,
                                     fontWeight: FontWeight.bold),
                               ),
-
-                                 Switch(
-                                  value: _selectedYellowCard,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      _selectedYellowCard = value;
-                                    });
-                                  },
-                                ),
-
+                              Switch(
+                                value: _selectedYellowCard,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    _selectedYellowCard = value;
+                                  });
+                                },
+                              ),
                             ]),
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
                                 "Red Card ",
@@ -466,60 +470,65 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             ]),
                       ]),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(right: 5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green),
-                    color: Colors.green,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(0),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(0),
-                        bottomRight: Radius.circular(10)),
-                  ),
-                  padding: EdgeInsets.all(4.0),
-                  child: Column(children: <Widget>[
-                    Row(
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 5.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.green),
+                      color: Colors.green,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(10)),
+                    ),
+                    constraints: BoxConstraints.expand(height: 160.0),
+                    padding: EdgeInsets.all(4.0),
+                    child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            "Operational (Hanging)",
-                            style: TextStyle(
-                                fontSize: styleFontSizeBody,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Container(
-                            child: Switch(
-                              value: _selectedOperational,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  _selectedOperational = value;
-                                });
-                              },
-                            ),
-                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Operational (Hanging)",
+                                  style: TextStyle(
+                                      fontSize: styleFontSizeBody,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  child: Switch(
+                                    value: _selectedOperational,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        _selectedOperational = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ]),
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  "Energised (Activated)",
+                                  style: TextStyle(
+                                      fontSize: styleFontSizeBody,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  child: Switch(
+                                    value: _selectedEnergised,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        _selectedEnergised = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ]),
                         ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.start,
-                        //crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "Energised (Activated)",
-                            style: TextStyle(
-                                fontSize: styleFontSizeBody,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Container(
-                            child: Switch(
-                              value: _selectedEnergised,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  _selectedEnergised = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ]),
-                  ]),
+                  ),
                 ),
               ],
             ),

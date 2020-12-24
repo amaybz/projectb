@@ -16,6 +16,9 @@ class AutoTab extends StatefulWidget {
 }
 
 class _AutoTabState extends State<AutoTab> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -218,6 +221,57 @@ class _AutoTabState extends State<AutoTab> {
                   Container(
                     margin: const EdgeInsets.all(5.0),
                     child: Text("Foul"),
+                  ),
+                  Switch(
+                    value: true,
+                  ),
+                ],
+              ),
+            ]),
+          ),
+        ),
+
+        FractionallySizedBox(
+          widthFactor: 0.99,
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
+            child: Column(children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  color: Colors.grey,
+                ),
+                child: Text(
+                  "Auto",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: Text("Does Auto"),
+                  ),
+                  Switch(
+                    value: true,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(5.0),
+                    child: Text("Leave Line"),
                   ),
                   Switch(
                     value: true,

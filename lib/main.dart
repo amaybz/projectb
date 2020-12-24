@@ -261,7 +261,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Match Scouting"),
                 onPressed: () {
                   updateDeviceName();
-                  _navigateToMatchScoutingScreen(context);
+                  if(currentEvent != null) {
+                    _navigateToMatchScoutingScreen(context);
+                  }
                 },
               ),
             ),
@@ -300,7 +302,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => MatchScoutingScreen(eventName: currentEvent.shortName)),
+
+      MaterialPageRoute(builder: (context) =>
+          MatchScoutingScreen(eventName: currentEvent.shortName)),
     );
   }
 }

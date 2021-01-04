@@ -11,10 +11,14 @@ class AutoTab extends StatefulWidget {
     this.boolContactWithRobot = false,
     this.boolCrossSector = false,
     this.boolFoul = false,
+    this.boolDoesAuto = false,
+    this.boolLeaveLine = false,
     this.onLoseStartObjectChange,
     this.onContactWithRobotChange,
     this.onCrossSectorChange,
     this.onFoulChange,
+    this.onDoesAutoChange,
+    this.onLeaveLineChange,
   }) : super(key: key);
 
   final double styleImgFieldWidth;
@@ -22,10 +26,14 @@ class AutoTab extends StatefulWidget {
   final ValueChanged<bool> onContactWithRobotChange;
   final ValueChanged<bool> onCrossSectorChange;
   final ValueChanged<bool> onFoulChange;
+  final ValueChanged<bool> onDoesAutoChange;
+  final ValueChanged<bool> onLeaveLineChange;
   final bool boolLoseStartObject;
   final bool boolContactWithRobot;
   final bool boolCrossSector;
   final bool boolFoul;
+  final bool boolDoesAuto;
+  final bool boolLeaveLine;
 
   @override
   _AutoTabState createState() => _AutoTabState();
@@ -257,7 +265,7 @@ class _AutoTabState extends State<AutoTab> {
                         setState(() {
                           widget.onFoulChange(value);
                         });
-                      }
+                      },
                   ),
                 ],
               ),
@@ -295,7 +303,12 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Does Auto"),
                   ),
                   Switch(
-                    value: true,
+                    value: widget.boolDoesAuto,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.onDoesAutoChange(value);
+                      });
+                    },
                   ),
                 ],
               ),
@@ -307,7 +320,12 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Leave Line"),
                   ),
                   Switch(
-                    value: true,
+                    value: widget.boolLeaveLine,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.onLeaveLineChange(value);
+                      });
+                    },
                   ),
                 ],
               ),

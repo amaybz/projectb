@@ -40,10 +40,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool _selectedRedCard = false;
   bool _selectedOperational = false;
   bool _selectedEnergised = false;
+  //autotab Varibles
   bool _selectedLoseStartObject = false;
   bool _selectedContactWithRobot = false;
   bool _selectedCrossSector = false;
   bool _selectedFoul = false;
+  bool _selectedDoesAuto = false;
+  bool _selectedLeaveLine = false;
 
   List<String> _listDriveStation = [
     'none',
@@ -581,6 +584,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         boolContactWithRobot: _selectedContactWithRobot,
         boolCrossSector: _selectedCrossSector,
         boolFoul: _selectedFoul,
+        boolDoesAuto: _selectedDoesAuto,
+        boolLeaveLine: _selectedLeaveLine,
         onLoseStartObjectChange: (bool value) {
           //save values
           setState(() {
@@ -605,6 +610,19 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             _selectedFoul = value;
           });
         },
+        onDoesAutoChange: (bool value) {
+          //save values
+          setState(() {
+            _selectedDoesAuto = value;
+          });
+        },
+        onLeaveLineChange: (bool value) {
+          //save values
+          setState(() {
+            _selectedLeaveLine = value;
+          });
+        },
+
       );
     }
     if (index == 1) {

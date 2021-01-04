@@ -40,6 +40,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool _selectedRedCard = false;
   bool _selectedOperational = false;
   bool _selectedEnergised = false;
+  bool _selectedLoseStartObject = false;
+  bool _selectedContactWithRobot = false;
+  bool _selectedCrossSector = false;
+  bool _selectedFoul = false;
 
   List<String> _listDriveStation = [
     'none',
@@ -571,7 +575,37 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   _showTab(int index) {
     if (index == 0) {
-      return AutoTab(styleImgFieldWidth: styleImgFieldWidth);
+      return AutoTab(
+        styleImgFieldWidth: styleImgFieldWidth,
+        boolLoseStartObject: _selectedLoseStartObject,
+        boolContactWithRobot: _selectedContactWithRobot,
+        boolCrossSector: _selectedCrossSector,
+        boolFoul: _selectedFoul,
+        onLoseStartObjectChange: (bool value) {
+          //save values
+          setState(() {
+            _selectedLoseStartObject = value;
+          });
+        },
+        onContactWithRobotChange: (bool value) {
+          //save values
+          setState(() {
+            _selectedContactWithRobot = value;
+          });
+        },
+        onCrossSectorChange: (bool value) {
+          //save values
+          setState(() {
+            _selectedCrossSector = value;
+          });
+        },
+        onFoulChange: (bool value) {
+          //save values
+          setState(() {
+            _selectedFoul = value;
+          });
+        },
+      );
     }
     if (index == 1) {
       return TeleOpScreen();

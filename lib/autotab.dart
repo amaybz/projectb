@@ -7,16 +7,31 @@ class AutoTab extends StatefulWidget {
   const AutoTab({
     Key key,
     @required this.styleImgFieldWidth,
+    this.boolLoseStartObject = false,
+    this.boolContactWithRobot = false,
+    this.boolCrossSector = false,
+    this.boolFoul = false,
+    this.onLoseStartObjectChange,
+    this.onContactWithRobotChange,
+    this.onCrossSectorChange,
+    this.onFoulChange,
   }) : super(key: key);
 
   final double styleImgFieldWidth;
+  final ValueChanged<bool> onLoseStartObjectChange;
+  final ValueChanged<bool> onContactWithRobotChange;
+  final ValueChanged<bool> onCrossSectorChange;
+  final ValueChanged<bool> onFoulChange;
+  final bool boolLoseStartObject;
+  final bool boolContactWithRobot;
+  final bool boolCrossSector;
+  final bool boolFoul;
 
   @override
   _AutoTabState createState() => _AutoTabState();
 }
 
 class _AutoTabState extends State<AutoTab> {
-
 
 
   @override
@@ -187,7 +202,12 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Lose Start Object"),
                   ),
                   Switch(
-                    value: true,
+                    value: widget.boolLoseStartObject,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.onLoseStartObjectChange(value);
+                      });
+                    },
                   ),
                 ],
               ),
@@ -199,8 +219,12 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Contact with Robot"),
                   ),
                   Switch(
-                    value: true,
-                  ),
+                      value: widget.boolContactWithRobot,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.onContactWithRobotChange(value);
+                        });
+                      }),
                 ],
               ),
               Row(
@@ -211,7 +235,12 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Cross Sector"),
                   ),
                   Switch(
-                    value: true,
+                    value: widget.boolCrossSector,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.onCrossSectorChange(value);
+                        });
+                      }
                   ),
                 ],
               ),
@@ -223,14 +252,18 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Foul"),
                   ),
                   Switch(
-                    value: true,
+                    value: widget.boolFoul,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.onFoulChange(value);
+                        });
+                      }
                   ),
                 ],
               ),
             ]),
           ),
         ),
-
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(

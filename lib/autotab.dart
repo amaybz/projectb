@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/dropdown_widget.dart';
-import 'package:projectb/sharedprefs.dart';
-import 'package:projectb/counter_widget.dart';
+
 
 class AutoTab extends StatefulWidget {
   const AutoTab({

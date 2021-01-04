@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listEvents());
     //print(await localDB.listScoringData());
     //gets all events from API
-    allEvents = await webAPI.getEventsByYear(2020);
+    allEvents = await webAPI.getEventsByYear(2021);
     //setEventItems();
   }
 

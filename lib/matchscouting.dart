@@ -152,6 +152,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           _selectedRedCard = false;
           _selectedOperational = false;
           _selectedEnergised = false;
+          _selectedLoseStartObject = false;
+          _selectedContactWithRobot = false;
+          _selectedCrossSector = false;
+          _selectedFoul = false;
+          _selectedLeaveLine = false;
+          _selectedDoesAuto = false;
+
         });
         break;
       case 'Settings':

@@ -353,8 +353,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Column(children: [
-                      Row(children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                         Text("Rotation Control:"),
                         Switch(
                             value: selectedRotationControl,
@@ -366,12 +371,15 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               });
                             }),
                       ]),
-
-                           DropDownWidget(value: _selectedTimeTakenRotation,
-                              title: "Time Taken",
-                              list: listTime),
-
-
+                      DropDownWidget(
+                          value: _selectedTimeTakenRotation,
+                          title: "Time Taken",
+                          list: listTime,
+                        onStateChanged: (String newValue) {
+                          setState(() {
+                            _selectedTimeTakenRotation = newValue;
+                          });
+                        },),
                       CounterWidget(
                         value: intPenalAttempts,
                         title: "Panel Attempts",
@@ -384,7 +392,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         },
                         onSetValue: (int value) {
                           intPenalAttempts = value;
-                          mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
+                          mySharedPrefs.saveInt(
+                              "PenalAttempts", intPenalAttempts);
                         },
                       ),
                       CounterWidget(
@@ -399,11 +408,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         },
                         onSetValue: (int value) {
                           intPenalSuccess = value;
-                          mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
+                          mySharedPrefs.saveInt(
+                              "PenalSuccess", intPenalSuccess);
                         },
                       ),
                     ]),
-                    Column(children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                       Row(children: [
                         Text("Position Control:"),
                         Switch(
@@ -417,9 +429,15 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             }),
                       ]),
                       Row(children: [
-                        Text("Time Taken:"),
-                        Switch(
-                          value: true,
+                        DropDownWidget(
+                          value: _selectedTimeTakenPosition,
+                          title: "Time Taken",
+                          list: listTime,
+                          onStateChanged: (String newValue) {
+                            setState(() {
+                              _selectedTimeTakenPosition = newValue;
+                            });
+                          },
                         ),
                       ]),
                       SizedBox(
@@ -502,15 +520,16 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownWidget(
-                        value: _selectedTimeFromGripToClimb,
-                        title: "Time from Grip to Climb",
-                        list: listTime,
-                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String newValue) {
-                          setState(() {
-                            _selectedTimeFromGripToClimb = newValue;
-                          });
-                        }),
+                      value: _selectedTimeFromGripToClimb,
+                      title: "Time from Grip to Climb",
+                      list: listTime,
+                      styleFieldWidth: styleFieldControlPanelDropDownsWidth,
+                      onStateChanged: (String newValue) {
+                        setState(() {
+                          _selectedTimeFromGripToClimb = newValue;
+                        });
+                      },
+                    ),
                     DropDownWidget(
                         value: _selectedOutcome,
                         title: "Outcome",
@@ -531,13 +550,15 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             _selectedPreferredPosition = newValue;
                           });
                         }),
-                    CounterWidget(value: intBuddies, title: 'Buddies',
-                    onIncreaseStateChanged: (int value) {
-                      setState(() {
-                        intBuddies = intBuddies + 1;
-                      });
-                      mySharedPrefs.saveInt("intBuddies", intBuddies);
-                    },
+                    CounterWidget(
+                      value: intBuddies,
+                      title: 'Buddies',
+                      onIncreaseStateChanged: (int value) {
+                        setState(() {
+                          intBuddies = intBuddies + 1;
+                        });
+                        mySharedPrefs.saveInt("intBuddies", intBuddies);
+                      },
                       onDecreaseStateChanged: (int value) {
                         setState(() {
                           intBuddies = intBuddies - 1;
@@ -548,8 +569,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         intBuddies = value;
                         mySharedPrefs.saveInt("intBuddies", intBuddies);
                       },
-
-                      ),
+                    ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -557,7 +577,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           Switch(
                               value: selectedBalance,
                               onChanged: (value) {
-                                mySharedPrefs.saveBool("selectedBalance", value);
+                                mySharedPrefs.saveBool(
+                                    "selectedBalance", value);
                                 setState(() {
                                   selectedBalance = value;
                                 });
@@ -570,7 +591,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           Switch(
                               value: selectedBalanceCorrection,
                               onChanged: (value) {
-                                mySharedPrefs.saveBool("selectedBalanceCorrection", value);
+                                mySharedPrefs.saveBool(
+                                    "selectedBalanceCorrection", value);
                                 setState(() {
                                   selectedBalanceCorrection = value;
                                 });

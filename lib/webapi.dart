@@ -34,7 +34,123 @@ class WebAPI {
     print(events.first.key);
     return events;
   }
+
+  Future<List<TeamsList>> getTeamsByEvent(String strEventKey) async {
+    List<TeamsList> teams;
+    var headers = {'X-TBA-Auth-Key': strAPIKey};
+    var request = http.Request(
+        'GET',
+        Uri.parse('https://www.thebluealliance.com/api/v3/event/' +
+            strEventKey + '/teams'));
+    request.body = '''''';
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String strTeamsList = await response.stream.bytesToString();
+      //print(strEventsList);
+
+      teams =(json.decode(strTeamsList) as List).map((i) =>
+          TeamsList.fromJson(i)).toList();
+
+    } else {
+      print(response.reasonPhrase);
+    }
+    print(teams.first.key);
+    return teams;
+  }
 }
+
+class TeamsList {
+  String address;
+  String city;
+  String country;
+  String gmapsPlaceId;
+  String gmapsUrl;
+  String homeChampionship;
+  String key;
+  String  lat;
+  String lng;
+  String locationName;
+  String motto;
+  String name;
+  String nickname;
+  String postalCode;
+  int rookieYear;
+  String schoolName;
+  String stateProv;
+  int teamNumber;
+  String website;
+
+  TeamsList(
+      {this.address,
+        this.city,
+        this.country,
+        this.gmapsPlaceId,
+        this.gmapsUrl,
+        this.homeChampionship,
+        this.key,
+        this.lat,
+        this.lng,
+        this.locationName,
+        this.motto,
+        this.name,
+        this.nickname,
+        this.postalCode,
+        this.rookieYear,
+        this.schoolName,
+        this.stateProv,
+        this.teamNumber,
+        this.website});
+
+  TeamsList.fromJson(Map<String, dynamic> json) {
+    address = json['address'];
+    city = json['city'];
+    country = json['country'];
+    gmapsPlaceId = json['gmaps_place_id'];
+    gmapsUrl = json['gmaps_url'];
+    //homeChampionship = json['home_championship'];
+    key = json['key'];
+    lat = json['lat'];
+    lng = json['lng'];
+    locationName = json['location_name'];
+    motto = json['motto'];
+    name = json['name'];
+    nickname = json['nickname'];
+    postalCode = json['postal_code'];
+    rookieYear = json['rookie_year'];
+    schoolName = json['school_name'];
+    stateProv = json['state_prov'];
+    teamNumber = json['team_number'];
+    website = json['website'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['address'] = this.address;
+    data['city'] = this.city;
+    data['country'] = this.country;
+    data['gmaps_place_id'] = this.gmapsPlaceId;
+    data['gmaps_url'] = this.gmapsUrl;
+    data['home_championship'] = this.homeChampionship;
+    data['key'] = this.key;
+    data['lat'] = this.lat;
+    data['lng'] = this.lng;
+    data['location_name'] = this.locationName;
+    data['motto'] = this.motto;
+    data['name'] = this.name;
+    data['nickname'] = this.nickname;
+    data['postal_code'] = this.postalCode;
+    data['rookie_year'] = this.rookieYear;
+    data['school_name'] = this.schoolName;
+    data['state_prov'] = this.stateProv;
+    data['team_number'] = this.teamNumber;
+    data['website'] = this.website;
+    return data;
+  }
+}
+
 
 class EventData {
   String address;

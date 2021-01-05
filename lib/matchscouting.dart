@@ -10,18 +10,26 @@ import 'dart:async';
 import 'package:projectb/teleoptab.dart';
 import 'package:projectb/dropdown_widget.dart';
 import 'package:projectb/ratingstab.dart';
+import 'package:projectb/webapi.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
     Key key,
     @required this.eventName,
+    @required this.eventKey,
+    this.eventTeams,
+
   }) : super(key: key);
 
   final String eventName;
+  final String eventKey;
+  final List<TeamsList> eventTeams;
 
   @override
   _MatchScoutingScreenState createState() => _MatchScoutingScreenState();
 }
+
+
 
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
@@ -102,8 +110,37 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthFacing = 90;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
-  double styleFontSizeBody = 20;
+  double styleFontSizeBody = 18;
   double styleRedBoxSize = 300;
+
+  TeamsList selectedTeam;
+  List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
+
+  setEventTeams(double styleFontSize) async {
+    //clear current selected event and dropdown box
+    setState(() {
+      selectedTeam = null;
+      eventTeamsListDropDown.clear();
+    });
+    //get events based on location
+    if(widget.eventTeams == null)
+    {
+      //get teams here
+
+    }
+
+    //update dropdown box with the new events
+    for (TeamsList team in widget.eventTeams ) {
+      setState(() {
+        eventTeamsListDropDown.add(new DropdownMenuItem(
+            value: team.key,
+            child: Text(
+              team.teamNumber.toString() + " - " + team.nickname,
+              style: TextStyle(fontSize: styleFontSize),
+            )));
+      });
+    }
+  }
 
   getDriveStationsByTeam(team) {
     if (team == "Blue") {
@@ -241,7 +278,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       children: <Widget>[
                         Text(
                           "Event Name: " + widget.eventName + " Scout: ",
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: styleFontSizeBody),
                         ),
                         Expanded(
                           child: TextField(
@@ -332,19 +369,27 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        DropDownWidget(
-                            value: _selectedTeam,
-                            title: "Team",
-                            list: _listTeams,
-                            styleFontSize: styleFontSizeBody,
-                            styleFieldWidth: styleFieldWidthTeam,
-                            styleFieldPadding: styleFieldPadding,
-                            styleFieldPaddingSides: styleFieldPaddingSides,
-                            onStateChanged: (String newValue) {
+                        Text(
+                          "Team ",
+                          style: TextStyle(fontSize: styleFontSizeBody),
+                        ),
+                        DropdownButton(
+                            value: selectedTeam == null ? null : selectedTeam.key,
+                            //title: "Team",
+                            items: eventTeamsListDropDown,
+                            onChanged: (item) {
                               setState(() {
-                                _selectedTeam = newValue;
+                                selectedTeam = widget.eventTeams.firstWhere(
+                                        (team) => team.key == item,
+                                    orElse: () => widget.eventTeams.first);
                               });
-                            }),
+                              print("Key: " + selectedTeam.key);
+                            },
+                            //styleFontSize: styleFontSizeBody,
+                            //styleFieldWidth: styleFieldWidthTeam,
+                            //styleFieldPadding: styleFieldPadding,
+                            //styleFieldPaddingSides: styleFieldPaddingSides,
+),
                       ]),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -721,5 +766,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     super.initState();
     // Call the getJSONData() method when the app initializes
     _getScoringData();
+    setEventTeams(14);
   }
 }

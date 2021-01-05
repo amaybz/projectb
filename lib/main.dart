@@ -45,14 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String locationDropDown;
   final List<String> _locations = [
-    'Australia',
+    //'Australia',
     'Canada',
     'China',
-    'Chinese Taipei',
-    'Israel',
+    //'Chinese Taipei',
+    //'Israel',
     'Mexico',
-    'Taiwan',
-    'Turkey'
+    //'Taiwan',
+    //'Turkey',
+    'USA',
   ];
 
   //used to store all events from API
@@ -64,6 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List<DropdownMenuItem<String>> eventListDropDown = [];
   //used to store the current selected event
   EventData currentEvent;
+
+  List<TeamsList> eventTeams;
+
 
   @override
   void initState()  {
@@ -131,6 +135,14 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(2021);
+    //setEventItems();
+  }
+
+  Future<void> getEventTeamsFromAPI(String eventKey) async {
+    //print(await localDB.listEvents());
+    //print(await localDB.listScoringData());
+    //gets all events from API
+    eventTeams = await webAPI.getTeamsByEvent(eventKey);
     //setEventItems();
   }
 
@@ -241,6 +253,8 @@ class _MyHomePageState extends State<MyHomePage> {
               (loc) => loc.key == item,
               orElse: () => eventsForLocation.first);
                     });
+                    print("Key: " + currentEvent.key.toString());
+                    getEventTeamsFromAPI(currentEvent.key);
                   },
                   items: eventListDropDown,
                 ),
@@ -305,7 +319,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
 
       MaterialPageRoute(builder: (context) =>
-          MatchScoutingScreen(eventName: currentEvent.shortName)),
+          MatchScoutingScreen(eventName: currentEvent.shortName, eventKey: currentEvent.key, eventTeams: eventTeams,)),
     );
   }
 }

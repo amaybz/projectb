@@ -273,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ]),
-            LoadingImage(state: _downloadingData,text: "Please Select Location and Event to download data",),
+            LoadingImage(state: _downloadingData, text: "Please select Location and Event to download data",),
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: FlatButton(

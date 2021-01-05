@@ -22,7 +22,6 @@ class _LoadingImageState extends State<LoadingImage> {
         child: Image.asset(
           cupertinoActivityIndicatorSmall,
         ),
-        //Image.asset('assets/imgs/greentick.png', scale: 10,),
       );
     } else if (widget.state == 2) {
       return Container(

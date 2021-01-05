@@ -35,19 +35,25 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   String _selectedAlliance;
   String _selectedDriveStation;
 
-  //varibles to control switchs
+  //variables to control switchs
   bool _selectedRobotFail = false;
   bool _selectedYellowCard = false;
   bool _selectedRedCard = false;
   bool _selectedOperational = false;
   bool _selectedEnergised = false;
-  //autotab Varibles
+  //autotab variables
   bool _selectedLoseStartObject = false;
   bool _selectedContactWithRobot = false;
   bool _selectedCrossSector = false;
   bool _selectedFoul = false;
   bool _selectedDoesAuto = false;
   bool _selectedLeaveLine = false;
+
+  //Ratings Tab variables
+  bool _assistOtherRobot = false;
+  String _selectedDriveRating;
+  String _selectedDefenceRating;
+
 
   List<String> _listDriveStation = [
     'none',
@@ -159,7 +165,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           _selectedFoul = false;
           _selectedLeaveLine = false;
           _selectedDoesAuto = false;
-
         });
         break;
       case 'Settings':
@@ -630,7 +635,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             _selectedLeaveLine = value;
           });
         },
-
       );
     }
     if (index == 1) {
@@ -638,7 +642,29 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 2) {
       return Container(
-        child: RatingsTab(),
+        child: RatingsTab(
+          assistOtherRobot: _assistOtherRobot,
+          selectedDriveRating: _selectedDriveRating,
+          selectedDefenceRating:  _selectedDefenceRating,
+          onAssistOtherRobotChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _assistOtherRobot = value;
+            });
+          },
+          onSelectedDriveRatingChanged: (String value) {
+            //Update Value
+            setState(() {
+              _selectedDriveRating = value;
+            });
+          },
+          onSelectedDefenceRatingChanged: (String value) {
+            //Update Value
+            setState(() {
+              _selectedDefenceRating = value;
+            });
+          },
+        ),
       );
     }
     if (index == 3) {

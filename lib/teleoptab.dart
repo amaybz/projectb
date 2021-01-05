@@ -104,6 +104,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   double styleImgFieldWidth = 150;
   double styleFieldControlPanelDropDownsWidth = 550.0;
   double styleFieldControlPanelDropDownsPaddingSides = 1.0;
+  double styleTimeTakenWidth = 180;
 
   _increasePenalAttempts() async {
     setState(() {
@@ -352,11 +353,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             Container(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -375,6 +376,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           value: _selectedTimeTakenRotation,
                           title: "Time Taken",
                           list: listTime,
+                        styleFieldWidth: styleTimeTakenWidth,
                         onStateChanged: (String newValue) {
                           setState(() {
                             _selectedTimeTakenRotation = newValue;
@@ -414,9 +416,12 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       ),
                     ]),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                      Row(children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
                         Text("Position Control:"),
                         Switch(
                             value: selectedPositionControl,
@@ -433,6 +438,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           value: _selectedTimeTakenPosition,
                           title: "Time Taken",
                           list: listTime,
+                          styleFieldWidth: styleTimeTakenWidth,
                           onStateChanged: (String newValue) {
                             setState(() {
                               _selectedTimeTakenPosition = newValue;

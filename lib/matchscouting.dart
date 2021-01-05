@@ -84,12 +84,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   String _selectedFacing;
   final List<String> _listFacing = ['Own Station', 'Opponent Station'];
 
-  String _selectedTeam;
-  final List<String> _listTeams = [
-    '1256 - Team 1',
-    '2563 - Team 2',
-    '2541 - Team 3'
-  ];
 
   String _selectedRobotPosition;
   final List<String> _listRobotPosition = [
@@ -166,7 +160,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
   }
 
-  void handleClick(String value) async {
+  void handleMenuClick(String value) async {
     switch (value) {
       case 'Clear Match':
         print("clear Match Selected");
@@ -191,7 +185,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           _selectedTab = 0;
           _selectedRobotPosition = null;
           _selectedFacing = null;
-          _selectedTeam = null;
+          selectedTeam = null;
           _selectedAlliance = null;
           _txtStartingCells.text = '0';
           _txtMatchNumber.text = '0';
@@ -245,7 +239,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Match Scouting'), actions: <Widget>[
         PopupMenuButton<String>(
-            onSelected: handleClick,
+            onSelected: handleMenuClick,
             itemBuilder: (BuildContext context) {
               return {'Clear Match', 'Settings'}.map((String choice) {
                 return PopupMenuItem<String>(
@@ -277,7 +271,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Event Name: " + widget.eventName + " Scout: ",
+                          "Event Name: " + widget.eventName,
+                          style: TextStyle(fontSize: styleFontSizeBody),
+                        ),
+                        Text(
+                          " - Scout: ",
                           style: TextStyle(fontSize: styleFontSizeBody),
                         ),
                         Expanded(

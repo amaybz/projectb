@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting.dart';
 import 'package:projectb/webapi.dart';
+import 'package:projectb/loadingwidget.dart';
+
 
 
 void main() {
@@ -42,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
   TextEditingController _txtDeviceName = TextEditingController();
+  static int _downloadingData = 0;
 
   String locationDropDown;
   final List<String> _locations = [
@@ -80,10 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  void _incrementCounter() {
+  void downloadData() async{
     //used for testing only
     setState(() {
+      _downloadingData = 1;
       _counter++;
+      //TESTING CODE
       Event event = Event(
         id: _counter,
         name: "test event" + _counter.toString(),
@@ -96,12 +101,15 @@ class _MyHomePageState extends State<MyHomePage> {
       );
       localDB.insertEvent(event);
       localDB.insertScoringData(scoringData);
-
-      //needs to be moved to a update button
-      updateEventsFromAPI();
-      updateDeviceName();
-
-
+      //END TESTING CODE
+    });
+    updateDeviceName();
+    await updateEventsFromAPI();
+    if(currentEvent.key != null) {
+      await getEventTeamsFromAPI(currentEvent.key);
+    }
+    setState(() {
+      _downloadingData = 2;
     });
   }
 
@@ -139,11 +147,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> getEventTeamsFromAPI(String eventKey) async {
-    //print(await localDB.listEvents());
-    //print(await localDB.listScoringData());
-    //gets all events from API
+    setState(() {
+      _downloadingData = 1;
+    });
+
     eventTeams = await webAPI.getTeamsByEvent(eventKey);
-    //setEventItems();
+    setState(() {
+      _downloadingData = 2;
+    });
+
   }
 
   setEventItems() async {
@@ -151,6 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       currentEvent = null;
       eventListDropDown.clear();
+      _downloadingData = 0;
     });
     //get events based on location
     if(allEvents == null)
@@ -170,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
             value: event.key,
             child: Text(
               event.name,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 16),
             )));
       });
     }
@@ -260,6 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ]),
+            LoadingImage(state: _downloadingData,text: "Please Select Location and Event to download data",),
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: FlatButton(
@@ -282,6 +296,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.only(top: 50.0),
               child: Text(
@@ -295,8 +310,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: downloadData,
+        tooltip: 'Download Data from API',
         child: Icon(Icons.download_outlined),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

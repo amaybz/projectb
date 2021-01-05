@@ -128,6 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3-nullsafety.3"
+  loading_gifs:
+    dependency: "direct main"
+    description:
+      name: loading_gifs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.3"
   matcher:
     dependency: transitive
     description:

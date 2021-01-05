@@ -9,6 +9,7 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/teleoptab.dart';
 import 'package:projectb/dropdown_widget.dart';
+import 'package:projectb/ratingstab.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -637,10 +638,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 2) {
       return Container(
-        child: Text(
-          "Quick Ratings",
-          style: TextStyle(fontSize: 18),
-        ),
+        child: RatingsTab(),
       );
     }
     if (index == 3) {

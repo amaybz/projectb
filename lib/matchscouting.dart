@@ -51,6 +51,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   //Ratings Tab variables
   bool _assistOtherRobot = false;
+  bool _workedWithAlliance = false;
+  bool _workedToStrategy = false;
+  bool _recovered = false;
+  bool _noTeamWork = false;
   String _selectedDriveRating;
   String _selectedDefenceRating;
 
@@ -646,6 +650,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           assistOtherRobot: _assistOtherRobot,
           selectedDriveRating: _selectedDriveRating,
           selectedDefenceRating:  _selectedDefenceRating,
+          workedWithAlliance: _workedWithAlliance,
+          workedToStrategy: _workedToStrategy,
+          recovered: _recovered,
+          noTeamWork: _noTeamWork,
           onAssistOtherRobotChanged: (bool value) {
             //Update Value
             setState(() {
@@ -662,6 +670,30 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             //Update Value
             setState(() {
               _selectedDefenceRating = value;
+            });
+          },
+          onRecoveredChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _recovered = value;
+            });
+          },
+          onNoTeamWorkChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _noTeamWork = value;
+            });
+          },
+          onWorkedToStrategyChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _workedToStrategy = value;
+            });
+          },
+          onWorkedWithAllianceChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _workedWithAlliance = value;
             });
           },
         ),

@@ -8,11 +8,19 @@ class LocalDB {
 
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 4;
+  static final _databaseVersion = 6;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
   final String tblScoringData = "ScoringData";
+  final String tblEventTeams= "EventTeams";
+
+  final String createTblEventTeams=
+      "CREATE TABLE IF NOT EXISTS EventTeams("
+      "key TEXT PRIMARY KEY, "
+      "name TEXT, "
+      "nickName TEXT, "
+      "teamNumber TEXT)";
 
   final String createTblEvents =
       "CREATE TABLE IF NOT EXISTS events("
@@ -160,6 +168,36 @@ class LocalDB {
         scoutName: maps[i]['scoutName'],
       );
     });
+  }
+}
+
+class LocalTeam {
+  final String key;
+  final String name;
+  final String teamNumber;
+  final String nickName;
+
+  LocalTeam({
+    @required this.key,
+    this.name,
+    this.nickName,
+    this.teamNumber,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'key': key,
+      'name': name,
+      'shortName': nickName,
+      'location': teamNumber,
+    };
+  }
+
+  // Implement toString to make it easier to see information about
+  // each dog when using the print statement.
+  @override
+  String toString() {
+    return 'Event{id: $key, name: $name, teamNumber: $teamNumber}';
   }
 }
 

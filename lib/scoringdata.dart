@@ -38,7 +38,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Saved Match Scores'),
+        title: Text('Saved Match Scouting'),
       ),
       body: Column(children: <Widget>[
       FractionallySizedBox(

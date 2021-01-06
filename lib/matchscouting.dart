@@ -204,6 +204,27 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     );
   }
 
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('EXIT?'),
+        content: new Text('This will clear the current Match?'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Yes'),
+          ),
+        ],
+      ),
+    )) ?? false;
+  }
+
+
   void clearMatch() async {
     mySharedPrefs.saveInt("CellAttempts", 0);
     mySharedPrefs.saveInt("CellSuccess", 0);
@@ -298,7 +319,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFontSizeBody = 16;
     }
 
-    return Scaffold(
+    return WillPopScope(
+    onWillPop: _onWillPop,
+      child: Scaffold(
       appBar: AppBar(title: Text('Match Scouting'), actions: <Widget>[
         PopupMenuButton<String>(
             onSelected: handleMenuClick,
@@ -695,6 +718,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           ),
         ],
       ),
+    ),
     );
   }
 

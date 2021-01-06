@@ -110,14 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _downloadingData = 1;
       _counter++;
     });
-    //add event to local DB
-    LocalEvent event = LocalEvent(
-      key: selectedEvent.key,
-      name: selectedEvent.name,
-      shortName: selectedEvent.shortName,
-      location: selectedEvent.country,
-    );
-    localDB.insertEvent(event);
+
     //Update current Device Name
     updateDeviceName();
     //update Events from API
@@ -160,6 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(2021);
+
     //setEventItems();
   }
 
@@ -167,6 +161,14 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _downloadingData = 1;
     });
+    //add event to local DB
+    LocalEvent event = LocalEvent(
+      key: selectedEvent.key,
+      name: selectedEvent.name,
+      shortName: selectedEvent.shortName,
+      location: selectedEvent.country,
+    );
+    localDB.insertEvent(event);
 
     eventTeams = await webAPI.getTeamsByEvent(eventKey);
     if (eventTeams == null) {

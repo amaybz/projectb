@@ -11,6 +11,7 @@ import 'package:projectb/teleoptab.dart';
 import 'package:projectb/dropdown_widget.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/webapi.dart';
+import 'package:projectb/finishtab.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -27,8 +28,6 @@ class MatchScoutingScreen extends StatefulWidget {
   @override
   _MatchScoutingScreenState createState() => _MatchScoutingScreenState();
 }
-
-
 
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
@@ -73,7 +72,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   String _selectedDriveRating;
   String _selectedDefenceRating;
 
-
   List<String> _listDriveStation = [
     'none',
   ];
@@ -90,7 +88,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   String _selectedFacing;
   final List<String> _listFacing = ['Own Station', 'Opponent Station'];
-
 
   String _selectedRobotPosition;
   final List<String> _listRobotPosition = [
@@ -124,14 +121,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       eventTeamsListDropDown.clear();
     });
     //get events based on location
-    if(widget.eventTeams == null)
-    {
+    if (widget.eventTeams == null) {
       //get teams here
 
     }
 
     //update dropdown box with the new events
-    for (TeamsList team in widget.eventTeams ) {
+    for (TeamsList team in widget.eventTeams) {
       setState(() {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
@@ -168,20 +164,19 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   }
 
   showAlertDialogClearMatch(BuildContext context) {
-
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = FlatButton(
       child: Text("Clear Data"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context).pop();
         clearMatch();
-        },
+      },
     );
 
     // set up the AlertDialog
@@ -205,24 +200,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('EXIT?'),
-        content: new Text('This will clear the current Match?'),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('No'),
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('EXIT?'),
+            content: new Text('This will clear the current Match?'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: new Text('Yes'),
+              ),
+            ],
           ),
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: new Text('Yes'),
-          ),
-        ],
-      ),
-    )) ?? false;
+        )) ??
+        false;
   }
-
 
   void clearMatch() async {
     mySharedPrefs.saveInt("CellAttempts", 0);
@@ -274,7 +269,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _shootingNearZone = false;
       _shootingMidZone = false;
       _shootingFarZone = false;
-
     });
   }
 
@@ -319,150 +313,151 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
 
     return WillPopScope(
-    onWillPop: _onWillPop,
+      onWillPop: _onWillPop,
       child: Scaffold(
-      appBar: AppBar(title: Text('Match Scouting'), actions: <Widget>[
-        PopupMenuButton<String>(
-            onSelected: handleMenuClick,
-            itemBuilder: (BuildContext context) {
-              return {'Clear Match', 'Settings'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            }),
-      ]),
-      body: ListView(children: <Widget>[
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Center(
-            child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 800.0),
-                child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueAccent),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                  ),
-                  padding: EdgeInsets.all(4.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Event Name: " + widget.eventName,
-                          style: TextStyle(fontSize: styleFontSizeBody),
-                        ),
-                        Text(
-                          " - Scout: ",
-                          style: TextStyle(fontSize: styleFontSizeBody),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: _txtScoutName,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Scout Name'),
-                          ),
-                        )
-                      ]),
-                )),
-          ),
-        ),
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-            ),
-            padding: EdgeInsets.all(styleFieldPadding),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: styleFieldPadding,
-                              horizontal: styleFieldPaddingSides),
-                          width: styleFieldMatchNumber,
-                          height: 58,
-                          child: TextField(
+        appBar: AppBar(title: Text('Match Scouting'), actions: <Widget>[
+          PopupMenuButton<String>(
+              onSelected: handleMenuClick,
+              itemBuilder: (BuildContext context) {
+                return {'Clear Match', 'Settings'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              }),
+        ]),
+        body: ListView(children: <Widget>[
+          FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Center(
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 800.0),
+                  child: Container(
+                    margin: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                    ),
+                    padding: EdgeInsets.all(4.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Event Name: " + widget.eventName,
                             style: TextStyle(fontSize: styleFontSizeBody),
-                            controller: _txtMatchNumber,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            decoration: InputDecoration(
-                              labelText: "Match #",
-                              border: InputBorder.none,
-                              isDense: true,
+                          ),
+                          Text(
+                            " - Scout: ",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Expanded(
+                            child: TextField(
+                              controller: _txtScoutName,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Scout Name'),
+                            ),
+                          )
+                        ]),
+                  )),
+            ),
+          ),
+          FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.blueAccent),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+              ),
+              padding: EdgeInsets.all(styleFieldPadding),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: styleFieldPadding,
+                                horizontal: styleFieldPaddingSides),
+                            width: styleFieldMatchNumber,
+                            height: 58,
+                            child: TextField(
+                              style: TextStyle(fontSize: styleFontSizeBody),
+                              controller: _txtMatchNumber,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: InputDecoration(
+                                labelText: "Match #",
+                                border: InputBorder.none,
+                                isDense: true,
+                              ),
                             ),
                           ),
-                        ),
-                        //Expanded(
-                        //child:
-                        DropDownWidget(
-                            value: _selectedAlliance,
-                            title: "Alliance",
-                            list: _listAlliance,
-                            styleFontSize: styleFontSizeBody,
-                            styleFieldWidth: styleFieldAlliance,
-                            styleFieldPadding: styleFieldPadding,
-                            styleFieldPaddingSides: styleFieldPaddingSides,
-                            onStateChanged: (String newValue) {
-                              setState(() {
-                                _selectedAlliance = newValue;
-                              });
-                              getDriveStationsByTeam(newValue);
-                              print(_selectedAlliance);
-                            }),
+                          //Expanded(
+                          //child:
+                          DropDownWidget(
+                              value: _selectedAlliance,
+                              title: "Alliance",
+                              list: _listAlliance,
+                              styleFontSize: styleFontSizeBody,
+                              styleFieldWidth: styleFieldAlliance,
+                              styleFieldPadding: styleFieldPadding,
+                              styleFieldPaddingSides: styleFieldPaddingSides,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  _selectedAlliance = newValue;
+                                });
+                                getDriveStationsByTeam(newValue);
+                                print(_selectedAlliance);
+                              }),
 
-                        DropDownWidget(
-                            value: _selectedDriveStation,
-                            title: "Drive Station",
-                            list: _listDriveStation,
-                            styleFontSize: styleFontSizeBody,
-                            styleFieldWidth: styleFieldWidth,
-                            styleFieldPadding: styleFieldPadding,
-                            styleFieldPaddingSides: styleFieldPaddingSides,
-                            onStateChanged: (String newValue) {
-                              setState(() {
-                                _selectedDriveStation = newValue;
-                              });
-                            }),
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Team ",
-                          style: TextStyle(fontSize: styleFontSizeBody),
-                        ),
-                        DropdownButton(
-                            value: selectedTeam == null ? null : selectedTeam.key,
+                          DropDownWidget(
+                              value: _selectedDriveStation,
+                              title: "Drive Station",
+                              list: _listDriveStation,
+                              styleFontSize: styleFontSizeBody,
+                              styleFieldWidth: styleFieldWidth,
+                              styleFieldPadding: styleFieldPadding,
+                              styleFieldPaddingSides: styleFieldPaddingSides,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  _selectedDriveStation = newValue;
+                                });
+                              }),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Team ",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          DropdownButton(
+                            value:
+                                selectedTeam == null ? null : selectedTeam.key,
                             //title: "Team",
                             items: eventTeamsListDropDown,
                             onChanged: (item) {
                               setState(() {
                                 selectedTeam = widget.eventTeams.firstWhere(
-                                        (team) => team.key == item,
+                                    (team) => team.key == item,
                                     orElse: () => widget.eventTeams.first);
                               });
                               print("Key: " + selectedTeam.key);
@@ -471,253 +466,257 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             //styleFieldWidth: styleFieldWidthTeam,
                             //styleFieldPadding: styleFieldPadding,
                             //styleFieldPaddingSides: styleFieldPaddingSides,
-),
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        DropDownWidget(
-                            value: _selectedFacing,
-                            title: "Facing",
-                            list: _listFacing,
-                            styleFontSize: styleFontSizeBody,
-                            styleFieldWidth: styleFieldWidthFacing,
-                            onStateChanged: (String newValue) {
-                              setState(() {
-                                _selectedFacing = newValue;
-                              });
-                            }),
-                        DropDownWidget(
-                            value: _selectedRobotPosition,
-                            title: "Robot Position",
-                            list: _listRobotPosition,
-                            styleFontSize: styleFontSizeBody,
-                            styleFieldWidth: styleFieldWidth,
-                            styleFieldPadding: styleFieldPadding,
-                            styleFieldPaddingSides: styleFieldPaddingSides,
-                            onStateChanged: (String newValue) {
-                              setState(() {
-                                _selectedRobotPosition = newValue;
-                              });
-                            }),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: styleFieldPadding,
-                              horizontal: styleFieldPaddingSides),
-                          width: styleFieldWidth,
-                          child: TextField(
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                            controller: _txtStartingCells,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            decoration: InputDecoration(
-                              labelText: "Starting Cells",
-                              labelStyle:
-                                  TextStyle(fontSize: styleFontSizeBody),
-                              border: InputBorder.none,
-                              isDense: true,
+                          ),
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          DropDownWidget(
+                              value: _selectedFacing,
+                              title: "Facing",
+                              list: _listFacing,
+                              styleFontSize: styleFontSizeBody,
+                              styleFieldWidth: styleFieldWidthFacing,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  _selectedFacing = newValue;
+                                });
+                              }),
+                          DropDownWidget(
+                              value: _selectedRobotPosition,
+                              title: "Robot Position",
+                              list: _listRobotPosition,
+                              styleFontSize: styleFontSizeBody,
+                              styleFieldWidth: styleFieldWidth,
+                              styleFieldPadding: styleFieldPadding,
+                              styleFieldPaddingSides: styleFieldPaddingSides,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  _selectedRobotPosition = newValue;
+                                });
+                              }),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: styleFieldPadding,
+                                horizontal: styleFieldPaddingSides),
+                            width: styleFieldWidth,
+                            child: TextField(
+                              style: TextStyle(fontSize: styleFontSizeBody),
+                              controller: _txtStartingCells,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: InputDecoration(
+                                labelText: "Starting Cells",
+                                labelStyle:
+                                    TextStyle(fontSize: styleFontSizeBody),
+                                border: InputBorder.none,
+                                isDense: true,
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
-                ]),
-          ),
-        ),
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              //border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
+                        ]),
+                  ]),
             ),
-            padding: EdgeInsets.all(0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    left: 0.0,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red),
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(0)),
-                  ),
-                  constraints: BoxConstraints.expand(
-                      width: styleRedBoxSize, height: 160.0),
-                  padding: EdgeInsets.all(4.0),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Row(
+          ),
+          FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                //border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+              ),
+              padding: EdgeInsets.all(0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(
+                      left: 0.0,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.red),
+                      color: Colors.red,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(0),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(0)),
+                    ),
+                    constraints: BoxConstraints.expand(
+                        width: styleRedBoxSize, height: 160.0),
+                    padding: EdgeInsets.all(4.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    "Total Robot Failure ",
+                                    style: TextStyle(
+                                        fontSize: styleFontSizeBody,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Switch(
+                                    value: _selectedRobotFail,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        _selectedRobotFail = value;
+                                      });
+                                    },
+                                  ),
+                                ]),
+                          ),
+                          Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "Total Robot Failure ",
+                                  "Yellow Card ",
                                   style: TextStyle(
                                       fontSize: styleFontSizeBody,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: _selectedRobotFail,
+                                  value: _selectedYellowCard,
                                   onChanged: (bool value) {
                                     setState(() {
-                                      _selectedRobotFail = value;
+                                      _selectedYellowCard = value;
                                     });
                                   },
                                 ),
                               ]),
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "Yellow Card ",
-                                style: TextStyle(
-                                    fontSize: styleFontSizeBody,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Switch(
-                                value: _selectedYellowCard,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _selectedYellowCard = value;
-                                  });
-                                },
-                              ),
-                            ]),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                "Red Card ",
-                                style: TextStyle(
-                                    fontSize: styleFontSizeBody,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Switch(
-                                value: _selectedRedCard,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _selectedRedCard = value;
-                                  });
-                                },
-                              ),
-                            ]),
-                      ]),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 5.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.green),
-                      color: Colors.green,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(10)),
-                    ),
-                    constraints: BoxConstraints.expand(height: 160.0),
-                    padding: EdgeInsets.all(4.0),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "Operational (Hanging)",
+                                  "Red Card ",
                                   style: TextStyle(
                                       fontSize: styleFontSizeBody,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Container(
-                                  child: Switch(
-                                    value: _selectedOperational,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        _selectedOperational = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ]),
-                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  "Energised (Activated)",
-                                  style: TextStyle(
-                                      fontSize: styleFontSizeBody,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  child: Switch(
-                                    value: _selectedEnergised,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        _selectedEnergised = value;
-                                      });
-                                    },
-                                  ),
+                                Switch(
+                                  value: _selectedRedCard,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      _selectedRedCard = value;
+                                    });
+                                  },
                                 ),
                               ]),
                         ]),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.green),
+                        color: Colors.green,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(0),
+                            bottomRight: Radius.circular(10)),
+                      ),
+                      constraints: BoxConstraints.expand(height: 160.0),
+                      padding: EdgeInsets.all(4.0),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    "Operational (Hanging)",
+                                    style: TextStyle(
+                                        fontSize: styleFontSizeBody,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    child: Switch(
+                                      value: _selectedOperational,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          _selectedOperational = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                //crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    "Energised (Activated)",
+                                    style: TextStyle(
+                                        fontSize: styleFontSizeBody,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    child: Switch(
+                                      value: _selectedEnergised,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          _selectedEnergised = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                          ]),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
+          Container(
+              margin: const EdgeInsets.all(0.0),
+              padding: EdgeInsets.all(0.0),
+              child: _showTab(_selectedTab)),
+        ]),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.blue,
+          selectedItemColor: Colors.white,
+          currentIndex: _selectedTab, // th
+          onTap: (value) {
+            setState(() => _selectedTab = value);
+          }, // is will be set when a new tab is tapped
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.car_repair),
+              label: 'Auto',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.engineering),
+              label: 'TeleOp',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: 'Ratings',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.save),
+              label: 'Finish',
+            ),
+          ],
         ),
-        Container(
-            margin: const EdgeInsets.all(0.0),
-            padding: EdgeInsets.all(0.0),
-            child: _showTab(_selectedTab)),
-      ]),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.white,
-        currentIndex: _selectedTab, // th
-        onTap: (value) {
-          setState(() => _selectedTab = value);
-        }, // is will be set when a new tab is tapped
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.car_repair),
-            label: 'Auto',
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.engineering),
-            label: 'TeleOp',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Ratings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.save),
-            label: 'Finish',
-          ),
-        ],
       ),
-    ),
     );
   }
 
@@ -777,7 +776,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         child: RatingsTab(
           assistOtherRobot: _assistOtherRobot,
           selectedDriveRating: _selectedDriveRating,
-          selectedDefenceRating:  _selectedDefenceRating,
+          selectedDefenceRating: _selectedDefenceRating,
           workedWithAlliance: _workedWithAlliance,
           workedToStrategy: _workedToStrategy,
           recovered: _recovered,
@@ -877,16 +876,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       );
     }
     if (index == 3) {
-      return Container(
-        child: Text(
-          "Required Fields",
-          style: TextStyle(fontSize: 18),
-        ),
+      return FinishTab(
+        onSavePressed: (bool value) {
+          print("save record");
+        },
       );
     } else {
       return Container(
         child: Text(
-          "Other Tab",
+          "HOW did you get HERE?????",
           style: TextStyle(fontSize: 18),
         ),
       );
@@ -901,3 +899,4 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     setEventTeams(14);
   }
 }
+

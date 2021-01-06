@@ -8,6 +8,7 @@ import 'package:projectb/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/loadingwidget.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -102,14 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
       scoutName: "Aiden",
     );
     localDB.insertScoringData(scoringData);
+
     //END TESTING CODE
 
+
+
+    if(await Permission.storage.status == PermissionStatus.granted) {
+      print(await Permission.storage.status);
+    }
+    else
+    {
+      print(await Permission.storage.status);
+      await Permission.storage.request();
+    }
     //display downloading icon
     setState(() {
       _downloadingData = 1;
       _counter++;
     });
-
     //Update current Device Name
     updateDeviceName();
     //update Events from API
@@ -122,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _downloadingData = 2;
     });
+
   }
 
   void updateDeviceName() async {

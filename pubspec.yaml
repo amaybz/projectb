@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.1
   http: ^0.12.2
   loading_gifs: ^0.2.3
+  permission_handler: ^5.0.1+1
 
 dev_dependencies:
   flutter_test:

@@ -18,7 +18,6 @@ class MatchScoutingScreen extends StatefulWidget {
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
-
   }) : super(key: key);
 
   final String eventName;

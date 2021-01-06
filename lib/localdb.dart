@@ -1,23 +1,38 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'webapi.dart';
 
 class LocalDB {
 
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 1;
+  static final _databaseVersion = 4;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
   final String tblScoringData = "ScoringData";
 
   final String createTblEvents =
-      "CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
+      "CREATE TABLE IF NOT EXISTS events("
+      "key TEXT PRIMARY KEY, "
+      "name TEXT, "
+      "shortName TEXT, "
+      "location TEXT)";
   final String createTblDevice =
       "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
   final String createTblScoringData =
-      "CREATE TABLE IF NOT EXISTS ScoringData(id INTEGER PRIMARY KEY, scoutName TEXT, matchNumber INTEGER, alliance TEXT, driveStation TEXT, team TEXT, facing TEXT, robotPosition TEXT, startingCells INTEGER)";
+      "CREATE TABLE IF NOT EXISTS ScoringData("
+      "id INTEGER PRIMARY KEY, "
+      "scoutName TEXT, "
+      "matchNumber INTEGER, "
+      "alliance TEXT, "
+      "driveStation TEXT, "
+      "team TEXT, "
+      "facing TEXT, "
+      "robotPosition TEXT, "
+      "startingCells INTEGER)";
 
   // Make this a singleton class.
   LocalDB._privateConstructor();
@@ -48,7 +63,7 @@ class LocalDB {
         },);
   }
 
-  Future<void> insertEvent(Event event) async {
+  Future<void> insertEvent(LocalEvent event) async {
     // Get a reference to the database.
     final Database db = await database;
     //insert data to DB
@@ -96,7 +111,7 @@ class LocalDB {
     return null;
   }
 
-  Future<List<Event>> listEvents() async {
+  Future<List<LocalEvent>> listEvents() async {
     // Get a reference to the database.
     final Database db = await database;
 
@@ -105,9 +120,26 @@ class LocalDB {
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
-      return Event(
-        id: maps[i]['id'],
+      return LocalEvent(
+        key: maps[i]['key'],
         name: maps[i]['name'],
+        location: maps[i]['location'],
+      );
+    });
+  }
+
+  Future<List<LocalEvent>> getEvent(String key) async {
+    // Get a reference to the database.
+    final Database db = await database;
+    // Query the table for all records.
+    final List<Map<String, dynamic>> maps = await db.query(tblEvents, where: 'key=?', whereArgs: [key]);
+
+    // Convert the List<Map<String, dynamic> into a List
+    return List.generate(maps.length, (i) {
+      return LocalEvent(
+        key: maps[i]['key'],
+        name: maps[i]['name'],
+        shortName: maps[i]['shortName'],
         location: maps[i]['location'],
       );
     });
@@ -131,17 +163,24 @@ class LocalDB {
   }
 }
 
-class Event {
-  final int id;
+class LocalEvent {
+  final String key;
   final String name;
   final String location;
+  final String shortName;
 
-  Event({this.id, this.name, this.location});
+  LocalEvent({
+    this.name,
+    this.shortName,
+    this.location,
+    @required this.key
+  });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'key': key,
       'name': name,
+      'shortName': shortName,
       'location': location,
     };
   }
@@ -150,7 +189,7 @@ class Event {
   // each dog when using the print statement.
   @override
   String toString() {
-    return 'Event{id: $id, name: $name, location: $location}';
+    return 'Event{id: $key, name: $name, location: $location}';
   }
 }
 

@@ -5,10 +5,9 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting.dart';
+import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/loadingwidget.dart';
-
-
 
 void main() {
   runApp(MyApp());
@@ -21,7 +20,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Project B',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Robot Match Scouting'),
@@ -40,11 +38,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  //String dropdownValue = '';
+
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
+  MySharedPrefs mySharedPrefs = new MySharedPrefs();
+
   TextEditingController _txtDeviceName = TextEditingController();
   static int _downloadingData = 0;
+  String _downloadingText = "Please select Location and Event to download data";
 
   String locationDropDown;
   final List<String> _locations = [
@@ -67,47 +68,65 @@ class _MyHomePageState extends State<MyHomePage> {
   List<EventsList> eventsList = [];
   List<DropdownMenuItem<String>> eventListDropDown = [];
   //used to store the current selected event
-  EventData currentEvent;
+  EventData selectedEvent;
+  LocalEvent selectedLocalEvent;
 
   List<TeamsList> eventTeams;
 
-
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     //get events from API
     updateEventsFromAPI();
     //update device name from local db
     getDeviceName();
-
+    setLocalEvent();
   }
 
+  void setLocalEvent() async {
+    String savedEventKey = await mySharedPrefs.readStr("currentEvent");
+    List<LocalEvent> listSelectedLocalEvents =  await localDB.getEvent(savedEventKey);
+    setState(() {
+      selectedLocalEvent = listSelectedLocalEvents.first;
+    });
+    print("LocalEvent: " + selectedLocalEvent.key);
+  }
 
-  void downloadData() async{
+  void downloadData() async {
+
+
     //used for testing only
+    //TESTING CODE
+    ScoringData scoringData = ScoringData(
+      id: _counter,
+      team: "team " + _counter.toString(),
+      scoutName: "Aiden",
+    );
+
+    localDB.insertScoringData(scoringData);
+    //END TESTING CODE
+
     setState(() {
       _downloadingData = 1;
       _counter++;
-      //TESTING CODE
-      Event event = Event(
-        id: _counter,
-        name: "test event" + _counter.toString(),
-        location: "Australia",
-      );
-      ScoringData scoringData = ScoringData(
-        id: _counter,
-        team: "team " + _counter.toString(),
-        scoutName: "Aiden",
-      );
-      localDB.insertEvent(event);
-      localDB.insertScoringData(scoringData);
-      //END TESTING CODE
     });
+    //add event to local DB
+    LocalEvent event = LocalEvent(
+      key: selectedEvent.key,
+      name: selectedEvent.name,
+      shortName: selectedEvent.shortName,
+      location: selectedEvent.country,
+    );
+    localDB.insertEvent(event);
+    //Update current Device Name
     updateDeviceName();
+    //update Events from API
     await updateEventsFromAPI();
-    if(currentEvent.key != null) {
-      await getEventTeamsFromAPI(currentEvent.key);
+    //update teams if event is selected
+    if (selectedEvent.key != null) {
+      await getEventTeamsFromAPI(selectedEvent.key);
     }
+    //set Downloading status to complete
     setState(() {
       _downloadingData = 2;
     });
@@ -123,14 +142,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getDeviceName() async {
-
     DeviceName deviceName = await localDB.getDeviceName();
-    if(deviceName == null) {
+    if (deviceName == null) {
       setState(() {
         _txtDeviceName.text = "";
       });
-    }
-    else {
+    } else {
       setState(() {
         _txtDeviceName.text = deviceName.name;
         //locationDropDown = deviceName.location;
@@ -152,25 +169,32 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     eventTeams = await webAPI.getTeamsByEvent(eventKey);
-    setState(() {
-      _downloadingData = 2;
-    });
-
+    if (eventTeams == null) {
+      setState(() {
+        _downloadingData = 0;
+        _downloadingText = "Unable to connect to Remote Host";
+      });
+    } else {
+      setState(() {
+        _downloadingData = 2;
+        _downloadingText = "Please select Location and Event to download data";
+      });
+    }
   }
 
   setEventItems() async {
     //clear current selected event and dropdown box
     setState(() {
-      currentEvent = null;
+      selectedEvent = null;
       eventListDropDown.clear();
       _downloadingData = 0;
     });
     //get events based on location
-    if(allEvents == null)
-      {
-        updateEventsFromAPI();
-      }
-    eventsForLocation = allEvents.where((i) => i.country == locationDropDown).toList();
+    if (allEvents == null) {
+      updateEventsFromAPI();
+    }
+    eventsForLocation =
+        allEvents.where((i) => i.country == locationDropDown).toList();
     //clear event list and update it with new events
     eventsList.clear();
     eventsForLocation.forEach((i) {
@@ -209,103 +233,150 @@ class _MyHomePageState extends State<MyHomePage> {
         // in the middle of the parent.
         child: Container(
           margin: const EdgeInsets.all(5.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              SizedBox(
-                width: 100,
-                child: Text("Device Name: "),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 100,
+                      child: Text("Device Name: "),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _txtDeviceName,
+                      ),
+                    ),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 100,
+                      child: Text("Location: "),
+                    ),
+                    Expanded(
+                      child: DropdownButton<String>(
+                        hint: Text('Please choose a location'),
+                        value: locationDropDown,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            locationDropDown = newValue;
+                          });
+                          setEventItems();
+                        },
+                        items: _locations.map((location) {
+                          return DropdownMenuItem(
+                            child: new Text(location),
+                            value: location,
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 100,
+                      child: Text("Event: "),
+                    ),
+                    Expanded(
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        hint: Text('Please choose a event'),
+                        value: selectedEvent == null ? null : selectedEvent.key,
+                        onChanged: (item) {
+                          setState(() {
+                            selectedEvent = eventsForLocation.firstWhere(
+                                (loc) => loc.key == item,
+                                orElse: () => eventsForLocation.first);
+                          });
+                          print("Key: " + selectedEvent.key.toString());
+                          getEventTeamsFromAPI(selectedEvent.key);
+                        },
+                        items: eventListDropDown,
+                      ),
+                    ),
+                  ]),
+              LoadingImage(
+                state: _downloadingData,
+                text: _downloadingText,
               ),
-              Expanded(
-                child: TextField(
-                  controller: _txtDeviceName,
+              FractionallySizedBox(
+                widthFactor: 0.99,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 800.0),
+                    child: Container(
+                      margin: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                      ),
+                      padding: EdgeInsets.all(4.0),
+                      child: Column(
+                        children: [
+                          Text("Current Selected Event:"),
+                          Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName)
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              SizedBox(
-                width: 100,
-                child: Text("Location: "),
-              ),
-              Expanded(
-                child: DropdownButton<String>(
-                  hint: Text('Please choose a location'),
-                  value: locationDropDown,
-                  onChanged: (String newValue) {
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: FlatButton(
+                  child: Text("Set Event"),
+                  onPressed: () {
+                    updateDeviceName();
+                    if (selectedEvent != null) {
 
-                    setState(() {
-                      locationDropDown = newValue;
-                    });
-                    setEventItems();
+                      mySharedPrefs.saveStr("currentEvent", selectedEvent.key);
+                      setLocalEvent();
+
+                    }
                   },
-                  items: _locations.map((location) {
-                    return DropdownMenuItem(
-                      child: new Text(location),
-                      value: location,
-                    );
-                  }).toList(),
                 ),
               ),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              SizedBox(
-                width: 100,
-                child: Text("Event: "),
-              ),
-              Expanded(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  hint: Text('Please choose a event'),
-                  value: currentEvent == null ? null : currentEvent.key,
-                  onChanged: (item) {
-                    setState(() {
-              currentEvent = eventsForLocation.firstWhere(
-              (loc) => loc.key == item,
-              orElse: () => eventsForLocation.first);
-                    });
-                    print("Key: " + currentEvent.key.toString());
-                    getEventTeamsFromAPI(currentEvent.key);
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: FlatButton(
+                  child: Text("Saved Records"),
+                  onPressed: () {
+                    updateDeviceName();
+                    _navigateToStoredData(context);
                   },
-                  items: eventListDropDown,
                 ),
               ),
-            ]),
-            LoadingImage(state: _downloadingData, text: "Please select Location and Event to download data",),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: FlatButton(
-                child: Text("Saved Records"),
-                onPressed: () {
-                  updateDeviceName();
-                  _navigateToStoredData(context);
-                },
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: FlatButton(
+                  child: Text("Match Scouting"),
+                  onPressed: () {
+                    updateDeviceName();
+                    if (selectedLocalEvent != null) {
+                      _navigateToMatchScoutingScreen(context);
+                    }
+                  },
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: FlatButton(
-                child: Text("Match Scouting"),
-                onPressed: () {
-                  updateDeviceName();
-                  if(currentEvent != null) {
-                    _navigateToMatchScoutingScreen(context);
-                  }
-                },
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Text(
+                  '$_counter',
+                  //style: Theme.of(context).textTheme.headline4,
+                ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Text(
-                '$_counter',
-                //style: Theme.of(context).textTheme.headline4,
-              ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
       ),
 
@@ -326,6 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute(builder: (context) => ScoringDataScreen()),
     );
   }
+
   _navigateToMatchScoutingScreen(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
@@ -333,8 +405,12 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       // Create the SelectionScreen in the next step.
 
-      MaterialPageRoute(builder: (context) =>
-          MatchScoutingScreen(eventName: currentEvent.shortName, eventKey: currentEvent.key, eventTeams: eventTeams,)),
+      MaterialPageRoute(
+          builder: (context) => MatchScoutingScreen(
+                eventName: selectedLocalEvent.shortName,
+                eventKey: selectedLocalEvent.key,
+                eventTeams: eventTeams,
+              )),
     );
   }
 }

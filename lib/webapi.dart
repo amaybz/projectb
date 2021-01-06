@@ -44,9 +44,8 @@ class WebAPI {
             strEventKey + '/teams'));
     request.body = '''''';
     request.headers.addAll(headers);
-
+  try {
     http.StreamedResponse response = await request.send();
-
     if (response.statusCode == 200) {
       String strTeamsList = await response.stream.bytesToString();
       //print(strEventsList);
@@ -59,6 +58,14 @@ class WebAPI {
     }
     print(teams.first.key);
     return teams;
+  } on Exception
+  catch (e) {
+    print("ERROR: unable to connect to remote API");
+  }
+
+
+  return teams;
+
   }
 }
 

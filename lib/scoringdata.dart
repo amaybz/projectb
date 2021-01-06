@@ -62,7 +62,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget _buildRow(dynamic item) {
     return ListTile(
       title: Text(
-        item.id.toString(),
+        "id: " + item.id.toString(),
       ),
       subtitle: Text(
         item.team + " " + item.scoutName,

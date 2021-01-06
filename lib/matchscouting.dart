@@ -225,6 +225,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _selectedTab = 0;
       _selectedRobotPosition = null;
       _selectedFacing = null;
+      _selectedDriveRating = null;
+      _selectedDefenceRating = null;
       selectedTeam = null;
       _selectedAlliance = null;
       _txtStartingCells.text = '0';
@@ -240,6 +242,19 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _selectedFoul = false;
       _selectedLeaveLine = false;
       _selectedDoesAuto = false;
+      _assistOtherRobot = false;
+      _workedWithAlliance = false;
+      _workedToStrategy = false;
+      _recovered = false;
+      _noTeamWork = false;
+      _groundIntake = false;
+      _highIntake = false;
+      _otherRobot = false;
+      _shootingWall = false;
+      _shootingNearZone = false;
+      _shootingMidZone = false;
+      _shootingFarZone = false;
+
     });
   }
 

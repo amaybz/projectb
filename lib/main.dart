@@ -102,10 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
       team: "team " + _counter.toString(),
       scoutName: "Aiden",
     );
-
     localDB.insertScoringData(scoringData);
     //END TESTING CODE
 
+    //display downloading icon
     setState(() {
       _downloadingData = 1;
       _counter++;

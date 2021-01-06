@@ -44,6 +44,6 @@
 
 	<!-- Permission options for the `camera` group -->
           <key>NSCameraUsageDescription</key>
-          <string>camera</string>
+          <string>The Camera is required to read QR codes</string>
 </dict>
 </plist>

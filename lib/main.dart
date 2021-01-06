@@ -85,7 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void setLocalEvent() async {
     String savedEventKey = await mySharedPrefs.readStr("currentEvent");
-    List<LocalEvent> listSelectedLocalEvents =  await localDB.getEvent(savedEventKey);
+    List<LocalEvent> listSelectedLocalEvents =
+        await localDB.getEvent(savedEventKey);
     setState(() {
       selectedLocalEvent = listSelectedLocalEvents.first;
     });
@@ -93,8 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void downloadData() async {
-
-
     //used for testing only
     //TESTING CODE
     ScoringData scoringData = ScoringData(
@@ -325,8 +324,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: EdgeInsets.all(4.0),
                       child: Column(
                         children: [
-                          Text("Current Selected Event:"),
-                          Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName)
+                          Text("Selected Event:"),
+                          //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
+                          Text(selectedLocalEvent == null
+                              ? "none"
+                              : selectedLocalEvent.name),
                         ],
                       ),
                     ),
@@ -340,10 +342,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     updateDeviceName();
                     if (selectedEvent != null) {
-
                       mySharedPrefs.saveStr("currentEvent", selectedEvent.key);
                       setLocalEvent();
-
                     }
                   },
                 ),
@@ -396,7 +396,12 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => ScoringDataScreen()),
+      MaterialPageRoute(
+        builder: (context) => ScoringDataScreen(
+          eventName: selectedLocalEvent.shortName,
+          eventKey: selectedLocalEvent.key,
+        ),
+      ),
     );
   }
 

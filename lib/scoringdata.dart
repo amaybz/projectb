@@ -7,6 +7,17 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 
 class ScoringDataScreen extends StatefulWidget {
+
+  ScoringDataScreen({
+    Key key,
+    @required this.eventName,
+    @required this.eventKey,
+  }) : super(key: key);
+
+  final String eventName;
+  final String eventKey;
+
+
   @override
   _ScoringDataScreenState createState() => _ScoringDataScreenState();
 }
@@ -39,8 +50,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             ),
             padding: EdgeInsets.all(4.0),
             child: Text(
-              "Event Name: ",
-              style: TextStyle(fontSize: 18),
+              "Event Name: " + widget.eventName,
+              style: TextStyle(fontSize: 16),
             )),
       ),
         Expanded(

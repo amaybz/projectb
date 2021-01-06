@@ -10,16 +10,29 @@ class RatingsTab extends StatefulWidget {
     this.workedToStrategy = false,
     this.noTeamWork = false,
     this.recovered = false,
+    this.highIntake = false,
+    this.groundIntake = false,
+    this.otherRobot = false,
+    this.shootingWall = false,
+    this.shootingNearZone = false,
+    this.shootingMidZone = false,
+    this.shootingFarZone = false,
     this.onAssistOtherRobotChanged,
     this.onWorkedWithAllianceChanged,
     this.onWorkedToStrategyChanged,
     this.onSelectedDriveRatingChanged,
     this.onSelectedDefenceRatingChanged,
+    this.onGroundIntakeChanged,
+    this.onHighIntakeChanged,
+    this.onOtherRobotChanged,
     this.onNoTeamWorkChanged,
     this.onRecoveredChanged,
+    this.onShootingFarZoneChanged,
+    this.onShootingMidZoneChanged,
+    this.onShootingNearZoneChanged,
+    this.onShootingWallZoneChanged,
     this.selectedDriveRating,
     this.selectedDefenceRating,
-
   }) : super(key: key);
 
   final ValueChanged<bool> onAssistOtherRobotChanged;
@@ -27,13 +40,27 @@ class RatingsTab extends StatefulWidget {
   final ValueChanged<bool> onWorkedToStrategyChanged;
   final ValueChanged<bool> onRecoveredChanged;
   final ValueChanged<bool> onNoTeamWorkChanged;
+  final ValueChanged<bool> onGroundIntakeChanged;
+  final ValueChanged<bool> onHighIntakeChanged;
+  final ValueChanged<bool> onOtherRobotChanged;
+  final ValueChanged<bool> onShootingWallZoneChanged;
+  final ValueChanged<bool> onShootingNearZoneChanged;
+  final ValueChanged<bool> onShootingMidZoneChanged;
+  final ValueChanged<bool> onShootingFarZoneChanged;
   final ValueChanged<String> onSelectedDriveRatingChanged;
   final ValueChanged<String> onSelectedDefenceRatingChanged;
   final bool assistOtherRobot;
+  final bool shootingWall;
+  final bool shootingNearZone;
+  final bool shootingMidZone;
+  final bool shootingFarZone;
   final bool workedWithAlliance;
   final bool workedToStrategy;
   final bool noTeamWork;
   final bool recovered;
+  final bool groundIntake;
+  final bool highIntake;
+  final bool otherRobot;
   final String selectedDriveRating;
   final String selectedDefenceRating;
 
@@ -189,6 +216,160 @@ class _RatingsTabState extends State<RatingsTab> {
             ),
           ),
         ),
+        FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5.0),
+                child: Column(children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      color: Colors.grey,
+                    ),
+                    child: Text(
+                      "Intake",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Ground Intake:"),
+                      Switch(
+                        value: widget.groundIntake,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onGroundIntakeChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("High Intake:"),
+                      Switch(
+                        value: widget.highIntake,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onHighIntakeChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Other Robot:"),
+                      Switch(
+                        value: widget.otherRobot,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onOtherRobotChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ]),
+              ),
+            ),),
+        FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5.0),
+                child: Column(children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      color: Colors.grey,
+                    ),
+                    child: Text(
+                      "Shooting",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Wall:"),
+                      Switch(
+                        value: widget.shootingWall,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onShootingWallZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Near Zone:"),
+                      Switch(
+                        value: widget.shootingNearZone,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onShootingNearZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Mid Zone:"),
+                      Switch(
+                        value: widget.shootingMidZone,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onShootingMidZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Far Zone:"),
+                      Switch(
+                        value: widget.shootingFarZone,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onShootingFarZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ]),
+              ),
+            )),
       ],
     );
   }

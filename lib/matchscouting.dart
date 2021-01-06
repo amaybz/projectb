@@ -49,6 +49,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool _selectedRedCard = false;
   bool _selectedOperational = false;
   bool _selectedEnergised = false;
+
   //autotab variables
   bool _selectedLoseStartObject = false;
   bool _selectedContactWithRobot = false;
@@ -63,6 +64,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool _workedToStrategy = false;
   bool _recovered = false;
   bool _noTeamWork = false;
+  bool _highIntake = false;
+  bool _groundIntake = false;
+  bool _otherRobot = false;
+  bool _shootingWall = false;
+  bool _shootingNearZone = false;
+  bool _shootingMidZone = false;
+  bool _shootingFarZone = false;
   String _selectedDriveRating;
   String _selectedDefenceRating;
 
@@ -160,47 +168,86 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
   }
 
+  showAlertDialogClearMatch(BuildContext context) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Clear Data"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+        clearMatch();
+        },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("WARNING"),
+      content: Text("This will clear all data?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void clearMatch() async {
+    mySharedPrefs.saveInt("CellAttempts", 0);
+    mySharedPrefs.saveInt("CellSuccess", 0);
+    mySharedPrefs.saveInt("PenalAttempts", 0);
+    mySharedPrefs.saveInt("PenalSuccess", 0);
+    mySharedPrefs.saveInt("intBuddies", 0);
+    mySharedPrefs.saveBool("selectedLower", false);
+    mySharedPrefs.saveBool("selectedOuter", false);
+    mySharedPrefs.saveBool("selectedInner", false);
+    mySharedPrefs.saveBool("selectedRotationControl", false);
+    mySharedPrefs.saveBool("selectedPositionControl", false);
+    mySharedPrefs.saveBool("selectedPark", false);
+    mySharedPrefs.saveBool("selectedBalance", false);
+    mySharedPrefs.saveBool("selectedBalanceCorrection", false);
+    mySharedPrefs.saveBool("selectedFall", false);
+    setState(() {
+      _selectedDriveStation = null;
+      _selectedDriveStation = null;
+      _selectedTab = 0;
+      _selectedRobotPosition = null;
+      _selectedFacing = null;
+      selectedTeam = null;
+      _selectedAlliance = null;
+      _txtStartingCells.text = '0';
+      _txtMatchNumber.text = '0';
+      _selectedRobotFail = false;
+      _selectedYellowCard = false;
+      _selectedRedCard = false;
+      _selectedOperational = false;
+      _selectedEnergised = false;
+      _selectedLoseStartObject = false;
+      _selectedContactWithRobot = false;
+      _selectedCrossSector = false;
+      _selectedFoul = false;
+      _selectedLeaveLine = false;
+      _selectedDoesAuto = false;
+    });
+  }
+
   void handleMenuClick(String value) async {
     switch (value) {
       case 'Clear Match':
         print("clear Match Selected");
-        mySharedPrefs.saveInt("CellAttempts", 0);
-        mySharedPrefs.saveInt("CellSuccess", 0);
-        mySharedPrefs.saveInt("PenalAttempts", 0);
-        mySharedPrefs.saveInt("PenalSuccess", 0);
-        mySharedPrefs.saveInt("intBuddies", 0);
-        mySharedPrefs.saveBool("selectedLower", false);
-        mySharedPrefs.saveBool("selectedOuter", false);
-        mySharedPrefs.saveBool("selectedInner", false);
-        mySharedPrefs.saveBool("selectedRotationControl", false);
-        mySharedPrefs.saveBool("selectedPositionControl", false);
-        mySharedPrefs.saveBool("selectedPark", false);
-        mySharedPrefs.saveBool("selectedBalance", false);
-        mySharedPrefs.saveBool("selectedBalanceCorrection", false);
-        mySharedPrefs.saveBool("selectedFall", false);
-
-        setState(() {
-          _selectedDriveStation = null;
-          _selectedDriveStation = null;
-          _selectedTab = 0;
-          _selectedRobotPosition = null;
-          _selectedFacing = null;
-          selectedTeam = null;
-          _selectedAlliance = null;
-          _txtStartingCells.text = '0';
-          _txtMatchNumber.text = '0';
-          _selectedRobotFail = false;
-          _selectedYellowCard = false;
-          _selectedRedCard = false;
-          _selectedOperational = false;
-          _selectedEnergised = false;
-          _selectedLoseStartObject = false;
-          _selectedContactWithRobot = false;
-          _selectedCrossSector = false;
-          _selectedFoul = false;
-          _selectedLeaveLine = false;
-          _selectedDoesAuto = false;
-        });
+        showAlertDialogClearMatch(context);
         break;
       case 'Settings':
         print("Settings Selected");
@@ -697,6 +744,55 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           workedToStrategy: _workedToStrategy,
           recovered: _recovered,
           noTeamWork: _noTeamWork,
+          highIntake: _highIntake,
+          groundIntake: _groundIntake,
+          otherRobot: _otherRobot,
+          shootingFarZone: _shootingFarZone,
+          shootingMidZone: _shootingMidZone,
+          shootingNearZone: _shootingNearZone,
+          shootingWall: _shootingWall,
+          onShootingWallZoneChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _shootingWall = value;
+            });
+          },
+          onShootingNearZoneChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _shootingNearZone = value;
+            });
+          },
+          onShootingMidZoneChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _shootingMidZone = value;
+            });
+          },
+          onShootingFarZoneChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _shootingFarZone = value;
+            });
+          },
+          onOtherRobotChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _otherRobot = value;
+            });
+          },
+          onHighIntakeChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _highIntake = value;
+            });
+          },
+          onGroundIntakeChanged: (bool value) {
+            //Update Value
+            setState(() {
+              _groundIntake = value;
+            });
+          },
           onAssistOtherRobotChanged: (bool value) {
             //Update Value
             setState(() {

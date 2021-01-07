@@ -5,9 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
+import 'package:projectb/displayqrcode.dart';
 
 class ScoringDataScreen extends StatefulWidget {
-
   ScoringDataScreen({
     Key key,
     @required this.eventName,
@@ -16,7 +16,6 @@ class ScoringDataScreen extends StatefulWidget {
 
   final String eventName;
   final String eventKey;
-
 
   @override
   _ScoringDataScreenState createState() => _ScoringDataScreenState();
@@ -41,19 +40,18 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         title: Text('Saved Match Scouting'),
       ),
       body: Column(children: <Widget>[
-      FractionallySizedBox(
-        widthFactor: 0.9,
-      child: Container(
-            margin: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent)
-            ),
-            padding: EdgeInsets.all(4.0),
-            child: Text(
-              "Event Name: " + widget.eventName,
-              style: TextStyle(fontSize: 16),
-            )),
-      ),
+        FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Container(
+              margin: const EdgeInsets.all(15.0),
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+              padding: EdgeInsets.all(4.0),
+              child: Text(
+                "Event Name: " + widget.eventName,
+                style: TextStyle(fontSize: 16),
+              )),
+        ),
         Expanded(
           child: _buildListView(),
         )
@@ -77,7 +75,37 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       ),
       subtitle: Text("Team: " + item.team),
       trailing: Icon(Icons.share),
-      onTap: () {},
+      onTap: () {
+        _showDialogQRCode(context, item.id.toString());
+      },
+    );
+  }
+
+  _showDialogQRCode(BuildContext context, String matchID) {
+    // set up the buttons
+
+    Widget continueButton = FlatButton(
+      child: Text("Close"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    Dialog dialogQRCodeImage = Dialog(
+      child: Container(
+      width: 300,
+      height: 300,
+        child: DisplayQRCode(matchID: matchID, styleQRSize: 290.0,),
+      ),
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return dialogQRCodeImage;
+      },
     );
   }
 

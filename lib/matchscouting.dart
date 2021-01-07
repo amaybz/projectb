@@ -24,7 +24,7 @@ class MatchScoutingScreen extends StatefulWidget {
 
   final String eventName;
   final String eventKey;
-  final List<TeamsList> eventTeams;
+  final List<LocalTeam> eventTeams;
 
   @override
   _MatchScoutingScreenState createState() => _MatchScoutingScreenState();
@@ -118,7 +118,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFontSizeBody = 18;
   double styleRedBoxSize = 300;
 
-  TeamsList selectedTeam;
+  LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
 
   setEventTeams(double styleFontSize) async {
@@ -134,12 +134,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
 
     //update dropdown box with the new events
-    for (TeamsList team in widget.eventTeams) {
+    for (LocalTeam team in widget.eventTeams) {
       setState(() {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber.toString() + " - " + team.nickname,
+              team.teamNumber + " - " + team.nickName,
               style: TextStyle(fontSize: styleFontSize),
             )));
       });

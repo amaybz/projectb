@@ -160,6 +160,24 @@ class LocalDB {
     });
   }
 
+  Future<List<LocalTeam>> listLocalTeams() async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    // Query the table for all records.
+    final List<Map<String, dynamic>> maps = await db.query(tblEventTeams);
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return LocalTeam(
+        key: maps[i]['key'],
+        name: maps[i]['name'],
+        nickName: maps[i]['nickName'],
+        teamNumber: maps[i]['teamNumber'],
+      );
+    });
+  }
+
   Future<List<LocalEvent>> getEvent(String key) async {
     // Get a reference to the database.
     final Database db = await database;
@@ -222,10 +240,10 @@ class LocalTeam {
   }
 
   // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
+  // each team when using the print statement.
   @override
   String toString() {
-    return 'Event{id: $key, name: $name, teamNumber: $teamNumber}';
+    return 'LocalTeam{id: $key, name: $name, teamNumber: $teamNumber}';
   }
 }
 

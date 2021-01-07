@@ -92,6 +92,20 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedLocalEvent = listSelectedLocalEvents.first;
     });
     print("LocalEvent: " + selectedLocalEvent.key);
+
+    if (eventTeams == null) {
+        print("No Teams");
+    } else {
+      localDB.clearLocalTeams();
+      for(TeamsList team in eventTeams) {
+        LocalTeam insertTeam = LocalTeam(key: team.key,
+            name: team.name,
+            nickName: team.nickname,
+            teamNumber: team.teamNumber.toString());
+        //print(insertTeam.teamNumber);
+        localDB.insertLocalTeam(insertTeam);
+      }
+    }
   }
 
   void downloadData() async {
@@ -424,15 +438,15 @@ class _MyHomePageState extends State<MyHomePage> {
   _navigateToMatchScoutingScreen(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
+    List<LocalTeam> teams = await localDB.listLocalTeams();
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
                 eventName: selectedLocalEvent.shortName,
                 eventKey: selectedLocalEvent.key,
-                eventTeams: eventTeams,
+                eventTeams: teams,
               )),
     );
   }

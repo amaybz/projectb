@@ -33,6 +33,12 @@ class MatchScoutingScreen extends StatefulWidget {
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
+
+  //manage save record
+  bool recordSaved = false;
+  int recordID;
+
+  //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
   final TextEditingController _txtStartingCells = TextEditingController();
@@ -273,21 +279,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
   }
 
-  void saveMatchScout() async {
+  void saveMatchScout({int recordID}) async {
     print("save record");
     ScoringData scoringData = ScoringData(
-      id: 1,
-      team: selectedTeam.key,
-      scoutName: _txtScoutName.text,
-      matchNumber: int.parse(_txtMatchNumber.text),
-      alliance: _selectedAlliance,
-      driveStation: _selectedDriveStation,
-      facing: _selectedFacing,
-      robotPosition: _selectedRobotPosition,
-      startingCells: int.parse(_txtStartingCells.text)
-    );
-    localDB.insertScoringData(scoringData);
-
+        id: recordID,
+        team: selectedTeam.key,
+        scoutName: _txtScoutName.text,
+        matchNumber: int.parse(_txtMatchNumber.text),
+        alliance: _selectedAlliance,
+        driveStation: _selectedDriveStation,
+        facing: _selectedFacing,
+        robotPosition: _selectedRobotPosition,
+        startingCells: int.parse(_txtStartingCells.text));
+    this.recordID = await localDB.insertScoringData(scoringData);
+    if (this.recordID > 0){
+      recordSaved = true;
+    }
+    print("Record Saved: " + recordSaved.toString());
+    print("Record ID: " + this.recordID.toString());
     //END TESTING CODE
   }
 
@@ -897,8 +906,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 3) {
       return FinishTab(
         onSavePressed: (bool value) {
-          saveMatchScout();
-
+          if (recordSaved == true) {
+            saveMatchScout(recordID: recordID);
+          } else {
+            saveMatchScout();
+          }
         },
       );
     } else {
@@ -919,4 +931,3 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     setEventTeams(14);
   }
 }
-

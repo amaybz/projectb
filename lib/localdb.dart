@@ -82,18 +82,19 @@ class LocalDB {
     );
   }
 
-  Future<void> insertScoringData(ScoringData scoringData) async {
+  Future<int> insertScoringData(ScoringData scoringData) async {
     // Get a reference to the database.
     final Database db = await database;
 
     // Insert the Dog into the correct table. Also specify the
     // `conflictAlgorithm`. In this case, if the same dog is inserted
     // multiple times, it replaces the previous data.
-    await db.insert(
+    int insertedID = await db.insert(
       tblScoringData,
       scoringData.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    return insertedID;
   }
 
   Future<void> updateDeviceDetails(DeviceName deviceName) async {

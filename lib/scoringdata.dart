@@ -24,10 +24,10 @@ class ScoringDataScreen extends StatefulWidget {
 class _ScoringDataScreenState extends State<ScoringDataScreen> {
   LocalDB localDB = LocalDB.instance;
   List unitMemberList;
-  List<ScoringData> dataList;
+  List<MatchScoutingData> dataList;
 
   _getScoringData() async {
-    List<ScoringData> list = await localDB.listScoringData();
+    List<MatchScoutingData> list = await localDB.listScoringData();
     setState(() {
       dataList = list;
     });
@@ -68,7 +68,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         });
   }
 
-  Widget _buildRow(ScoringData item) {
+  Widget _buildRow(MatchScoutingData item) {
     return ListTile(
       title: Text(
         item.id.toString() + ". Match: " + item.matchNumber.toString(),
@@ -81,22 +81,16 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     );
   }
 
-  _showDialogQRCode(BuildContext context, String matchID) {
+  _showDialogQRCode(BuildContext context, String matchID) async {
     // set up the buttons
 
-    Widget continueButton = FlatButton(
-      child: Text("Close"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
+    MatchScoutingData match = await localDB.getScoringDataRecord(int.parse(matchID));
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
       width: 300,
       height: 300,
-        child: DisplayQRCode(matchID: matchID, styleQRSize: 290.0,),
+        child: DisplayQRCode(match: match, styleQRSize: 299.0,),
       ),
     );
 

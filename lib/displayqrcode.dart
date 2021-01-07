@@ -3,12 +3,12 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:projectb/localdb.dart';
 
 class DisplayQRCode extends StatefulWidget {
-  final String matchID;
+  final MatchScoutingData match;
   final double styleQRSize;
 
   const DisplayQRCode({
     Key key,
-    @required this.matchID,
+    @required this.match,
     this.styleQRSize = 100,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class _DisplayQRCodeState extends State<DisplayQRCode> {
       child: Column(children: [
         //Text("QR Code"),
         QrImage(
-          data: "{matchID: " + widget.matchID + '}',
+          data: widget.match.toString(),
           version: QrVersions.auto,
           size: widget.styleQRSize,
           gapless: false,

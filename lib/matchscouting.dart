@@ -161,10 +161,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
-  List<ScoringData> dataList;
+  List<MatchScoutingData> dataList;
 
   _getScoringData() async {
-    List<ScoringData> list = await localDB.listScoringData();
+    List<MatchScoutingData> list = await localDB.listScoringData();
     setState(() {
       dataList = list;
     });
@@ -281,7 +281,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   void saveMatchScout({int recordID}) async {
     print("save record");
-    ScoringData scoringData = ScoringData(
+    MatchScoutingData scoringData = MatchScoutingData(
         id: recordID,
         team: selectedTeam.key,
         scoutName: _txtScoutName.text,

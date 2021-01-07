@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'webapi.dart';
 
 class LocalDB {
-
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
   static final _databaseVersion = 6;
@@ -13,25 +12,22 @@ class LocalDB {
   final String tblEvents = "events";
   final String tblDevice = "Device";
   final String tblScoringData = "ScoringData";
-  final String tblEventTeams= "EventTeams";
+  final String tblEventTeams = "EventTeams";
 
-  final String createTblEventTeams=
-      "CREATE TABLE IF NOT EXISTS EventTeams("
+  final String createTblEventTeams = "CREATE TABLE IF NOT EXISTS EventTeams("
       "key TEXT PRIMARY KEY, "
       "name TEXT, "
       "nickName TEXT, "
       "teamNumber TEXT)";
 
-  final String createTblEvents =
-      "CREATE TABLE IF NOT EXISTS events("
+  final String createTblEvents = "CREATE TABLE IF NOT EXISTS events("
       "key TEXT PRIMARY KEY, "
       "name TEXT, "
       "shortName TEXT, "
       "location TEXT)";
   final String createTblDevice =
       "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
-  final String createTblScoringData =
-      "CREATE TABLE IF NOT EXISTS ScoringData("
+  final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
       "id INTEGER PRIMARY KEY, "
       "scoutName TEXT, "
       "matchNumber INTEGER, "
@@ -64,11 +60,13 @@ class LocalDB {
     // The path_provider plugin gets the right directory for Android or iOS.
     String path = join(await getDatabasesPath(), _databaseName);
     // Open the database. Can also add an onUpdate callback parameter.
-    return await openDatabase(path,
-        version: _databaseVersion,
-        onCreate: (db, version) {
-          return createTables(db);
-        },);
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: (db, version) {
+        return createTables(db);
+      },
+    );
   }
 
   Future<void> insertEvent(LocalEvent event) async {
@@ -82,7 +80,7 @@ class LocalDB {
     );
   }
 
-  Future<int> insertScoringData(ScoringData scoringData) async {
+  Future<int> insertScoringData(MatchScoutingData scoringData) async {
     // Get a reference to the database.
     final Database db = await database;
 
@@ -111,11 +109,19 @@ class LocalDB {
   Future<DeviceName> getDeviceName() async {
     Database db = await database;
     List<Map> maps = await db.query(tblDevice,
-        columns: ['id', 'name', 'location'],
-        where: 'id = ?',
-        whereArgs: [1]);
+        columns: ['id', 'name', 'location'], where: 'id = ?', whereArgs: [1]);
     if (maps.length > 0) {
       return DeviceName.fromMap(maps.first);
+    }
+    return null;
+  }
+
+  Future<MatchScoutingData> getScoringDataRecord(int id) async {
+    Database db = await database;
+    List<Map> maps =
+        await db.query(tblScoringData, where: 'id = ?', whereArgs: [id]);
+    if (maps.length > 0) {
+      return MatchScoutingData.fromMap(maps.first);
     }
     return null;
   }
@@ -141,7 +147,8 @@ class LocalDB {
     // Get a reference to the database.
     final Database db = await database;
     // Query the table for all records.
-    final List<Map<String, dynamic>> maps = await db.query(tblEvents, where: 'key=?', whereArgs: [key]);
+    final List<Map<String, dynamic>> maps =
+        await db.query(tblEvents, where: 'key=?', whereArgs: [key]);
 
     // Convert the List<Map<String, dynamic> into a List
     return List.generate(maps.length, (i) {
@@ -154,7 +161,7 @@ class LocalDB {
     });
   }
 
-  Future<List<ScoringData>> listScoringData() async {
+  Future<List<MatchScoutingData>> listScoringData() async {
     // Get a reference to the database.
     final Database db = await database;
 
@@ -163,7 +170,7 @@ class LocalDB {
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
-      return ScoringData(
+      return MatchScoutingData(
         id: maps[i]['id'],
         team: maps[i]['team'],
         scoutName: maps[i]['scoutName'],
@@ -193,7 +200,7 @@ class LocalTeam {
       'key': key,
       'name': name,
       'shortName': nickName,
-      'location': teamNumber,
+      'teamNumber': teamNumber,
     };
   }
 
@@ -211,12 +218,7 @@ class LocalEvent {
   final String location;
   final String shortName;
 
-  LocalEvent({
-    this.name,
-    this.shortName,
-    this.location,
-    @required this.key
-  });
+  LocalEvent({this.name, this.shortName, this.location, @required this.key});
 
   Map<String, dynamic> toMap() {
     return {
@@ -228,25 +230,25 @@ class LocalEvent {
   }
 
   // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
+  // each item when using the print statement.
   @override
   String toString() {
     return 'Event{id: $key, name: $name, location: $location}';
   }
 }
 
-class ScoringData {
-  final int id;
-  final String team;
-  final String scoutName;
-  final int matchNumber;
-  final String alliance;
-  final String driveStation;
-  final String facing;
-  final String robotPosition;
-  final int startingCells;
+class MatchScoutingData {
+  int id;
+  String team;
+  String scoutName;
+  int matchNumber;
+  String alliance;
+  String driveStation;
+  String facing;
+  String robotPosition;
+  int startingCells;
 
-  ScoringData({
+  MatchScoutingData({
     this.id,
     this.team,
     this.scoutName,
@@ -263,22 +265,49 @@ class ScoringData {
       'id': id,
       'team': team,
       'scoutName': scoutName,
+      'alliance': alliance,
+      'driveStation': driveStation,
+      'facing': facing,
       'matchNumber': matchNumber,
+      'robotPosition': robotPosition,
+      'startingCells': startingCells,
     };
+  }
+
+  MatchScoutingData.fromMap(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.team = map['team'];
+    this.scoutName = map['scoutName'];
+    this.alliance = map['alliance'];
+    this.driveStation = map['driveStation'];
+    this.facing = map['facing'];
+    this.matchNumber = map['matchNumber'];
+    this.robotPosition = map['robotPosition'];
+    this.startingCells = map['startingCells'];
   }
 
   // Implement toString to make it easier to see information about
   // each dog when using the print statement.
   @override
   String toString() {
-    return 'ScoringData{id: $id, team: $team, scoutName: $scoutName}';
+    return 'MatchScoutingData{'
+        'id: $id, '
+        'team: $team, '
+        'scoutName: $scoutName, '
+        'alliance: $alliance, '
+        'driveStation: $driveStation, '
+        'facing: $facing, '
+        'matchNumber: $matchNumber, '
+        'robotPosition: $robotPosition, '
+        'startingCells: $startingCells, '
+        '}';
   }
 }
 
 class DeviceName {
-   int id;
-   String name;
-   String location;
+  int id;
+  String name;
+  String location;
 
   DeviceName({this.id, this.name, this.location});
 
@@ -288,10 +317,9 @@ class DeviceName {
       'name': name,
       'location': location,
     };
-
   }
 
-   DeviceName.fromMap(Map<String, dynamic> map) {
+  DeviceName.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     name = map['name'];
     location = map['location'];

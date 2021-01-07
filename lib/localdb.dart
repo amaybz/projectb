@@ -7,7 +7,7 @@ import 'webapi.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 6;
+  static final _databaseVersion = 7;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -46,6 +46,7 @@ class LocalDB {
     db.execute(createTblEvents);
     db.execute(createTblScoringData);
     db.execute(createTblDevice);
+    db.execute(createTblEventTeams);
   }
 
   static Database _database;
@@ -84,15 +85,31 @@ class LocalDB {
     // Get a reference to the database.
     final Database db = await database;
 
-    // Insert the Dog into the correct table. Also specify the
-    // `conflictAlgorithm`. In this case, if the same dog is inserted
-    // multiple times, it replaces the previous data.
     int insertedID = await db.insert(
       tblScoringData,
       scoringData.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return insertedID;
+  }
+
+  Future<int> insertLocalTeam(LocalTeam localTeam) async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    int insertedID = await db.insert(
+      tblEventTeams,
+      localTeam.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return insertedID;
+  }
+
+  Future<void> clearLocalTeams() async {
+    // Get a reference to the database.
+    final Database db = await database;
+    //delete all teams in DB
+    await db.execute("delete from " + tblEventTeams);
   }
 
   Future<void> updateDeviceDetails(DeviceName deviceName) async {
@@ -183,10 +200,10 @@ class LocalDB {
 }
 
 class LocalTeam {
-  final String key;
-  final String name;
-  final String teamNumber;
-  final String nickName;
+  String key;
+  String name;
+  String teamNumber;
+  String nickName;
 
   LocalTeam({
     @required this.key,
@@ -199,7 +216,7 @@ class LocalTeam {
     return {
       'key': key,
       'name': name,
-      'shortName': nickName,
+      'nickName': nickName,
       'teamNumber': teamNumber,
     };
   }

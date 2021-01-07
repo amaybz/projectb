@@ -159,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _downloadingData = 1;
     });
+
     //add event to local DB
     LocalEvent event = LocalEvent(
       key: selectedEvent.key,
@@ -179,6 +180,15 @@ class _MyHomePageState extends State<MyHomePage> {
         _downloadingData = 2;
         _downloadingText = "Please select Location and Event to download data";
       });
+      localDB.clearLocalTeams();
+      for(TeamsList team in eventTeams) {
+        LocalTeam insertTeam = LocalTeam(key: team.key,
+            name: team.name,
+            nickName: team.nickname,
+            teamNumber: team.teamNumber.toString());
+        //print(insertTeam.teamNumber);
+        localDB.insertLocalTeam(insertTeam);
+      }
     }
   }
 
@@ -227,6 +237,36 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+      ),
+      drawer: Drawer (
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text('Scouting'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Match Scouting'),
+              onTap: () {
+                Navigator.pop(context);
+                if (selectedLocalEvent != null) {
+                  _navigateToMatchScoutingScreen(context);
+                }
+              },
+            ),
+            ListTile(
+              title: Text('Saved Match Records'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToStoredData(context);
+              },
+            ),
+          ],
+        ),
+
       ),
       body: ListView (children: [
 
@@ -351,33 +391,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: FlatButton(
-                  child: Text("Saved Records"),
-                  onPressed: () {
-                    updateDeviceName();
-                    _navigateToStoredData(context);
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: FlatButton(
-                  child: Text("Match Scouting"),
-                  onPressed: () {
-                    updateDeviceName();
-                    if (selectedLocalEvent != null) {
-                      _navigateToMatchScoutingScreen(context);
-                    }
-                  },
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.only(top: 50.0),
-                child: Text(
-                  '$_counter',
-                  //style: Theme.of(context).textTheme.headline4,
-                ),
               ),
             ],
           ),

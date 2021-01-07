@@ -12,6 +12,7 @@ import 'package:projectb/dropdown_widget.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/finishtab.dart';
+import 'package:projectb/localdb.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -270,6 +271,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _shootingMidZone = false;
       _shootingFarZone = false;
     });
+  }
+
+  void saveMatchScout() async {
+    print("save record");
+    ScoringData scoringData = ScoringData(
+      id: 1,
+      team: selectedTeam.key,
+      scoutName: _txtScoutName.text,
+      matchNumber: int.parse(_txtMatchNumber.text),
+      alliance: _selectedAlliance,
+      driveStation: _selectedDriveStation,
+      facing: _selectedFacing,
+      robotPosition: _selectedRobotPosition,
+      startingCells: int.parse(_txtStartingCells.text)
+    );
+    localDB.insertScoringData(scoringData);
+
+    //END TESTING CODE
   }
 
   void handleMenuClick(String value) async {
@@ -878,7 +897,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 3) {
       return FinishTab(
         onSavePressed: (bool value) {
-          print("save record");
+          saveMatchScout();
+
         },
       );
     } else {

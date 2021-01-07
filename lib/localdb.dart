@@ -235,8 +235,24 @@ class ScoringData {
   final int id;
   final String team;
   final String scoutName;
+  final int matchNumber;
+  final String alliance;
+  final String driveStation;
+  final String facing;
+  final String robotPosition;
+  final int startingCells;
 
-  ScoringData({this.id, this.team, this.scoutName});
+  ScoringData({
+    this.id,
+    this.team,
+    this.scoutName,
+    this.alliance,
+    this.driveStation,
+    this.facing,
+    this.matchNumber,
+    this.robotPosition,
+    this.startingCells,
+  });
 
   Map<String, dynamic> toMap() {
     return {

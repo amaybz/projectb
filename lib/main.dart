@@ -95,20 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void downloadData() async {
-    //used for testing only
-    //TESTING CODE
-    ScoringData scoringData = ScoringData(
-      id: _counter,
-      team: "team " + _counter.toString(),
-      scoutName: "Aiden",
-    );
-    localDB.insertScoringData(scoringData);
-
-    //END TESTING CODE
-
-
-
-    if(await Permission.storage.status == PermissionStatus.granted) {
+        if(await Permission.storage.status == PermissionStatus.granted) {
       print(await Permission.storage.status);
     }
     else

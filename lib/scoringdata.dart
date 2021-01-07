@@ -70,14 +70,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         });
   }
 
-  Widget _buildRow(dynamic item) {
+  Widget _buildRow(ScoringData item) {
     return ListTile(
       title: Text(
-        "id: " + item.id.toString(),
+        item.id.toString() + ". Match: " + item.matchNumber.toString(),
       ),
-      subtitle: Text(
-        item.team + " " + item.scoutName,
-      ),
+      subtitle: Text("Team: " + item.team),
       trailing: Icon(Icons.share),
       onTap: () {},
     );

@@ -167,6 +167,9 @@ class LocalDB {
         id: maps[i]['id'],
         team: maps[i]['team'],
         scoutName: maps[i]['scoutName'],
+        matchNumber: maps[i]['matchNumber'],
+        startingCells: maps[i]['startingCells'],
+        robotPosition: maps[i]['robotPosition'],
       );
     });
   }
@@ -260,6 +263,7 @@ class ScoringData {
       'id': id,
       'team': team,
       'scoutName': scoutName,
+      'matchNumber': matchNumber,
     };
   }
 

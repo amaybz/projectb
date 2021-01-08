@@ -321,6 +321,20 @@ class MatchScoutingData {
     this.startingCells = map['startingCells'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['"id"'] = this.id;
+    data['"team"'] = '"' + this.team.toString() + '"';
+    data['"scoutName"'] = '"' + this.scoutName.toString() + '"';
+    data['"alliance"'] =  '"' + this.alliance.toString() + '"';
+    data['"driveStation"'] = '"' + this.driveStation.toString() + '"';
+    data['"facing"'] = '"' + this.facing.toString() + '"';
+    data['"matchNumber"'] = this.matchNumber;
+    data['"robotPosition"'] = '"' + this.robotPosition.toString() + '"';
+    data['"startingCells"'] = this.startingCells;
+    return data;
+  }
+
   // Implement toString to make it easier to see information about
   // each dog when using the print statement.
   @override
@@ -337,6 +351,7 @@ class MatchScoutingData {
         'startingCells: $startingCells, '
         '}';
   }
+
 }
 
 class DeviceName {

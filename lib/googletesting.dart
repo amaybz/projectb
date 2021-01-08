@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:google_sign_in/google_sign_in.dart' as signIn;
+import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleauthclient.dart';
+import 'dart:io';
+import 'package:projectb/localdb.dart';
+import 'package:projectb/scoringdata.dart';
 
 class GoogleLoginRequest extends StatefulWidget {
   @override
@@ -13,6 +19,41 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
   final googleSignIn =
   signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
   signIn.GoogleSignInAccount account;
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/test.json');
+  }
+
+  Future<File> writeFile(MatchScoutingData matchScoutingData) async {
+    final file = await _localFile;
+    // Write the file.
+    return file.writeAsString(matchScoutingData.toJson().toString());
+  }
+
+  Future<MatchScoutingData> readFile() async {
+    try {
+      final file = await _localFile;
+      // Read the file.
+      String contents = await file.readAsString();
+      print(contents);
+      MatchScoutingData matchScoutingData = MatchScoutingData.fromMap(jsonDecode(contents));
+
+      print(matchScoutingData.scoutName);
+
+      return matchScoutingData;
+    } catch (e) {
+      // If encountering an error, return 0.
+      print(e);
+      return null;
+    }
+  }
+
 
 
   Future<void> _googleSignOut() async {
@@ -99,6 +140,18 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
               _googleDriveFolders();
             },
             child: Text("Print Files to Console"),
+          ),
+          FlatButton(
+            onPressed: () {
+              writeFile(MatchScoutingData(id: 1, scoutName: "Aiden", team: "1234 - test", matchNumber: 123, startingCells: 3, driveStation: "red 3"));
+            },
+            child: Text("write File"),
+          ),
+          FlatButton(
+            onPressed: () {
+              readFile();
+            },
+            child: Text("read File"),
           ),
         ]),
       );

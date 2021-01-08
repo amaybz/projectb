@@ -2,38 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:projectb/dropdown_widget.dart';
 
 class RatingsTab extends StatefulWidget {
-  const RatingsTab({
-    Key key,
-    //@required this.styleImgFieldWidth,
-    this.assistOtherRobot = false,
-    this.workedWithAlliance = false,
-    this.workedToStrategy = false,
-    this.noTeamWork = false,
-    this.recovered = false,
-    this.highIntake = false,
-    this.groundIntake = false,
-    this.otherRobot = false,
-    this.shootingWall = false,
-    this.shootingNearZone = false,
-    this.shootingMidZone = false,
-    this.shootingFarZone = false,
-    this.onAssistOtherRobotChanged,
-    this.onWorkedWithAllianceChanged,
-    this.onWorkedToStrategyChanged,
-    this.onSelectedDriveRatingChanged,
-    this.onSelectedDefenceRatingChanged,
-    this.onGroundIntakeChanged,
-    this.onHighIntakeChanged,
-    this.onOtherRobotChanged,
-    this.onNoTeamWorkChanged,
-    this.onRecoveredChanged,
-    this.onShootingFarZoneChanged,
-    this.onShootingMidZoneChanged,
-    this.onShootingNearZoneChanged,
-    this.onShootingWallZoneChanged,
-    this.selectedDriveRating,
-    this.selectedDefenceRating,
-  }) : super(key: key);
+  const RatingsTab(
+      {Key key,
+      //@required this.styleImgFieldWidth,
+      this.assistOtherRobot = false,
+      this.workedWithAlliance = false,
+      this.workedToStrategy = false,
+      this.noTeamWork = false,
+      this.recovered = false,
+      this.highIntake = false,
+      this.groundIntake = false,
+      this.otherRobot = false,
+      this.shootingWall = false,
+      this.shootingNearZone = false,
+      this.shootingMidZone = false,
+      this.shootingFarZone = false,
+      this.onAssistOtherRobotChanged,
+      this.onWorkedWithAllianceChanged,
+      this.onWorkedToStrategyChanged,
+      this.onSelectedDriveRatingChanged,
+      this.onSelectedDefenceRatingChanged,
+      this.onGroundIntakeChanged,
+      this.onHighIntakeChanged,
+      this.onOtherRobotChanged,
+      this.onNoTeamWorkChanged,
+      this.onRecoveredChanged,
+      this.onShootingFarZoneChanged,
+      this.onShootingMidZoneChanged,
+      this.onShootingNearZoneChanged,
+      this.onShootingWallZoneChanged,
+      this.selectedDriveRating,
+      this.selectedDefenceRating,
+      this.txtComments})
+      : super(key: key);
 
   final ValueChanged<bool> onAssistOtherRobotChanged;
   final ValueChanged<bool> onWorkedWithAllianceChanged;
@@ -63,6 +64,7 @@ class RatingsTab extends StatefulWidget {
   final bool otherRobot;
   final String selectedDriveRating;
   final String selectedDefenceRating;
+  final TextEditingController txtComments;
 
   @override
   _RatingsTabState createState() => _RatingsTabState();
@@ -217,75 +219,76 @@ class _RatingsTabState extends State<RatingsTab> {
           ),
         ),
         FractionallySizedBox(
-            widthFactor: 0.99,
+          widthFactor: 0.99,
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
+            ),
             child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                child: Column(children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.grey,
-                    ),
-                    child: Text(
-                      "Intake",
-                      style: TextStyle(fontSize: 18),
-                    ),
+              padding: EdgeInsets.all(5.0),
+              child: Column(children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    color: Colors.grey,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Ground Intake:"),
-                      Switch(
-                        value: widget.groundIntake,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onGroundIntakeChanged(value);
-                          });
-                        },
-                      )
-                    ],
+                  child: Text(
+                    "Intake",
+                    style: TextStyle(fontSize: 18),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("High Intake:"),
-                      Switch(
-                        value: widget.highIntake,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onHighIntakeChanged(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Other Robot:"),
-                      Switch(
-                        value: widget.otherRobot,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onOtherRobotChanged(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ]),
-              ),
-            ),),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Ground Intake:"),
+                    Switch(
+                      value: widget.groundIntake,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.onGroundIntakeChanged(value);
+                        });
+                      },
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("High Intake:"),
+                    Switch(
+                      value: widget.highIntake,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.onHighIntakeChanged(value);
+                        });
+                      },
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Other Robot:"),
+                    Switch(
+                      value: widget.otherRobot,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.onOtherRobotChanged(value);
+                        });
+                      },
+                    )
+                  ],
+                ),
+              ]),
+            ),
+          ),
+        ),
         FractionallySizedBox(
             widthFactor: 0.99,
             child: Container(
@@ -357,6 +360,78 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Far Zone:"),
+                      Switch(
+                        value: widget.shootingFarZone,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onShootingFarZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                ]),
+              ),
+            )),
+        FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5.0),
+                child: Column(children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      color: Colors.grey,
+                    ),
+                    child: Text(
+                      "Comments",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(""),
+                      Expanded(
+                        child: TextField(
+                          controller: widget.txtComments,
+                          decoration: InputDecoration(
+                            labelText: "Comments on Performance",
+                            border: InputBorder.none,
+                            isDense: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Highlight Team (Consider Regardless of performance):"),
+                      Switch(
+                        value: widget.shootingMidZone,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.onShootingMidZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Warning (Scout Team Futher before Considering):"),
                       Switch(
                         value: widget.shootingFarZone,
                         onChanged: (bool value) {

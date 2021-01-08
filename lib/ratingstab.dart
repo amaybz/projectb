@@ -33,6 +33,8 @@ class RatingsTab extends StatefulWidget {
       this.onShootingWallZoneChanged,
       this.selectedDriveRating,
       this.selectedDefenceRating,
+      this.onHighlightTeamChanged,
+      this.onWarningChanged,
       this.txtComments})
       : super(key: key);
 
@@ -48,6 +50,8 @@ class RatingsTab extends StatefulWidget {
   final ValueChanged<bool> onShootingNearZoneChanged;
   final ValueChanged<bool> onShootingMidZoneChanged;
   final ValueChanged<bool> onShootingFarZoneChanged;
+  final ValueChanged<bool> onHighlightTeamChanged;
+  final ValueChanged<bool> onWarningChanged;
   final ValueChanged<String> onSelectedDriveRatingChanged;
   final ValueChanged<String> onSelectedDefenceRatingChanged;
   final bool assistOtherRobot;
@@ -417,7 +421,8 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Highlight Team (Consider Regardless of performance):"),
+                      Text(
+                          "Highlight Team (Consider Regardless of performance):"),
                       Switch(
                         value: widget.shootingMidZone,
                         onChanged: (bool value) {

@@ -9,6 +9,7 @@ import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/loadingwidget.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:projectb/googletesting.dart';
 
 void main() {
   runApp(MyApp());
@@ -278,6 +279,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 _navigateToStoredData(context);
               },
             ),
+            ListTile(
+              title: Text('TESTING ONLY - GOOGLE'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToGoogleLogin(context);
+              },
+            ),
           ],
         ),
 
@@ -431,6 +439,18 @@ class _MyHomePageState extends State<MyHomePage> {
           eventName: selectedLocalEvent.shortName,
           eventKey: selectedLocalEvent.key,
         ),
+      ),
+    );
+  }
+
+  _navigateToGoogleLogin(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(
+        builder: (context) => GoogleLoginRequest(        ),
       ),
     );
   }

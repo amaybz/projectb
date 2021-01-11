@@ -30,6 +30,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   List unitMemberList;
   List<MatchScoutingData> dataList;
   String googleEmail = "Not Signed In";
+  bool isSignedInToGoogle = false;
 
   _getScoringData() async {
     List<MatchScoutingData> list = await localDB.listScoringData();
@@ -48,12 +49,14 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   _signOutOfGoogle() async {
     await googleInterface.doSignOut();
     _updateGoogleEmail();
+    checkIsSignedInToGoogle();
     setState(() {});
   }
 
   _signInToGoogle() async {
     await googleInterface.doSignIn();
     _updateGoogleEmail();
+    checkIsSignedInToGoogle();
     setState(() {});
   }
 
@@ -75,14 +78,19 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("write file");
     File newFile =
         await file.writeAsString(matchScoutingData.toJson().toString());
-    print("sync to google...");
+    //print("sync to google...");
     await googleInterface.uploadFile(
         newFile,
         matchScoutingData.matchNumber.toString() +
             " " +
             matchScoutingData.team.toString());
-    print("Write Complete");
+    print("Upload Complete");
     return newFile;
+  }
+
+  checkIsSignedInToGoogle() async {
+    isSignedInToGoogle = await googleInterface.isSignedIn();
+    setState(() {});
   }
 
   @override
@@ -126,17 +134,15 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             ),
           ),
         ),
-        FlatButton(
-          onPressed: () {
-            _signInToGoogle();
+        GoogleLoginButton(
+          googleLoginState: isSignedInToGoogle,
+          onLoginPressed: (bool value) {
+            if (value == true) {
+              _signInToGoogle();
+            } else {
+              _signOutOfGoogle();
+            }
           },
-          child: Text("Sign into Google"),
-        ),
-        FlatButton(
-          onPressed: () {
-            _signOutOfGoogle();
-          },
-          child: Text("Sign Out of Google"),
         ),
         Expanded(
           child: _buildListView(),
@@ -202,5 +208,6 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // Call the getJSONData() method when the app initializes
     _getScoringData();
     _updateGoogleEmail();
+    checkIsSignedInToGoogle();
   }
 }

@@ -34,6 +34,8 @@ class GoogleInterface {
 
 
 
+
+
   Future<String> getEmail() async {
     //final signIn.GoogleSignInAccount googleAccount  = await account;
     //googleAccount.authHeaders;
@@ -41,9 +43,15 @@ class GoogleInterface {
     return "Not Signed In";
   }
 
+  Future<bool> isSignedIn() async {
+    return googleSignIn.isSignedIn();
+  }
+
   Future<void> doSignIn() async {
     final signIn.GoogleSignInAccount googleAccount  = await account;
     print("User account $googleAccount");
+    //var test =  await _account.authentication;
+   // print(test.idToken);
   }
 
   Future<void> doSignOut() async {
@@ -115,3 +123,45 @@ class GoogleInterface {
 
 
 }
+
+class GoogleLoginButton extends StatefulWidget {
+  const GoogleLoginButton({
+    Key key,
+    this.googleLoginState = false,
+    this.onLoginPressed,
+  }) : super(key: key);
+
+  final bool googleLoginState;
+  final ValueChanged<bool> onLoginPressed;
+
+  @override
+  _GoogleLoginButtonState createState() => _GoogleLoginButtonState();
+}
+
+class _GoogleLoginButtonState extends State<GoogleLoginButton> {
+
+  @override
+  Widget build(BuildContext context) {
+    if(widget.googleLoginState == false) {
+      return Container(
+        child: FlatButton(
+          onPressed: () {
+            widget.onLoginPressed(true);
+          },
+          child: Text("Sign into Google"),
+        ),
+      );
+    }
+    else {
+      return Container(
+        child: FlatButton(
+          onPressed: () {
+            widget.onLoginPressed(false);
+          },
+          child: Text("Sign Out of Google"),
+        ),
+      );
+      }
+  }
+}
+

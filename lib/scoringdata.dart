@@ -3,9 +3,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/displayqrcode.dart';
+import 'package:projectb/googleinterface.dart';
+import 'dart:io';
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
@@ -22,15 +25,64 @@ class ScoringDataScreen extends StatefulWidget {
 }
 
 class _ScoringDataScreenState extends State<ScoringDataScreen> {
+  GoogleInterface googleInterface = GoogleInterface.instance;
   LocalDB localDB = LocalDB.instance;
   List unitMemberList;
   List<MatchScoutingData> dataList;
+  String googleEmail = "Not Signed In";
 
   _getScoringData() async {
     List<MatchScoutingData> list = await localDB.listScoringData();
     setState(() {
       dataList = list;
     });
+  }
+
+  _updateGoogleEmail() async {
+    String email = await googleInterface.getEmail();
+    setState(() {
+      googleEmail = email;
+    });
+  }
+
+  _signOutOfGoogle() async {
+    await googleInterface.doSignOut();
+    _updateGoogleEmail();
+    setState(() {});
+  }
+
+  _signInToGoogle() async {
+    await googleInterface.doSignIn();
+    _updateGoogleEmail();
+    setState(() {});
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/temp.json');
+  }
+
+  Future<File> writeFileAndUploadToGoogle(
+      MatchScoutingData matchScoutingData) async {
+    print("get file Path");
+    final file = await _localFile;
+    // Write the file.
+    print("write file");
+    File newFile =
+        await file.writeAsString(matchScoutingData.toJson().toString());
+    print("sync to google...");
+    await googleInterface.uploadFile(
+        newFile,
+        matchScoutingData.matchNumber.toString() +
+            " " +
+            matchScoutingData.team.toString());
+    print("Write Complete");
+    return newFile;
   }
 
   @override
@@ -43,14 +95,48 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         FractionallySizedBox(
           widthFactor: 0.9,
           child: Container(
-              margin: const EdgeInsets.all(15.0),
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-              padding: EdgeInsets.all(4.0),
-              child: Text(
-                "Event Name: " + widget.eventName,
-                style: TextStyle(fontSize: 16),
-              )),
+            margin: const EdgeInsets.all(15.0),
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+            padding: EdgeInsets.all(4.0),
+            child: Text(
+              "Event Name: " + widget.eventName,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ),
+        FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Container(
+            margin: const EdgeInsets.all(15.0),
+            decoration:
+                BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+            padding: EdgeInsets.all(4.0),
+            child: Column(
+              children: [
+                Text(
+                  "Google Account: " + googleEmail,
+                  style: TextStyle(fontSize: 14),
+                ),
+                Text(
+                  "Press and hold a result to upload to google",
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+        ),
+        FlatButton(
+          onPressed: () {
+            _signInToGoogle();
+          },
+          child: Text("Sign into Google"),
+        ),
+        FlatButton(
+          onPressed: () {
+            _signOutOfGoogle();
+          },
+          child: Text("Sign Out of Google"),
         ),
         Expanded(
           child: _buildListView(),
@@ -78,19 +164,26 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       onTap: () {
         _showDialogQRCode(context, item.id.toString());
       },
+      onLongPress: () {
+        writeFileAndUploadToGoogle(item);
+      },
     );
   }
 
   _showDialogQRCode(BuildContext context, String matchID) async {
     // set up the buttons
 
-    MatchScoutingData match = await localDB.getScoringDataRecord(int.parse(matchID));
+    MatchScoutingData match =
+        await localDB.getScoringDataRecord(int.parse(matchID));
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
-      width: 300,
-      height: 300,
-        child: DisplayQRCode(match: match, styleQRSize: 299.0,),
+        width: 300,
+        height: 300,
+        child: DisplayQRCode(
+          match: match,
+          styleQRSize: 299.0,
+        ),
       ),
     );
 
@@ -108,5 +201,6 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     super.initState();
     // Call the getJSONData() method when the app initializes
     _getScoringData();
+    _updateGoogleEmail();
   }
 }

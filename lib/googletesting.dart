@@ -27,13 +27,19 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/test.json');
+    return File('$path/temp.json');
   }
 
-  Future<File> writeFile(MatchScoutingData matchScoutingData) async {
+  Future<File> writeFileAndUploadToGoogle(MatchScoutingData matchScoutingData) async {
+    print("get file Path");
     final file = await _localFile;
     // Write the file.
-    return file.writeAsString(matchScoutingData.toJson().toString());
+    print("write file");
+    File newFile = await file.writeAsString(matchScoutingData.toJson().toString());
+    print ("sync to google...");
+    await _googleUploadFile(newFile);
+    print ("Write Complete");
+    return newFile;
   }
 
   Future<MatchScoutingData> readFile() async {
@@ -73,6 +79,27 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     });
   }
 
+  Future<void> _googleUploadFile(File file) async {
+    print("get file ready to be sent");
+    final authHeaders = await account.authHeaders;
+    final authenticateClient = GoogleAuthClient(authHeaders);
+    final driveApi = drive.DriveApi(authenticateClient);
+    googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
+    //print("auth Headers: " + authHeaders.toString());
+    //create file
+    Stream<List<int>> mediaStream = file.openRead().asBroadcastStream();
+    int mediaStreamLength = await file.length();
+    //int mediaStreamLength = await mediaStream.length;
+    print("get file length to be sent: " + mediaStreamLength.toString());
+   var media = new drive.Media(mediaStream,mediaStreamLength);
+    var driveFile = new drive.File();
+    driveFile.name = "FRC_Results.txt";
+    final result = await driveApi.files.create(driveFile, uploadMedia: media);
+    print("Upload result: $result");
+    return true;
+  }
+
+
   Future<void> _googleDriveFolders() async {
 
   final authHeaders = await account.authHeaders;
@@ -81,18 +108,11 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
   googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
   //print(authenticateClient);
 
-  //create file
-  final Stream<List<int>> mediaStream =
-  Future.value([104, 105]).asStream().asBroadcastStream();
-  var media = new drive.Media(mediaStream, 2);
-  var driveFile = new drive.File();
-  driveFile.name = "hello_world.txt";
-  //final result = await driveApi.files.create(driveFile, uploadMedia: media);
-  // print("Upload result: $result");
+
 
   //create folder
   var driveFolder = new drive.File();
-  driveFolder.name = "FRCAPP";
+  driveFolder.name = "FRC-APP";
   driveFolder.mimeType = "application/vnd.google-apps.folder";
   //final createFolder = await driveApi.files.create(driveFolder);
   //print("Upload result: $createFolder");
@@ -118,7 +138,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
             onPressed: () {
               _googleSignIn();
             },
-            child: Text("Sign In"),
+            child: Text("Sign In to Google"),
           ),
         ]),
       );
@@ -133,25 +153,26 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
             onPressed: () {
               _googleSignOut();
             },
-            child: Text("Sign Out"),
+            child: Text("Sign Out of Google"),
           ),
           FlatButton(
             onPressed: () {
               _googleDriveFolders();
             },
-            child: Text("Print Files to Console"),
+            child: Text("Print Folders to Console"),
           ),
           FlatButton(
             onPressed: () {
-              writeFile(MatchScoutingData(id: 1, scoutName: "Aiden", team: "1234 - test", matchNumber: 123, startingCells: 3, driveStation: "red 3"));
+              writeFileAndUploadToGoogle(MatchScoutingData(id: 1, scoutName: "Aiden", team: "1234 - test", matchNumber: 123, startingCells: 3, driveStation: "red 3"));
+
             },
-            child: Text("write File"),
+            child: Text("write test File to google"),
           ),
           FlatButton(
             onPressed: () {
               readFile();
             },
-            child: Text("read File"),
+            child: Text("read last File from device"),
           ),
         ]),
       );

@@ -85,11 +85,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             " " +
             matchScoutingData.team.toString());
     print("Upload Complete");
+    checkIsSignedInToGoogle();
     return newFile;
   }
 
   checkIsSignedInToGoogle() async {
     isSignedInToGoogle = await googleInterface.isSignedIn();
+    googleEmail = await googleInterface.getEmail();
     setState(() {});
   }
 

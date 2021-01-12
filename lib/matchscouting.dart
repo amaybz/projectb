@@ -10,9 +10,7 @@ import 'dart:async';
 import 'package:projectb/teleoptab.dart';
 import 'package:projectb/dropdown_widget.dart';
 import 'package:projectb/ratingstab.dart';
-import 'package:projectb/webapi.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/localdb.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -333,7 +331,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     double width = MediaQuery.of(context).size.width;
     print(width);
 
-    if (width < 500){
+    if (width < 500) {
       styleFieldWidth = 111.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 75.0;
@@ -833,9 +831,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           setState(() {
             matchScoutingData.cellAttempts = value;
           });
-
         },
-        onCellSuccessChanged:(int value) {
+        onCellSuccessChanged: (int value) {
           setState(() {
             matchScoutingData.cellSuccess = value;
           });
@@ -846,7 +843,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.endgamePark = value;
           });
         },
-        onEndgameClimbChanged: (String value){
+        onEndgameClimbChanged: (String value) {
           matchScoutingData.endgameClimb = value;
         },
       );

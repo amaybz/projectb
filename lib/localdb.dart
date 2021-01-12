@@ -51,6 +51,7 @@ class LocalDB {
       "cellAttempts INTEGER,"
       "cellSuccess INTEGER,"
       "endgameClimb TEXT,"
+      "endgamePark TEXT,"
       "driveRating TEXT,"
       "defenceRating TEXT"
       ")";
@@ -381,6 +382,8 @@ class MatchScoutingData {
       //Tele OP Tab
       'cellAttempts': cellAttempts,
       'cellSuccess': cellSuccess,
+      'endgameClimb': endgameClimb,
+      'endgamePark': endgamePark,
       //RatingsTab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
@@ -413,6 +416,8 @@ class MatchScoutingData {
       //Tele OP Tab
       'cellAttempts': cellAttempts,
       'cellSuccess': cellSuccess,
+      'endgameClimb': endgameClimb.toString(),
+      'endgamePark': endgamePark.toString(),
       //Ratings Tab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
@@ -444,6 +449,8 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];
+    this.endgamePark = map['endgamePark'].toString().toLowerCase() == 'true';
+    this.endgameClimb = map['endgameClimb'];
     //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
@@ -475,6 +482,8 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];
+    this.endgamePark = map['endgamePark'];
+    this.endgameClimb = map['endgameClimb'];
     //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];

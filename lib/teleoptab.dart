@@ -26,6 +26,7 @@ class TeleOpScreen extends StatefulWidget {
     this.endgameTimeFromGripToClimb,
     this.endgameTimeToGrip,
     this.onEndgameParkChanged,
+    this.onEndgameClimbChanged,
   }) : super(key: key);
 
 
@@ -50,6 +51,7 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<int> onPenalSuccessChanged;
   final ValueChanged<int> onBuddiesChanged;
   final ValueChanged<bool> onEndgameParkChanged;
+  final ValueChanged<String> onEndgameClimbChanged;
 
 
   @override
@@ -556,13 +558,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               }),
                         ]),
                     DropDownWidget(
-                        value: _selectedClimb,
+                        value: widget.endgameClimb,
                         title: "Climb",
                         list: listSuccessFailNA,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                         onStateChanged: (String newValue) {
                           setState(() {
-                            _selectedClimb = newValue;
+                            widget.onEndgameClimbChanged(newValue);
                           });
                         }),
                     DropDownWidget(

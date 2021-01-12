@@ -7,7 +7,7 @@ import 'webapi.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 7;
+  static final _databaseVersion = 13;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -36,17 +36,33 @@ class LocalDB {
       "team TEXT, "
       "facing TEXT, "
       "robotPosition TEXT, "
-      "startingCells INTEGER)";
+      "startingCells INTEGER,"
+      "robotFail TEXT,"
+      "yellowCard TEXT,"
+      "redCard TEXT,"
+      "operational TEXT,"
+      "energised TEXT,"
+      "loseStartObject TEXT"
+      ")";
+
 
   // Make this a singleton class.
   LocalDB._privateConstructor();
   static final LocalDB instance = LocalDB._privateConstructor();
 
-  createTables(Database db) async {
-    db.execute(createTblEvents);
-    db.execute(createTblScoringData);
-    db.execute(createTblDevice);
-    db.execute(createTblEventTeams);
+  void  _createTables(Database db, int version) async {
+    await db.execute(createTblEvents);
+    await db.execute(createTblScoringData);
+    await db.execute(createTblDevice);
+    await db.execute(createTblEventTeams);
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    await db.execute("DROP TABLE IF EXISTS $tblScoringData");
+    await db.execute("DROP TABLE IF EXISTS $tblEventTeams");
+    await db.execute("DROP TABLE IF EXISTS $tblEvents");
+    await db.execute("DROP TABLE IF EXISTS $tblDevice");
+    _createTables(db, newVersion);
   }
 
   static Database _database;
@@ -64,9 +80,8 @@ class LocalDB {
     return await openDatabase(
       path,
       version: _databaseVersion,
-      onCreate: (db, version) {
-        return createTables(db);
-      },
+      onCreate: _createTables,
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -87,7 +102,7 @@ class LocalDB {
 
     int insertedID = await db.insert(
       tblScoringData,
-      scoringData.toMap(),
+      scoringData.toLocalDB(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return insertedID;
@@ -138,7 +153,7 @@ class LocalDB {
     List<Map> maps =
         await db.query(tblScoringData, where: 'id = ?', whereArgs: [id]);
     if (maps.length > 0) {
-      return MatchScoutingData.fromMap(maps.first);
+      return MatchScoutingData.fromLocalDB(maps.first);
     }
     return null;
   }
@@ -205,14 +220,7 @@ class LocalDB {
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
-      return MatchScoutingData(
-        id: maps[i]['id'],
-        team: maps[i]['team'],
-        scoutName: maps[i]['scoutName'],
-        matchNumber: maps[i]['matchNumber'],
-        startingCells: maps[i]['startingCells'],
-        robotPosition: maps[i]['robotPosition'],
-      );
+      return MatchScoutingData.fromLocalDB(maps[i]);
     });
   }
 }
@@ -282,6 +290,13 @@ class MatchScoutingData {
   String facing;
   String robotPosition;
   int startingCells;
+  bool robotFail;
+  bool yellowCard;
+  bool redCard;
+  bool operational;
+  bool energised;
+  bool loseStartObject;
+
 
   MatchScoutingData({
     this.id,
@@ -293,6 +308,12 @@ class MatchScoutingData {
     this.matchNumber,
     this.robotPosition,
     this.startingCells,
+    this.robotFail,
+    this.yellowCard,
+    this.redCard,
+    this.operational,
+    this.energised,
+    this.loseStartObject,
   });
 
   Map<String, dynamic> toMap() {
@@ -306,7 +327,51 @@ class MatchScoutingData {
       'matchNumber': matchNumber,
       'robotPosition': robotPosition,
       'startingCells': startingCells,
+      'robotFail': robotFail,
+      'operational': operational,
+      'redCard': redCard,
+      'yellowCard': yellowCard,
+      'energised': energised,
+      'loseStartObject': loseStartObject,
     };
+  }
+
+  Map<String, dynamic> toLocalDB() {
+    return {
+      'id': id,
+      'team': team,
+      'scoutName': scoutName,
+      'alliance': alliance,
+      'driveStation': driveStation,
+      'facing': facing,
+      'matchNumber': matchNumber,
+      'robotPosition': robotPosition,
+      'startingCells': startingCells,
+      'robotFail': robotFail.toString(),
+      'operational': operational.toString(),
+      'redCard': redCard.toString(),
+      'yellowCard': yellowCard.toString(),
+      'energised': energised.toString(),
+      'loseStartObject': loseStartObject.toString(),
+    };
+  }
+  MatchScoutingData.fromLocalDB(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.team = map['team'];
+    this.scoutName = map['scoutName'];
+    this.alliance = map['alliance'];
+    this.driveStation = map['driveStation'];
+    this.facing = map['facing'];
+    this.matchNumber = map['matchNumber'];
+    this.robotPosition = map['robotPosition'];
+    this.startingCells = map['startingCells'];
+    this.robotPosition = map['robotPosition'];
+    this.robotFail = map['robotFail'].toString().toLowerCase() == 'true';
+    this.operational = map['operational'].toString().toLowerCase() == 'true';
+    this.redCard = map['redCard'].toString().toLowerCase() == 'true';
+    this.yellowCard = map['yellowCard'].toString().toLowerCase() == 'true';
+    this.energised = map['energised'].toString().toLowerCase() == 'true';
+    this.loseStartObject = map['loseStartObject'].toString().toLowerCase() == 'true';
   }
 
   MatchScoutingData.fromMap(Map<String, dynamic> map) {
@@ -319,6 +384,13 @@ class MatchScoutingData {
     this.matchNumber = map['matchNumber'];
     this.robotPosition = map['robotPosition'];
     this.startingCells = map['startingCells'];
+    this.robotPosition = map['robotPosition'];
+    this.robotFail = map['robotFail'];
+    this.operational = map['operational'];
+    this.redCard = map['redCard'];
+    this.yellowCard = map['yellowCard'];
+    this.energised = map['energised'];
+    this.loseStartObject = map['loseStartObject'];
   }
 
   Map<String, dynamic> toJson() {
@@ -332,6 +404,12 @@ class MatchScoutingData {
     data['"matchNumber"'] = this.matchNumber;
     data['"robotPosition"'] = '"' + this.robotPosition.toString() + '"';
     data['"startingCells"'] = this.startingCells;
+    data['"robotFail"'] = '"' + this.robotFail.toString() + '"';
+    data['"operational"'] = '"' + this.operational.toString() + '"';
+    data['"redCard"'] = '"' + this.redCard.toString() + '"';
+    data['"yellowCard"'] = '"' + this.yellowCard.toString() + '"';
+    data['"energised"'] = '"' + this.energised.toString() + '"';
+    data['"loseStartObject"'] = '"' + this.loseStartObject.toString() + '"';
     return data;
   }
 

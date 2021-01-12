@@ -23,7 +23,7 @@ class _DisplayQRCodeState extends State<DisplayQRCode> {
       child: Column(children: [
         //Text("QR Code"),
         QrImage(
-          data: widget.match.toString(),
+          data: widget.match.toJson().toString(),
           version: QrVersions.auto,
           size: widget.styleQRSize,
           gapless: false,

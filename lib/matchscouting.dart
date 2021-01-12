@@ -57,6 +57,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     foul: false,
     doesAuto: false,
     leaveLine: false,
+    endgamePark: false,
   );
 
   //Ratings Tab variables
@@ -305,6 +306,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     matchScoutingData.team = selectedTeam.key;
     matchScoutingData.matchNumber = int.parse(_txtMatchNumber.text);
     matchScoutingData.startingCells = int.parse(_txtStartingCells.text);
+    matchScoutingData.scoutName = _txtScoutName.text;
     this.recordID = await localDB.insertScoringData(matchScoutingData);
     if (this.recordID > 0) {
       recordSaved = true;
@@ -812,6 +814,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 1) {
       return TeleOpScreen(
+        endgamePark: matchScoutingData.endgamePark,
+        endgameClimb: matchScoutingData.endgameClimb,
         onCellAttemptsChanged: (int value) {
           setState(() {
             matchScoutingData.cellAttempts = value;
@@ -823,7 +827,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.cellSuccess = value;
           });
           print(matchScoutingData.cellSuccess);
-        } ,
+        },
+        onEndgameParkChanged: (bool value) {
+          setState(() {
+            matchScoutingData.endgamePark = value;
+          });
+        },
       );
     }
     if (index == 2) {

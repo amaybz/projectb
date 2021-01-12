@@ -7,7 +7,7 @@ import 'webapi.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 16;
+  static final _databaseVersion = 17;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -46,6 +46,8 @@ class LocalDB {
       "crossSector TEXT,"
       "contactWithRobot TEXT,"
       "foul TEXT,"
+      "doesAuto TEXT,"
+      "leaveLine TEXT,"
       "driveRating TEXT,"
       "defenceRating TEXT"
       ")";
@@ -307,9 +309,13 @@ class MatchScoutingData {
   bool foul;
   bool doesAuto;
   bool leaveLine;
+  //Tele Op Tab
+  int cellAttempts;
+  int cellSuccess;
   //Ratings Tab
   String driveRating;
   String defenceRating;
+
 
   MatchScoutingData({
     this.id,
@@ -333,6 +339,9 @@ class MatchScoutingData {
     this.foul,
     this.doesAuto,
     this.leaveLine,
+    //Tele OP Tab
+    this.cellAttempts,
+    this.cellSuccess,
 
     //Ratings Tab
     this.driveRating,

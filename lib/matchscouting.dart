@@ -59,8 +59,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     leaveLine: false,
   );
 
-
-
   //Ratings Tab variables
   bool _assistOtherRobot = false;
   bool _workedWithAlliance = false;
@@ -160,7 +158,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
-
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
     Widget cancelButton = FlatButton(
@@ -210,7 +207,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       title: Text(heading),
       content: Text(text),
       actions: [
-          okButton,
+        okButton,
       ],
     );
 
@@ -814,7 +811,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       );
     }
     if (index == 1) {
-      return TeleOpScreen();
+      return TeleOpScreen(
+        onCellAttemptsChanged: (int value) {
+          setState(() {
+            matchScoutingData.cellAttempts = value;
+          });
+
+        },
+        onCellSuccessChanged:(int value) {
+          setState(() {
+            matchScoutingData.cellSuccess = value;
+          });
+          print(matchScoutingData.cellSuccess);
+        } ,
+      );
     }
     if (index == 2) {
       return Container(
@@ -925,11 +935,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         onSavePressed: (bool value) {
           if (recordSaved == true) {
             saveMatchScout(recordID: recordID);
-
           } else {
             saveMatchScout();
           }
-          showAlertOKDialog(context, "Saved", "Match has been saved to Local Database");
+          showAlertOKDialog(
+              context, "Saved", "Match has been saved to Local Database");
         },
       );
     } else {

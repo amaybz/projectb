@@ -4,6 +4,34 @@ import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/counter_widget.dart';
 
 class TeleOpScreen extends StatefulWidget {
+  const TeleOpScreen({
+    Key key,
+    this.intBuddies,
+    this.intPenalSuccess,
+    this.intCellSuccess,
+    this.intCellAttempts,
+    this.intPenalAttempts,
+    this.onBuddiesChanged,
+    this.onCellAttemptsChanged,
+    this.onCellSuccessChanged,
+    this.onPenalAttemptsChanged,
+    this.onPenalSuccessChanged,
+  }) : super(key: key);
+
+
+  final int intCellAttempts;
+  final int intCellSuccess;
+  final int intPenalAttempts;
+  final int intPenalSuccess;
+  final int intBuddies;
+
+  final ValueChanged<int> onCellAttemptsChanged;
+  final ValueChanged<int> onCellSuccessChanged;
+  final ValueChanged<int> onPenalAttemptsChanged;
+  final ValueChanged<int> onPenalSuccessChanged;
+  final ValueChanged<int> onBuddiesChanged;
+
+
   @override
   _TeleOpScreenState createState() => _TeleOpScreenState();
 }
@@ -141,6 +169,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
+      widget.onCellAttemptsChanged(intCellAttempts);
     });
   }
 
@@ -149,12 +178,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
+      widget.onCellAttemptsChanged(intCellAttempts);
     });
   }
 
   _updateCellAttempts(int value) {
     intCellAttempts = value;
     mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
+    widget.onCellAttemptsChanged(intCellAttempts);
   }
 
   _increaseCellSuccess() async {
@@ -165,6 +196,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     setState(() {
       _txtCellSuccess.text = intCellSuccess.toString();
       _txtCellAttempts.text = intCellAttempts.toString();
+      widget.onCellSuccessChanged(intCellSuccess);
+      widget.onCellAttemptsChanged(intCellAttempts);
     });
   }
 
@@ -173,17 +206,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
     setState(() {
       _txtCellSuccess.text = intCellSuccess.toString();
+      widget.onCellSuccessChanged(intCellSuccess);
     });
   }
 
   _updateCellSuccess(int value) {
     intCellSuccess = value;
     mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
-  }
-
-  _showTimeTaken(int value) {
-    intCellSuccess = value;
-    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
+    widget.onCellSuccessChanged(intCellSuccess);
   }
 
   @override

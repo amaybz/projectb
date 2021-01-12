@@ -332,7 +332,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     print(width);
-    if (width < 500) {
+
+    if (width < 500){
       styleFieldWidth = 111.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 75.0;
@@ -342,6 +343,18 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleImgFieldWidth = 250;
       styleFieldWidthTeam = 300;
       styleFontSizeBody = 12;
+      styleRedBoxSize = 180;
+    }
+    if (width < 395) {
+      styleFieldWidth = 100.0;
+      styleFieldMatchNumber = 80.0;
+      styleFieldAlliance = 75.0;
+      styleFieldPadding = 2.0;
+      styleFieldPaddingSides = 2.0;
+      styleFieldWidthFacing = 140;
+      styleImgFieldWidth = 250;
+      styleFieldWidthTeam = 250;
+      styleFontSizeBody = 11;
       styleRedBoxSize = 180;
     }
     if (width >= 600) {
@@ -833,11 +846,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.endgamePark = value;
           });
         },
+        onEndgameClimbChanged: (String value){
+          matchScoutingData.endgameClimb = value;
+        },
       );
     }
     if (index == 2) {
       return Container(
         child: RatingsTab(
+          styleFontSize: styleFontSizeBody,
           assistOtherRobot: _assistOtherRobot,
           selectedDriveRating: matchScoutingData.driveRating,
           selectedDefenceRating: matchScoutingData.defenceRating,

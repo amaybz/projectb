@@ -16,6 +16,16 @@ class TeleOpScreen extends StatefulWidget {
     this.onCellSuccessChanged,
     this.onPenalAttemptsChanged,
     this.onPenalSuccessChanged,
+    this.endgameBalance,
+    this.endgameBalanceCorrection,
+    this.endgameClimb,
+    this.endgameFall,
+    this.endgameOutcome,
+    this.endgamePark,
+    this.endgamePreferredPosition,
+    this.endgameTimeFromGripToClimb,
+    this.endgameTimeToGrip,
+    this.onEndgameParkChanged,
   }) : super(key: key);
 
 
@@ -24,12 +34,22 @@ class TeleOpScreen extends StatefulWidget {
   final int intPenalAttempts;
   final int intPenalSuccess;
   final int intBuddies;
+  final bool endgamePark;
+  final String endgameClimb;
+  final String endgameTimeToGrip;
+  final String endgameTimeFromGripToClimb;
+  final String endgameOutcome;
+  final String endgamePreferredPosition;
+  final bool endgameBalance;
+  final bool endgameBalanceCorrection;
+  final bool endgameFall;
 
   final ValueChanged<int> onCellAttemptsChanged;
   final ValueChanged<int> onCellSuccessChanged;
   final ValueChanged<int> onPenalAttemptsChanged;
   final ValueChanged<int> onPenalSuccessChanged;
   final ValueChanged<int> onBuddiesChanged;
+  final ValueChanged<bool> onEndgameParkChanged;
 
 
   @override
@@ -527,11 +547,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Park:"),
                           Switch(
-                              value: selectedPark,
+                              value: widget.endgamePark,
                               onChanged: (value) {
                                 mySharedPrefs.saveBool("selectedPark", value);
                                 setState(() {
-                                  selectedPark = value;
+                                  widget.onEndgameParkChanged(value);
                                 });
                               }),
                         ]),

@@ -32,6 +32,33 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   String googleEmail = "Not Signed In";
   bool isSignedInToGoogle = false;
 
+  showAlertOKDialog(BuildContext context, String heading, String text) {
+    // set up the buttons
+    Widget okButton = FlatButton(
+      child: Text("ok"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(heading),
+      content: Text(text),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   _getScoringData() async {
     List<MatchScoutingData> list = await localDB.listScoringData();
     setState(() {
@@ -86,6 +113,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             matchScoutingData.team.toString());
     print("Upload Complete");
     checkIsSignedInToGoogle();
+    showAlertOKDialog(context, "Upload", "Result uploaded to Google");
     return newFile;
   }
 

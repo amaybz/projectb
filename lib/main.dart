@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextEditingController _txtDeviceName = TextEditingController();
   static int _downloadingData = 0;
+  static int _countOfTeams = 0;
   String _downloadingText = "Please select Location and Event to download data";
 
   String locationDropDown;
@@ -91,12 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
         await localDB.getEvent(savedEventKey);
     setState(() {
       selectedLocalEvent = listSelectedLocalEvents.first;
+      _countOfTeams = eventTeams.length;
     });
     print("LocalEvent: " + selectedLocalEvent.key);
 
     if (eventTeams == null) {
         print("No Teams");
     } else {
+
       localDB.clearLocalTeams();
       for(TeamsList team in eventTeams) {
         LocalTeam insertTeam = LocalTeam(key: team.key,
@@ -185,6 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
     localDB.insertEvent(event);
 
     eventTeams = await webAPI.getTeamsByEvent(eventKey);
+    print(eventTeams.length);
     if (eventTeams == null) {
       setState(() {
         _downloadingData = 0;
@@ -393,6 +397,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           Text(selectedLocalEvent == null
                               ? "none"
                               : selectedLocalEvent.name),
+                          Text("Teams Loaded: " + _countOfTeams.toString()),
+
                         ],
                       ),
                     ),

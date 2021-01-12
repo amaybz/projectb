@@ -24,7 +24,7 @@ class GoogleInterface {
 
   static drive.DriveApi _driveApi;
   Future<drive.DriveApi> get driveApi async {
-    if (_driveApi != null) return _driveApi;
+    //if (_driveApi != null) return _driveApi;
     final signIn.GoogleSignInAccount googleAccount  = await account;
     final authHeaders = await googleAccount.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
@@ -44,6 +44,7 @@ class GoogleInterface {
   }
 
   Future<bool> isSignedIn() async {
+    //print(googleSignIn.scopes.first);
     return googleSignIn.isSignedIn();
   }
 
@@ -61,6 +62,7 @@ class GoogleInterface {
 
   Future<void> uploadFile(File file, String name) async {
     print("check if APP folder exists");
+    print(await isSignedIn());
     await _checkIfAppFolderExists();
     if (appFolderID == "") {
       //create folder
@@ -92,7 +94,6 @@ class GoogleInterface {
 
     final drive.DriveApi gDriveApi = await driveApi;
     print("Printing list");
-
     //check folders to see if it has already been created.
     var f = await gDriveApi.files
         .list(q: "mimeType = 'application/vnd.google-apps.folder'");

@@ -7,7 +7,7 @@ import 'webapi.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 13;
+  static final _databaseVersion = 16;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -42,7 +42,12 @@ class LocalDB {
       "redCard TEXT,"
       "operational TEXT,"
       "energised TEXT,"
-      "loseStartObject TEXT"
+      "loseStartObject TEXT,"
+      "crossSector TEXT,"
+      "contactWithRobot TEXT,"
+      "foul TEXT,"
+      "driveRating TEXT,"
+      "defenceRating TEXT"
       ")";
 
 
@@ -295,8 +300,14 @@ class MatchScoutingData {
   bool redCard;
   bool operational;
   bool energised;
+  //Auto Tab
   bool loseStartObject;
-
+  bool contactWithRobot;
+  bool crossSector;
+  bool foul;
+  //Ratings Tab
+  String driveRating;
+  String defenceRating;
 
   MatchScoutingData({
     this.id,
@@ -313,7 +324,14 @@ class MatchScoutingData {
     this.redCard,
     this.operational,
     this.energised,
+    //Auto Tab
     this.loseStartObject,
+    this.contactWithRobot,
+    this.crossSector,
+    this.foul,
+    //Ratings Tab
+    this.driveRating,
+    this.defenceRating,
   });
 
   Map<String, dynamic> toMap() {
@@ -333,6 +351,11 @@ class MatchScoutingData {
       'yellowCard': yellowCard,
       'energised': energised,
       'loseStartObject': loseStartObject,
+      'contactWithRobot': contactWithRobot,
+      'crossSector': crossSector,
+      'foul': foul,
+      'driveRating': driveRating,
+      'defenceRating': defenceRating,
     };
   }
 
@@ -353,6 +376,11 @@ class MatchScoutingData {
       'yellowCard': yellowCard.toString(),
       'energised': energised.toString(),
       'loseStartObject': loseStartObject.toString(),
+      'contactWithRobot': contactWithRobot.toString(),
+      'crossSector': crossSector.toString(),
+      'foul': foul.toString(),
+      'driveRating': driveRating,
+      'defenceRating': defenceRating,
     };
   }
   MatchScoutingData.fromLocalDB(Map<String, dynamic> map) {
@@ -372,6 +400,11 @@ class MatchScoutingData {
     this.yellowCard = map['yellowCard'].toString().toLowerCase() == 'true';
     this.energised = map['energised'].toString().toLowerCase() == 'true';
     this.loseStartObject = map['loseStartObject'].toString().toLowerCase() == 'true';
+    this.contactWithRobot = map['contactWithRobot'].toString().toLowerCase() == 'true';
+    this.crossSector = map['crossSector'].toString().toLowerCase() == 'true';
+    this.foul = map['foul'].toString().toLowerCase() == 'true';
+    this.driveRating = map['driveRating'];
+    this.defenceRating = map['defenceRating'];
   }
 
   MatchScoutingData.fromMap(Map<String, dynamic> map) {
@@ -391,6 +424,12 @@ class MatchScoutingData {
     this.yellowCard = map['yellowCard'];
     this.energised = map['energised'];
     this.loseStartObject = map['loseStartObject'];
+    this.contactWithRobot = map['contactWithRobot'];
+    this.crossSector = map['crossSector'];
+    this.foul = map['foul'];
+    this.driveRating = map['driveRating'];
+    this.defenceRating = map['defenceRating'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -410,6 +449,11 @@ class MatchScoutingData {
     data['"yellowCard"'] = '"' + this.yellowCard.toString() + '"';
     data['"energised"'] = '"' + this.energised.toString() + '"';
     data['"loseStartObject"'] = '"' + this.loseStartObject.toString() + '"';
+    data['"contactWithRobot"'] = '"' + this.contactWithRobot.toString() + '"';
+    data['"crossSector"'] = '"' + this.crossSector.toString() + '"';
+    data['"foul"'] = '"' + this.foul.toString() + '"';
+    data['"driveRating"'] = '"' + this.driveRating.toString() + '"';
+    data['"defenceRating"'] = '"' + this.defenceRating.toString() + '"';
     return data;
   }
 

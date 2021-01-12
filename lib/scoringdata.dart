@@ -78,7 +78,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("write file");
     File newFile =
         await file.writeAsString(matchScoutingData.toJson().toString());
-    //print("sync to google...");
+    print("JSON: " + matchScoutingData.toJson().toString());
     await googleInterface.uploadFile(
         newFile,
         matchScoutingData.matchNumber.toString() +
@@ -163,6 +163,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Widget _buildRow(MatchScoutingData item) {
+    //print(item.defenceRating);
     return ListTile(
       title: Text(
         item.id.toString() + ". Match: " + item.matchNumber.toString(),

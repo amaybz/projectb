@@ -52,15 +52,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     operational: false,
     energised: false,
     loseStartObject: false,
+    contactWithRobot: false,
+    crossSector: false,
+    foul: false,
   );
 
-  //bool _selectedEnergised = false;
-
-  //autotab variables
-  //bool _selectedLoseStartObject = false;
-  bool _selectedContactWithRobot = false;
-  bool _selectedCrossSector = false;
-  bool _selectedFoul = false;
+  //bool _selectedFoul = false;
   bool _selectedDoesAuto = false;
   bool _selectedLeaveLine = false;
 
@@ -77,8 +74,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool _shootingNearZone = false;
   bool _shootingMidZone = false;
   bool _shootingFarZone = false;
-  String _selectedDriveRating;
-  String _selectedDefenceRating;
+  //String _selectedDriveRating;
+  //String _selectedDefenceRating;
 
   List<String> _listDriveStation = [
     'none',
@@ -163,15 +160,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
-  List<MatchScoutingData> dataList;
-
-  _getScoringData() async {
-    //is this used? can be deleted?
-    List<MatchScoutingData> list = await localDB.listScoringData();
-    setState(() {
-      dataList = list;
-    });
-  }
 
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
@@ -196,6 +184,33 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       actions: [
         cancelButton,
         continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertOKDialog(BuildContext context, String heading, String text) {
+    // set up the buttons
+    Widget okButton = FlatButton(
+      child: Text("ok"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(heading),
+      content: Text(text),
+      actions: [
+          okButton,
       ],
     );
 
@@ -246,24 +261,26 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     mySharedPrefs.saveBool("selectedFall", false);
     setState(() {
       _selectedTab = 0;
+      _txtStartingCells.text = '0';
+      _txtMatchNumber.text = '0';
+      selectedTeam = null;
+      matchScoutingData.startingCells = 0;
+      matchScoutingData.matchNumber = 0;
       matchScoutingData.driveStation = null;
       matchScoutingData.robotPosition = null;
       matchScoutingData.facing = null;
-      _selectedDriveRating = null;
-      _selectedDefenceRating = null;
-      selectedTeam = null;
+      matchScoutingData.driveRating = null;
+      matchScoutingData.defenceRating = null;
       matchScoutingData.alliance = null;
-      _txtStartingCells.text = '0';
-      _txtMatchNumber.text = '0';
       matchScoutingData.robotFail = false;
       matchScoutingData.yellowCard = false;
       matchScoutingData.redCard = false;
       matchScoutingData.operational = false;
       matchScoutingData.energised = false;
       matchScoutingData.loseStartObject = false;
-      _selectedContactWithRobot = false;
-      _selectedCrossSector = false;
-      _selectedFoul = false;
+      matchScoutingData.contactWithRobot = false;
+      matchScoutingData.crossSector = false;
+      matchScoutingData.foul = false;
       _selectedLeaveLine = false;
       _selectedDoesAuto = false;
       _assistOtherRobot = false;
@@ -753,9 +770,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       return AutoTab(
         styleImgFieldWidth: styleImgFieldWidth,
         boolLoseStartObject: matchScoutingData.loseStartObject,
-        boolContactWithRobot: _selectedContactWithRobot,
-        boolCrossSector: _selectedCrossSector,
-        boolFoul: _selectedFoul,
+        boolContactWithRobot: matchScoutingData.contactWithRobot,
+        boolCrossSector: matchScoutingData.crossSector,
+        boolFoul: matchScoutingData.foul,
         boolDoesAuto: _selectedDoesAuto,
         boolLeaveLine: _selectedLeaveLine,
         onLoseStartObjectChange: (bool value) {
@@ -767,19 +784,19 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         onContactWithRobotChange: (bool value) {
           //save values
           setState(() {
-            _selectedContactWithRobot = value;
+            matchScoutingData.contactWithRobot = value;
           });
         },
         onCrossSectorChange: (bool value) {
           //save values
           setState(() {
-            _selectedCrossSector = value;
+            matchScoutingData.crossSector = value;
           });
         },
         onFoulChange: (bool value) {
           //save values
           setState(() {
-            _selectedFoul = value;
+            matchScoutingData.foul = value;
           });
         },
         onDoesAutoChange: (bool value) {
@@ -803,8 +820,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       return Container(
         child: RatingsTab(
           assistOtherRobot: _assistOtherRobot,
-          selectedDriveRating: _selectedDriveRating,
-          selectedDefenceRating: _selectedDefenceRating,
+          selectedDriveRating: matchScoutingData.driveRating,
+          selectedDefenceRating: matchScoutingData.defenceRating,
           workedWithAlliance: _workedWithAlliance,
           workedToStrategy: _workedToStrategy,
           recovered: _recovered,
@@ -867,13 +884,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           onSelectedDriveRatingChanged: (String value) {
             //Update Value
             setState(() {
-              _selectedDriveRating = value;
+              matchScoutingData.driveRating = value;
             });
           },
           onSelectedDefenceRatingChanged: (String value) {
             //Update Value
             setState(() {
-              _selectedDefenceRating = value;
+              matchScoutingData.defenceRating = value;
             });
           },
           onRecoveredChanged: (bool value) {
@@ -908,9 +925,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         onSavePressed: (bool value) {
           if (recordSaved == true) {
             saveMatchScout(recordID: recordID);
+
           } else {
             saveMatchScout();
           }
+          showAlertOKDialog(context, "Saved", "Match has been saved to Local Database");
         },
       );
     } else {
@@ -927,7 +946,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   void initState() {
     super.initState();
     // Call the getJSONData() method when the app initializes
-    _getScoringData();
+    //_getScoringData();
     setEventTeams(14);
   }
 }

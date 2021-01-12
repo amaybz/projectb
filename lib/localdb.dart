@@ -48,6 +48,9 @@ class LocalDB {
       "foul TEXT,"
       "doesAuto TEXT,"
       "leaveLine TEXT,"
+      "cellAttempts INTEGER,"
+      "cellSuccess INTEGER,"
+      "endgameClimb TEXT,"
       "driveRating TEXT,"
       "defenceRating TEXT"
       ")";
@@ -312,6 +315,8 @@ class MatchScoutingData {
   //Tele Op Tab
   int cellAttempts;
   int cellSuccess;
+  bool endgamePark;
+  String endgameClimb;
   //Ratings Tab
   String driveRating;
   String defenceRating;
@@ -342,6 +347,8 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts,
     this.cellSuccess,
+    this.endgameClimb,
+    this.endgamePark,
 
     //Ratings Tab
     this.driveRating,
@@ -371,6 +378,9 @@ class MatchScoutingData {
       'foul': foul,
       'doesAuto': doesAuto,
       'leaveLine': leaveLine,
+      //Tele OP Tab
+      'cellAttempts': cellAttempts,
+      'cellSuccess': cellSuccess,
       //RatingsTab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
@@ -400,6 +410,9 @@ class MatchScoutingData {
       'foul': foul.toString(),
       'doesAuto': doesAuto.toString(),
       'leaveLine': leaveLine.toString(),
+      //Tele OP Tab
+      'cellAttempts': cellAttempts,
+      'cellSuccess': cellSuccess,
       //Ratings Tab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
@@ -428,6 +441,9 @@ class MatchScoutingData {
     this.foul = map['foul'].toString().toLowerCase() == 'true';
     this.doesAuto = map['doesAuto'].toString().toLowerCase() == 'true';
     this.leaveLine = map['leaveLine'].toString().toLowerCase() == 'true';
+    //Tele OP Tab
+    this.cellAttempts = map['cellAttempts'];
+    this.cellSuccess = map['cellSuccess'];
     //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
@@ -456,6 +472,9 @@ class MatchScoutingData {
     this.foul = map['foul'];
     this.doesAuto = map['doesAuto'];
     this.leaveLine = map['leaveLine'];
+    //Tele OP Tab
+    this.cellAttempts = map['cellAttempts'];
+    this.cellSuccess = map['cellSuccess'];
     //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
@@ -485,6 +504,9 @@ class MatchScoutingData {
     data['"foul"'] = '"' + this.foul.toString() + '"';
     data['"doesAuto"'] = '"' + this.doesAuto.toString() + '"';
     data['"leaveLine"'] = '"' + this.leaveLine.toString() + '"';
+    //Tele OP Tab
+    data['"cellAttempts"'] = this.cellAttempts;
+    data['"cellSuccess"'] = this.cellSuccess;
     //Ratings Tab
     data['"driveRating"'] = '"' + this.driveRating.toString() + '"';
     data['"defenceRating"'] = '"' + this.defenceRating.toString() + '"';

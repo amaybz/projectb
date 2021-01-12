@@ -305,6 +305,8 @@ class MatchScoutingData {
   bool contactWithRobot;
   bool crossSector;
   bool foul;
+  bool doesAuto;
+  bool leaveLine;
   //Ratings Tab
   String driveRating;
   String defenceRating;
@@ -329,6 +331,9 @@ class MatchScoutingData {
     this.contactWithRobot,
     this.crossSector,
     this.foul,
+    this.doesAuto,
+    this.leaveLine,
+
     //Ratings Tab
     this.driveRating,
     this.defenceRating,
@@ -350,10 +355,14 @@ class MatchScoutingData {
       'redCard': redCard,
       'yellowCard': yellowCard,
       'energised': energised,
+      //AutoTab
       'loseStartObject': loseStartObject,
       'contactWithRobot': contactWithRobot,
       'crossSector': crossSector,
       'foul': foul,
+      'doesAuto': doesAuto,
+      'leaveLine': leaveLine,
+      //RatingsTab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
     };
@@ -375,10 +384,14 @@ class MatchScoutingData {
       'redCard': redCard.toString(),
       'yellowCard': yellowCard.toString(),
       'energised': energised.toString(),
+       //Auto Tab
       'loseStartObject': loseStartObject.toString(),
       'contactWithRobot': contactWithRobot.toString(),
       'crossSector': crossSector.toString(),
       'foul': foul.toString(),
+      'doesAuto': doesAuto.toString(),
+      'leaveLine': leaveLine.toString(),
+      //Ratings Tab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
     };
@@ -399,10 +412,14 @@ class MatchScoutingData {
     this.redCard = map['redCard'].toString().toLowerCase() == 'true';
     this.yellowCard = map['yellowCard'].toString().toLowerCase() == 'true';
     this.energised = map['energised'].toString().toLowerCase() == 'true';
+   //Auto Tab
     this.loseStartObject = map['loseStartObject'].toString().toLowerCase() == 'true';
     this.contactWithRobot = map['contactWithRobot'].toString().toLowerCase() == 'true';
     this.crossSector = map['crossSector'].toString().toLowerCase() == 'true';
     this.foul = map['foul'].toString().toLowerCase() == 'true';
+    this.doesAuto = map['doesAuto'].toString().toLowerCase() == 'true';
+    this.leaveLine = map['leaveLine'].toString().toLowerCase() == 'true';
+    //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
   }
@@ -423,10 +440,14 @@ class MatchScoutingData {
     this.redCard = map['redCard'];
     this.yellowCard = map['yellowCard'];
     this.energised = map['energised'];
+    //Auto Tab
     this.loseStartObject = map['loseStartObject'];
     this.contactWithRobot = map['contactWithRobot'];
     this.crossSector = map['crossSector'];
     this.foul = map['foul'];
+    this.doesAuto = map['doesAuto'];
+    this.leaveLine = map['leaveLine'];
+    //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
 
@@ -448,10 +469,14 @@ class MatchScoutingData {
     data['"redCard"'] = '"' + this.redCard.toString() + '"';
     data['"yellowCard"'] = '"' + this.yellowCard.toString() + '"';
     data['"energised"'] = '"' + this.energised.toString() + '"';
+    //Auto Tab
     data['"loseStartObject"'] = '"' + this.loseStartObject.toString() + '"';
     data['"contactWithRobot"'] = '"' + this.contactWithRobot.toString() + '"';
     data['"crossSector"'] = '"' + this.crossSector.toString() + '"';
     data['"foul"'] = '"' + this.foul.toString() + '"';
+    data['"doesAuto"'] = '"' + this.doesAuto.toString() + '"';
+    data['"leaveLine"'] = '"' + this.leaveLine.toString() + '"';
+    //Ratings Tab
     data['"driveRating"'] = '"' + this.driveRating.toString() + '"';
     data['"defenceRating"'] = '"' + this.defenceRating.toString() + '"';
     return data;

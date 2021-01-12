@@ -55,11 +55,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     contactWithRobot: false,
     crossSector: false,
     foul: false,
+    doesAuto: false,
+    leaveLine: false,
   );
 
-  //bool _selectedFoul = false;
-  bool _selectedDoesAuto = false;
-  bool _selectedLeaveLine = false;
+
 
   //Ratings Tab variables
   bool _assistOtherRobot = false;
@@ -281,8 +281,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       matchScoutingData.contactWithRobot = false;
       matchScoutingData.crossSector = false;
       matchScoutingData.foul = false;
-      _selectedLeaveLine = false;
-      _selectedDoesAuto = false;
+      matchScoutingData.doesAuto = false;
+      matchScoutingData.leaveLine = false;
       _assistOtherRobot = false;
       _workedWithAlliance = false;
       _workedToStrategy = false;
@@ -773,8 +773,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         boolContactWithRobot: matchScoutingData.contactWithRobot,
         boolCrossSector: matchScoutingData.crossSector,
         boolFoul: matchScoutingData.foul,
-        boolDoesAuto: _selectedDoesAuto,
-        boolLeaveLine: _selectedLeaveLine,
+        boolDoesAuto: matchScoutingData.doesAuto,
+        boolLeaveLine: matchScoutingData.leaveLine,
         onLoseStartObjectChange: (bool value) {
           //save values
           setState(() {
@@ -802,13 +802,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         onDoesAutoChange: (bool value) {
           //save values
           setState(() {
-            _selectedDoesAuto = value;
+            matchScoutingData.doesAuto = value;
           });
         },
         onLeaveLineChange: (bool value) {
           //save values
           setState(() {
-            _selectedLeaveLine = value;
+            matchScoutingData.leaveLine = value;
           });
         },
       );

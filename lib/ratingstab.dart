@@ -116,7 +116,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Drive Rating:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Drive Rating:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     DropDownWidget(
                       value: widget.selectedDriveRating,
                       title: null,
@@ -134,7 +137,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Defence Rating:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Defence Rating:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     DropDownWidget(
                       value: widget.selectedDefenceRating,
                       title: null,
@@ -152,7 +158,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Assist Other Robot:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Assist Other Robot:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     Switch(
                       value: widget.assistOtherRobot,
                       onChanged: (bool value) {
@@ -166,7 +175,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Worked with Alliance:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Worked with Alliance:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     Switch(
                       value: widget.workedWithAlliance,
                       onChanged: (bool value) {
@@ -180,7 +192,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Worked to a Strategy:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Worked to a Strategy:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     Switch(
                       value: widget.workedToStrategy,
                       onChanged: (bool value) {
@@ -194,7 +209,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Recovered:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Recovered:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     Switch(
                       value: widget.recovered,
                       onChanged: (bool value) {
@@ -208,7 +226,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("No Teamwork:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "No Teamwork:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     Switch(
                       value: widget.noTeamWork,
                       onChanged: (bool value) {
@@ -251,7 +272,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Ground Intake:", style: TextStyle(fontSize: widget.styleFontSize),),
+                    Text(
+                      "Ground Intake:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
                     Switch(
                       value: widget.groundIntake,
                       onChanged: (bool value) {
@@ -328,7 +352,10 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Wall:", style: TextStyle(fontSize: widget.styleFontSize),),
+                      Text(
+                        "Wall:",
+                        style: TextStyle(fontSize: widget.styleFontSize),
+                      ),
                       Switch(
                         value: widget.shootingWall,
                         onChanged: (bool value) {
@@ -342,7 +369,10 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Near Zone:", style: TextStyle(fontSize: widget.styleFontSize),),
+                      Text(
+                        "Near Zone:",
+                        style: TextStyle(fontSize: widget.styleFontSize),
+                      ),
                       Switch(
                         value: widget.shootingNearZone,
                         onChanged: (bool value) {
@@ -356,7 +386,10 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Mid Zone:", style: TextStyle(fontSize: widget.styleFontSize),),
+                      Text(
+                        "Mid Zone:",
+                        style: TextStyle(fontSize: widget.styleFontSize),
+                      ),
                       Switch(
                         value: widget.shootingMidZone,
                         onChanged: (bool value) {
@@ -370,7 +403,10 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Far Zone:", style: TextStyle(fontSize: widget.styleFontSize),),
+                      Text(
+                        "Far Zone:",
+                        style: TextStyle(fontSize: widget.styleFontSize),
+                      ),
                       Switch(
                         value: widget.shootingFarZone,
                         onChanged: (bool value) {
@@ -420,7 +456,8 @@ class _RatingsTabState extends State<RatingsTab> {
                             labelText: "Comments on Performance",
                             border: InputBorder.none,
                             isDense: true,
-                            labelStyle: TextStyle(fontSize: widget.styleFontSize),
+                            labelStyle:
+                                TextStyle(fontSize: widget.styleFontSize),
                           ),
                         ),
                       ),

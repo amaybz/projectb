@@ -96,9 +96,11 @@ class _MyHomePageState extends State<MyHomePage> {
     String savedEventKey = await mySharedPrefs.readStr("currentEvent");
     List<LocalEvent> listSelectedLocalEvents =
         await localDB.getEvent(savedEventKey);
+    List<LocalTeam> listSelectedLocalTeams =    await localDB.listLocalTeams();
+
     setState(() {
       selectedLocalEvent = listSelectedLocalEvents.first;
-      _countOfTeams = eventTeams.length;
+      _countOfTeams = listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
     print("LocalEvent: " + selectedLocalEvent.key);
 

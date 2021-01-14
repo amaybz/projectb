@@ -11,11 +11,13 @@ class TeleOpScreen extends StatefulWidget {
     this.intCellSuccess,
     this.intCellAttempts,
     this.intPenalAttempts,
-    this.onBuddiesChanged,
-    this.onCellAttemptsChanged,
-    this.onCellSuccessChanged,
-    this.onPenalAttemptsChanged,
-    this.onPenalSuccessChanged,
+    this.powerPortLower,
+    this.powerPortInner,
+    this.powerPortOuter,
+    this.cpRotationControl,
+    this.cpRotationTimeTaken,
+    this.cpPositionControl,
+    this.cpPositionTimeTaken,
     this.endgameBalance,
     this.endgameBalanceCorrection,
     this.endgameClimb,
@@ -25,8 +27,21 @@ class TeleOpScreen extends StatefulWidget {
     this.endgamePreferredPosition,
     this.endgameTimeFromGripToClimb,
     this.endgameTimeToGrip,
+    //onchange
+    this.onBuddiesChanged,
+    this.onCellAttemptsChanged,
+    this.onCellSuccessChanged,
+    this.onPenalAttemptsChanged,
+    this.onPenalSuccessChanged,
     this.onEndgameParkChanged,
     this.onEndgameClimbChanged,
+    this.onPowerPortInnerChanged,
+    this.onPowerPortLowerChanged,
+    this.onPowerPortOuterChanged,
+    this.onCPRotationControlChanged,
+    this.onCPRotationTimeTakenChange,
+    this.onCPPositionControlChanged,
+    this.onCPPositionTimeTakenChange,
   }) : super(key: key);
 
 
@@ -35,6 +50,13 @@ class TeleOpScreen extends StatefulWidget {
   final int intPenalAttempts;
   final int intPenalSuccess;
   final int intBuddies;
+  final bool powerPortLower;
+  final bool powerPortInner;
+  final bool powerPortOuter;
+  final bool cpRotationControl;
+  final String cpRotationTimeTaken;
+  final bool cpPositionControl;
+  final String cpPositionTimeTaken;
   final bool endgamePark;
   final String endgameClimb;
   final String endgameTimeToGrip;
@@ -45,6 +67,9 @@ class TeleOpScreen extends StatefulWidget {
   final bool endgameBalanceCorrection;
   final bool endgameFall;
 
+  final ValueChanged<bool> onPowerPortLowerChanged;
+  final ValueChanged<bool> onPowerPortInnerChanged;
+  final ValueChanged<bool> onPowerPortOuterChanged;
   final ValueChanged<int> onCellAttemptsChanged;
   final ValueChanged<int> onCellSuccessChanged;
   final ValueChanged<int> onPenalAttemptsChanged;
@@ -52,7 +77,10 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<int> onBuddiesChanged;
   final ValueChanged<bool> onEndgameParkChanged;
   final ValueChanged<String> onEndgameClimbChanged;
-
+  final ValueChanged<bool> onCPRotationControlChanged;
+  final ValueChanged<String> onCPRotationTimeTakenChange;
+final ValueChanged<bool> onCPPositionControlChanged;
+final ValueChanged<String> onCPPositionTimeTakenChange;
 
   @override
   _TeleOpScreenState createState() => _TeleOpScreenState();
@@ -342,33 +370,34 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Outer"),
                         Switch(
-                            value: selectedOuter,
+                            value: widget.powerPortOuter,
                             onChanged: (value) {
                               mySharedPrefs.saveBool("selectedOuter", value);
                               setState(() {
-                                selectedOuter = value;
+                                widget.onPowerPortOuterChanged(value);
                               });
                             }),
                       ]),
                       Row(children: [
                         Text("Inner"),
                         Switch(
-                            value: selectedInner,
+                            value: widget.powerPortInner,
                             onChanged: (value) {
                               mySharedPrefs.saveBool("selectedInner", value);
                               setState(() {
-                                selectedInner = value;
+                                widget.onPowerPortInnerChanged(value);
                               });
                             }),
                       ]),
                       Row(children: [
                         Text("Lower"),
                         Switch(
-                            value: selectedLower,
+                            value: widget.powerPortLower,
                             onChanged: (value) {
                               mySharedPrefs.saveBool("selectedLower", value);
                               setState(() {
                                 selectedLower = value;
+                                widget.onPowerPortLowerChanged(value);
                               });
                             }),
                       ]),

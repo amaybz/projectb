@@ -50,6 +50,9 @@ class LocalDB {
       "leaveLine TEXT,"
       "cellAttempts INTEGER,"
       "cellSuccess INTEGER,"
+      "powerPortOuter TEXT,"
+      "powerPortInner TEXT,"
+      "powerPortLower TEXT,"
       "endgameClimb TEXT,"
       "endgamePark TEXT,"
       "driveRating TEXT,"
@@ -316,6 +319,13 @@ class MatchScoutingData {
   //Tele Op Tab
   int cellAttempts;
   int cellSuccess;
+  bool powerPortOuter;
+  bool powerPortInner;
+  bool powerPortLower;
+  bool cpRotationControl;
+  String cpRotationTimeTaken;
+  bool cpPositionControl;
+  String cpPositionTimeTaken;
   bool endgamePark;
   String endgameClimb;
   //Ratings Tab
@@ -348,9 +358,11 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts,
     this.cellSuccess,
+    this.powerPortInner,
+    this.powerPortLower,
+    this.powerPortOuter,
     this.endgameClimb,
     this.endgamePark,
-
     //Ratings Tab
     this.driveRating,
     this.defenceRating,
@@ -382,6 +394,13 @@ class MatchScoutingData {
       //Tele OP Tab
       'cellAttempts': cellAttempts,
       'cellSuccess': cellSuccess,
+      'powerPortLower': powerPortLower,
+      'powerPortInner': powerPortInner,
+      'powerPortOuter': powerPortOuter,
+      'cpRotationControl': cpRotationControl,
+      'cpRotationTimeTaken': cpRotationTimeTaken,
+      'cpPositionControl': cpPositionControl,
+      'cpPositionTimeTaken': cpPositionTimeTaken,
       'endgameClimb': endgameClimb,
       'endgamePark': endgamePark,
       //RatingsTab
@@ -416,8 +435,16 @@ class MatchScoutingData {
       //Tele OP Tab
       'cellAttempts': cellAttempts,
       'cellSuccess': cellSuccess,
+      'powerPortLower': powerPortLower.toString(),
+      'powerPortInner': powerPortInner.toString(),
+      'powerPortOuter': powerPortOuter.toString(),
+      'cpRotationControl': cpRotationControl.toString(),
+      'cpRotationTimeTaken': cpRotationTimeTaken.toString(),
+      'cpPositionControl': cpPositionControl.toString(),
+      'cpPositionTimeTaken': cpPositionTimeTaken.toString(),
       'endgameClimb': endgameClimb.toString(),
       'endgamePark': endgamePark.toString(),
+
       //Ratings Tab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
@@ -449,6 +476,13 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];
+    this.powerPortLower = map['powerPortLower'].toString().toLowerCase() == 'true';
+    this.powerPortInner = map['powerPortInner'].toString().toLowerCase() == 'true';
+    this.powerPortOuter = map['powerPortOuter'].toString().toLowerCase() == 'true';
+    this.cpRotationControl = map['cpRotationControl'].toString().toLowerCase() == 'true';
+    this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
+    this.cpPositionControl = map['cpPositionControl'].toString().toLowerCase() == 'true';
+    this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
     this.endgamePark = map['endgamePark'].toString().toLowerCase() == 'true';
     this.endgameClimb = map['endgameClimb'];
     //Ratings Tab
@@ -482,6 +516,13 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];
+    this.powerPortLower = map['powerPortLower'];
+    this.powerPortInner = map['powerPortInner'];
+    this.powerPortOuter = map['powerPortOuter'];
+    this.cpRotationControl = map['cpRotationControl'];
+    this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
+    this.cpPositionControl = map['cpPositionControl'];
+    this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
     this.endgamePark = map['endgamePark'];
     this.endgameClimb = map['endgameClimb'];
     //Ratings Tab
@@ -516,6 +557,15 @@ class MatchScoutingData {
     //Tele OP Tab
     data['"cellAttempts"'] = this.cellAttempts;
     data['"cellSuccess"'] = this.cellSuccess;
+    data['"powerPortLower"'] = '"' + this.powerPortLower.toString() + '"';
+    data['"powerPortInner"'] = '"' + this.powerPortInner.toString() + '"';
+    data['"powerPortOuter"'] = '"' + this.powerPortOuter.toString() + '"';
+    data['"cpRotationControl"'] = '"' + this.cpRotationControl.toString() + '"';
+    data['"cpRotationTimeTaken"'] = '"' + this.cpRotationTimeTaken.toString() + '"';
+    data['"cpPositionControl"'] = '"' + this.cpPositionControl.toString() + '"';
+    data['"cpPositionTimeTaken"'] = '"' + this.cpPositionTimeTaken.toString() + '"';
+    data['"endgamePark"'] = '"' + this.endgamePark.toString() + '"';
+    data['"endgameClimb"'] = '"' + this.endgameClimb.toString() + '"';
     //Ratings Tab
     data['"driveRating"'] = '"' + this.driveRating.toString() + '"';
     data['"defenceRating"'] = '"' + this.defenceRating.toString() + '"';

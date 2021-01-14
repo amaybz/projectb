@@ -51,16 +51,22 @@ class _MyHomePageState extends State<MyHomePage> {
   String _downloadingText = "Please select Location and Event to download data";
 
   String locationDropDown;
+  String selectedYear = "2021";
   final List<String> _locations = [
-    //'Australia',
+    'Australia',
     'Canada',
     'China',
-    //'Chinese Taipei',
-    //'Israel',
+    'Chinese Taipei',
+    'Israel',
     'Mexico',
-    //'Taiwan',
-    //'Turkey',
+    'Taiwan',
+    'Turkey',
     'USA',
+  ];
+
+  final List<String> _year = [
+    '2020',
+    '2021'
   ];
 
   //used to store all events from API
@@ -80,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     //get events from API
-    updateEventsFromAPI();
+    updateEventsFromAPI(selectedYear);
     //update device name from local db
     getDeviceName();
     setLocalEvent();
@@ -129,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //Update current Device Name
     updateDeviceName();
     //update Events from API
-    await updateEventsFromAPI();
+    await updateEventsFromAPI(selectedYear);
     //update teams if event is selected
     if (selectedEvent.key != null) {
       await getEventTeamsFromAPI(selectedEvent.key);
@@ -164,11 +170,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  Future<void> updateEventsFromAPI() async {
+  Future<void> updateEventsFromAPI(String year) async {
     //print(await localDB.listEvents());
     //print(await localDB.listScoringData());
     //gets all events from API
-    allEvents = await webAPI.getEventsByYear(2021);
+    allEvents = await webAPI.getEventsByYear(year);
 
     //setEventItems();
   }
@@ -220,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     //get events based on location
     if (allEvents == null) {
-      updateEventsFromAPI();
+      updateEventsFromAPI(selectedYear);
     }
     eventsForLocation =
         allEvents.where((i) => i.country == locationDropDown).toList();
@@ -316,6 +322,34 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: TextField(
                         controller: _txtDeviceName,
+                      ),
+                    ),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 100,
+                      child: Text("Year: "),
+                    ),
+                    Expanded(
+                      child: DropdownButton<String>(
+                        hint: Text('Please select Year'),
+                        value: selectedYear,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            selectedYear = newValue;
+                            locationDropDown = null;
+                            selectedEvent = null;
+                          });
+                          updateEventsFromAPI(selectedYear);
+                        },
+                        items: _year.map((location) {
+                          return DropdownMenuItem(
+                            child: new Text(location),
+                            value: location,
+                          );
+                        }).toList(),
                       ),
                     ),
                   ]),

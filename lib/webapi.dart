@@ -9,7 +9,7 @@ class WebAPI {
       "k9w9nJeu045mBGHOIQNIN5mL9Uii2QK6nanQdsMDvMfuMcenbxL6nL4X6cNeW0lb";
   final String strAPILink = "https://www.thebluealliance.com/api/v3/";
 
-  Future<List<EventData>> getEventsByYear(int year) async {
+  Future<List<EventData>> getEventsByYear(String year) async {
     List<EventData> events;
     var headers = {'X-TBA-Auth-Key': strAPIKey};
     var request = http.Request(

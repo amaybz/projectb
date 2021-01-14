@@ -63,10 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'USA',
   ];
 
-  final List<String> _year = [
-    '2020',
-    '2021'
-  ];
+  final List<String> _year = ['2020', '2021'];
 
   //used to store all events from API
   List<EventData> allEvents;
@@ -95,21 +92,22 @@ class _MyHomePageState extends State<MyHomePage> {
     String savedEventKey = await mySharedPrefs.readStr("currentEvent");
     List<LocalEvent> listSelectedLocalEvents =
         await localDB.getEvent(savedEventKey);
-    List<LocalTeam> listSelectedLocalTeams =    await localDB.listLocalTeams();
+    List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
 
     setState(() {
       selectedLocalEvent = listSelectedLocalEvents.first;
-      _countOfTeams = listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      _countOfTeams =
+          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
     print("LocalEvent: " + selectedLocalEvent.key);
 
     if (eventTeams == null) {
-        print("No Teams");
+      print("No Teams");
     } else {
-
       localDB.clearLocalTeams();
-      for(TeamsList team in eventTeams) {
-        LocalTeam insertTeam = LocalTeam(key: team.key,
+      for (TeamsList team in eventTeams) {
+        LocalTeam insertTeam = LocalTeam(
+            key: team.key,
             name: team.name,
             nickName: team.nickname,
             teamNumber: team.teamNumber.toString());
@@ -120,11 +118,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void downloadData() async {
-        if(await Permission.storage.status == PermissionStatus.granted) {
+    if (await Permission.storage.status == PermissionStatus.granted) {
       print(await Permission.storage.status);
-    }
-    else
-    {
+    } else {
       print(await Permission.storage.status);
       await Permission.storage.request();
     }
@@ -145,7 +141,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _downloadingData = 2;
     });
-
   }
 
   void updateDeviceName() async {
@@ -207,8 +202,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _downloadingText = "Please select Location and Event to download data";
       });
       localDB.clearLocalTeams();
-      for(TeamsList team in eventTeams) {
-        LocalTeam insertTeam = LocalTeam(key: team.key,
+      for (TeamsList team in eventTeams) {
+        LocalTeam insertTeam = LocalTeam(
+            key: team.key,
             name: team.name,
             nickName: team.nickname,
             teamNumber: team.teamNumber.toString());
@@ -264,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      drawer: Drawer (
+      drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -292,168 +288,169 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-
       ),
-      body: ListView (children: [
-
-
-      Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 100,
-                      child: Text("Device Name: "),
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: _txtDeviceName,
-                      ),
-                    ),
-                  ]),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 100,
-                      child: Text("Year: "),
-                    ),
-                    Expanded(
-                      child: DropdownButton<String>(
-                        hint: Text('Please select Year'),
-                        value: selectedYear,
-                        onChanged: (String newValue) {
-                          setState(() {
-                            selectedYear = newValue;
-                            locationDropDown = null;
-                            selectedEvent = null;
-                          });
-                          updateEventsFromAPI(selectedYear);
-                        },
-                        items: _year.map((location) {
-                          return DropdownMenuItem(
-                            child: new Text(location),
-                            value: location,
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ]),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 100,
-                      child: Text("Location: "),
-                    ),
-                    Expanded(
-                      child: DropdownButton<String>(
-                        hint: Text('Please choose a location'),
-                        value: locationDropDown,
-                        onChanged: (String newValue) {
-                          setState(() {
-                            locationDropDown = newValue;
-                          });
-                          setEventItems();
-                        },
-                        items: _locations.map((location) {
-                          return DropdownMenuItem(
-                            child: new Text(location),
-                            value: location,
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ]),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 100,
-                      child: Text("Event: "),
-                    ),
-                    Expanded(
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        hint: Text('Please choose a event'),
-                        value: selectedEvent == null ? null : selectedEvent.key,
-                        onChanged: (item) {
-                          setState(() {
-                            selectedEvent = eventsForLocation.firstWhere(
-                                (loc) => loc.key == item,
-                                orElse: () => eventsForLocation.first);
-                          });
-                          print("Key: " + selectedEvent.key.toString());
-                          getEventTeamsFromAPI(selectedEvent.key);
-                        },
-                        items: eventListDropDown,
-                      ),
-                    ),
-                  ]),
-              LoadingImage(
-                state: _downloadingData,
-                text: _downloadingText,
-              ),
-              FractionallySizedBox(
-                widthFactor: 0.99,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 800.0),
-                    child: Container(
-                      margin: const EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blueAccent),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                      ),
-                      padding: EdgeInsets.all(4.0),
-                      child: Column(
-                        children: [
-                          Text("Selected Event:"),
-                          //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
-                          Text(selectedLocalEvent == null
-                              ? "none"
-                              : selectedLocalEvent.name),
-                          Text("Teams Loaded: " + _countOfTeams.toString()),
-
-                        ],
+      body: ListView(
+        children: [
+          Center(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 100,
+                          child: Text("Device Name: "),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: _txtDeviceName,
+                          ),
+                        ),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 100,
+                          child: Text("Year: "),
+                        ),
+                        Expanded(
+                          child: DropdownButton<String>(
+                            hint: Text('Please select Year'),
+                            value: selectedYear,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                selectedYear = newValue;
+                                locationDropDown = null;
+                                selectedEvent = null;
+                              });
+                              updateEventsFromAPI(selectedYear);
+                            },
+                            items: _year.map((location) {
+                              return DropdownMenuItem(
+                                child: new Text(location),
+                                value: location,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 100,
+                          child: Text("Location: "),
+                        ),
+                        Expanded(
+                          child: DropdownButton<String>(
+                            hint: Text('Please choose a location'),
+                            value: locationDropDown,
+                            onChanged: (String newValue) {
+                              setState(() {
+                                locationDropDown = newValue;
+                              });
+                              setEventItems();
+                            },
+                            items: _locations.map((location) {
+                              return DropdownMenuItem(
+                                child: new Text(location),
+                                value: location,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 100,
+                          child: Text("Event: "),
+                        ),
+                        Expanded(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            hint: Text('Please choose a event'),
+                            value: selectedEvent == null
+                                ? null
+                                : selectedEvent.key,
+                            onChanged: (item) {
+                              setState(() {
+                                selectedEvent = eventsForLocation.firstWhere(
+                                    (loc) => loc.key == item,
+                                    orElse: () => eventsForLocation.first);
+                              });
+                              print("Key: " + selectedEvent.key.toString());
+                              getEventTeamsFromAPI(selectedEvent.key);
+                            },
+                            items: eventListDropDown,
+                          ),
+                        ),
+                      ]),
+                  LoadingImage(
+                    state: _downloadingData,
+                    text: _downloadingText,
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: 0.99,
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 800.0),
+                        child: Container(
+                          margin: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10)),
+                          ),
+                          padding: EdgeInsets.all(4.0),
+                          child: Column(
+                            children: [
+                              Text("Selected Event:"),
+                              //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
+                              Text(selectedLocalEvent == null
+                                  ? "none"
+                                  : selectedLocalEvent.name),
+                              Text("Teams Loaded: " + _countOfTeams.toString()),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: FlatButton(
+                      child: Text("Set Event"),
+                      onPressed: () {
+                        updateDeviceName();
+                        if (selectedEvent != null) {
+                          mySharedPrefs.saveStr(
+                              "currentEvent", selectedEvent.key);
+                          setLocalEvent();
+                        }
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: FlatButton(
-                  child: Text("Set Event"),
-                  onPressed: () {
-                    updateDeviceName();
-                    if (selectedEvent != null) {
-                      mySharedPrefs.saveStr("currentEvent", selectedEvent.key);
-                      setLocalEvent();
-                    }
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
-      ],),
       floatingActionButton: FloatingActionButton(
         onPressed: downloadData,
         tooltip: 'Download Data from API',

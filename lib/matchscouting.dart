@@ -36,6 +36,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool recordSaved = false;
   int recordID;
 
+  int _selectedTab = 0;
+
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
@@ -56,6 +58,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     doesAuto: false,
     leaveLine: false,
     endgamePark: false,
+    powerPortInner: false,
+    powerPortLower: false,
+    powerPortOuter: false,
   );
 
   //Ratings Tab variables
@@ -71,8 +76,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   bool _shootingNearZone = false;
   bool _shootingMidZone = false;
   bool _shootingFarZone = false;
-  //String _selectedDriveRating;
-  //String _selectedDefenceRating;
 
   List<String> _listDriveStation = [
     'none',
@@ -98,8 +101,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     'Loading',
     'Other',
   ];
-
-  int _selectedTab = 0;
 
   //style
   double styleFieldWidth = 99.0;
@@ -825,8 +826,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 1) {
       return TeleOpScreen(
+        powerPortInner: matchScoutingData.powerPortInner,
+        powerPortLower: matchScoutingData.powerPortLower,
+        powerPortOuter: matchScoutingData.powerPortOuter,
         endgamePark: matchScoutingData.endgamePark,
         endgameClimb: matchScoutingData.endgameClimb,
+        cpRotationControl: matchScoutingData.cpRotationControl,
+        cpRotationTimeTaken: matchScoutingData.cpRotationTimeTaken,
+        cpPositionControl: matchScoutingData.cpPositionControl,
+        cpPositionTimeTaken: matchScoutingData.cpPositionTimeTaken,
         onCellAttemptsChanged: (int value) {
           setState(() {
             matchScoutingData.cellAttempts = value;
@@ -845,6 +853,21 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         },
         onEndgameClimbChanged: (String value) {
           matchScoutingData.endgameClimb = value;
+        },
+        onPowerPortOuterChanged: (bool value) {
+          setState(() {
+            matchScoutingData.powerPortOuter = value;
+          });
+        },
+        onPowerPortInnerChanged: (bool value) {
+          setState(() {
+            matchScoutingData.powerPortInner = value;
+          });
+        },
+        onPowerPortLowerChanged: (bool value) {
+          setState(() {
+            matchScoutingData.powerPortLower = value;
+          });
         },
       );
     }

@@ -45,33 +45,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   final List<String> _listAlliance = ['Red', 'Blue'];
 
-  MatchScoutingData matchScoutingData = MatchScoutingData(
-    robotFail: false,
-    yellowCard: false,
-    redCard: false,
-    operational: false,
-    energised: false,
-    loseStartObject: false,
-    contactWithRobot: false,
-    crossSector: false,
-    foul: false,
-    doesAuto: false,
-    leaveLine: false,
-    powerPortInner: false,
-    powerPortLower: false,
-    powerPortOuter: false,
-    cpRotationControl: false,
-    cpPositionControl: false,
-    endgamePark: false,
-    endgameBalance: false,
-    endgameBalanceCorrection: false,
-    endgameFall: false,
-    cellAttempts: 0,
-    cellSuccess: 0,
-    cpPanelAttempts: 0,
-    cpPanelSuccess: 0,
-    endgameBuddies: 0,
-  );
+  MatchScoutingData matchScoutingData = MatchScoutingData( );
 
   //Ratings Tab variables
   bool _assistOtherRobot = false;
@@ -254,33 +228,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   clearMatchScoutingData() {
     setState(() {
       matchScoutingData = null;
-      matchScoutingData = MatchScoutingData(
-        robotFail: false,
-        yellowCard: false,
-        redCard: false,
-        operational: false,
-        energised: false,
-        loseStartObject: false,
-        contactWithRobot: false,
-        crossSector: false,
-        foul: false,
-        doesAuto: false,
-        leaveLine: false,
-        powerPortInner: false,
-        powerPortLower: false,
-        powerPortOuter: false,
-        cpRotationControl: false,
-        cpPositionControl: false,
-        endgamePark: false,
-        endgameBalance: false,
-        endgameBalanceCorrection: false,
-        endgameFall: false,
-        cellAttempts: 0,
-        cellSuccess: 0,
-        cpPanelAttempts: 0,
-        cpPanelSuccess: 0,
-        endgameBuddies: 0,
-      );
+      matchScoutingData = MatchScoutingData();
     });
   }
 

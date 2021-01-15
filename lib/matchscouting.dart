@@ -45,8 +45,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   final List<String> _listAlliance = ['Red', 'Blue'];
 
-
-    MatchScoutingData matchScoutingData = MatchScoutingData(
+  MatchScoutingData matchScoutingData = MatchScoutingData(
     robotFail: false,
     yellowCard: false,
     redCard: false,
@@ -62,6 +61,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     powerPortInner: false,
     powerPortLower: false,
     powerPortOuter: false,
+    cpRotationControl: false,
+    cpPositionControl: false,
   );
 
   //Ratings Tab variables
@@ -158,7 +159,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       });
     }
   }
-
 
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
@@ -262,6 +262,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         powerPortInner: false,
         powerPortLower: false,
         powerPortOuter: false,
+        cpRotationControl: false,
+        cpPositionControl: false,
       );
     });
   }

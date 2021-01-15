@@ -57,6 +57,8 @@ class LocalDB {
       "cpRotationTimeTaken TEXT,"
       "cpPositionControl TEXT,"
       "cpPositionTimeTaken TEXT,"
+      "cpPanelAttempts INTEGER,"
+      "cpPanelSuccess INTEGER,"
       "endgamePark TEXT,"
       "endgameClimb TEXT,"
       "endgameTimeToGrip TEXT,"
@@ -337,6 +339,8 @@ class MatchScoutingData {
   String cpRotationTimeTaken;
   bool cpPositionControl;
   String cpPositionTimeTaken;
+  int cpPanelAttempts;
+  int cpPanelSuccess;
   bool endgamePark;
   String endgameClimb;
   String endgameTimeToGrip;
@@ -380,6 +384,12 @@ class MatchScoutingData {
     this.powerPortInner,
     this.powerPortLower,
     this.powerPortOuter,
+    this.cpRotationControl,
+    this.cpRotationTimeTaken,
+    this.cpPositionControl,
+    this.cpPositionTimeTaken,
+    this.cpPanelAttempts,
+    this.cpPanelSuccess,
     this.endgameClimb,
     this.endgamePark,
     this.endgameTimeToGrip,
@@ -428,6 +438,8 @@ class MatchScoutingData {
       'cpRotationTimeTaken': cpRotationTimeTaken,
       'cpPositionControl': cpPositionControl,
       'cpPositionTimeTaken': cpPositionTimeTaken,
+      'cpPanelAttempts': cpPanelAttempts,
+      'cpPanelSuccess': cpPanelSuccess,
       'endgamePark': endgamePark,
       'endgameClimb': endgameClimb,
       'endgameTimeToGrip': endgameTimeToGrip,
@@ -478,6 +490,8 @@ class MatchScoutingData {
       'cpRotationTimeTaken': cpRotationTimeTaken.toString(),
       'cpPositionControl': cpPositionControl.toString(),
       'cpPositionTimeTaken': cpPositionTimeTaken.toString(),
+      'cpPanelAttempts': cpPanelAttempts,
+      'cpPanelSuccess': cpPanelSuccess,
       'endgamePark': endgamePark.toString(),
       'endgameClimb': endgameClimb.toString(),
       'endgameTimeToGrip': endgameTimeToGrip.toString(),
@@ -533,6 +547,8 @@ class MatchScoutingData {
     this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
     this.cpPositionControl =
         map['cpPositionControl'].toString().toLowerCase() == 'true';
+    this.cpPanelAttempts = map['cpPanelAttempts'];
+    this.cpPanelSuccess = map['cpPanelSuccess'];
     this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
     this.endgamePark = map['endgamePark'].toString().toLowerCase() == 'true';
     this.endgameClimb = map['endgameClimb'];
@@ -582,6 +598,8 @@ class MatchScoutingData {
     this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
     this.cpPositionControl = map['cpPositionControl'];
     this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
+    this.cpPanelAttempts = map['cpPanelAttempts'];
+    this.cpPanelSuccess = map['cpPanelSuccess'];
     this.endgamePark = map['endgamePark'];
     this.endgameClimb = map['endgameClimb'];
     this.endgameTimeToGrip = map['endgameTimeToGrip'];
@@ -632,6 +650,8 @@ class MatchScoutingData {
     data['"cpPositionControl"'] = '"' + this.cpPositionControl.toString() + '"';
     data['"cpPositionTimeTaken"'] =
         '"' + this.cpPositionTimeTaken.toString() + '"';
+    data['"cpPanelAttempts"'] = this.cpPanelAttempts;
+    data['"cpPanelSuccess"'] = this.cpPanelSuccess;
     data['"endgamePark"'] = '"' + this.endgamePark.toString() + '"';
     data['"endgameClimb"'] = '"' + this.endgameClimb.toString() + '"';
     data['"endgameTimeToGrip"'] = '"' + this.endgameTimeToGrip.toString() + '"';

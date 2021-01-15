@@ -38,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
@@ -127,7 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
     //display downloading icon
     setState(() {
       _downloadingData = 1;
-      _counter++;
     });
     //Update current Device Name
     updateDeviceName();

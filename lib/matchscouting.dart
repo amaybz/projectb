@@ -225,15 +225,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         false;
   }
 
-  clearMatchScoutingData() {
-    setState(() {
-      matchScoutingData = null;
-      matchScoutingData = MatchScoutingData();
-    });
-  }
+
 
   void clearMatch() async {
-    clearMatchScoutingData();
     mySharedPrefs.saveInt("CellAttempts", 0);
     mySharedPrefs.saveInt("CellSuccess", 0);
     mySharedPrefs.saveInt("PenalAttempts", 0);
@@ -249,6 +243,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     mySharedPrefs.saveBool("selectedBalanceCorrection", false);
     mySharedPrefs.saveBool("selectedFall", false);
     setState(() {
+      matchScoutingData = null;
+      matchScoutingData = MatchScoutingData();
       _selectedTab = 0;
       _txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
@@ -285,7 +281,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     print("Record Saved: " + recordSaved.toString());
     print("Record ID: " + this.recordID.toString());
-    //END TESTING CODE
   }
 
   void handleMenuClick(String value) async {

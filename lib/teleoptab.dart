@@ -56,14 +56,11 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<bool> onEndgameBalanceCorrectionChanged;
   final ValueChanged<bool> onEndgameFallChanged;
 
-
   @override
   _TeleOpScreenState createState() => _TeleOpScreenState();
 }
 
 class _TeleOpScreenState extends State<TeleOpScreen> {
-
-
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
 
   @override
@@ -74,8 +71,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   }
 
   updateValuesFromSP() async {
-
-
     setState(() {
       intPenalAttempts = widget.matchScoutingData.cpPanelAttempts;
       intPenalSuccess = widget.matchScoutingData.cpPanelSuccess;
@@ -138,7 +133,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       intPenalAttempts = intPenalAttempts - 1;
       widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
-
   }
 
   _increasePenalSuccess() async {
@@ -148,7 +142,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       widget.onCPPanelSuccessChanged(intPenalSuccess);
       widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
-
   }
 
   _decreasePenalSuccess() async {
@@ -156,7 +149,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       intPenalSuccess = intPenalSuccess - 1;
       widget.onCPPanelSuccessChanged(intPenalSuccess);
     });
-
   }
 
   _increaseCellAttempts() async {
@@ -174,7 +166,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   }
 
   _updateCellAttempts(int value) {
-
     setState(() {
       intCellAttempts = value;
       widget.onCellAttemptsChanged(intCellAttempts);
@@ -373,12 +364,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               children: [
                                 Text("Rotation Control:"),
                                 Switch(
-                                    value: widget.matchScoutingData.cpRotationControl,
+                                    value: widget
+                                        .matchScoutingData.cpRotationControl,
                                     onChanged: (value) {
                                       mySharedPrefs.saveBool(
                                           "selectedRotationControl", value);
                                       setState(() {
-                                        widget.onCPRotationControlChanged(value);
+                                        widget
+                                            .onCPRotationControlChanged(value);
                                       });
                                     }),
                               ]),
@@ -415,7 +408,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             styleFontSize: styleFontSizeBody,
                             onIncreaseStateChanged: (int increase) {
                               _increasePenalSuccess();
-
                             },
                             onDecreaseStateChanged: (int decrease) {
                               _decreasePenalSuccess();
@@ -435,16 +427,19 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               children: [
                                 Text("Position Control:"),
                                 Switch(
-                                    value: widget.matchScoutingData.cpPositionControl,
+                                    value: widget
+                                        .matchScoutingData.cpPositionControl,
                                     onChanged: (value) {
                                       setState(() {
-                                        widget.onCPPositionControlChanged(value);
+                                        widget
+                                            .onCPPositionControlChanged(value);
                                       });
                                     }),
                               ]),
                           Row(children: [
                             DropDownWidget(
-                              value: widget.matchScoutingData.cpPositionTimeTaken,
+                              value:
+                                  widget.matchScoutingData.cpPositionTimeTaken,
                               title: "Time Taken",
                               list: listTime,
                               styleFieldWidth: styleTimeTakenWidth,
@@ -534,7 +529,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownWidget(
-                      value: widget.matchScoutingData.endgameTimeFromGripToClimb,
+                      value:
+                          widget.matchScoutingData.endgameTimeFromGripToClimb,
                       title: "Time from Grip to Climb",
                       list: listTime,
                       styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -555,7 +551,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownWidget(
-                        value: widget.matchScoutingData.endgamePreferredPosition,
+                        value:
+                            widget.matchScoutingData.endgamePreferredPosition,
                         title: "Preferred Position",
                         list: listPositions,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -565,23 +562,23 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     CounterWidget(
-                      value: intBuddies,
+                      value: widget.matchScoutingData.endgameBuddies,
                       title: 'Buddies',
                       onIncreaseStateChanged: (int value) {
                         setState(() {
                           intBuddies = intBuddies + 1;
+                          widget.onEndgameBuddiesChanged(intBuddies);
                         });
-                        mySharedPrefs.saveInt("intBuddies", intBuddies);
                       },
                       onDecreaseStateChanged: (int value) {
                         setState(() {
                           intBuddies = intBuddies - 1;
+                          widget.onEndgameBuddiesChanged(intBuddies);
                         });
-                        mySharedPrefs.saveInt("intBuddies", intBuddies);
                       },
                       onSetValue: (int value) {
                         intBuddies = value;
-                        mySharedPrefs.saveInt("intBuddies", intBuddies);
+                        widget.onEndgameBuddiesChanged(intBuddies);
                       },
                     ),
                     Row(
@@ -592,7 +589,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               value: widget.matchScoutingData.endgameBalance,
                               onChanged: (bool value) {
                                 setState(() {
-                                  widget.onEndgameBalanceChanged(value) ;
+                                  widget.onEndgameBalanceChanged(value);
                                 });
                               }),
                         ]),
@@ -601,10 +598,12 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Balance Correction:"),
                           Switch(
-                              value: widget.matchScoutingData.endgameBalanceCorrection,
+                              value: widget
+                                  .matchScoutingData.endgameBalanceCorrection,
                               onChanged: (bool value) {
                                 setState(() {
-                                  widget.onEndgameBalanceCorrectionChanged(value) ;
+                                  widget
+                                      .onEndgameBalanceCorrectionChanged(value);
                                 });
                               }),
                         ]),

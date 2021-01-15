@@ -9,13 +9,8 @@ class TeleOpScreen extends StatefulWidget {
     Key key,
     this.matchScoutingData,
     //onchange
-    this.onBuddiesChanged,
     this.onCellAttemptsChanged,
     this.onCellSuccessChanged,
-    this.onPenalAttemptsChanged,
-    this.onPenalSuccessChanged,
-    this.onEndgameParkChanged,
-    this.onEndgameClimbChanged,
     this.onPowerPortInnerChanged,
     this.onPowerPortLowerChanged,
     this.onPowerPortOuterChanged,
@@ -23,25 +18,44 @@ class TeleOpScreen extends StatefulWidget {
     this.onCPRotationTimeTakenChange,
     this.onCPPositionControlChanged,
     this.onCPPositionTimeTakenChange,
+    this.onCPPanelAttemptsChanged,
+    this.onCPPanelSuccessChanged,
+    this.onEndgameParkChanged,
+    this.onEndgameClimbChanged,
+    this.onEndgameTimeToGripChanged,
+    this.onEndgameTimeFromGripToClimbChanged,
+    this.onEndgameOutcomeChanged,
+    this.onEndgamePreferredPositionChanged,
+    this.onEndgameBuddiesChanged,
+    this.onEndgameBalanceChanged,
+    this.onEndgameBalanceCorrectionChanged,
+    this.onEndgameFallChanged,
   }) : super(key: key);
 
-
   final MatchScoutingData matchScoutingData;
-
+  //onchange
   final ValueChanged<bool> onPowerPortLowerChanged;
   final ValueChanged<bool> onPowerPortInnerChanged;
   final ValueChanged<bool> onPowerPortOuterChanged;
   final ValueChanged<int> onCellAttemptsChanged;
   final ValueChanged<int> onCellSuccessChanged;
-  final ValueChanged<int> onPenalAttemptsChanged;
-  final ValueChanged<int> onPenalSuccessChanged;
-  final ValueChanged<int> onBuddiesChanged;
-  final ValueChanged<bool> onEndgameParkChanged;
-  final ValueChanged<String> onEndgameClimbChanged;
   final ValueChanged<bool> onCPRotationControlChanged;
   final ValueChanged<String> onCPRotationTimeTakenChange;
-final ValueChanged<bool> onCPPositionControlChanged;
-final ValueChanged<String> onCPPositionTimeTakenChange;
+  final ValueChanged<bool> onCPPositionControlChanged;
+  final ValueChanged<String> onCPPositionTimeTakenChange;
+  final ValueChanged<int> onCPPanelAttemptsChanged;
+  final ValueChanged<int> onCPPanelSuccessChanged;
+  final ValueChanged<bool> onEndgameParkChanged;
+  final ValueChanged<String> onEndgameClimbChanged;
+  final ValueChanged<String> onEndgameTimeToGripChanged;
+  final ValueChanged<String> onEndgameTimeFromGripToClimbChanged;
+  final ValueChanged<String> onEndgameOutcomeChanged;
+  final ValueChanged<String> onEndgamePreferredPositionChanged;
+  final ValueChanged<int> onEndgameBuddiesChanged;
+  final ValueChanged<bool> onEndgameBalanceChanged;
+  final ValueChanged<bool> onEndgameBalanceCorrectionChanged;
+  final ValueChanged<bool> onEndgameFallChanged;
+
 
   @override
   _TeleOpScreenState createState() => _TeleOpScreenState();
@@ -66,34 +80,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     intPenalAttempts = await mySharedPrefs.readInt("PenalAttempts");
     intPenalSuccess = await mySharedPrefs.readInt("PenalSuccess");
     intBuddies = await mySharedPrefs.readInt("intBuddies");
-    selectedLower = await mySharedPrefs.readBool("selectedLower");
-    selectedOuter = await mySharedPrefs.readBool("selectedOuter");
-    selectedInner = await mySharedPrefs.readBool("selectedInner");
-    selectedRotationControl =
-        await mySharedPrefs.readBool("selectedRotationControl");
-    selectedPositionControl =
-        await mySharedPrefs.readBool("selectedPositionControl");
-    selectedPark = await mySharedPrefs.readBool("selectedPark");
-    selectedBalance = await mySharedPrefs.readBool("selectedBalance");
-    selectedBalanceCorrection =
-        await mySharedPrefs.readBool("selectedBalanceCorrection");
-    selectedFall = await mySharedPrefs.readBool("selectedFall");
     setState(() {
       _txtCellAttempts.text = intCellAttempts.toString();
       _txtCellSuccess.text = intCellSuccess.toString();
     });
   }
 
-  //Switch Varibles
-  bool selectedOuter = false;
-  bool selectedInner = false;
-  bool selectedLower = false;
-  bool selectedRotationControl = false;
-  bool selectedPositionControl = false;
-  bool selectedPark = false;
-  bool selectedBalance = false;
-  bool selectedBalanceCorrection = false;
-  bool selectedFall = false;
+
 
   //counters
   int intCellAttempts = 0;
@@ -103,13 +96,12 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intBuddies = 0;
 
   //drop down var
-  String _selectedClimb;
   String _selectedTimeToGrip;
   String _selectedTimeFromGripToClimb;
   String _selectedOutcome;
   String _selectedPreferredPosition;
   String _selectedTimeTakenRotation;
-  String _selectedTimeTakenPosition;
+
 
   //lists
   final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
@@ -355,9 +347,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         Switch(
                             value: widget.matchScoutingData.powerPortLower,
                             onChanged: (value) {
-                              mySharedPrefs.saveBool("selectedLower", value);
                               setState(() {
-                                selectedLower = value;
                                 widget.onPowerPortLowerChanged(value);
                               });
                             }),
@@ -398,108 +388,107 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                        Text("Rotation Control:"),
-                        Switch(
-                            value: selectedRotationControl,
-                            onChanged: (value) {
-                              mySharedPrefs.saveBool(
-                                  "selectedRotationControl", value);
-                              setState(() {
-                                selectedRotationControl = value;
-                              });
-                            }),
-                      ]),
-                      DropDownWidget(
-                          value: _selectedTimeTakenRotation,
-                          title: "Time Taken",
-                          list: listTime,
-                        styleFieldWidth: styleTimeTakenWidth,
-                        onStateChanged: (String newValue) {
-                          setState(() {
-                            _selectedTimeTakenRotation = newValue;
-                          });
-                        },),
-                      CounterWidget(
-                        value: intPenalAttempts,
-                        title: "Panel Attempts",
-                        styleFontSize: styleFontSizeBody,
-                        onIncreaseStateChanged: (int increase) {
-                          _increasePenalAttempts();
-                        },
-                        onDecreaseStateChanged: (int decrease) {
-                          _decreasePenalAttempts();
-                        },
-                        onSetValue: (int value) {
-                          intPenalAttempts = value;
-                          mySharedPrefs.saveInt(
-                              "PenalAttempts", intPenalAttempts);
-                        },
-                      ),
-                      CounterWidget(
-                        value: intPenalSuccess,
-                        title: "Panel Success",
-                        styleFontSize: styleFontSizeBody,
-                        onIncreaseStateChanged: (int increase) {
-                          _increasePenalSuccess();
-                        },
-                        onDecreaseStateChanged: (int decrease) {
-                          _decreasePenalSuccess();
-                        },
-                        onSetValue: (int value) {
-                          intPenalSuccess = value;
-                          mySharedPrefs.saveInt(
-                              "PenalSuccess", intPenalSuccess);
-                        },
-                      ),
-                    ]),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                        Text("Position Control:"),
-                        Switch(
-                            value: selectedPositionControl,
-                            onChanged: (value) {
-                              mySharedPrefs.saveBool(
-                                  "selectedPositionControl", value);
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Rotation Control:"),
+                                Switch(
+                                    value: widget.matchScoutingData.cpRotationControl,
+                                    onChanged: (value) {
+                                      mySharedPrefs.saveBool(
+                                          "selectedRotationControl", value);
+                                      setState(() {
+                                        widget.onCPRotationControlChanged(value);
+                                      });
+                                    }),
+                              ]),
+                          DropDownWidget(
+                            value: _selectedTimeTakenRotation,
+                            title: "Time Taken",
+                            list: listTime,
+                            styleFieldWidth: styleTimeTakenWidth,
+                            onStateChanged: (String newValue) {
                               setState(() {
-                                selectedPositionControl = value;
+                                _selectedTimeTakenRotation = newValue;
                               });
-                            }),
-                      ]),
-                      Row(children: [
-                        DropDownWidget(
-                          value: _selectedTimeTakenPosition,
-                          title: "Time Taken",
-                          list: listTime,
-                          styleFieldWidth: styleTimeTakenWidth,
-                          onStateChanged: (String newValue) {
-                            setState(() {
-                              _selectedTimeTakenPosition = newValue;
-                            });
-                          },
-                        ),
-                      ]),
-                      SizedBox(
-                        width: styleImgFieldWidth,
-                        height: (styleImgFieldWidth * 0.5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              //border: Border.all(color: Colors.grey),
-                              //color: Colors.white,
-                              ),
-                          child: Image.asset("assets/imgs/tele.png"),
-                        ),
-                      ),
-                    ]),
+                            },
+                          ),
+                          CounterWidget(
+                            value: intPenalAttempts,
+                            title: "Panel Attempts",
+                            styleFontSize: styleFontSizeBody,
+                            onIncreaseStateChanged: (int increase) {
+                              _increasePenalAttempts();
+                            },
+                            onDecreaseStateChanged: (int decrease) {
+                              _decreasePenalAttempts();
+                            },
+                            onSetValue: (int value) {
+                              intPenalAttempts = value;
+                              mySharedPrefs.saveInt(
+                                  "PenalAttempts", intPenalAttempts);
+                            },
+                          ),
+                          CounterWidget(
+                            value: intPenalSuccess,
+                            title: "Panel Success",
+                            styleFontSize: styleFontSizeBody,
+                            onIncreaseStateChanged: (int increase) {
+                              _increasePenalSuccess();
+                            },
+                            onDecreaseStateChanged: (int decrease) {
+                              _decreasePenalSuccess();
+                            },
+                            onSetValue: (int value) {
+                              intPenalSuccess = value;
+                              mySharedPrefs.saveInt(
+                                  "PenalSuccess", intPenalSuccess);
+                            },
+                          ),
+                        ]),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text("Position Control:"),
+                                Switch(
+                                    value: widget.matchScoutingData.cpPositionControl,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        widget.onCPPositionControlChanged(value);
+                                      });
+                                    }),
+                              ]),
+                          Row(children: [
+                            DropDownWidget(
+                              value: widget.matchScoutingData.cpPositionTimeTaken,
+                              title: "Time Taken",
+                              list: listTime,
+                              styleFieldWidth: styleTimeTakenWidth,
+                              onStateChanged: (String value) {
+                                setState(() {
+                                  widget.onCPPositionTimeTakenChange(value);
+                                });
+                              },
+                            ),
+                          ]),
+                          SizedBox(
+                            width: styleImgFieldWidth,
+                            height: (styleImgFieldWidth * 0.5),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  //border: Border.all(color: Colors.grey),
+                                  //color: Colors.white,
+                                  ),
+                              child: Image.asset("assets/imgs/tele.png"),
+                            ),
+                          ),
+                        ]),
                   ]),
             ),
           ]),
@@ -623,12 +612,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Balance:"),
                           Switch(
-                              value: selectedBalance,
-                              onChanged: (value) {
-                                mySharedPrefs.saveBool(
-                                    "selectedBalance", value);
+                              value: widget.matchScoutingData.endgameBalance,
+                              onChanged: (bool value) {
                                 setState(() {
-                                  selectedBalance = value;
+                                  widget.onEndgameBalanceChanged(value) ;
                                 });
                               }),
                         ]),
@@ -637,12 +624,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Balance Correction:"),
                           Switch(
-                              value: selectedBalanceCorrection,
-                              onChanged: (value) {
-                                mySharedPrefs.saveBool(
-                                    "selectedBalanceCorrection", value);
+                              value: widget.matchScoutingData.endgameBalanceCorrection,
+                              onChanged: (bool value) {
                                 setState(() {
-                                  selectedBalanceCorrection = value;
+                                  widget.onEndgameBalanceCorrectionChanged(value) ;
                                 });
                               }),
                         ]),
@@ -651,11 +636,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Fall:"),
                           Switch(
-                              value: selectedFall,
-                              onChanged: (value) {
-                                mySharedPrefs.saveBool("selectedFall", value);
+                              value: widget.matchScoutingData.endgameFall,
+                              onChanged: (bool value) {
                                 setState(() {
-                                  selectedFall = value;
+                                  widget.onEndgameFallChanged(value);
                                 });
                               }),
                         ]),

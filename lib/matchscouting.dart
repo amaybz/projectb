@@ -57,12 +57,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     foul: false,
     doesAuto: false,
     leaveLine: false,
-    endgamePark: false,
     powerPortInner: false,
     powerPortLower: false,
     powerPortOuter: false,
     cpRotationControl: false,
     cpPositionControl: false,
+    endgamePark: false,
+    endgameBalance: false,
+    endgameBalanceCorrection: false,
+    endgameFall: false,
   );
 
   //Ratings Tab variables
@@ -258,12 +261,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         foul: false,
         doesAuto: false,
         leaveLine: false,
-        endgamePark: false,
         powerPortInner: false,
         powerPortLower: false,
         powerPortOuter: false,
         cpRotationControl: false,
         cpPositionControl: false,
+        endgamePark: false,
+        endgameBalance: false,
+        endgameBalanceCorrection: false,
+        endgameFall: false,
       );
     });
   }
@@ -868,6 +874,46 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         onPowerPortLowerChanged: (bool value) {
           setState(() {
             matchScoutingData.powerPortLower = value;
+          });
+        },
+        onEndgameTimeToGripChanged: (String value) {
+          setState(() {
+            matchScoutingData.endgameTimeToGrip = value;
+          });
+        },
+        onEndgameTimeFromGripToClimbChanged: (String value) {
+          setState(() {
+            matchScoutingData.endgameTimeFromGripToClimb = value;
+          });
+        },
+        onEndgameOutcomeChanged: (String value) {
+          setState(() {
+            matchScoutingData.endgameOutcome = value;
+          });
+        },
+        onEndgamePreferredPositionChanged: (String value) {
+          setState(() {
+            matchScoutingData.endgamePreferredPosition = value;
+          });
+        },
+        onEndgameBuddiesChanged: (int value) {
+          setState(() {
+            matchScoutingData.endgameBuddies = value;
+          });
+        },
+        onEndgameBalanceChanged: (bool value) {
+          setState(() {
+            matchScoutingData.endgameBalance = value;
+          });
+        },
+        onEndgameBalanceCorrectionChanged: (bool value) {
+          setState(() {
+            matchScoutingData.endgameBalanceCorrection = value;
+          });
+        },
+        onEndgameFallChanged: (bool value) {
+          setState(() {
+            matchScoutingData.endgameFall = value;
           });
         },
       );

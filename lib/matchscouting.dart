@@ -876,6 +876,36 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.powerPortLower = value;
           });
         },
+        onCPRotationControlChanged: (bool value) {
+          setState(() {
+            matchScoutingData.cpRotationControl = value;
+          });
+        },
+        onCPRotationTimeTakenChange: (String value) {
+          setState(() {
+            matchScoutingData.cpRotationTimeTaken = value;
+          });
+        },
+        onCPPositionControlChanged: (bool value) {
+          setState(() {
+            matchScoutingData.cpPositionControl = value;
+          });
+        },
+        onCPPositionTimeTakenChange: (String value) {
+          setState(() {
+            matchScoutingData.cpPositionTimeTaken = value;
+          });
+        },
+        onCPPanelAttemptsChanged: (int value) {
+          setState(() {
+            matchScoutingData.cpPanelAttempts = value;
+          });
+        },
+        onCPPanelSuccessChanged: (int value) {
+          setState(() {
+            matchScoutingData.cpPanelSuccess = value;
+          });
+        },
         onEndgameTimeToGripChanged: (String value) {
           setState(() {
             matchScoutingData.endgameTimeToGrip = value;

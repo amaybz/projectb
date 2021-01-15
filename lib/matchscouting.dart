@@ -45,7 +45,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   final List<String> _listAlliance = ['Red', 'Blue'];
 
-  MatchScoutingData matchScoutingData = MatchScoutingData(
+
+    MatchScoutingData matchScoutingData = MatchScoutingData(
     robotFail: false,
     yellowCard: false,
     redCard: false,
@@ -158,6 +159,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
+
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
     Widget cancelButton = FlatButton(
@@ -241,7 +243,31 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         false;
   }
 
+  clearMatchScoutingData() {
+    setState(() {
+      matchScoutingData = null;
+      matchScoutingData = MatchScoutingData(
+        robotFail: false,
+        yellowCard: false,
+        redCard: false,
+        operational: false,
+        energised: false,
+        loseStartObject: false,
+        contactWithRobot: false,
+        crossSector: false,
+        foul: false,
+        doesAuto: false,
+        leaveLine: false,
+        endgamePark: false,
+        powerPortInner: false,
+        powerPortLower: false,
+        powerPortOuter: false,
+      );
+    });
+  }
+
   void clearMatch() async {
+    clearMatchScoutingData();
     mySharedPrefs.saveInt("CellAttempts", 0);
     mySharedPrefs.saveInt("CellSuccess", 0);
     mySharedPrefs.saveInt("PenalAttempts", 0);
@@ -261,25 +287,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
       selectedTeam = null;
-      matchScoutingData.startingCells = 0;
-      matchScoutingData.matchNumber = 0;
-      matchScoutingData.driveStation = null;
-      matchScoutingData.robotPosition = null;
-      matchScoutingData.facing = null;
-      matchScoutingData.driveRating = null;
-      matchScoutingData.defenceRating = null;
-      matchScoutingData.alliance = null;
-      matchScoutingData.robotFail = false;
-      matchScoutingData.yellowCard = false;
-      matchScoutingData.redCard = false;
-      matchScoutingData.operational = false;
-      matchScoutingData.energised = false;
-      matchScoutingData.loseStartObject = false;
-      matchScoutingData.contactWithRobot = false;
-      matchScoutingData.crossSector = false;
-      matchScoutingData.foul = false;
-      matchScoutingData.doesAuto = false;
-      matchScoutingData.leaveLine = false;
       _assistOtherRobot = false;
       _workedWithAlliance = false;
       _workedToStrategy = false;
@@ -826,15 +833,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 1) {
       return TeleOpScreen(
-        powerPortInner: matchScoutingData.powerPortInner,
-        powerPortLower: matchScoutingData.powerPortLower,
-        powerPortOuter: matchScoutingData.powerPortOuter,
-        endgamePark: matchScoutingData.endgamePark,
-        endgameClimb: matchScoutingData.endgameClimb,
-        cpRotationControl: matchScoutingData.cpRotationControl,
-        cpRotationTimeTaken: matchScoutingData.cpRotationTimeTaken,
-        cpPositionControl: matchScoutingData.cpPositionControl,
-        cpPositionTimeTaken: matchScoutingData.cpPositionTimeTaken,
+        matchScoutingData: matchScoutingData,
         onCellAttemptsChanged: (int value) {
           setState(() {
             matchScoutingData.cellAttempts = value;

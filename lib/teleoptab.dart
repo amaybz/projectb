@@ -1,32 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/dropdown_widget.dart';
+import 'package:projectb/localdb.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/counter_widget.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
     Key key,
-    this.intBuddies,
-    this.intPenalSuccess,
-    this.intCellSuccess,
-    this.intCellAttempts,
-    this.intPenalAttempts,
-    this.powerPortLower,
-    this.powerPortInner,
-    this.powerPortOuter,
-    this.cpRotationControl,
-    this.cpRotationTimeTaken,
-    this.cpPositionControl,
-    this.cpPositionTimeTaken,
-    this.endgameBalance,
-    this.endgameBalanceCorrection,
-    this.endgameClimb,
-    this.endgameFall,
-    this.endgameOutcome,
-    this.endgamePark,
-    this.endgamePreferredPosition,
-    this.endgameTimeFromGripToClimb,
-    this.endgameTimeToGrip,
+    this.matchScoutingData,
     //onchange
     this.onBuddiesChanged,
     this.onCellAttemptsChanged,
@@ -45,27 +26,7 @@ class TeleOpScreen extends StatefulWidget {
   }) : super(key: key);
 
 
-  final int intCellAttempts;
-  final int intCellSuccess;
-  final int intPenalAttempts;
-  final int intPenalSuccess;
-  final int intBuddies;
-  final bool powerPortLower;
-  final bool powerPortInner;
-  final bool powerPortOuter;
-  final bool cpRotationControl;
-  final String cpRotationTimeTaken;
-  final bool cpPositionControl;
-  final String cpPositionTimeTaken;
-  final bool endgamePark;
-  final String endgameClimb;
-  final String endgameTimeToGrip;
-  final String endgameTimeFromGripToClimb;
-  final String endgameOutcome;
-  final String endgamePreferredPosition;
-  final bool endgameBalance;
-  final bool endgameBalanceCorrection;
-  final bool endgameFall;
+  final MatchScoutingData matchScoutingData;
 
   final ValueChanged<bool> onPowerPortLowerChanged;
   final ValueChanged<bool> onPowerPortInnerChanged;
@@ -370,7 +331,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Outer"),
                         Switch(
-                            value: widget.powerPortOuter,
+                            value: widget.matchScoutingData.powerPortOuter,
                             onChanged: (value) {
                               mySharedPrefs.saveBool("selectedOuter", value);
                               setState(() {
@@ -381,7 +342,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Inner"),
                         Switch(
-                            value: widget.powerPortInner,
+                            value: widget.matchScoutingData.powerPortInner,
                             onChanged: (value) {
                               mySharedPrefs.saveBool("selectedInner", value);
                               setState(() {
@@ -392,7 +353,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       Row(children: [
                         Text("Lower"),
                         Switch(
-                            value: widget.powerPortLower,
+                            value: widget.matchScoutingData.powerPortLower,
                             onChanged: (value) {
                               mySharedPrefs.saveBool("selectedLower", value);
                               setState(() {
@@ -578,7 +539,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Park:"),
                           Switch(
-                              value: widget.endgamePark,
+                              value: widget.matchScoutingData.endgamePark,
                               onChanged: (value) {
                                 mySharedPrefs.saveBool("selectedPark", value);
                                 setState(() {
@@ -587,7 +548,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               }),
                         ]),
                     DropDownWidget(
-                        value: widget.endgameClimb,
+                        value: widget.matchScoutingData.endgameClimb,
                         title: "Climb",
                         list: listSuccessFailNA,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,

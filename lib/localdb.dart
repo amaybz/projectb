@@ -63,12 +63,11 @@ class LocalDB {
       "defenceRating TEXT"
       ")";
 
-
   // Make this a singleton class.
   LocalDB._privateConstructor();
   static final LocalDB instance = LocalDB._privateConstructor();
 
-  void  _createTables(Database db, int version) async {
+  void _createTables(Database db, int version) async {
     await db.execute(createTblEvents);
     await db.execute(createTblScoringData);
     await db.execute(createTblDevice);
@@ -332,10 +331,18 @@ class MatchScoutingData {
   String cpPositionTimeTaken;
   bool endgamePark;
   String endgameClimb;
+  String endgameTimeToGrip;
+  String endgameTimeFromGripToClimb;
+  String endgameOutcome;
+  String endgamePreferredPosition;
+  int endgameBuddies;
+  bool endgameBalance;
+  bool endgameBalanceCorrection;
+  bool endgameFall;
+
   //Ratings Tab
   String driveRating;
   String defenceRating;
-
 
   MatchScoutingData({
     this.id,
@@ -367,6 +374,14 @@ class MatchScoutingData {
     this.powerPortOuter,
     this.endgameClimb,
     this.endgamePark,
+    this.endgameTimeToGrip,
+    this.endgameTimeFromGripToClimb,
+    this.endgameOutcome,
+    this.endgamePreferredPosition,
+    this.endgameBuddies,
+    this.endgameBalance,
+    this.endgameBalanceCorrection,
+    this.endgameFall,
     //Ratings Tab
     this.driveRating,
     this.defenceRating,
@@ -405,8 +420,17 @@ class MatchScoutingData {
       'cpRotationTimeTaken': cpRotationTimeTaken,
       'cpPositionControl': cpPositionControl,
       'cpPositionTimeTaken': cpPositionTimeTaken,
-      'endgameClimb': endgameClimb,
       'endgamePark': endgamePark,
+      'endgameClimb': endgameClimb,
+      'endgameTimeToGrip': endgameTimeToGrip,
+      'endgameTimeFromGripToClimb': endgameTimeFromGripToClimb,
+      'endgameOutcome': endgameOutcome,
+      'endgamePreferredPosition': endgamePreferredPosition,
+      'endgameBuddies': endgameBuddies,
+      'endgameBalance': endgameBalance,
+      'endgameBalanceCorrection': endgameBalanceCorrection,
+      'endgameFall': endgameFall,
+
       //RatingsTab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
@@ -429,7 +453,7 @@ class MatchScoutingData {
       'redCard': redCard.toString(),
       'yellowCard': yellowCard.toString(),
       'energised': energised.toString(),
-       //Auto Tab
+      //Auto Tab
       'loseStartObject': loseStartObject.toString(),
       'contactWithRobot': contactWithRobot.toString(),
       'crossSector': crossSector.toString(),
@@ -446,14 +470,22 @@ class MatchScoutingData {
       'cpRotationTimeTaken': cpRotationTimeTaken.toString(),
       'cpPositionControl': cpPositionControl.toString(),
       'cpPositionTimeTaken': cpPositionTimeTaken.toString(),
-      'endgameClimb': endgameClimb.toString(),
       'endgamePark': endgamePark.toString(),
-
+      'endgameClimb': endgameClimb.toString(),
+      'endgameTimeToGrip': endgameTimeToGrip.toString(),
+      'endgameTimeFromGripToClimb': endgameTimeFromGripToClimb.toString(),
+      'endgameOutcome': endgameOutcome.toString(),
+      'endgamePreferredPosition': endgamePreferredPosition.toString(),
+      'endgameBuddies': endgameBuddies,
+      'endgameBalance': endgameBalance.toString(),
+      'endgameBalanceCorrection': endgameBalanceCorrection.toString(),
+      'endgameFall': endgameFall.toString(),
       //Ratings Tab
       'driveRating': driveRating,
       'defenceRating': defenceRating,
     };
   }
+
   MatchScoutingData.fromLocalDB(Map<String, dynamic> map) {
     this.id = map['id'];
     this.team = map['team'];
@@ -470,9 +502,11 @@ class MatchScoutingData {
     this.redCard = map['redCard'].toString().toLowerCase() == 'true';
     this.yellowCard = map['yellowCard'].toString().toLowerCase() == 'true';
     this.energised = map['energised'].toString().toLowerCase() == 'true';
-   //Auto Tab
-    this.loseStartObject = map['loseStartObject'].toString().toLowerCase() == 'true';
-    this.contactWithRobot = map['contactWithRobot'].toString().toLowerCase() == 'true';
+    //Auto Tab
+    this.loseStartObject =
+        map['loseStartObject'].toString().toLowerCase() == 'true';
+    this.contactWithRobot =
+        map['contactWithRobot'].toString().toLowerCase() == 'true';
     this.crossSector = map['crossSector'].toString().toLowerCase() == 'true';
     this.foul = map['foul'].toString().toLowerCase() == 'true';
     this.doesAuto = map['doesAuto'].toString().toLowerCase() == 'true';
@@ -480,15 +514,28 @@ class MatchScoutingData {
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];
-    this.powerPortLower = map['powerPortLower'].toString().toLowerCase() == 'true';
-    this.powerPortInner = map['powerPortInner'].toString().toLowerCase() == 'true';
-    this.powerPortOuter = map['powerPortOuter'].toString().toLowerCase() == 'true';
-    this.cpRotationControl = map['cpRotationControl'].toString().toLowerCase() == 'true';
+    this.powerPortLower =
+        map['powerPortLower'].toString().toLowerCase() == 'true';
+    this.powerPortInner =
+        map['powerPortInner'].toString().toLowerCase() == 'true';
+    this.powerPortOuter =
+        map['powerPortOuter'].toString().toLowerCase() == 'true';
+    this.cpRotationControl =
+        map['cpRotationControl'].toString().toLowerCase() == 'true';
     this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
-    this.cpPositionControl = map['cpPositionControl'].toString().toLowerCase() == 'true';
+    this.cpPositionControl =
+        map['cpPositionControl'].toString().toLowerCase() == 'true';
     this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
     this.endgamePark = map['endgamePark'].toString().toLowerCase() == 'true';
     this.endgameClimb = map['endgameClimb'];
+    this.endgameTimeToGrip = map['endgameTimeToGrip'];
+    this.endgameTimeFromGripToClimb = map['endgameTimeFromGripToClimb'];
+    this.endgameOutcome = map['endgameOutcome'];
+    this.endgamePreferredPosition = map['endgamePreferredPosition'];
+    this.endgameBuddies = map['endgameBuddies'];
+    this.endgameBalance = map['endgameBalance'].toString().toLowerCase() == 'true';
+    this.endgameBalanceCorrection = map['endgameBalanceCorrection'].toString().toLowerCase() == 'true';
+    this.endgameFall = map['endgameFall'].toString().toLowerCase() == 'true';
     //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
@@ -529,10 +576,17 @@ class MatchScoutingData {
     this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
     this.endgamePark = map['endgamePark'];
     this.endgameClimb = map['endgameClimb'];
+    this.endgameTimeToGrip = map['endgameTimeToGrip'];
+    this.endgameTimeFromGripToClimb = map['endgameTimeFromGripToClimb'];
+    this.endgameOutcome = map['endgameOutcome'];
+    this.endgamePreferredPosition = map['endgamePreferredPosition'];
+    this.endgameBuddies = map['endgameBuddies'];
+    this.endgameBalance = map['endgameBalance'];
+    this.endgameBalanceCorrection = map['endgameBalanceCorrection'];
+    this.endgameFall = map['endgameFall'];
     //Ratings Tab
     this.driveRating = map['driveRating'];
     this.defenceRating = map['defenceRating'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -540,7 +594,7 @@ class MatchScoutingData {
     data['"id"'] = this.id;
     data['"team"'] = '"' + this.team.toString() + '"';
     data['"scoutName"'] = '"' + this.scoutName.toString() + '"';
-    data['"alliance"'] =  '"' + this.alliance.toString() + '"';
+    data['"alliance"'] = '"' + this.alliance.toString() + '"';
     data['"driveStation"'] = '"' + this.driveStation.toString() + '"';
     data['"facing"'] = '"' + this.facing.toString() + '"';
     data['"matchNumber"'] = this.matchNumber;
@@ -565,11 +619,21 @@ class MatchScoutingData {
     data['"powerPortInner"'] = '"' + this.powerPortInner.toString() + '"';
     data['"powerPortOuter"'] = '"' + this.powerPortOuter.toString() + '"';
     data['"cpRotationControl"'] = '"' + this.cpRotationControl.toString() + '"';
-    data['"cpRotationTimeTaken"'] = '"' + this.cpRotationTimeTaken.toString() + '"';
+    data['"cpRotationTimeTaken"'] =
+        '"' + this.cpRotationTimeTaken.toString() + '"';
     data['"cpPositionControl"'] = '"' + this.cpPositionControl.toString() + '"';
-    data['"cpPositionTimeTaken"'] = '"' + this.cpPositionTimeTaken.toString() + '"';
+    data['"cpPositionTimeTaken"'] =
+        '"' + this.cpPositionTimeTaken.toString() + '"';
     data['"endgamePark"'] = '"' + this.endgamePark.toString() + '"';
     data['"endgameClimb"'] = '"' + this.endgameClimb.toString() + '"';
+    data['"endgameTimeToGrip"'] = '"' + this.endgameTimeToGrip.toString() + '"';
+    data['"endgameTimeFromGripToClimb"'] = '"' + this.endgameTimeFromGripToClimb.toString() + '"';
+    data['"endgameOutcome"'] = '"' + this.endgameOutcome.toString() + '"';
+    data['"endgamePreferredPosition"'] = '"' + this.endgamePreferredPosition.toString() + '"';
+    data['"endgameBuddies"'] = this.endgameBuddies;
+    data['"endgameBalance"'] = '"' + this.endgameBalance.toString() + '"';
+    data['"endgameBalanceCorrection"'] = '"' + this.endgameBalanceCorrection.toString() + '"';
+    data['"endgameFall"'] = '"' + this.endgameFall.toString() + '"';
     //Ratings Tab
     data['"driveRating"'] = '"' + this.driveRating.toString() + '"';
     data['"defenceRating"'] = '"' + this.defenceRating.toString() + '"';
@@ -592,7 +656,6 @@ class MatchScoutingData {
         'startingCells: $startingCells, '
         '}';
   }
-
 }
 
 class DeviceName {

@@ -66,6 +66,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     endgameBalance: false,
     endgameBalanceCorrection: false,
     endgameFall: false,
+    cellAttempts: 0,
+    cellSuccess: 0,
+    cpPanelAttempts: 0,
+    cpPanelSuccess: 0,
+    endgameBuddies: 0,
   );
 
   //Ratings Tab variables
@@ -270,6 +275,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         endgameBalance: false,
         endgameBalanceCorrection: false,
         endgameFall: false,
+        cellAttempts: 0,
+        cellSuccess: 0,
+        cpPanelAttempts: 0,
+        cpPanelSuccess: 0,
+        endgameBuddies: 0,
       );
     });
   }

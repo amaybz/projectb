@@ -62,8 +62,7 @@ class TeleOpScreen extends StatefulWidget {
 }
 
 class _TeleOpScreenState extends State<TeleOpScreen> {
-  final TextEditingController _txtCellAttempts = TextEditingController();
-  final TextEditingController _txtCellSuccess = TextEditingController();
+
 
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
 
@@ -75,18 +74,16 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   }
 
   updateValuesFromSP() async {
-    intCellAttempts = await mySharedPrefs.readInt("CellAttempts");
-    intCellSuccess = await mySharedPrefs.readInt("CellSuccess");
-    intPenalAttempts = await mySharedPrefs.readInt("PenalAttempts");
-    intPenalSuccess = await mySharedPrefs.readInt("PenalSuccess");
-    intBuddies = await mySharedPrefs.readInt("intBuddies");
+
+
     setState(() {
-      _txtCellAttempts.text = intCellAttempts.toString();
-      _txtCellSuccess.text = intCellSuccess.toString();
+      intPenalAttempts = widget.matchScoutingData.cpPanelAttempts;
+      intPenalSuccess = widget.matchScoutingData.cpPanelSuccess;
+      intBuddies = widget.matchScoutingData.endgameBuddies;
+      intCellAttempts = widget.matchScoutingData.cellAttempts;
+      intCellSuccess = widget.matchScoutingData.cellSuccess;
     });
   }
-
-
 
   //counters
   int intCellAttempts = 0;
@@ -94,14 +91,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intPenalAttempts = 0;
   int intPenalSuccess = 0;
   int intBuddies = 0;
-
-  //drop down var
-  String _selectedTimeToGrip;
-  String _selectedTimeFromGripToClimb;
-  String _selectedOutcome;
-  String _selectedPreferredPosition;
-  String _selectedTimeTakenRotation;
-
 
   //lists
   final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
@@ -140,65 +129,62 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   _increasePenalAttempts() async {
     setState(() {
       intPenalAttempts = intPenalAttempts + 1;
+      widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
-    mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
   }
 
   _decreasePenalAttempts() async {
     setState(() {
       intPenalAttempts = intPenalAttempts - 1;
+      widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
-    mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
+
   }
 
   _increasePenalSuccess() async {
     setState(() {
       intPenalAttempts = intPenalAttempts + 1;
       intPenalSuccess = intPenalSuccess + 1;
+      widget.onCPPanelSuccessChanged(intPenalSuccess);
+      widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
-    mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
-    mySharedPrefs.saveInt("PenalAttempts", intPenalAttempts);
+
   }
 
   _decreasePenalSuccess() async {
     setState(() {
       intPenalSuccess = intPenalSuccess - 1;
+      widget.onCPPanelSuccessChanged(intPenalSuccess);
     });
-    mySharedPrefs.saveInt("PenalSuccess", intPenalSuccess);
+
   }
 
   _increaseCellAttempts() async {
     intCellAttempts = intCellAttempts + 1;
-    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
     setState(() {
-      _txtCellAttempts.text = intCellAttempts.toString();
       widget.onCellAttemptsChanged(intCellAttempts);
     });
   }
 
   _decreaseCellAttempts() async {
-    intCellAttempts = intCellAttempts - 1;
-    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
     setState(() {
-      _txtCellAttempts.text = intCellAttempts.toString();
+      intCellAttempts = intCellAttempts - 1;
       widget.onCellAttemptsChanged(intCellAttempts);
     });
   }
 
   _updateCellAttempts(int value) {
-    intCellAttempts = value;
-    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
-    widget.onCellAttemptsChanged(intCellAttempts);
+
+    setState(() {
+      intCellAttempts = value;
+      widget.onCellAttemptsChanged(intCellAttempts);
+    });
   }
 
   _increaseCellSuccess() async {
     intCellSuccess = intCellSuccess + 1;
     intCellAttempts = intCellAttempts + 1;
-    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
-    mySharedPrefs.saveInt("CellAttempts", intCellAttempts);
     setState(() {
-      _txtCellSuccess.text = intCellSuccess.toString();
-      _txtCellAttempts.text = intCellAttempts.toString();
       widget.onCellSuccessChanged(intCellSuccess);
       widget.onCellAttemptsChanged(intCellAttempts);
     });
@@ -206,9 +192,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   _decreaseCellSuccess() async {
     intCellSuccess = intCellSuccess - 1;
-    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
     setState(() {
-      _txtCellSuccess.text = intCellSuccess.toString();
       widget.onCellSuccessChanged(intCellSuccess);
     });
   }
@@ -222,12 +206,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    if (_txtCellAttempts.text == "") {
-      _txtCellAttempts.text = "0";
-    }
-    if (_txtCellSuccess.text == "") {
-      _txtCellSuccess.text = "0";
-    }
 
     if (width < 500) {
       styleFieldCellsWidth = 38.0;
@@ -405,13 +383,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                     }),
                               ]),
                           DropDownWidget(
-                            value: _selectedTimeTakenRotation,
+                            value: widget.matchScoutingData.cpRotationTimeTaken,
                             title: "Time Taken",
                             list: listTime,
                             styleFieldWidth: styleTimeTakenWidth,
-                            onStateChanged: (String newValue) {
+                            onStateChanged: (String value) {
                               setState(() {
-                                _selectedTimeTakenRotation = newValue;
+                                widget.onCPRotationTimeTakenChange(value);
                               });
                             },
                           ),
@@ -432,19 +410,19 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             },
                           ),
                           CounterWidget(
-                            value: intPenalSuccess,
+                            value: widget.matchScoutingData.cpPanelSuccess,
                             title: "Panel Success",
                             styleFontSize: styleFontSizeBody,
                             onIncreaseStateChanged: (int increase) {
                               _increasePenalSuccess();
+
                             },
                             onDecreaseStateChanged: (int decrease) {
                               _decreasePenalSuccess();
                             },
                             onSetValue: (int value) {
                               intPenalSuccess = value;
-                              mySharedPrefs.saveInt(
-                                  "PenalSuccess", intPenalSuccess);
+                              widget.onCPPanelSuccessChanged(value);
                             },
                           ),
                         ]),
@@ -530,7 +508,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           Switch(
                               value: widget.matchScoutingData.endgamePark,
                               onChanged: (value) {
-                                mySharedPrefs.saveBool("selectedPark", value);
                                 setState(() {
                                   widget.onEndgameParkChanged(value);
                                 });
@@ -547,44 +524,44 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownWidget(
-                        value: _selectedTimeToGrip,
+                        value: widget.matchScoutingData.endgameTimeToGrip,
                         title: "Time to Grip",
                         list: listTime,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String newValue) {
+                        onStateChanged: (String value) {
                           setState(() {
-                            _selectedTimeToGrip = newValue;
+                            widget.onEndgameTimeToGripChanged(value);
                           });
                         }),
                     DropDownWidget(
-                      value: _selectedTimeFromGripToClimb,
+                      value: widget.matchScoutingData.endgameTimeFromGripToClimb,
                       title: "Time from Grip to Climb",
                       list: listTime,
                       styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                      onStateChanged: (String newValue) {
+                      onStateChanged: (String value) {
                         setState(() {
-                          _selectedTimeFromGripToClimb = newValue;
+                          widget.onEndgameTimeFromGripToClimbChanged(value);
                         });
                       },
                     ),
                     DropDownWidget(
-                        value: _selectedOutcome,
+                        value: widget.matchScoutingData.endgameOutcome,
                         title: "Outcome",
                         list: listOutcomes,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String newValue) {
+                        onStateChanged: (String value) {
                           setState(() {
-                            _selectedOutcome = newValue;
+                            widget.onEndgameOutcomeChanged(value);
                           });
                         }),
                     DropDownWidget(
-                        value: _selectedPreferredPosition,
+                        value: widget.matchScoutingData.endgamePreferredPosition,
                         title: "Preferred Position",
                         list: listPositions,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                         onStateChanged: (String newValue) {
                           setState(() {
-                            _selectedPreferredPosition = newValue;
+                            widget.onEndgamePreferredPositionChanged(newValue);
                           });
                         }),
                     CounterWidget(

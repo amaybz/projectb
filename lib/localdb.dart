@@ -7,7 +7,7 @@ import 'webapi.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 17;
+  static final _databaseVersion = 18;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -57,8 +57,16 @@ class LocalDB {
       "cpRotationTimeTaken TEXT,"
       "cpPositionControl TEXT,"
       "cpPositionTimeTaken TEXT,"
-      "endgameClimb TEXT,"
       "endgamePark TEXT,"
+      "endgameClimb TEXT,"
+      "endgameTimeToGrip TEXT,"
+      "endgameTimeFromGripToClimb TEXT,"
+      "endgameOutcome TEXT,"
+      "endgamePreferredPosition TEXT,"
+      "endgameBuddies INTEGER,"
+      "endgameBalance TEXT,"
+      "endgameBalanceCorrection TEXT,"
+      "endgameFall TEXT,"
       "driveRating TEXT,"
       "defenceRating TEXT"
       ")";

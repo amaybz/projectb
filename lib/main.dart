@@ -94,11 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
 
     setState(() {
-      selectedLocalEvent = listSelectedLocalEvents.first;
+      selectedLocalEvent = listSelectedLocalEvents.length > 0 ? listSelectedLocalEvents.first : null ;
       _countOfTeams =
           listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
-    print("LocalEvent: " + selectedLocalEvent.key);
+    //print("LocalEvent: " + selectedLocalEvent.key);
 
     if (eventTeams == null) {
       print("No Teams");

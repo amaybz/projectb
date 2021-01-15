@@ -67,10 +67,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   void initState() {
     super.initState();
     //get values from SharedPrefs
-    updateValuesFromSP();
+    updateValues();
   }
 
-  updateValuesFromSP() async {
+  updateValues() async {
     setState(() {
       intPenalAttempts = widget.matchScoutingData.cpPanelAttempts;
       intPenalSuccess = widget.matchScoutingData.cpPanelSuccess;

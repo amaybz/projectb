@@ -97,11 +97,18 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
     //get events based on location
     if (widget.eventTeams == null) {
-      //get teams here
-
+      //show no teams
+      setState(() {
+        eventTeamsListDropDown.add(new DropdownMenuItem(
+            value: "0",
+            child: Text(
+              "NO TEAMS for this EVENT",
+              style: TextStyle(fontSize: styleFontSize),
+            )));
+      });
     }
 
-    //update dropdown box with the new events
+    //update dropdown box with Teams
     for (LocalTeam team in widget.eventTeams) {
       setState(() {
         eventTeamsListDropDown.add(new DropdownMenuItem(
@@ -274,7 +281,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    print(width);
+    print("Screen Size: " + width.toString());
 
     if (width < 500) {
       styleFieldWidth = 111.0;

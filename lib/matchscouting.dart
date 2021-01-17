@@ -83,6 +83,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
   double styleFontSizeBody = 18;
+  double styleFontSizeHeadings = 18;
   double styleRedBoxSize = 300;
 
   LocalTeam selectedTeam;
@@ -293,6 +294,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleImgFieldWidth = 250;
       styleFieldWidthTeam = 300;
       styleFontSizeBody = 12;
+      styleFontSizeHeadings = 16;
       styleRedBoxSize = 180;
     }
     if (width < 395) {
@@ -305,6 +307,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleImgFieldWidth = 250;
       styleFieldWidthTeam = 250;
       styleFontSizeBody = 11;
+      styleFontSizeHeadings = 16;
       styleRedBoxSize = 180;
     }
     if (width >= 600) {
@@ -889,6 +892,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         child: RatingsTab(
           matchScoutingData: matchScoutingData,
           styleFontSize: styleFontSizeBody,
+          styleFontSizeHeadings: styleFontSizeHeadings,
           onShootingWallZoneChanged: (bool value) {
             //Update Value
             setState(() {

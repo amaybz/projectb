@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
+import 'package:projectb/widget_headingmain.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(
       {Key key,
       @required this.styleFontSize,
+      @required this.styleFontSizeHeadings,
       this.matchScoutingData,
       this.onAssistOtherRobotChanged,
       this.onWorkedWithAllianceChanged,
@@ -27,6 +29,7 @@ class RatingsTab extends StatefulWidget {
       : super(key: key);
 
   final double styleFontSize;
+  final double styleFontSizeHeadings;
   final MatchScoutingData matchScoutingData;
   final ValueChanged<bool> onAssistOtherRobotChanged;
   final ValueChanged<bool> onWorkedWithAllianceChanged;
@@ -69,7 +72,7 @@ class _RatingsTabState extends State<RatingsTab> {
     updateValues();
   }
 
-  updateValues (){
+  updateValues() {
     setState(() {
       _txtComments.text = widget.matchScoutingData.comments;
     });
@@ -94,15 +97,9 @@ class _RatingsTabState extends State<RatingsTab> {
             child: Container(
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    color: Colors.grey,
-                  ),
-                  child: Text(
-                    "Quick Ratings",
-                    style: TextStyle(fontSize: 18),
-                  ),
+                HeadingMain(
+                  styleFontSize: widget.styleFontSizeHeadings,
+                  headingText: "Quick Ratings",
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,7 +168,8 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.quickRatingsWorkedWithAlliance,
+                      value: widget
+                          .matchScoutingData.quickRatingsWorkedWithAlliance,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onWorkedWithAllianceChanged(value);
@@ -188,7 +186,8 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.quickRatingsWorkedToAStrategy,
+                      value: widget
+                          .matchScoutingData.quickRatingsWorkedToAStrategy,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onWorkedToStrategyChanged(value);
@@ -250,15 +249,9 @@ class _RatingsTabState extends State<RatingsTab> {
             child: Container(
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    color: Colors.grey,
-                  ),
-                  child: Text(
-                    "Intake",
-                    style: TextStyle(fontSize: 18),
-                  ),
+                HeadingMain(
+                  styleFontSize: widget.styleFontSizeHeadings,
+                  headingText: "Intake",
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -330,15 +323,9 @@ class _RatingsTabState extends State<RatingsTab> {
               child: Container(
                 padding: EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.grey,
-                    ),
-                    child: Text(
-                      "Shooting",
-                      style: TextStyle(fontSize: 18),
-                    ),
+                  HeadingMain(
+                    styleFontSize: widget.styleFontSizeHeadings,
+                    headingText: "Shooting",
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -426,15 +413,9 @@ class _RatingsTabState extends State<RatingsTab> {
               child: Container(
                 padding: EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.grey,
-                    ),
-                    child: Text(
-                      "Comments",
-                      style: TextStyle(fontSize: 18),
-                    ),
+                  HeadingMain(
+                    styleFontSize: widget.styleFontSizeHeadings,
+                    headingText: "Comments",
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -449,12 +430,10 @@ class _RatingsTabState extends State<RatingsTab> {
                             isDense: true,
                             labelStyle:
                                 TextStyle(fontSize: widget.styleFontSize),
-
                           ),
                           onChanged: (String value) {
                             widget.onCommentsChanged(value);
                           },
-
                         ),
                       ),
                     ],

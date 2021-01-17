@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:projectb/widget_headingmain.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/autotab.dart';
 import 'package:projectb/sharedprefs.dart';
@@ -178,8 +179,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   double styleFieldScoutNameMaxWidth = 300;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
-  double styleFontSizeBody = 18;
-  double styleRedBoxSize = 300;
+  double styleFontSizeBody = 15;
+  double styleFontSizeHeadings = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -188,10 +189,12 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     print("Screen Size: " + width.toString());
     if (width < 500) {
       styleFontSizeBody = 12;
+      styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 250;
     }
     if (width < 395) {
       styleFontSizeBody = 11;
+      styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 200;
     }
     if (width >= 600) {
@@ -201,106 +204,93 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-          appBar: AppBar(title: Text('Pit Scouting'), actions: <Widget>[
-            PopupMenuButton<String>(
-                onSelected: handleMenuClick,
-                itemBuilder: (BuildContext context) {
-                  return {'Clear Pit', 'Settings'}.map((String choice) {
-                    return PopupMenuItem<String>(
-                      value: choice,
-                      child: Text(choice),
-                    );
-                  }).toList();
-                }),
-          ]),
-          body: ListView(children: <Widget>[
-            FractionallySizedBox(
-              widthFactor: 0.99,
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 800.0),
-                  child: Container(
-                    margin: const EdgeInsets.all(5.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10)),
-                    ),
-                    padding: EdgeInsets.all(4.0),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Event Name: " + widget.eventName,
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Scout: ",
-                                style: TextStyle(fontSize: styleFontSizeBody),
-                              ),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(
-                                    maxWidth: styleFieldScoutNameMaxWidth),
-                                child: TextField(
-                                  controller: _txtScoutName,
-                                  decoration:
-                                      InputDecoration(hintText: 'Scout Name'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ]),
+        appBar: AppBar(title: Text('Pit Scouting'), actions: <Widget>[
+          PopupMenuButton<String>(
+              onSelected: handleMenuClick,
+              itemBuilder: (BuildContext context) {
+                return {'Clear Pit', 'Settings'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              }),
+        ]),
+        body: ListView(children: <Widget>[
+          FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 800.0),
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueAccent),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)),
                   ),
+                  padding: EdgeInsets.all(4.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Event Name: " + widget.eventName,
+                          style: TextStyle(fontSize: styleFontSizeBody),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Scout: ",
+                              style: TextStyle(fontSize: styleFontSizeBody),
+                            ),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxWidth: styleFieldScoutNameMaxWidth),
+                              child: TextField(
+                                controller: _txtScoutName,
+                                decoration:
+                                    InputDecoration(hintText: 'Scout Name'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ]),
                 ),
               ),
             ),
-
-
-    FractionallySizedBox(
-    widthFactor: 0.99,
-    child: Container(
-    margin: const EdgeInsets.all(5.0),
-    decoration: BoxDecoration(
-    border: Border.all(color: Colors.black),
-    borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(10),
-    topRight: Radius.circular(10),
-    bottomLeft: Radius.circular(10),
-    bottomRight: Radius.circular(10)),
-    ),
-    child: Container(
-      padding: EdgeInsets.all(5.0),
-      child: Column(children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            color: Colors.grey,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5),
-                topRight: Radius.circular(5),
-                bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5)),
           ),
-
-          child: Text(
-            "Robot Stats",
-            style: TextStyle(fontSize: 18),
+          FractionallySizedBox(
+            widthFactor: 0.99,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(5.0),
+                child: Column(children: <Widget>[
+                  HeadingMain(
+                    styleFontSize: styleFontSizeHeadings,
+                    headingText: "Robot Stats",
+                    //backGroundColor: Colors.green,
+                  ),
+                ]),
+              ),
+            ),
           ),
-        ),
-      ]),
-    ),),),
-
-
-          ])),
+        ]),
+      ),
     );
   }
 }

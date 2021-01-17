@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projectb/localdb.dart';
+import 'package:projectb/pitscouting.dart';
 import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
-import 'package:projectb/loadingwidget.dart';
+import 'package:projectb/widget_loading.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -269,6 +270,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ListTile(
+              title: Text('Pit Scouting'),
+              onTap: () {
+                Navigator.pop(context);
+                if (selectedLocalEvent != null) {
+                  _navigateToPitScoutingScreen(context);
+                }
+              },
+            ),
+            ListTile(
               title: Text('Match Scouting'),
               onTap: () {
                 Navigator.pop(context);
@@ -485,6 +495,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventKey: selectedLocalEvent.key,
                 eventTeams: teams,
               )),
+    );
+  }
+
+  _navigateToPitScoutingScreen(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    List<LocalTeam> teams = await localDB.listLocalTeams();
+    final result = await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(
+          builder: (context) => PitScoutingScreen(
+            eventName: selectedLocalEvent.shortName,
+            eventKey: selectedLocalEvent.key,
+            eventTeams: teams,
+          )),
     );
   }
 }

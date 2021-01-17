@@ -8,7 +8,7 @@ import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/teleoptab.dart';
-import 'package:projectb/dropdown_widget.dart';
+import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 

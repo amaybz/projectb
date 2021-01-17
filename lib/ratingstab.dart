@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/dropdown_widget.dart';
+import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
 
 class RatingsTab extends StatefulWidget {

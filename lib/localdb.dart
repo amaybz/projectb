@@ -69,8 +69,23 @@ class LocalDB {
       "endgameBalance TEXT,"
       "endgameBalanceCorrection TEXT,"
       "endgameFall TEXT,"
-      "driveRating TEXT,"
-      "defenceRating TEXT"
+      "quickRatingsDriveRating TEXT,"
+      "quickRatingsDefenceRating TEXT,"
+      "quickRatingsAssistRobot TEXT,"
+      "quickRatingsWorkedWithAlliance TEXT,"
+      "quickRatingsWorkedToAStrategy TEXT,"
+      "quickRatingsRecovered TEXT,"
+      "quickRatingsNoTeamWork TEXT,"
+      "intakeGround TEXT,"
+      "intakeHigh TEXT,"
+      "intakeOtherRobot TEXT,"
+      "shootingWall TEXT,"
+      "shootingNearZone TEXT,"
+      "shootingMidZone TEXT,"
+      "shootingFarZone TEXT,"
+      "comments TEXT,"
+      "highlightTeam ,"
+      "warning TEXT"
       ")";
 
   // Make this a singleton class.
@@ -351,10 +366,24 @@ class MatchScoutingData {
   bool endgameBalance;
   bool endgameBalanceCorrection;
   bool endgameFall;
-
   //Ratings Tab
-  String driveRating;
-  String defenceRating;
+  String quickRatingsDriveRating;
+  String quickRatingsDefenceRating;
+  bool quickRatingsAssistRobot;
+  bool quickRatingsWorkedWithAlliance;
+  bool quickRatingsWorkedToAStrategy;
+  bool quickRatingsRecovered;
+  bool quickRatingsNoTeamWork;
+  bool intakeGround;
+  bool intakeHigh;
+  bool intakeOtherRobot;
+  bool shootingWall;
+  bool shootingNearZone;
+  bool shootingMidZone;
+  bool shootingFarZone;
+  String comments;
+  bool highlightTeam;
+  bool warning;
 
   MatchScoutingData({
     this.id,
@@ -401,8 +430,23 @@ class MatchScoutingData {
     this.endgameBalanceCorrection = false,
     this.endgameFall = false,
     //Ratings Tab
-    this.driveRating,
-    this.defenceRating,
+    this.quickRatingsDriveRating,
+    this.quickRatingsDefenceRating,
+    this.quickRatingsAssistRobot = false,
+    this.quickRatingsWorkedWithAlliance = false,
+    this.quickRatingsWorkedToAStrategy = false,
+    this.quickRatingsRecovered = false,
+    this.quickRatingsNoTeamWork = false,
+    this.intakeGround = false,
+    this.intakeHigh = false,
+    this.intakeOtherRobot = false,
+    this.shootingWall = false,
+    this.shootingNearZone = false,
+    this.shootingMidZone = false,
+    this.shootingFarZone = false,
+    this.comments,
+    this.highlightTeam = false,
+    this.warning = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -450,10 +494,24 @@ class MatchScoutingData {
       'endgameBalance': endgameBalance,
       'endgameBalanceCorrection': endgameBalanceCorrection,
       'endgameFall': endgameFall,
-
       //RatingsTab
-      'driveRating': driveRating,
-      'defenceRating': defenceRating,
+      'quickRatingsDriveRating': quickRatingsDriveRating,
+      'quickRatingsDefenceRating': quickRatingsDefenceRating,
+      'quickRatingsAssistRobot': quickRatingsAssistRobot,
+      'quickRatingsWorkedWithAlliance': quickRatingsWorkedWithAlliance,
+      'quickRatingsWorkedToAStrategy': quickRatingsWorkedToAStrategy,
+      'quickRatingsRecovered': quickRatingsRecovered,
+      'quickRatingsNoTeamWork': quickRatingsNoTeamWork,
+      'intakeGround': intakeGround,
+      'intakeHigh': intakeHigh,
+      'intakeOtherRobot': intakeOtherRobot,
+      'shootingWall': shootingWall,
+      'shootingNearZone': shootingNearZone,
+      'shootingMidZone': shootingMidZone,
+      'shootingFarZone': shootingFarZone,
+      'comments': comments,
+      'highlightTeam': highlightTeam,
+      'warning': warning,
     };
   }
 
@@ -503,8 +561,23 @@ class MatchScoutingData {
       'endgameBalanceCorrection': endgameBalanceCorrection.toString(),
       'endgameFall': endgameFall.toString(),
       //Ratings Tab
-      'driveRating': driveRating,
-      'defenceRating': defenceRating,
+      'quickRatingsDriveRating': quickRatingsDriveRating,
+      'quickRatingsDefenceRating': quickRatingsDefenceRating,
+      'quickRatingsAssistRobot': quickRatingsAssistRobot.toString(),
+      'quickRatingsWorkedWithAlliance': quickRatingsWorkedWithAlliance.toString(),
+      'quickRatingsWorkedToAStrategy': quickRatingsWorkedToAStrategy.toString(),
+      'quickRatingsRecovered': quickRatingsRecovered.toString(),
+      'quickRatingsNoTeamWork': quickRatingsNoTeamWork.toString(),
+      'intakeGround': intakeGround.toString(),
+      'intakeHigh': intakeHigh.toString(),
+      'intakeOtherRobot': intakeOtherRobot.toString(),
+      'shootingWall': shootingWall.toString(),
+      'shootingNearZone': shootingNearZone.toString(),
+      'shootingMidZone': shootingMidZone.toString(),
+      'shootingFarZone': shootingFarZone.toString(),
+      'comments': comments.toString(),
+      'highlightTeam': highlightTeam.toString(),
+      'warning': warning.toString(),
     };
   }
 
@@ -561,8 +634,23 @@ class MatchScoutingData {
     this.endgameBalanceCorrection = map['endgameBalanceCorrection'].toString().toLowerCase() == 'true';
     this.endgameFall = map['endgameFall'].toString().toLowerCase() == 'true';
     //Ratings Tab
-    this.driveRating = map['driveRating'];
-    this.defenceRating = map['defenceRating'];
+    this.quickRatingsDriveRating = map['quickRatingsDriveRating'];
+    this.quickRatingsDefenceRating = map['quickRatingsDefenceRating'];
+    this.quickRatingsAssistRobot = map['quickRatingsAssistRobot'].toString().toLowerCase() == 'true';
+    this.quickRatingsWorkedWithAlliance = map['quickRatingsWorkedWithAlliance'].toString().toLowerCase() == 'true';
+    this.quickRatingsWorkedToAStrategy = map['quickRatingsWorkedToAStrategy'].toString().toLowerCase() == 'true';
+    this.quickRatingsRecovered = map['quickRatingsRecovered'].toString().toLowerCase() == 'true';
+    this.quickRatingsNoTeamWork = map['quickRatingsNoTeamWork'].toString().toLowerCase() == 'true';
+    this.intakeGround = map['intakeGround'].toString().toLowerCase() == 'true';
+    this.intakeHigh = map['intakeHigh'].toString().toLowerCase() == 'true';
+    this.intakeOtherRobot = map['intakeOtherRobot'].toString().toLowerCase() == 'true';
+    this.shootingWall = map['shootingWall'].toString().toLowerCase() == 'true';
+    this.shootingNearZone = map['shootingNearZone'].toString().toLowerCase() == 'true';
+    this.shootingMidZone = map['shootingMidZone'].toString().toLowerCase() == 'true';
+    this.shootingFarZone = map['shootingFarZone'].toString().toLowerCase() == 'true';
+    this.comments = map['comments'];
+    this.highlightTeam = map['highlightTeam'].toString().toLowerCase() == 'true';
+    this.warning = map['warning'].toString().toLowerCase() == 'true';
   }
 
   MatchScoutingData.fromMap(Map<String, dynamic> map) {
@@ -611,8 +699,23 @@ class MatchScoutingData {
     this.endgameBalanceCorrection = map['endgameBalanceCorrection'];
     this.endgameFall = map['endgameFall'];
     //Ratings Tab
-    this.driveRating = map['driveRating'];
-    this.defenceRating = map['defenceRating'];
+    this.quickRatingsDriveRating = map['quickRatingsDriveRating'];
+    this.quickRatingsDefenceRating = map['quickRatingsDefenceRating'];
+    this.quickRatingsAssistRobot = map['quickRatingsAssistRobot'];
+    this.quickRatingsWorkedWithAlliance = map['quickRatingsWorkedWithAlliance'];
+    this.quickRatingsWorkedToAStrategy = map['quickRatingsWorkedToAStrategy'];
+    this.quickRatingsRecovered = map['quickRatingsRecovered'];
+    this.quickRatingsNoTeamWork = map['quickRatingsNoTeamWork'];
+    this.intakeGround = map['intakeGround'];
+    this.intakeHigh = map['intakeHigh'];
+    this.intakeOtherRobot = map['intakeOtherRobot'];
+    this.shootingWall = map['shootingWall'];
+    this.shootingNearZone = map['shootingNearZone'];
+    this.shootingMidZone = map['shootingMidZone'];
+    this.shootingFarZone = map['shootingFarZone'];
+    this.comments = map['comments'];
+    this.highlightTeam = map['highlightTeam'];
+    this.warning = map['warning'];
   }
 
   Map<String, dynamic> toJson() {
@@ -663,8 +766,22 @@ class MatchScoutingData {
     data['"endgameBalanceCorrection"'] = '"' + this.endgameBalanceCorrection.toString() + '"';
     data['"endgameFall"'] = '"' + this.endgameFall.toString() + '"';
     //Ratings Tab
-    data['"driveRating"'] = '"' + this.driveRating.toString() + '"';
-    data['"defenceRating"'] = '"' + this.defenceRating.toString() + '"';
+    data['"quickRatingsDriveRating"'] = '"' + this.quickRatingsDriveRating.toString() + '"';
+    data['"quickRatingsDefenceRating"'] = '"' + this.quickRatingsDefenceRating.toString() + '"';
+    data['"quickRatingsAssistRobot"'] = '"' + this.quickRatingsAssistRobot.toString() + '"';
+    data['"quickRatingsWorkedWithAlliance"'] = '"' + this.quickRatingsWorkedWithAlliance.toString() + '"';
+    data['"quickRatingsWorkedToAStrategy"'] = '"' + this.quickRatingsWorkedToAStrategy.toString() + '"';
+    data['"quickRatingsRecovered"'] = '"' + this.quickRatingsRecovered.toString() + '"';
+    data['"intakeGround"'] = '"' + this.intakeGround.toString() + '"';
+    data['"intakeHigh"'] = '"' + this.intakeHigh.toString() + '"';
+    data['"intakeOtherRobot"'] = '"' + this.intakeOtherRobot.toString() + '"';
+    data['"shootingWall"'] = '"' + this.shootingWall.toString() + '"';
+    data['"shootingNearZone"'] = '"' + this.shootingNearZone.toString() + '"';
+    data['"shootingMidZone"'] = '"' + this.shootingMidZone.toString() + '"';
+    data['"shootingFarZone"'] = '"' + this.shootingFarZone.toString() + '"';
+    data['"comments"'] = '"' + this.comments.toString() + '"';
+    data['"highlightTeam"'] = '"' + this.highlightTeam.toString() + '"';
+    data['"warning"'] = '"' + this.warning.toString() + '"';
     return data;
   }
 

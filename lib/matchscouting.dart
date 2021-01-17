@@ -47,19 +47,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   MatchScoutingData matchScoutingData = MatchScoutingData( );
 
-  //Ratings Tab variables
-  bool _assistOtherRobot = false;
-  bool _workedWithAlliance = false;
-  bool _workedToStrategy = false;
-  bool _recovered = false;
-  bool _noTeamWork = false;
-  bool _highIntake = false;
-  bool _groundIntake = false;
-  bool _otherRobot = false;
-  bool _shootingWall = false;
-  bool _shootingNearZone = false;
-  bool _shootingMidZone = false;
-  bool _shootingFarZone = false;
 
   List<String> _listDriveStation = [
     'none',
@@ -249,18 +236,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
       selectedTeam = null;
-      _assistOtherRobot = false;
-      _workedWithAlliance = false;
-      _workedToStrategy = false;
-      _recovered = false;
-      _noTeamWork = false;
-      _groundIntake = false;
-      _highIntake = false;
-      _otherRobot = false;
-      _shootingWall = false;
-      _shootingNearZone = false;
-      _shootingMidZone = false;
-      _shootingFarZone = false;
+
     });
   }
 
@@ -904,104 +880,111 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 2) {
       return Container(
         child: RatingsTab(
+          matchScoutingData: matchScoutingData,
           styleFontSize: styleFontSizeBody,
-          assistOtherRobot: _assistOtherRobot,
-          selectedDriveRating: matchScoutingData.driveRating,
-          selectedDefenceRating: matchScoutingData.defenceRating,
-          workedWithAlliance: _workedWithAlliance,
-          workedToStrategy: _workedToStrategy,
-          recovered: _recovered,
-          noTeamWork: _noTeamWork,
-          highIntake: _highIntake,
-          groundIntake: _groundIntake,
-          otherRobot: _otherRobot,
-          shootingFarZone: _shootingFarZone,
-          shootingMidZone: _shootingMidZone,
-          shootingNearZone: _shootingNearZone,
-          shootingWall: _shootingWall,
           onShootingWallZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              _shootingWall = value;
+              matchScoutingData.shootingWall = value;
             });
           },
           onShootingNearZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              _shootingNearZone = value;
+              matchScoutingData.shootingNearZone = value;
             });
           },
           onShootingMidZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              _shootingMidZone = value;
+              matchScoutingData.shootingMidZone = value;
             });
           },
           onShootingFarZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              _shootingFarZone = value;
+              matchScoutingData.shootingFarZone = value;
             });
           },
           onOtherRobotChanged: (bool value) {
             //Update Value
             setState(() {
-              _otherRobot = value;
+              matchScoutingData.intakeOtherRobot = value;
             });
           },
           onHighIntakeChanged: (bool value) {
             //Update Value
             setState(() {
-              _highIntake = value;
+              matchScoutingData.intakeHigh = value;
             });
           },
           onGroundIntakeChanged: (bool value) {
             //Update Value
             setState(() {
-              _groundIntake = value;
+              matchScoutingData.intakeGround = value;
             });
           },
           onAssistOtherRobotChanged: (bool value) {
             //Update Value
             setState(() {
-              _assistOtherRobot = value;
+              matchScoutingData.quickRatingsAssistRobot = value;
             });
           },
           onSelectedDriveRatingChanged: (String value) {
             //Update Value
             setState(() {
-              matchScoutingData.driveRating = value;
+              matchScoutingData.quickRatingsDriveRating = value;
             });
           },
           onSelectedDefenceRatingChanged: (String value) {
             //Update Value
             setState(() {
-              matchScoutingData.defenceRating = value;
+              matchScoutingData.quickRatingsDefenceRating = value;
             });
           },
           onRecoveredChanged: (bool value) {
             //Update Value
             setState(() {
-              _recovered = value;
+              matchScoutingData.quickRatingsRecovered = value;
             });
           },
           onNoTeamWorkChanged: (bool value) {
             //Update Value
             setState(() {
-              _noTeamWork = value;
+              matchScoutingData.quickRatingsNoTeamWork = value;
             });
           },
           onWorkedToStrategyChanged: (bool value) {
             //Update Value
             setState(() {
-              _workedToStrategy = value;
+              matchScoutingData.quickRatingsWorkedToAStrategy = value;
             });
           },
           onWorkedWithAllianceChanged: (bool value) {
             //Update Value
             setState(() {
-              _workedWithAlliance = value;
+              matchScoutingData.quickRatingsWorkedWithAlliance = value;
             });
+          },
+          onWarningChanged: (bool value) {
+            //Update Value
+            setState(() {
+              matchScoutingData.warning = value;
+            });
+          },
+          onHighlightTeamChanged: (bool value) {
+            //Update Value
+            setState(() {
+              matchScoutingData.highlightTeam = value;
+            });
+
+          },
+          onCommentsChanged: (String value) {
+            //Update Value
+            setState(() {
+              matchScoutingData.comments = value;
+            });
+
           },
         ),
       );

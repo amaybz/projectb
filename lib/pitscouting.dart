@@ -11,7 +11,7 @@ import 'package:projectb/teleoptab.dart';
 import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/pitdataclass.dart';
+import 'package:projectb/class_pitdata.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({

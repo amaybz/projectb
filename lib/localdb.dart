@@ -2,17 +2,18 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'webapi.dart';
+import 'package:projectb/class_pitdata.dart';
 
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 18;
+  static final _databaseVersion = 19;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
   final String tblScoringData = "ScoringData";
   final String tblEventTeams = "EventTeams";
+  final String tblPitData = "PitData";
 
   final String createTblEventTeams = "CREATE TABLE IF NOT EXISTS EventTeams("
       "key TEXT PRIMARY KEY, "
@@ -87,6 +88,54 @@ class LocalDB {
       "highlightTeam ,"
       "warning TEXT"
       ")";
+  final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
+      'id INTEGER PRIMARY KEY, '
+      'txEvent TEXT,'
+      'idTeam INTEGER,'
+      'txScoutName TEXT,'
+      'numWeight INTEGER,'
+      'numHeight INTEGER,'
+      'flCells TEXT,'
+      'flIntakeGround TEXT,'
+      'flIntakeHigh TEXT,'
+      'numStorage INTEGER,'
+      'txShooting TEXT,'
+      'flTargetLow TEXT,'
+      'flTargetOuter TEXT,'
+      'flTargetInner TEXT,'
+      'flClimb TEXT,'
+      'idClimbType TEXT,'
+      'numClimbHeight INTEGER,'
+      'flClimbSecure TEXT,'
+      'idClimbGrab TEXT,'
+      'idClimbSpeed TEXT,'
+      'flClimbTilt TEXT,'
+      'txClimb TEXT,'
+      'idClimbPos TEXT,'
+      'flClimbLevel TEXT,'
+      'flClimbLevelSelf TEXT,'
+      'flClimbLevelOther TEXT,'
+      'flClimbMove TEXT,'
+      'flClimbOther TEXT,'
+      'numClimbOther INTEGER,'
+      'flPanel TEXT,'
+      'flPanelBrake TEXT,'
+      'flPanelRotation TEXT,'
+      'flPanelPos TEXT,'
+      'flPanelSensor TEXT,'
+      'txPanelSensor TEXT,'
+      'flAuto TEXT,'
+      'flAutoLine TEXT,'
+      'flAutoShoot TEXT,'
+      'numAutoShoot INTEGER,'
+      'numAutoLoad INTEGER,'
+      'txPitNotes TEXT,'
+      'dtCreation TEXT,'
+      'dtModified TEXT,'
+      'txComputerName TEXT'
+  ')';
+
+
 
   // Make this a singleton class.
   LocalDB._privateConstructor();
@@ -97,6 +146,7 @@ class LocalDB {
     await db.execute(createTblScoringData);
     await db.execute(createTblDevice);
     await db.execute(createTblEventTeams);
+    await db.execute(createTblPitData);
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -104,6 +154,7 @@ class LocalDB {
     await db.execute("DROP TABLE IF EXISTS $tblEventTeams");
     await db.execute("DROP TABLE IF EXISTS $tblEvents");
     await db.execute("DROP TABLE IF EXISTS $tblDevice");
+    await db.execute("DROP TABLE IF EXISTS $tblPitData");
     _createTables(db, newVersion);
   }
 
@@ -145,6 +196,18 @@ class LocalDB {
     int insertedID = await db.insert(
       tblScoringData,
       scoringData.toLocalDB(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return insertedID;
+  }
+
+  Future<int> insertPitData(PitData pitData) async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    int insertedID = await db.insert(
+      tblPitData,
+      pitData.toLocalDB(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return insertedID;

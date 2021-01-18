@@ -34,6 +34,7 @@ class PitScoutingScreen extends StatefulWidget {
 }
 
 class _PitScoutingScreenState extends State<PitScoutingScreen> {
+  ScrollController _scrollController = new ScrollController();
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   PitData pitData = PitData();
@@ -45,11 +46,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txClimb = TextEditingController();
   final TextEditingController txPanelSensor = TextEditingController();
 
-
-
   LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
-
 
   @override
   void initState() {
@@ -127,6 +125,19 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     );
   }
 
+  scrollDown(double amount) async {
+    // After 1 second, it takes you to the bottom of the ListView
+    double newPos = _scrollController.offset + amount;
+    Timer(
+        Duration(milliseconds: 75),
+        () => _scrollController.animateTo(
+              newPos,
+              duration: Duration(seconds: 1),
+              curve: Curves.fastOutSlowIn,
+            ));
+    print(_scrollController.position);
+  }
+
   void clearPit() async {
     setState(() {
       pitData = null;
@@ -197,7 +208,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   double styleFieldPadding = 5.0;
   double styleFieldPaddingSides = 10.0;
   double styleFieldScoutNameMaxWidth = 300;
-  double styleFieldtxShootingMaxWidth = 350;
+  double styleFieldTxShootingMaxWidth = 350;
+  double styleFieldTxClimbMaxWidth = 350;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
   double styleFontSizeBody = 15;
@@ -212,13 +224,14 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       styleFontSizeBody = 12;
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 250;
-      styleFieldtxShootingMaxWidth = 300;
+      styleFieldTxShootingMaxWidth = 250;
+      styleFieldTxClimbMaxWidth = 240;
     }
     if (width < 395) {
       styleFontSizeBody = 11;
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 200;
-      styleFieldtxShootingMaxWidth = 200;
+      styleFieldTxShootingMaxWidth = 198;
     }
     if (width >= 600) {
       styleFontSizeBody = 15;
@@ -239,334 +252,349 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 }).toList();
               }),
         ]),
-        body: ListView(children: <Widget>[
-          FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 800.0),
+        body: ListView(
+            controller: _scrollController,
+            reverse: false,
+            shrinkWrap: true,
+            children: <Widget>[
+              FractionallySizedBox(
+                widthFactor: 0.99,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 800.0),
+                    child: Container(
+                      margin: const EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blueAccent),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                      ),
+                      padding: EdgeInsets.all(4.0),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "Event Name: " + widget.eventName,
+                              style: TextStyle(fontSize: styleFontSizeBody),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Scout: ",
+                                  style: TextStyle(fontSize: styleFontSizeBody),
+                                ),
+                                ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      maxWidth: styleFieldScoutNameMaxWidth),
+                                  child: TextField(
+                                    controller: _txtScoutName,
+                                    decoration:
+                                        InputDecoration(hintText: 'Scout Name'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "Team ",
+                                    style:
+                                        TextStyle(fontSize: styleFontSizeBody),
+                                  ),
+                                  DropdownButton(
+                                    value: selectedTeam == null
+                                        ? null
+                                        : selectedTeam.key,
+                                    //title: "Team",
+                                    items: ddsEventTeams,
+                                    onChanged: (item) {
+                                      setState(() {
+                                        selectedTeam = widget.eventTeams
+                                            .firstWhere(
+                                                (team) => team.key == item,
+                                                orElse: () =>
+                                                    widget.eventTeams.first);
+                                      });
+                                      print("Team Key: " + selectedTeam.key);
+                                    },
+                                  ),
+                                ]),
+                          ]),
+                    ),
+                  ),
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: 0.99,
                 child: Container(
                   margin: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueAccent),
+                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10)),
                   ),
-                  padding: EdgeInsets.all(4.0),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Event Name: " + widget.eventName,
-                          style: TextStyle(fontSize: styleFontSizeBody),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(children: <Widget>[
+                      HeadingMain(
+                        styleFontSize: styleFontSizeHeadings,
+                        headingText: "Robot Stats",
+                        //backGroundColor: Colors.green,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text(
-                              "Scout: ",
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                            CounterWidget(
+                              value: pitData.numWeight,
+                              title: "Weight",
+                              onIncreaseStateChanged: (int value) {
+                                setState(() {
+                                  pitData.numWeight++;
+                                });
+                              },
+                              onDecreaseStateChanged: (int value) {
+                                setState(() {
+                                  pitData.numWeight--;
+                                });
+                              },
+                              onSetValue: (int value) {
+                                setState(() {
+                                  pitData.numWeight = value;
+                                });
+                              },
                             ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  maxWidth: styleFieldScoutNameMaxWidth),
-                              child: TextField(
-                                controller: _txtScoutName,
-                                decoration:
-                                    InputDecoration(hintText: 'Scout Name'),
-                              ),
+                            CounterWidget(
+                              value: pitData.numHeight,
+                              title: "Height",
+                              onIncreaseStateChanged: (int value) {
+                                setState(() {
+                                  pitData.numHeight++;
+                                });
+                              },
+                              onDecreaseStateChanged: (int value) {
+                                setState(() {
+                                  pitData.numHeight--;
+                                });
+                              },
+                              onSetValue: (int value) {
+                                setState(() {
+                                  pitData.numHeight = value;
+                                });
+                              },
                             ),
-                          ],
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Team ",
-                                style: TextStyle(fontSize: styleFontSizeBody),
-                              ),
-                              DropdownButton(
-                                value: selectedTeam == null
-                                    ? null
-                                    : selectedTeam.key,
-                                //title: "Team",
-                                items: ddsEventTeams,
-                                onChanged: (item) {
-                                  setState(() {
-                                    selectedTeam = widget.eventTeams.firstWhere(
-                                        (team) => team.key == item,
-                                        orElse: () => widget.eventTeams.first);
-                                  });
-                                  print("Team Key: " + selectedTeam.key);
-                                },
-                              ),
-                            ]),
-                      ]),
+                          ]),
+                    ]),
+                  ),
                 ),
               ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+              FractionallySizedBox(
+                widthFactor: 0.99,
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(children: <Widget>[
+                      HeadingMain(
+                        styleFontSize: styleFontSizeHeadings,
+                        headingText: "Power Cells",
+                        //backGroundColor: Colors.green,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Manipulate:",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Switch(
+                            value: pitData.flCells,
+                            onChanged: (bool value) {
+                              setState(() {
+                                pitData.flCells = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Ground Intake:",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Switch(
+                            value: pitData.flIntakeGround,
+                            onChanged: (bool value) {
+                              setState(() {
+                                pitData.flIntakeGround = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Loading Station Intake:",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Switch(
+                            value: pitData.flIntakeHigh,
+                            onChanged: (bool value) {
+                              setState(() {
+                                pitData.flIntakeHigh = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Target (Lower):",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Switch(
+                            value: pitData.flTargetLow,
+                            onChanged: (bool value) {
+                              setState(() {
+                                pitData.flTargetLow = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Target (Outer):",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Switch(
+                            value: pitData.flTargetOuter,
+                            onChanged: (bool value) {
+                              setState(() {
+                                pitData.flTargetOuter = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Target (Inner):",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          Switch(
+                            value: pitData.flTargetInner,
+                            onChanged: (bool value) {
+                              setState(() {
+                                pitData.flTargetInner = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CounterWidget(
+                              value: pitData.numStorage,
+                              title: "Storage Capacity",
+                              onIncreaseStateChanged: (int value) {
+                                setState(() {
+                                  pitData.numStorage++;
+                                });
+                              },
+                              onDecreaseStateChanged: (int value) {
+                                setState(() {
+                                  pitData.numStorage--;
+                                });
+                              },
+                              onSetValue: (int value) {
+                                setState(() {
+                                  pitData.numStorage = value;
+                                });
+                              },
+                            ),
+                          ]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Shooting Mechanism: ",
+                            style: TextStyle(fontSize: styleFontSizeBody),
+                          ),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxWidth: styleFieldTxShootingMaxWidth),
+                            child: TextField(
+                              controller: _txShooting,
+                              decoration: InputDecoration(
+                                  hintText:
+                                      'Cannon, hooded shooter, twin flywheel etc'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
+                ),
               ),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                child: Column(children: <Widget>[
-                  HeadingMain(
-                    styleFontSize: styleFontSizeHeadings,
-                    headingText: "Robot Stats",
-                    //backGroundColor: Colors.green,
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CounterWidget(
-                          value: pitData.numWeight,
-                          title: "Weight",
-                          onIncreaseStateChanged: (int value) {
-                            setState(() {
-                              pitData.numWeight++;
-                            });
-                          },
-                          onDecreaseStateChanged: (int value) {
-                            setState(() {
-                              pitData.numWeight--;
-                            });
-                          },
-                          onSetValue: (int value) {
-                            setState(() {
-                              pitData.numWeight = value;
-                            });
-                          },
-                        ),
-                        CounterWidget(
-                          value: pitData.numHeight,
-                          title: "Height",
-                          onIncreaseStateChanged: (int value) {
-                            setState(() {
-                              pitData.numHeight++;
-                            });
-                          },
-                          onDecreaseStateChanged: (int value) {
-                            setState(() {
-                              pitData.numHeight--;
-                            });
-                          },
-                          onSetValue: (int value) {
-                            setState(() {
-                              pitData.numHeight = value;
-                            });
-                          },
-                        ),
-                      ]),
-                ]),
+              PitClimb(
+                pitData: pitData,
+                txClimb: txClimb,
+                styleFieldTxClimbMaxWidth: styleFieldTxClimbMaxWidth,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(200) : scrollDown(0);
+                },
               ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+              PitControlPanel(
+                pitData: pitData,
+                txPanelSensor: txPanelSensor,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                    print("Pit_Climb: Updated to Parent");
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(200) : scrollDown(0);
+                },
               ),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                child: Column(children: <Widget>[
-                  HeadingMain(
-                    styleFontSize: styleFontSizeHeadings,
-                    headingText: "Power Cells",
-                    //backGroundColor: Colors.green,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Manipulate:",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      Switch(
-                        value: pitData.flCells,
-                        onChanged: (bool value) {
-                          setState(() {
-                            pitData.flCells = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Ground Intake:",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      Switch(
-                        value: pitData.flIntakeGround,
-                        onChanged: (bool value) {
-                          setState(() {
-                            pitData.flIntakeGround = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Loading Station Intake:",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      Switch(
-                        value: pitData.flIntakeHigh,
-                        onChanged: (bool value) {
-                          setState(() {
-                            pitData.flIntakeHigh = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Target (Lower):",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      Switch(
-                        value: pitData.flTargetLow,
-                        onChanged: (bool value) {
-                          setState(() {
-                            pitData.flTargetLow = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Target (Outer):",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      Switch(
-                        value: pitData.flTargetOuter,
-                        onChanged: (bool value) {
-                          setState(() {
-                            pitData.flTargetOuter = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Target (Inner):",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      Switch(
-                        value: pitData.flTargetInner,
-                        onChanged: (bool value) {
-                          setState(() {
-                            pitData.flTargetInner = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CounterWidget(
-                          value: pitData.numStorage,
-                          title: "Storage Capacity",
-                          onIncreaseStateChanged: (int value) {
-                            setState(() {
-                              pitData.numStorage++;
-                            });
-                          },
-                          onDecreaseStateChanged: (int value) {
-                            setState(() {
-                              pitData.numStorage--;
-                            });
-                          },
-                          onSetValue: (int value) {
-                            setState(() {
-                              pitData.numStorage = value;
-                            });
-                          },
-                        ),
-                      ]),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Shooting Mechanism: ",
-                        style: TextStyle(fontSize: styleFontSizeBody),
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxWidth: styleFieldtxShootingMaxWidth),
-                        child: TextField(
-                          controller: _txShooting,
-                          decoration: InputDecoration(
-                              hintText:
-                                  'Cannon, hooded shooter, twin flywheel etc'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ]),
-              ),
-            ),
-          ),
-        PitClimb(pitData: pitData,
-        txClimb: txClimb,
-        onChanged: (PitData updates){
-          setState(() {
-            pitData = updates;
-            //print("Pit_Climb: Updated to Parent");
-            //print("numStorage: " + pitData.numStorage.toString());
-            //print("flClimb: " + pitData.flClimb.toString());
-          });
-
-
-        },),
-          PitControlPanel(pitData: pitData,
-    txPanelSensor: txPanelSensor,
-    onChanged: (PitData updates){
-    setState(() {
-      pitData = updates;
-    }
-    );}),
-        ]),
+            ]),
       ),
     );
   }

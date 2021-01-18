@@ -10,16 +10,18 @@ class PitClimb extends StatefulWidget {
     @required this.pitData,
     this.styleFontSize = 16,
     this.styleFontSizeHeadings = 18,
-    this.styleFieldShootingMaxWidth = 300,
+    this.styleFieldTxClimbMaxWidth = 300,
     this.onChanged,
     this.txClimb,
+    this.onExpanded
   }) : super(key: key);
 
   final PitData pitData;
   final double styleFontSize;
   final double styleFontSizeHeadings;
-  final double styleFieldShootingMaxWidth;
+  final double styleFieldTxClimbMaxWidth;
   final ValueChanged<PitData> onChanged;
+  final ValueChanged<bool> onExpanded;
   final TextEditingController txClimb;
 
   @override
@@ -78,6 +80,7 @@ class _PitClimbState extends State<PitClimb> {
                   setState(() {
                     widget.pitData.flClimb = value;
                     widget.onChanged(widget.pitData);
+                    widget.onExpanded(true);
                   });
                 },
               ),
@@ -240,7 +243,7 @@ class _PitClimbState extends State<PitClimb> {
                     ),
                     ConstrainedBox(
                       constraints: BoxConstraints(
-                          maxWidth: widget.styleFieldShootingMaxWidth),
+                          maxWidth: widget.styleFieldTxClimbMaxWidth),
                       child: TextField(
                         controller: widget.txClimb,
                         decoration: InputDecoration(

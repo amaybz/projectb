@@ -15,6 +15,7 @@ class PitControlPanel extends StatefulWidget {
     this.styleFieldPanelSensorMaxWidth = 300,
     this.onChanged,
     this.txPanelSensor,
+    this.onExpanded,
   }) : super(key: key);
 
   final PitData pitData;
@@ -23,6 +24,7 @@ class PitControlPanel extends StatefulWidget {
   final double styleFieldPanelSensorMaxWidth;
   final ValueChanged<PitData> onChanged;
   final TextEditingController txPanelSensor;
+  final ValueChanged<bool> onExpanded;
 
   @override
   _PitControlPanelState createState() => _PitControlPanelState();
@@ -60,6 +62,7 @@ class _PitControlPanelState extends State<PitControlPanel> {
                   setState(() {
                     widget.pitData.flPanel = value;
                     widget.onChanged(widget.pitData);
+                    widget.onExpanded(true);
                   });
                 },
               ),

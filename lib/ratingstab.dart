@@ -452,7 +452,7 @@ class _RatingsTabState extends State<RatingsTab> {
                             widget.onHighlightTeamChanged(value);
                           });
                         },
-                      )
+                      ),
                     ],
                   ),
                   Row(

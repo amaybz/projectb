@@ -14,6 +14,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/class_pitdata.dart';
+import 'package:projectb/widget_pit_climb.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
@@ -41,8 +42,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txShooting = TextEditingController();
 
+
   LocalTeam selectedTeam;
-  List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
+  List<DropdownMenuItem<String>> ddsEventTeams = [];
+
 
   @override
   void initState() {
@@ -57,13 +60,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     setState(() {
       selectedTeam = null;
       pitData.idTeam = null;
-      eventTeamsListDropDown.clear();
+      ddsEventTeams.clear();
     });
     //get events based on location
     if (widget.eventTeams == null) {
       //show no teams
       setState(() {
-        eventTeamsListDropDown.add(new DropdownMenuItem(
+        ddsEventTeams.add(new DropdownMenuItem(
             value: "0",
             child: Text(
               "NO TEAMS for this EVENT",
@@ -75,7 +78,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     //update dropdown box with Teams
     for (LocalTeam team in widget.eventTeams) {
       setState(() {
-        eventTeamsListDropDown.add(new DropdownMenuItem(
+        ddsEventTeams.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
               team.teamNumber + " - " + team.nickName,
@@ -286,7 +289,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                     ? null
                                     : selectedTeam.key,
                                 //title: "Team",
-                                items: eventTeamsListDropDown,
+                                items: ddsEventTeams,
                                 onChanged: (item) {
                                   setState(() {
                                     selectedTeam = widget.eventTeams.firstWhere(
@@ -345,7 +348,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           },
                         ),
                         CounterWidget(
-                            value: pitData.numHeight, title: "Height",
+                          value: pitData.numHeight,
+                          title: "Height",
                           onIncreaseStateChanged: (int value) {
                             setState(() {
                               pitData.numHeight++;
@@ -360,9 +364,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             setState(() {
                               pitData.numHeight = value;
                             });
-                          },),
+                          },
+                        ),
                       ]),
-
                 ]),
               ),
             ),
@@ -525,17 +529,21 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             maxWidth: styleFieldtxShootingMaxWidth),
                         child: TextField(
                           controller: _txShooting,
-                          decoration:
-                          InputDecoration(hintText: 'Cannon, hooded shooter, twin flywheel etc'),
+                          decoration: InputDecoration(
+                              hintText:
+                                  'Cannon, hooded shooter, twin flywheel etc'),
                         ),
                       ),
                     ],
                   ),
-
                 ]),
               ),
             ),
           ),
+        PitClimb(pitData: pitData,
+        onChanged: (PitData updates){
+          pitData = updates;
+        },)
         ]),
       ),
     );

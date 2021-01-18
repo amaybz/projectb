@@ -17,11 +17,11 @@ class PitData {
   String idClimbType;
   int numClimbHeight;
   bool flClimbSecure;
-  int idClimbGrab;
-  int idClimbSpeed;
+  String idClimbGrab;
+  String idClimbSpeed;
   bool flClimbTilt;
   String txClimb;
-  int idClimbPos;
+  String idClimbPos;
   bool flClimbLevel;
   bool flClimbLevelSelf;
   bool flClimbLevelOther;
@@ -60,7 +60,7 @@ class PitData {
     this.flTargetInner = false,
     this.flClimb = false,
     this.idClimbType,
-    this.numClimbHeight,
+    this.numClimbHeight = 0,
     this.flClimbSecure = false,
     this.idClimbGrab,
     this.idClimbSpeed,
@@ -72,7 +72,7 @@ class PitData {
     this.flClimbLevelOther = false,
     this.flClimbMove = false,
     this.flClimbOther = false,
-    this.numClimbOther,
+    this.numClimbOther = 0,
     this.flPanel = false,
     this.flPanelBrake = false,
     this.flPanelRotation = false,
@@ -82,8 +82,8 @@ class PitData {
     this.flAuto = false,
     this.flAutoLine = false,
     this.flAutoShoot = false,
-    this.numAutoShoot,
-    this.numAutoLoad,
+    this.numAutoShoot = 0,
+    this.numAutoLoad = 0,
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,

@@ -116,7 +116,7 @@ class _PitClimbState extends State<PitClimb> {
                   });
                 },
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 CounterWidget(
                   value: widget.pitData.numClimbHeight,
                   title: "Height",

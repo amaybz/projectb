@@ -8,7 +8,7 @@ class PitData {
   bool flCells;
   bool flIntakeGround;
   bool flIntakeHigh;
-  bool numStorage;
+  int numStorage;
   String txShooting;
   bool flTargetLow;
   bool flTargetOuter;
@@ -48,12 +48,12 @@ class PitData {
     this.txEvent,
     this.idTeam,
     this.txScoutName,
-    this.numWeight,
-    this.numHeight,
+    this.numWeight = 0,
+    this.numHeight = 0,
     this.flCells = false,
     this.flIntakeGround = false,
     this.flIntakeHigh = false,
-    this.numStorage,
+    this.numStorage = 0,
     this.txShooting,
     this.flTargetLow = false,
     this.flTargetOuter = false,

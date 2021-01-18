@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
+import 'package:projectb/widget_pit_controlpenal.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:projectb/autotab.dart';
 import 'package:projectb/sharedprefs.dart';
@@ -41,6 +42,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txShooting = TextEditingController();
+  final TextEditingController txClimb = TextEditingController();
+  final TextEditingController txPanelSensor = TextEditingController();
+
 
 
   LocalTeam selectedTeam;
@@ -128,7 +132,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       pitData = null;
       pitData = PitData();
       selectedTeam = null;
+      _txShooting.text = "";
+      txClimb.text = "";
     });
+    print("Pit Cleared");
   }
 
   Future<bool> _onWillPop() async {
@@ -541,9 +548,24 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
             ),
           ),
         PitClimb(pitData: pitData,
+        txClimb: txClimb,
         onChanged: (PitData updates){
-          pitData = updates;
-        },)
+          setState(() {
+            pitData = updates;
+            //print("Pit_Climb: Updated to Parent");
+            //print("numStorage: " + pitData.numStorage.toString());
+            //print("flClimb: " + pitData.flClimb.toString());
+          });
+
+
+        },),
+          PitControlPanel(pitData: pitData,
+    txPanelSensor: txPanelSensor,
+    onChanged: (PitData updates){
+    setState(() {
+      pitData = updates;
+    }
+    );}),
         ]),
       ),
     );

@@ -12,6 +12,7 @@ class PitClimb extends StatefulWidget {
     this.styleFontSizeHeadings = 18,
     this.styleFieldShootingMaxWidth = 300,
     this.onChanged,
+    this.txClimb,
   }) : super(key: key);
 
   final PitData pitData;
@@ -19,14 +20,13 @@ class PitClimb extends StatefulWidget {
   final double styleFontSizeHeadings;
   final double styleFieldShootingMaxWidth;
   final ValueChanged<PitData> onChanged;
+  final TextEditingController txClimb;
 
   @override
   _PitClimbState createState() => _PitClimbState();
 }
 
 class _PitClimbState extends State<PitClimb> {
-  final TextEditingController _txClimb = TextEditingController();
-
   List<DropdownMenuItem<String>> ddsSpeed = [
     DropdownMenuItem(value: "1", child: Text("NA")),
     DropdownMenuItem(value: "2", child: Text("Slow")),
@@ -77,6 +77,7 @@ class _PitClimbState extends State<PitClimb> {
                 onChange: (bool value) {
                   setState(() {
                     widget.pitData.flClimb = value;
+                    widget.onChanged(widget.pitData);
                   });
                 },
               ),
@@ -113,6 +114,7 @@ class _PitClimbState extends State<PitClimb> {
                 onChange: (bool value) {
                   setState(() {
                     widget.pitData.flClimb = value;
+                    widget.onChanged(widget.pitData);
                   });
                 },
               ),
@@ -127,9 +129,10 @@ class _PitClimbState extends State<PitClimb> {
                     });
                   },
                   onDecreaseStateChanged: (int value) {
+                    PitData newPitData = widget.pitData;
                     setState(() {
-                      widget.pitData.numClimbHeight--;
-                      widget.onChanged(widget.pitData);
+                      newPitData.numClimbHeight--;
+                      widget.onChanged(newPitData);
                     });
                   },
                   onSetValue: (int value) {
@@ -156,6 +159,7 @@ class _PitClimbState extends State<PitClimb> {
                     onChanged: (item) {
                       setState(() {
                         widget.pitData.idClimbType = item;
+                        widget.onChanged(widget.pitData);
                       });
                       print("idClimbType: " + widget.pitData.idClimbType);
                     },
@@ -178,6 +182,7 @@ class _PitClimbState extends State<PitClimb> {
                     onChanged: (item) {
                       setState(() {
                         widget.pitData.idClimbGrab = item;
+                        widget.onChanged(widget.pitData);
                       });
                       print("idClimbGrab: " + widget.pitData.idClimbGrab);
                     },
@@ -200,6 +205,7 @@ class _PitClimbState extends State<PitClimb> {
                     onChanged: (item) {
                       setState(() {
                         widget.pitData.idClimbSpeed = item;
+                        widget.onChanged(widget.pitData);
                       });
                       print("idClimbSpeed: " + widget.pitData.idClimbSpeed);
                     },
@@ -218,30 +224,36 @@ class _PitClimbState extends State<PitClimb> {
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flClimbTilt = value;
+                        widget.onChanged(widget.pitData);
                       });
                     },
                   ),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Climb Mechanism: ",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                        maxWidth: widget.styleFieldShootingMaxWidth),
-                    child: TextField(
-                      controller: _txClimb,
-                      decoration:
-                          InputDecoration(hintText: 'Notes on climb mechanism'),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Climb Mechanism: ",
+                      style: TextStyle(fontSize: widget.styleFontSize),
                     ),
-                  ),
-                ],
-              ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxWidth: widget.styleFieldShootingMaxWidth),
+                      child: TextField(
+                        controller: widget.txClimb,
+                        decoration: InputDecoration(
+                            hintText: 'Notes on climb mechanism'),
+                        onChanged: (String text) {
+                          setState(() {
+                            widget.pitData.txClimb = text;
+                            widget.onChanged(widget.pitData);
+                          });
+                        },
+                      ),
+                    ),
+                  ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -251,17 +263,17 @@ class _PitClimbState extends State<PitClimb> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   DropdownButton(
-                    value: widget.pitData.idClimbPos == null
-                        ? null
-                        : widget.pitData.idClimbPos,
-                    items: ddsPosition,
-                    onChanged: (item) {
-                      setState(() {
-                        widget.pitData.idClimbPos = item;
-                      });
-                      print("idClimbSpeed: " + widget.pitData.idClimbPos);
-                    },
-                  ),
+                      value: widget.pitData.idClimbPos == null
+                          ? null
+                          : widget.pitData.idClimbPos,
+                      items: ddsPosition,
+                      onChanged: (item) {
+                        setState(() {
+                          widget.pitData.idClimbPos = item;
+                          widget.onChanged(widget.pitData);
+                        });
+                        print("idClimbSpeed: " + widget.pitData.idClimbPos);
+                      }),
                 ],
               ),
             ]),

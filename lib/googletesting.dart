@@ -49,7 +49,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
       print(contents);
       MatchScoutingData matchScoutingData = MatchScoutingData.fromMap(jsonDecode(contents));
 
-      print(matchScoutingData.scoutName);
+      print(matchScoutingData.txScoutName);
 
       return matchScoutingData;
     } catch (e) {
@@ -162,7 +162,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
           ),
           FlatButton(
             onPressed: () {
-              writeFileAndUploadToGoogle(MatchScoutingData(id: 1, scoutName: "Aiden", team: "1234 - test", matchNumber: 123, startingCells: 3, driveStation: "red 3"));
+              writeFileAndUploadToGoogle(MatchScoutingData(id: 1, txScoutName: "Aiden", idTeam: "1234 - test", numMatch: 123, numStartCells: 3, idDriveStation: "red 3"));
 
             },
             child: Text("write test File to google"),

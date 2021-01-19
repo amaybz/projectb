@@ -62,7 +62,7 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       var jsonString = json.decode(this.barcode);
       matchScoutingData = MatchScoutingData.fromMap(jsonString);
       print("matchScoutingData ID: " + matchScoutingData.id.toString());
-      print("matchScoutingData Team: " + matchScoutingData.team);
+      print("matchScoutingData Team: " + matchScoutingData.idTeam);
       matchScoutingData.id = null;
       status = (await localDB.insertScoringData(matchScoutingData) > 0 )? "Record Saved" : "Failed to Save Record";
       setState(() {

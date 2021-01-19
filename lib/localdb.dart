@@ -7,7 +7,7 @@ import 'package:projectb/class_pitdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 19;
+  static final _databaseVersion = 20;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -30,19 +30,20 @@ class LocalDB {
       "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
   final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
       "id INTEGER PRIMARY KEY, "
-      "scoutName TEXT, "
-      "matchNumber INTEGER, "
-      "alliance TEXT, "
-      "driveStation TEXT, "
-      "team TEXT, "
-      "facing TEXT, "
-      "robotPosition TEXT, "
-      "startingCells INTEGER,"
-      "robotFail TEXT,"
-      "yellowCard TEXT,"
-      "redCard TEXT,"
-      "operational TEXT,"
-      "energised TEXT,"
+      'txEvent TEXT,'
+      'numMatch INTEGER,'
+      'idAlliance TEXT,'
+      'idDriveStation TEXT,'
+      'idTeam TEXT,'
+      'txScoutName TEXT,'
+      'idStartFacing TEXT,'
+      'idStartPosition TEXT,'
+      'numStartCells INTEGER,'
+      'flRed TEXT,'
+      'flYellow TEXT,'
+      'flCrash TEXT,'
+      'flRanking1 TEXT,'
+      'flRanking2 TEXT,'
       "loseStartObject TEXT,"
       "crossSector TEXT,"
       "contactWithRobot TEXT,"
@@ -409,19 +410,20 @@ class LocalEvent {
 
 class MatchScoutingData {
   int id;
-  String team;
-  String scoutName;
-  int matchNumber;
-  String alliance;
-  String driveStation;
-  String facing;
-  String robotPosition;
-  int startingCells;
-  bool robotFail;
-  bool yellowCard;
-  bool redCard;
-  bool operational;
-  bool energised;
+  String txEvent;
+  String idTeam;
+  String txScoutName;
+  int numMatch;
+  String idAlliance;
+  String idDriveStation;
+  String idStartFacing;
+  String idStartPosition;
+  int numStartCells;
+  bool flCrash;
+  bool flYellow;
+  bool flRed;
+  bool flRanking1;
+  bool flRanking2;
   //Auto Tab
   bool loseStartObject;
   bool contactWithRobot;
@@ -472,19 +474,20 @@ class MatchScoutingData {
 
   MatchScoutingData({
     this.id,
-    this.team,
-    this.scoutName,
-    this.alliance,
-    this.driveStation,
-    this.facing,
-    this.matchNumber = 0,
-    this.robotPosition,
-    this.startingCells = 0,
-    this.robotFail = false,
-    this.yellowCard = false,
-    this.redCard = false,
-    this.operational = false,
-    this.energised = false,
+    this.txEvent,
+    this.idTeam,
+    this.txScoutName,
+    this.idAlliance,
+    this.idDriveStation,
+    this.idStartFacing,
+    this.numMatch = 0,
+    this.idStartPosition,
+    this.numStartCells = 0,
+    this.flCrash = false,
+    this.flYellow = false,
+    this.flRed = false,
+    this.flRanking1 = false,
+    this.flRanking2 = false,
     //Auto Tab
     this.loseStartObject = false,
     this.contactWithRobot = false,
@@ -537,19 +540,20 @@ class MatchScoutingData {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'team': team,
-      'scoutName': scoutName,
-      'alliance': alliance,
-      'driveStation': driveStation,
-      'facing': facing,
-      'matchNumber': matchNumber,
-      'robotPosition': robotPosition,
-      'startingCells': startingCells,
-      'robotFail': robotFail,
-      'operational': operational,
-      'redCard': redCard,
-      'yellowCard': yellowCard,
-      'energised': energised,
+      'txEvent' : txEvent,
+      'numMatch' : numMatch,
+      'idAlliance' : idAlliance,
+      'idDriveStation' : idDriveStation,
+      'idTeam' : idTeam,
+      'txScoutName' : txScoutName,
+      'idStartFacing' : idStartFacing,
+      'idStartPosition' : idStartPosition,
+      'numStartCells' : numStartCells,
+      'flRed' : flRed,
+      'flYellow' : flYellow,
+      'flCrash' : flCrash,
+      'flRanking1' : flRanking1,
+      'flRanking2' : flRanking2,
       //AutoTab
       'loseStartObject': loseStartObject,
       'contactWithRobot': contactWithRobot,
@@ -603,19 +607,20 @@ class MatchScoutingData {
   Map<String, dynamic> toLocalDB() {
     return {
       'id': id,
-      'team': team,
-      'scoutName': scoutName,
-      'alliance': alliance,
-      'driveStation': driveStation,
-      'facing': facing,
-      'matchNumber': matchNumber,
-      'robotPosition': robotPosition,
-      'startingCells': startingCells,
-      'robotFail': robotFail.toString(),
-      'operational': operational.toString(),
-      'redCard': redCard.toString(),
-      'yellowCard': yellowCard.toString(),
-      'energised': energised.toString(),
+      'txEvent': txEvent,
+      'numMatch': numMatch,
+      'idAlliance': idAlliance,
+      'idDriveStation': idDriveStation,
+      'idTeam': idTeam,
+      'txScoutName': txScoutName,
+      'idStartFacing': idStartFacing,
+      'idStartPosition': idStartPosition,
+      'numStartCells': numStartCells,
+      'flRed': flRed.toString(),
+      'flYellow': flYellow.toString(),
+      'flCrash': flCrash.toString(),
+      'flRanking1': flRanking1.toString(),
+      'flRanking2': flRanking2.toString(),
       //Auto Tab
       'loseStartObject': loseStartObject.toString(),
       'contactWithRobot': contactWithRobot.toString(),
@@ -668,21 +673,20 @@ class MatchScoutingData {
 
   MatchScoutingData.fromLocalDB(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.team = map['team'];
-    this.scoutName = map['scoutName'];
-    this.alliance = map['alliance'];
-    this.driveStation = map['driveStation'];
-    this.facing = map['facing'];
-    this.matchNumber = map['matchNumber'];
-    this.robotPosition = map['robotPosition'];
-    this.startingCells = map['startingCells'];
-    this.robotPosition = map['robotPosition'];
-    this.robotFail = map['robotFail'].toString().toLowerCase() == 'true';
-    this.operational = map['operational'].toString().toLowerCase() == 'true';
-    this.redCard = map['redCard'].toString().toLowerCase() == 'true';
-    this.yellowCard = map['yellowCard'].toString().toLowerCase() == 'true';
-    this.energised = map['energised'].toString().toLowerCase() == 'true';
-    //Auto Tab
+    this.txEvent = map['txEvent'];
+    this.numMatch = map['numMatch'];
+    this.idAlliance = map['idAlliance'];
+    this.idDriveStation = map['idDriveStation'];
+    this.idTeam = map['idTeam'];
+    this.txScoutName = map['txScoutName'];
+    this.idStartFacing = map['idStartFacing'];
+    this.idStartPosition = map['idStartPosition'];
+    this.numStartCells = map['numStartCells'];
+    this.flRed = map['flRed'];
+    this.flYellow = map['flYellow'].toString().toLowerCase() == 'true';
+    this.flCrash = map['flCrash'].toString().toLowerCase() == 'true';
+    this.flRanking1 = map['flRanking1'].toString().toLowerCase() == 'true';
+    this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';//Auto Tab
     this.loseStartObject =
         map['loseStartObject'].toString().toLowerCase() == 'true';
     this.contactWithRobot =
@@ -740,20 +744,20 @@ class MatchScoutingData {
 
   MatchScoutingData.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.team = map['team'];
-    this.scoutName = map['scoutName'];
-    this.alliance = map['alliance'];
-    this.driveStation = map['driveStation'];
-    this.facing = map['facing'];
-    this.matchNumber = map['matchNumber'];
-    this.robotPosition = map['robotPosition'];
-    this.startingCells = map['startingCells'];
-    this.robotPosition = map['robotPosition'];
-    this.robotFail = map['robotFail'];
-    this.operational = map['operational'];
-    this.redCard = map['redCard'];
-    this.yellowCard = map['yellowCard'];
-    this.energised = map['energised'];
+    this.txEvent = map['txEvent'];
+    this.numMatch = map['numMatch'];
+    this.idAlliance = map['idAlliance'];
+    this.idDriveStation = map['idDriveStation'];
+    this.idTeam = map['idTeam'];
+    this.txScoutName = map['txScoutName'];
+    this.idStartFacing = map['idStartFacing'];
+    this.idStartPosition = map['idStartPosition'];
+    this.numStartCells = map['numStartCells'];
+    this.flRed = map['flRed'];
+    this.flYellow = map['flYellow'];
+    this.flCrash = map['flCrash'];
+    this.flRanking1 = map['flRanking1'];
+    this.flRanking2 = map['flRanking2'];
     //Auto Tab
     this.loseStartObject = map['loseStartObject'];
     this.contactWithRobot = map['contactWithRobot'];
@@ -808,14 +812,14 @@ class MatchScoutingData {
   String toString() {
     return 'MatchScoutingData{'
         'id: $id, '
-        'team: $team, '
-        'scoutName: $scoutName, '
-        'alliance: $alliance, '
-        'driveStation: $driveStation, '
-        'facing: $facing, '
-        'matchNumber: $matchNumber, '
-        'robotPosition: $robotPosition, '
-        'startingCells: $startingCells, '
+        'team: $idTeam, '
+        'scoutName: $txScoutName, '
+        'alliance: $idAlliance, '
+        'driveStation: $idDriveStation, '
+        'facing: $idStartFacing, '
+        'numMatch: $numMatch, '
+        'robotPosition: $idStartPosition, '
+        'startingCells: $numStartCells, '
         '}';
   }
 }

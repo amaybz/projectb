@@ -118,9 +118,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
         newFile,
-        matchScoutingData.matchNumber.toString() +
+        matchScoutingData.numMatch.toString() +
             " " +
-            matchScoutingData.team.toString());
+            matchScoutingData.idTeam.toString());
     print("Upload Complete");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
@@ -211,9 +211,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     //print(item.defenceRating);
     return ListTile(
       title: Text(
-        item.id.toString() + ". Match: " + item.matchNumber.toString(),
+        item.id.toString() + ". Match: " + item.numMatch.toString(),
       ),
-      subtitle: Text("Team: " + item.team),
+      subtitle: Text("Team: " + item.idTeam),
       trailing: Icon(Icons.share),
       onTap: () {
         _showDialogMatchQRCode(context, item.id.toString());

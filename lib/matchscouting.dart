@@ -93,7 +93,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     //clear current selected event and dropdown box
     setState(() {
       selectedTeam = null;
-      matchScoutingData.team = null;
+      matchScoutingData.idTeam = null;
       eventTeamsListDropDown.clear();
     });
     //get events based on location
@@ -125,13 +125,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   getDriveStationsByTeam(team) {
     if (team == "Blue") {
       setState(() {
-        matchScoutingData.driveStation = null;
+        matchScoutingData.idDriveStation = null;
         _listDriveStation = _listBlueDriveStations;
       });
     }
     if (team == "Red") {
       setState(() {
-        matchScoutingData.driveStation = null;
+        matchScoutingData.idDriveStation = null;
         _listDriveStation = _listRedDriveStations;
       });
     }
@@ -255,10 +255,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (recordID > 0) {
       matchScoutingData.id = recordID;
     }
-    matchScoutingData.team = selectedTeam.key;
-    matchScoutingData.matchNumber = int.parse(_txtMatchNumber.text);
-    matchScoutingData.startingCells = int.parse(_txtStartingCells.text);
-    matchScoutingData.scoutName = _txtScoutName.text;
+    matchScoutingData.idTeam = selectedTeam.key;
+    matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
+    matchScoutingData.numStartCells = int.parse(_txtStartingCells.text);
+    matchScoutingData.txScoutName = _txtScoutName.text;
     this.recordID = await localDB.insertScoringData(matchScoutingData);
     if (this.recordID > 0) {
       recordSaved = true;
@@ -422,7 +422,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           //Expanded(
                           //child:
                           DropDownWidget(
-                              value: matchScoutingData.alliance,
+                              value: matchScoutingData.idAlliance,
                               title: "Alliance",
                               list: _listAlliance,
                               styleFontSize: styleFontSizeBody,
@@ -431,14 +431,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               styleFieldPaddingSides: styleFieldPaddingSides,
                               onStateChanged: (String newValue) {
                                 setState(() {
-                                  matchScoutingData.alliance = newValue;
+                                  matchScoutingData.idAlliance = newValue;
                                 });
                                 getDriveStationsByTeam(newValue);
-                                print(matchScoutingData.alliance);
+                                print(matchScoutingData.idAlliance);
                               }),
 
                           DropDownWidget(
-                              value: matchScoutingData.driveStation,
+                              value: matchScoutingData.idDriveStation,
                               title: "Drive Station",
                               list: _listDriveStation,
                               styleFontSize: styleFontSizeBody,
@@ -447,7 +447,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               styleFieldPaddingSides: styleFieldPaddingSides,
                               onStateChanged: (String newValue) {
                                 setState(() {
-                                  matchScoutingData.driveStation = newValue;
+                                  matchScoutingData.idDriveStation = newValue;
                                 });
                               }),
                         ]),
@@ -483,18 +483,18 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           DropDownWidget(
-                              value: matchScoutingData.facing,
+                              value: matchScoutingData.idStartFacing,
                               title: "Facing",
                               list: _listFacing,
                               styleFontSize: styleFontSizeBody,
                               styleFieldWidth: styleFieldWidthFacing,
                               onStateChanged: (String newValue) {
                                 setState(() {
-                                  matchScoutingData.facing = newValue;
+                                  matchScoutingData.idStartFacing = newValue;
                                 });
                               }),
                           DropDownWidget(
-                              value: matchScoutingData.robotPosition,
+                              value: matchScoutingData.idStartPosition,
                               title: "Robot Position",
                               list: _listRobotPosition,
                               styleFontSize: styleFontSizeBody,
@@ -503,7 +503,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               styleFieldPaddingSides: styleFieldPaddingSides,
                               onStateChanged: (String newValue) {
                                 setState(() {
-                                  matchScoutingData.robotPosition = newValue;
+                                  matchScoutingData.idStartPosition = newValue;
                                 });
                               }),
                           Container(
@@ -580,10 +580,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Switch(
-                                    value: matchScoutingData.robotFail,
+                                    value: matchScoutingData.flCrash,
                                     onChanged: (bool value) {
                                       setState(() {
-                                        matchScoutingData.robotFail = value;
+                                        matchScoutingData.flCrash = value;
                                       });
                                     },
                                   ),
@@ -599,10 +599,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: matchScoutingData.yellowCard,
+                                  value: matchScoutingData.flYellow,
                                   onChanged: (bool value) {
                                     setState(() {
-                                      matchScoutingData.yellowCard = value;
+                                      matchScoutingData.flYellow = value;
                                     });
                                   },
                                 ),
@@ -617,10 +617,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: matchScoutingData.redCard,
+                                  value: matchScoutingData.flRed,
                                   onChanged: (bool value) {
                                     setState(() {
-                                      matchScoutingData.redCard = value;
+                                      matchScoutingData.flRed = value;
                                     });
                                   },
                                 ),
@@ -656,10 +656,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   ),
                                   Container(
                                     child: Switch(
-                                      value: matchScoutingData.operational,
+                                      value: matchScoutingData.flRanking1,
                                       onChanged: (bool value) {
                                         setState(() {
-                                          matchScoutingData.operational = value;
+                                          matchScoutingData.flRanking1 = value;
                                         });
                                       },
                                     ),
@@ -678,10 +678,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   ),
                                   Container(
                                     child: Switch(
-                                      value: matchScoutingData.energised,
+                                      value: matchScoutingData.flRanking2,
                                       onChanged: (bool value) {
                                         setState(() {
-                                          matchScoutingData.energised = value;
+                                          matchScoutingData.flRanking2 = value;
                                         });
                                       },
                                     ),

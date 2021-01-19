@@ -237,6 +237,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     mySharedPrefs.saveBool("selectedBalance", false);
     mySharedPrefs.saveBool("selectedBalanceCorrection", false);
     mySharedPrefs.saveBool("selectedFall", false);
+    recordSaved = false;
     setState(() {
       matchScoutingData = null;
       matchScoutingData = MatchScoutingData();
@@ -255,7 +256,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (recordID > 0) {
       matchScoutingData.id = recordID;
     }
-    matchScoutingData.idTeam = selectedTeam.key;
+    matchScoutingData.txEvent = widget.eventKey;
+    matchScoutingData.idTeam = selectedTeam.teamNumber;
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
     matchScoutingData.numStartCells = int.parse(_txtStartingCells.text);
     matchScoutingData.txScoutName = _txtScoutName.text;

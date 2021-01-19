@@ -682,7 +682,7 @@ class MatchScoutingData {
     this.idStartFacing = map['idStartFacing'];
     this.idStartPosition = map['idStartPosition'];
     this.numStartCells = map['numStartCells'];
-    this.flRed = map['flRed'];
+    this.flRed = map['flRed'].toString().toLowerCase() == 'true';
     this.flYellow = map['flYellow'].toString().toLowerCase() == 'true';
     this.flCrash = map['flCrash'].toString().toLowerCase() == 'true';
     this.flRanking1 = map['flRanking1'].toString().toLowerCase() == 'true';

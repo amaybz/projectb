@@ -112,9 +112,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     final file = await _localFile;
     // Write the file.
     print("write file");
+    var dataToWrite = json.encode(matchScoutingData.toMap());
     File newFile =
-        await file.writeAsString(matchScoutingData.toJson().toString());
-    print("JSON: " + matchScoutingData.toJson().toString());
+        await file.writeAsString(dataToWrite.toString());
+    print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
         newFile,
         matchScoutingData.matchNumber.toString() +
@@ -254,13 +255,14 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
     MatchScoutingData match =
         await localDB.getScoringDataRecord(int.parse(matchID));
+    var barcodeData = json.encode(match.toMap());
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
         width: 320,
         height: 320,
         child: DisplayQRCode(
-          data: match.toJson().toString(),
+          data: barcodeData.toString(),
           styleQRSize: 305.0,
         ),
       ),

@@ -803,75 +803,7 @@ class MatchScoutingData {
     this.warning = map['warning'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['"id"'] = this.id;
-    data['"team"'] = '"' + this.team.toString() + '"';
-    data['"scoutName"'] = '"' + this.scoutName.toString() + '"';
-    data['"alliance"'] = '"' + this.alliance.toString() + '"';
-    data['"driveStation"'] = '"' + this.driveStation.toString() + '"';
-    data['"facing"'] = '"' + this.facing.toString() + '"';
-    data['"matchNumber"'] = this.matchNumber;
-    data['"robotPosition"'] = '"' + this.robotPosition.toString() + '"';
-    data['"startingCells"'] = this.startingCells;
-    data['"robotFail"'] = '"' + this.robotFail.toString() + '"';
-    data['"operational"'] = '"' + this.operational.toString() + '"';
-    data['"redCard"'] = '"' + this.redCard.toString() + '"';
-    data['"yellowCard"'] = '"' + this.yellowCard.toString() + '"';
-    data['"energised"'] = '"' + this.energised.toString() + '"';
-    //Auto Tab
-    data['"loseStartObject"'] = '"' + this.loseStartObject.toString() + '"';
-    data['"contactWithRobot"'] = '"' + this.contactWithRobot.toString() + '"';
-    data['"crossSector"'] = '"' + this.crossSector.toString() + '"';
-    data['"foul"'] = '"' + this.foul.toString() + '"';
-    data['"doesAuto"'] = '"' + this.doesAuto.toString() + '"';
-    data['"leaveLine"'] = '"' + this.leaveLine.toString() + '"';
-    //Tele OP Tab
-    data['"cellAttempts"'] = this.cellAttempts;
-    data['"cellSuccess"'] = this.cellSuccess;
-    data['"powerPortLower"'] = '"' + this.powerPortLower.toString() + '"';
-    data['"powerPortInner"'] = '"' + this.powerPortInner.toString() + '"';
-    data['"powerPortOuter"'] = '"' + this.powerPortOuter.toString() + '"';
-    data['"cpRotationControl"'] = '"' + this.cpRotationControl.toString() + '"';
-    data['"cpRotationTimeTaken"'] =
-        '"' + this.cpRotationTimeTaken.toString() + '"';
-    data['"cpPositionControl"'] = '"' + this.cpPositionControl.toString() + '"';
-    data['"cpPositionTimeTaken"'] =
-        '"' + this.cpPositionTimeTaken.toString() + '"';
-    data['"cpPanelAttempts"'] = this.cpPanelAttempts;
-    data['"cpPanelSuccess"'] = this.cpPanelSuccess;
-    data['"endgamePark"'] = '"' + this.endgamePark.toString() + '"';
-    data['"endgameClimb"'] = '"' + this.endgameClimb.toString() + '"';
-    data['"endgameTimeToGrip"'] = '"' + this.endgameTimeToGrip.toString() + '"';
-    data['"endgameTimeFromGripToClimb"'] = '"' + this.endgameTimeFromGripToClimb.toString() + '"';
-    data['"endgameOutcome"'] = '"' + this.endgameOutcome.toString() + '"';
-    data['"endgamePreferredPosition"'] = '"' + this.endgamePreferredPosition.toString() + '"';
-    data['"endgameBuddies"'] = this.endgameBuddies;
-    data['"endgameBalance"'] = '"' + this.endgameBalance.toString() + '"';
-    data['"endgameBalanceCorrection"'] = '"' + this.endgameBalanceCorrection.toString() + '"';
-    data['"endgameFall"'] = '"' + this.endgameFall.toString() + '"';
-    //Ratings Tab
-    data['"quickRatingsDriveRating"'] = '"' + this.quickRatingsDriveRating.toString() + '"';
-    data['"quickRatingsDefenceRating"'] = '"' + this.quickRatingsDefenceRating.toString() + '"';
-    data['"quickRatingsAssistRobot"'] = '"' + this.quickRatingsAssistRobot.toString() + '"';
-    data['"quickRatingsWorkedWithAlliance"'] = '"' + this.quickRatingsWorkedWithAlliance.toString() + '"';
-    data['"quickRatingsWorkedToAStrategy"'] = '"' + this.quickRatingsWorkedToAStrategy.toString() + '"';
-    data['"quickRatingsRecovered"'] = '"' + this.quickRatingsRecovered.toString() + '"';
-    data['"intakeGround"'] = '"' + this.intakeGround.toString() + '"';
-    data['"intakeHigh"'] = '"' + this.intakeHigh.toString() + '"';
-    data['"intakeOtherRobot"'] = '"' + this.intakeOtherRobot.toString() + '"';
-    data['"shootingWall"'] = '"' + this.shootingWall.toString() + '"';
-    data['"shootingNearZone"'] = '"' + this.shootingNearZone.toString() + '"';
-    data['"shootingMidZone"'] = '"' + this.shootingMidZone.toString() + '"';
-    data['"shootingFarZone"'] = '"' + this.shootingFarZone.toString() + '"';
-    data['"comments"'] = '"' + this.comments.toString() + '"';
-    data['"highlightTeam"'] = '"' + this.highlightTeam.toString() + '"';
-    data['"warning"'] = '"' + this.warning.toString() + '"';
-    return data;
-  }
-
   // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
   @override
   String toString() {
     return 'MatchScoutingData{'

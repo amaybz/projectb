@@ -34,7 +34,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     final file = await _localFile;
     // Write the file.
     print("write file");
-    File newFile = await file.writeAsString(matchScoutingData.toJson().toString());
+    File newFile = await file.writeAsString(matchScoutingData.toMap().toString());
     print ("sync to google...");
     await _googleUploadFile(newFile);
     print ("Write Complete");

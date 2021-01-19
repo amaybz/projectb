@@ -13,7 +13,10 @@ class QRReaderScreen extends StatefulWidget {
 }
 
 class _QRReaderScreenState extends State<QRReaderScreen> {
+  LocalDB localDB = LocalDB.instance;
+
   var barcode = "";
+  String status = "";
   PitData pitData;
   MatchScoutingData matchScoutingData;
   @override
@@ -30,6 +33,11 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       pitData = PitData.fromMap(jsonString);
       print("PitData ID: " + pitData.id.toString());
       print("PitData event: " + pitData.txEvent.toString());
+      pitData.id = null;
+      status = (await localDB.insertPitData(pitData) > 0 )? "Record Saved" : "Failed to Save Record";
+      setState(() {
+
+      });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         setState(() {
@@ -55,6 +63,11 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       matchScoutingData = MatchScoutingData.fromMap(jsonString);
       print("matchScoutingData ID: " + matchScoutingData.id.toString());
       print("matchScoutingData Team: " + matchScoutingData.team);
+      matchScoutingData.id = null;
+      status = (await localDB.insertScoringData(matchScoutingData) > 0 )? "Record Saved" : "Failed to Save Record";
+      setState(() {
+
+      });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         setState(() {
@@ -103,7 +116,14 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Text(
-                  "Result: " + barcode,
+                  "Result: " + status,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Text(
+                  "Data: " + barcode,
                   textAlign: TextAlign.center,
                 ),
               ),

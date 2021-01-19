@@ -289,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Saved Match Records'),
+              title: Text('Saved Records'),
               onTap: () {
                 Navigator.pop(context);
                 _navigateToStoredData(context);

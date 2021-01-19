@@ -3,6 +3,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/widget_counter.dart';
+import 'package:projectb/widget_performace.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
@@ -151,48 +152,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     });
   }
 
-  _increaseCellAttempts() async {
-    intCellAttempts = intCellAttempts + 1;
-    setState(() {
-      widget.onCellAttemptsChanged(intCellAttempts);
-    });
-  }
 
-  _decreaseCellAttempts() async {
-    setState(() {
-      intCellAttempts = intCellAttempts - 1;
-      widget.onCellAttemptsChanged(intCellAttempts);
-    });
-  }
-
-  _updateCellAttempts(int value) {
-    setState(() {
-      intCellAttempts = value;
-      widget.onCellAttemptsChanged(intCellAttempts);
-    });
-  }
-
-  _increaseCellSuccess() async {
-    intCellSuccess = intCellSuccess + 1;
-    intCellAttempts = intCellAttempts + 1;
-    setState(() {
-      widget.onCellSuccessChanged(intCellSuccess);
-      widget.onCellAttemptsChanged(intCellAttempts);
-    });
-  }
-
-  _decreaseCellSuccess() async {
-    intCellSuccess = intCellSuccess - 1;
-    setState(() {
-      widget.onCellSuccessChanged(intCellSuccess);
-    });
-  }
-
-  _updateCellSuccess(int value) {
-    intCellSuccess = value;
-    mySharedPrefs.saveInt("CellSuccess", intCellSuccess);
-    widget.onCellSuccessChanged(intCellSuccess);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -215,117 +175,39 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     }
 
     return Column(children: [
-      FractionallySizedBox(
-        widthFactor: 0.99,
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            //color: Colors.red,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          padding: EdgeInsets.all(4.0),
-          child: Column(children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                color: Colors.grey,
-              ),
-              child: Column(children: [
-                Text("Power Port"),
-              ]),
-            ),
-            Container(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(children: [
-                      CounterWidget(
-                        value: intCellAttempts,
-                        title: "Cell Attempts",
-                        styleFontSize: styleFontSizeBody,
-                        onIncreaseStateChanged: (int increase) {
-                          _increaseCellAttempts();
-                        },
-                        onDecreaseStateChanged: (int decrease) {
-                          _decreaseCellAttempts();
-                        },
-                        onSetValue: (int value) {
-                          _updateCellAttempts(value);
-                        },
-                      ),
-                      CounterWidget(
-                        value: intCellSuccess,
-                        title: "Cell Success",
-                        styleFontSize: styleFontSizeBody,
-                        onIncreaseStateChanged: (int increase) {
-                          _increaseCellSuccess();
-                        },
-                        onDecreaseStateChanged: (int decrease) {
-                          _decreaseCellSuccess();
-                        },
-                        onSetValue: (int value) {
-                          _updateCellSuccess(value);
-                        },
-                      ),
-                    ]),
-                    Column(children: [
-                      Row(children: [
-                        SizedBox(
-                          width: styleImgFieldWidth,
-                          height: (styleImgFieldWidth * 0.5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                //border: Border.all(color: Colors.grey),
-                                //color: Colors.white,
-                                ),
-                            child: Image.asset("assets/imgs/ports.png"),
-                          ),
-                        ),
-                      ])
-                    ]),
-                    Column(children: [
-                      Row(children: [
-                        Text("Outer"),
-                        Switch(
-                            value: widget.matchScoutingData.powerPortOuter,
-                            onChanged: (value) {
-                              mySharedPrefs.saveBool("selectedOuter", value);
-                              setState(() {
-                                widget.onPowerPortOuterChanged(value);
-                              });
-                            }),
-                      ]),
-                      Row(children: [
-                        Text("Inner"),
-                        Switch(
-                            value: widget.matchScoutingData.powerPortInner,
-                            onChanged: (value) {
-                              mySharedPrefs.saveBool("selectedInner", value);
-                              setState(() {
-                                widget.onPowerPortInnerChanged(value);
-                              });
-                            }),
-                      ]),
-                      Row(children: [
-                        Text("Lower"),
-                        Switch(
-                            value: widget.matchScoutingData.powerPortLower,
-                            onChanged: (value) {
-                              setState(() {
-                                widget.onPowerPortLowerChanged(value);
-                              });
-                            }),
-                      ]),
-                    ]),
-                  ]),
-            ),
-          ]),
-        ),
+      PerformanceWidget(
+        styleImgFieldWidth: styleImgFieldWidth,
+        styleFontSizeBody: styleFontSizeBody,
+        numCellAttempt: widget.matchScoutingData.cellAttempts,
+        numCellSuccess: widget.matchScoutingData.cellSuccess,
+        flInner: widget.matchScoutingData.powerPortInner,
+        flOuter: widget.matchScoutingData.powerPortOuter,
+        flLower: widget.matchScoutingData.powerPortLower,
+        onCellAttemptsChanged: (int value) {
+          setState(() {
+            widget.onCellAttemptsChanged(value);
+          });
+        },
+        onCellSuccessChanged: (int value) {
+          setState(() {
+            widget.onCellSuccessChanged(value);
+          });
+        },
+        onFlOuterChanged: (bool value) {
+          setState(() {
+            widget.onPowerPortOuterChanged(value);
+          });
+        },
+        onFlInnerChanged: (bool value) {
+          setState(() {
+            widget.onPowerPortInnerChanged(value);
+          });
+        },
+        onFlLowerChanged: (bool value) {
+          setState(() {
+            widget.onPowerPortLowerChanged(value);
+          });
+        },
       ),
       FractionallySizedBox(
         widthFactor: 0.99,

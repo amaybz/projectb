@@ -44,12 +44,18 @@ class LocalDB {
       'flCrash TEXT,'
       'flRanking1 TEXT,'
       'flRanking2 TEXT,'
-      "loseStartObject TEXT,"
-      "crossSector TEXT,"
-      "contactWithRobot TEXT,"
-      "foul TEXT,"
-      "doesAuto TEXT,"
-      "leaveLine TEXT,"
+      'autoFlStart TEXT,'
+      'autoFlBaseLine TEXT,'
+      'autoNumCellLoad INTEGER,'
+      'autoFlFoul TEXT,'
+      'autoFlRobotContact TEXT,'
+      'autoFlLoseStartObject TEXT,'
+      'autoFlCrossOver TEXT,'
+      'autoNumCellAttempt INTEGER,'
+      'autoNumCellSuccess INTEGER,'
+      'autoFlOuter TEXT,'
+      'autoFlInner TEXT,'
+      'autoFlLower TEXT,'
       "cellAttempts INTEGER,"
       "cellSuccess INTEGER,"
       "powerPortOuter TEXT,"
@@ -425,12 +431,21 @@ class MatchScoutingData {
   bool flRanking1;
   bool flRanking2;
   //Auto Tab
-  bool loseStartObject;
-  bool contactWithRobot;
-  bool crossSector;
-  bool foul;
-  bool doesAuto;
-  bool leaveLine;
+  bool autoFlStart;
+  bool autoFlBaseLine;
+  int autoNumCellLoad;
+  //Auto - Errors
+  bool autoFlFoul;
+  bool autoFlRobotContact;
+  bool autoFlLoseStartObject;
+  bool autoFlCrossOver;
+  //Auto - Performance
+  int autoNumCellAttempt;
+  int autoNumCellSuccess;
+  bool autoFlOuter;
+  bool autoFlInner;
+  bool autoFlLower;
+
   //Tele Op Tab
   int cellAttempts;
   int cellSuccess;
@@ -489,12 +504,22 @@ class MatchScoutingData {
     this.flRanking1 = false,
     this.flRanking2 = false,
     //Auto Tab
-    this.loseStartObject = false,
-    this.contactWithRobot = false,
-    this.crossSector = false,
-    this.foul = false,
-    this.doesAuto = false,
-    this.leaveLine = false,
+    this.autoFlStart = false,
+    this.autoFlBaseLine = false,
+    this.autoNumCellLoad = 0,
+    //Auto - Errors
+    this.autoFlLoseStartObject = false,
+    this.autoFlRobotContact = false,
+    this.autoFlCrossOver = false,
+    this.autoFlFoul = false,
+    //Auto - Performance
+    this.autoNumCellAttempt = 0,
+    this.autoNumCellSuccess = 0,
+    this.autoFlOuter = false,
+    this.autoFlInner = false,
+    this.autoFlLower = false,
+
+
     //Tele OP Tab
     this.cellAttempts = 0,
     this.cellSuccess = 0,
@@ -555,12 +580,18 @@ class MatchScoutingData {
       'flRanking1' : flRanking1,
       'flRanking2' : flRanking2,
       //AutoTab
-      'loseStartObject': loseStartObject,
-      'contactWithRobot': contactWithRobot,
-      'crossSector': crossSector,
-      'foul': foul,
-      'doesAuto': doesAuto,
-      'leaveLine': leaveLine,
+      'autoFlStart' : autoFlStart,
+      'autoFlBaseLine' : autoFlBaseLine,
+      'autoNumCellLoad' : autoNumCellLoad,
+      'autoFlFoul' : autoFlFoul,
+      'autoFlRobotContact' : autoFlRobotContact,
+      'autoFlLoseStartObject' : autoFlLoseStartObject,
+      'autoFlCrossOver' : autoFlCrossOver,
+      'autoNumCellAttempt' : autoNumCellAttempt,
+      'autoNumCellSuccess' : autoNumCellSuccess,
+      'autoFlOuter' : autoFlOuter,
+      'autoFlInner' : autoFlInner,
+      'autoFlLower' : autoFlLower,
       //Tele OP Tab
       'cellAttempts': cellAttempts,
       'cellSuccess': cellSuccess,
@@ -622,12 +653,18 @@ class MatchScoutingData {
       'flRanking1': flRanking1.toString(),
       'flRanking2': flRanking2.toString(),
       //Auto Tab
-      'loseStartObject': loseStartObject.toString(),
-      'contactWithRobot': contactWithRobot.toString(),
-      'crossSector': crossSector.toString(),
-      'foul': foul.toString(),
-      'doesAuto': doesAuto.toString(),
-      'leaveLine': leaveLine.toString(),
+      'autoFlStart': autoFlStart.toString(),
+      'autoFlBaseLine': autoFlBaseLine.toString(),
+      'autoNumCellLoad': autoNumCellLoad,
+      'autoFlFoul': autoFlFoul.toString(),
+      'autoFlRobotContact': autoFlRobotContact.toString(),
+      'autoFlLoseStartObject': autoFlLoseStartObject.toString(),
+      'autoFlCrossOver': autoFlCrossOver.toString(),
+      'autoNumCellAttempt': autoNumCellAttempt,
+      'autoNumCellSuccess': autoNumCellSuccess,
+      'autoFlOuter': autoFlOuter.toString(),
+      'autoFlInner': autoFlInner.toString(),
+      'autoFlLower': autoFlLower.toString(),
       //Tele OP Tab
       'cellAttempts': cellAttempts,
       'cellSuccess': cellSuccess,
@@ -686,15 +723,20 @@ class MatchScoutingData {
     this.flYellow = map['flYellow'].toString().toLowerCase() == 'true';
     this.flCrash = map['flCrash'].toString().toLowerCase() == 'true';
     this.flRanking1 = map['flRanking1'].toString().toLowerCase() == 'true';
-    this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';//Auto Tab
-    this.loseStartObject =
-        map['loseStartObject'].toString().toLowerCase() == 'true';
-    this.contactWithRobot =
-        map['contactWithRobot'].toString().toLowerCase() == 'true';
-    this.crossSector = map['crossSector'].toString().toLowerCase() == 'true';
-    this.foul = map['foul'].toString().toLowerCase() == 'true';
-    this.doesAuto = map['doesAuto'].toString().toLowerCase() == 'true';
-    this.leaveLine = map['leaveLine'].toString().toLowerCase() == 'true';
+    this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';
+    //Auto Tab
+    this.autoFlStart = map['autoFlStart'].toString().toLowerCase() == 'true';
+    this.autoFlBaseLine = map['autoFlBaseLine'].toString().toLowerCase() == 'true';
+    this.autoNumCellLoad = map['autoNumCellLoad'];
+    this.autoFlFoul = map['autoFlFoul'].toString().toLowerCase() == 'true';
+    this.autoFlRobotContact = map['autoFlRobotContact'].toString().toLowerCase() == 'true';
+    this.autoFlLoseStartObject = map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
+    this.autoFlCrossOver = map['autoFlCrossOver'].toString().toLowerCase() == 'true';
+    this.autoNumCellAttempt = map['autoNumCellAttempt'];
+    this.autoNumCellSuccess = map['autoNumCellSuccess'];
+    this.autoFlOuter = map['autoFlOuter'].toString().toLowerCase() == 'true';
+    this.autoFlInner = map['autoFlInner'].toString().toLowerCase() == 'true';
+    this.autoFlLower = map['autoFlLower'].toString().toLowerCase() == 'true';
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];
@@ -759,12 +801,18 @@ class MatchScoutingData {
     this.flRanking1 = map['flRanking1'];
     this.flRanking2 = map['flRanking2'];
     //Auto Tab
-    this.loseStartObject = map['loseStartObject'];
-    this.contactWithRobot = map['contactWithRobot'];
-    this.crossSector = map['crossSector'];
-    this.foul = map['foul'];
-    this.doesAuto = map['doesAuto'];
-    this.leaveLine = map['leaveLine'];
+    this.autoFlStart = map['autoFlStart'];
+    this.autoFlBaseLine = map['autoFlBaseLine'];
+    this.autoNumCellLoad = map['autoNumCellLoad'];
+    this.autoFlFoul = map['autoFlFoul'];
+    this.autoFlRobotContact = map['autoFlRobotContact'];
+    this.autoFlLoseStartObject = map['autoFlLoseStartObject'];
+    this.autoFlCrossOver = map['autoFlCrossOver'];
+    this.autoNumCellAttempt = map['autoNumCellAttempt'];
+    this.autoNumCellSuccess = map['autoNumCellSuccess'];
+    this.autoFlOuter = map['autoFlOuter'];
+    this.autoFlInner = map['autoFlInner'];
+    this.autoFlLower = map['autoFlLower'];
     //Tele OP Tab
     this.cellAttempts = map['cellAttempts'];
     this.cellSuccess = map['cellSuccess'];

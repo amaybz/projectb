@@ -12,6 +12,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 
+
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
     Key key,
@@ -82,7 +83,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthFacing = 90;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
-  double styleFontSizeBody = 18;
+  double styleFontSizeBody = 16;
   double styleFontSizeHeadings = 18;
   double styleRedBoxSize = 300;
 
@@ -651,7 +652,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
-                                    "Operational (Hanging)",
+                                    "RP #1",
                                     style: TextStyle(
                                         fontSize: styleFontSizeBody,
                                         fontWeight: FontWeight.bold),
@@ -673,7 +674,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 //crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    "Energised (Activated)",
+                                    "RP #2",
                                     style: TextStyle(
                                         fontSize: styleFontSizeBody,
                                         fontWeight: FontWeight.bold),
@@ -736,46 +737,46 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 0) {
       return AutoTab(
         styleImgFieldWidth: styleImgFieldWidth,
-        boolLoseStartObject: matchScoutingData.loseStartObject,
-        boolContactWithRobot: matchScoutingData.contactWithRobot,
-        boolCrossSector: matchScoutingData.crossSector,
-        boolFoul: matchScoutingData.foul,
-        boolDoesAuto: matchScoutingData.doesAuto,
-        boolLeaveLine: matchScoutingData.leaveLine,
+        boolLoseStartObject: matchScoutingData.autoFlLoseStartObject,
+        boolContactWithRobot: matchScoutingData.autoFlRobotContact,
+        boolCrossSector: matchScoutingData.autoFlCrossOver,
+        boolFoul: matchScoutingData.autoFlFoul,
+        boolDoesAuto: matchScoutingData.autoFlStart,
+        boolLeaveLine: matchScoutingData.autoFlBaseLine,
         onLoseStartObjectChange: (bool value) {
           //save values
           setState(() {
-            matchScoutingData.loseStartObject = value;
+            matchScoutingData.autoFlLoseStartObject = value;
           });
         },
         onContactWithRobotChange: (bool value) {
           //save values
           setState(() {
-            matchScoutingData.contactWithRobot = value;
+            matchScoutingData.autoFlRobotContact = value;
           });
         },
         onCrossSectorChange: (bool value) {
           //save values
           setState(() {
-            matchScoutingData.crossSector = value;
+            matchScoutingData.autoFlCrossOver = value;
           });
         },
         onFoulChange: (bool value) {
           //save values
           setState(() {
-            matchScoutingData.foul = value;
+            matchScoutingData.autoFlFoul = value;
           });
         },
         onDoesAutoChange: (bool value) {
           //save values
           setState(() {
-            matchScoutingData.doesAuto = value;
+            matchScoutingData.autoFlStart = value;
           });
         },
         onLeaveLineChange: (bool value) {
           //save values
           setState(() {
-            matchScoutingData.leaveLine = value;
+            matchScoutingData.autoFlBaseLine = value;
           });
         },
       );

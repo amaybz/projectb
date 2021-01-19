@@ -10,6 +10,7 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_pit_climb.dart';
+import 'package:projectb/finishtab.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
@@ -143,6 +144,33 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     print("Pit Cleared");
   }
 
+  showAlertOKDialog(BuildContext context, String heading, String text) {
+    // set up the buttons
+    Widget okButton = FlatButton(
+      child: Text("ok"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(heading),
+      content: Text(text),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   Future<bool> _onWillPop() async {
     return (await showDialog(
           context: context,
@@ -164,23 +192,40 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         false;
   }
 
-  void savePitData({
+  Future<bool> savePitData ({
     int recordID = 0,
   }) async {
     print("saving record");
+    pitData.id = null;
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
     if (recordID > 0) {
       pitData.id = recordID;
+      pitData.dtModified = date.toString();
     }
+    else{
+      pitData.dtCreation = date.toString();
+      pitData.dtModified = date.toString();
+    }
+    if(selectedTeam == null) return false;
     pitData.idTeam = selectedTeam.teamNumber;
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
     //insert Pit Record
-    //pitData.id = await localDB.insertPitData(pitData);
+    pitData.id = await localDB.insertPitData(pitData);
     if (pitData.id > 0) {
       recordSaved = true;
+      print("Record Saved: " + recordSaved.toString());
+      print("Record ID: " + pitData.id.toString());
+      return true;
     }
-    print("Record Saved: " + recordSaved.toString());
-    print("Record ID: " + pitData.id.toString());
+    else
+      {
+        print("ERROR Saving Record: " + recordSaved.toString());
+        return false;
+      }
+
+
   }
 
   void handleMenuClick(String value) async {
@@ -588,7 +633,22 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   (value == true) ? scrollDown(200) : scrollDown(0);
                 },
               ),
+              FinishTab(
+                onSavePressed: (bool value) async {
+                  if (recordSaved == true) {
+                    await savePitData(recordID: pitData.id);
+                  } else {
+                    await savePitData();
+                  }
+                  String alertMsg;
+                  alertMsg = (recordSaved == true) ? "Pit has been saved to Local Database" : "FAILED to Save Record";
+                  showAlertOKDialog(
+                      context, "Saved", alertMsg);
+
+                },
+              ),
             ]),
+
       ),
     );
   }

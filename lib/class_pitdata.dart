@@ -45,6 +45,7 @@ class PitData {
   String txComputerName;
 
   PitData({
+    this.id = 0,
     this.txEvent,
     this.idTeam,
     this.txScoutName,
@@ -137,5 +138,65 @@ class PitData {
       'dtModified': dtModified.toString(),
       'txComputerName': txComputerName,
     };
+  }
+
+  PitData.fromLocalDB(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.txEvent = map['txEvent'];
+    this.idTeam = map['idTeam'].toString();
+    this.txScoutName = map['txScoutName'];
+    this.numWeight = map['numWeight'];
+    this.numHeight = map['numHeight'];
+    this.flCells = map['flCells'].toString().toLowerCase() == 'true';
+    this.flIntakeGround = map['flIntakeGround'].toString().toLowerCase() == 'true';
+    this.flIntakeHigh = map['flIntakeHigh'].toString().toLowerCase() == 'true';
+    this.numStorage = map['numStorage'];
+    this.txShooting = map['txShooting'];
+    this.flTargetLow = map['flTargetLow'].toString().toLowerCase() == 'true';
+    this.flTargetOuter = map['flTargetOuter'].toString().toLowerCase() == 'true';
+    this.flTargetInner = map['flTargetInner'].toString().toLowerCase() == 'true';
+    this.flClimb = map['flClimb'].toString().toLowerCase() == 'true';
+    this.idClimbType = map['idClimbType'];
+    this.numClimbHeight = map['numClimbHeight'];
+    this.flClimbSecure = map['flClimbSecure'].toString().toLowerCase() == 'true';
+    this.idClimbGrab = map['idClimbGrab'];
+    this.idClimbSpeed = map['idClimbSpeed'];
+    this.flClimbTilt = map['flClimbTilt'].toString().toLowerCase() == 'true';
+    this.txClimb = map['txClimb'];
+    this.idClimbPos = map['idClimbPos'];
+    this.flClimbLevel = map['flClimbLevel'].toString().toLowerCase() == 'true';
+    this.flClimbLevelSelf = map['flClimbLevelSelf'].toString().toLowerCase() == 'true';
+    this.flClimbLevelOther = map['flClimbLevelOther'].toString().toLowerCase() == 'true';
+    this.flClimbMove = map['flClimbMove'].toString().toLowerCase() == 'true';
+    this.flClimbOther = map['flClimbOther'].toString().toLowerCase() == 'true';
+    this.numClimbOther = map['numClimbOther'];
+    this.flPanel = map['flPanel'].toString().toLowerCase() == 'true';
+    this.flPanelBrake = map['flPanelBrake'].toString().toLowerCase() == 'true';
+    this.flPanelRotation = map['flPanelRotation'].toString().toLowerCase() == 'true';
+    this.flPanelPos = map['flPanelPos'].toString().toLowerCase() == 'true';
+    this.flPanelSensor = map['flPanelSensor'].toString().toLowerCase() == 'true';
+    this.txPanelSensor = map['txPanelSensor'];
+    this.flAuto = map['flAuto'].toString().toLowerCase() == 'true';
+    this.flAutoLine = map['flAutoLine'].toString().toLowerCase() == 'true';
+    this.flAutoShoot = map['flAutoShoot'].toString().toLowerCase() == 'true';
+    this.numAutoShoot = map['numAutoShoot'];
+    this.numAutoLoad = map['numAutoLoad'];
+    this.txPitNotes = map['txPitNotes'];
+    this.dtCreation = map['dtCreation'];
+    this.dtModified = map['dtModified'];
+    this.txComputerName = map['txComputerName'];
+
+  }
+
+  Map<String, dynamic> toMap() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['txEvent'] = this.txEvent;
+    return data;
+  }
+
+  PitData.fromMap(Map<String, dynamic> map) {
+    this.id = map['id'];
+    this.txEvent = map['txEvent'];
   }
 }

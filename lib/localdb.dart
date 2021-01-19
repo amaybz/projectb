@@ -91,7 +91,7 @@ class LocalDB {
   final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
       'id INTEGER PRIMARY KEY, '
       'txEvent TEXT,'
-      'idTeam INTEGER,'
+      'idTeam TEXT,'
       'txScoutName TEXT,'
       'numWeight INTEGER,'
       'numHeight INTEGER,'
@@ -262,6 +262,15 @@ class LocalDB {
     }
     return null;
   }
+  Future<PitData> getPitDataRecord(int id) async {
+    Database db = await database;
+    List<Map> maps =
+    await db.query(tblPitData, where: 'id = ?', whereArgs: [id]);
+    if (maps.length > 0) {
+      return PitData.fromLocalDB(maps.first);
+    }
+    return null;
+  }
 
   Future<List<LocalEvent>> listEvents() async {
     // Get a reference to the database.
@@ -326,6 +335,19 @@ class LocalDB {
     // Convert the List<Map<String, dynamic> into a List<Dog>.
     return List.generate(maps.length, (i) {
       return MatchScoutingData.fromLocalDB(maps[i]);
+    });
+  }
+
+  Future<List<PitData>> listPitData() async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    // Query the table for all The Dogs.
+    final List<Map<String, dynamic>> maps = await db.query(tblPitData);
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return PitData.fromLocalDB(maps[i]);
     });
   }
 }

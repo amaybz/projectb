@@ -10,6 +10,7 @@ import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:projectb/qrreaderscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -294,6 +295,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 _navigateToStoredData(context);
               },
             ),
+            ListTile(
+              title: Text('Read QR Code'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToQRReaderScreen(context);
+              },
+            ),
           ],
         ),
       ),
@@ -510,6 +518,20 @@ class _MyHomePageState extends State<MyHomePage> {
             eventName: selectedLocalEvent.shortName,
             eventKey: selectedLocalEvent.key,
             eventTeams: teams,
+          )),
+    );
+  }
+
+  _navigateToQRReaderScreen(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    //List<LocalTeam> teams = await localDB.listLocalTeams();
+    final result = await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(
+          builder: (context) => QRReaderScreen(
+
           )),
     );
   }

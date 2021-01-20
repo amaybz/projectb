@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class_pitdata.dart';
+import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_row_heading.dart';
 
-
-class PitControlPanel extends StatefulWidget {
-
-  PitControlPanel({
+class PitPowerCells extends StatefulWidget {
+  PitPowerCells({
     Key key,
     @required this.pitData,
     this.styleFontSize = 16,
     this.styleFontSizeHeadings = 18,
-    this.styleFieldPanelSensorMaxWidth = 300,
+    this.styleFieldTxShootingMaxWidth = 300,
     this.onChanged,
-    this.txPanelSensor,
+    this.txShooting,
     this.onExpanded,
   }) : super(key: key);
 
   final PitData pitData;
   final double styleFontSize;
   final double styleFontSizeHeadings;
-  final double styleFieldPanelSensorMaxWidth;
+  final double styleFieldTxShootingMaxWidth;
   final ValueChanged<PitData> onChanged;
-  final TextEditingController txPanelSensor;
+  final TextEditingController txShooting;
   final ValueChanged<bool> onExpanded;
 
   @override
-  _PitControlPanelState createState() => _PitControlPanelState();
+  _PitPowerCellsState createState() => _PitPowerCellsState();
 }
 
-class _PitControlPanelState extends State<PitControlPanel> {
+class _PitPowerCellsState extends State<PitPowerCells> {
   @override
   Widget build(BuildContext context) {
-    if (widget.pitData.flPanel == false) {
+    if (widget.pitData.flCells == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -49,17 +48,17 @@ class _PitControlPanelState extends State<PitControlPanel> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
-                headingText: "Control Panel",
+                styleFontSize: widget.styleFontSize,
+                headingText: "Power Cells",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Can manipulate control panel?",
-                value: widget.pitData.flPanel,
+                text: "Manipulate:",
+                value: widget.pitData.flCells,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flPanel = value;
+                    widget.pitData.flCells = value;
                     widget.onChanged(widget.pitData);
                     widget.onExpanded(true);
                   });
@@ -86,19 +85,20 @@ class _PitControlPanelState extends State<PitControlPanel> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
-                headingText: "Control Panel",
+                styleFontSize: widget.styleFontSize,
+                headingText: "Power Cells",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Can manipulate control panel?",
-                value: widget.pitData.flPanel,
+                text: "Manipulate:",
+                value: widget.pitData.flCells,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flPanel = value;
+                    widget.pitData.flCells = value;
                     widget.onChanged(widget.pitData);
+                    widget.onExpanded(true);
                   });
                 },
               ),
@@ -106,15 +106,14 @@ class _PitControlPanelState extends State<PitControlPanel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Brakes?:",
+                    "Ground Intake:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flPanelBrake,
+                    value: widget.pitData.flIntakeGround,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flPanelBrake = value;
-                        widget.onChanged(widget.pitData);
+                        widget.pitData.flIntakeGround = value;
                       });
                     },
                   ),
@@ -124,15 +123,14 @@ class _PitControlPanelState extends State<PitControlPanel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Rotation Control?:",
+                    "Loading Station Intake:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flPanelRotation,
+                    value: widget.pitData.flIntakeHigh,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flPanelRotation = value;
-                        widget.onChanged(widget.pitData);
+                        widget.pitData.flIntakeHigh = value;
                       });
                     },
                   ),
@@ -142,15 +140,14 @@ class _PitControlPanelState extends State<PitControlPanel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Position Control?:",
+                    "Target (Lower):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flPanelPos,
+                    value: widget.pitData.flTargetLow,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flPanelPos = value;
-                        widget.onChanged(widget.pitData);
+                        widget.pitData.flTargetLow = value;
                       });
                     },
                   ),
@@ -160,44 +157,77 @@ class _PitControlPanelState extends State<PitControlPanel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Sensor?:",
+                    "Target (Outer):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flPanelSensor,
+                    value: widget.pitData.flTargetOuter,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flPanelSensor = value;
-                        widget.onChanged(widget.pitData);
+                        widget.pitData.flTargetOuter = value;
                       });
                     },
                   ),
                 ],
               ),
               Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Notes: ",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Target (Inner):",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flTargetInner,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flTargetInner = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text("Storage Capacity:"),
+                CounterWidget(
+                  value: widget.pitData.numStorage,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numStorage++;
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numStorage--;
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numStorage = value;
+                    });
+                  },
+                ),
+              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Shooting Mechanism: ",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxWidth: widget.styleFieldTxShootingMaxWidth),
+                    child: TextField(
+                      controller: widget.txShooting,
+                      decoration: InputDecoration(
+                          hintText:
+                              'Cannon, hooded shooter, twin flywheel etc'),
                     ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                          maxWidth: widget.styleFieldPanelSensorMaxWidth),
-                      child: TextField(
-                        controller: widget.txPanelSensor,
-                        decoration: InputDecoration(
-                            hintText: 'What kind of sensor etc'),
-                        onChanged: (String text) {
-                          setState(() {
-                            widget.pitData.txClimb = text;
-                            widget.onChanged(widget.pitData);
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
+                  ),
+                ],
+              ),
             ]),
           ),
         ),

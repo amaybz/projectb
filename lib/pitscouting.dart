@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_pit_climb.dart';
 import 'package:projectb/finishtab.dart';
+import 'package:projectb/widget_pit_powercells.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
@@ -37,7 +38,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   bool recordSaved = false;
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
-  final TextEditingController _txShooting = TextEditingController();
+  final TextEditingController txShooting = TextEditingController();
   final TextEditingController txClimb = TextEditingController();
   final TextEditingController txPanelSensor = TextEditingController();
 
@@ -138,7 +139,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       pitData = null;
       pitData = PitData();
       selectedTeam = null;
-      _txShooting.text = "";
+      txShooting.text = "";
       txClimb.text = "";
     });
     print("Pit Cleared");
@@ -595,7 +596,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             constraints: BoxConstraints(
                                 maxWidth: styleFieldTxShootingMaxWidth),
                             child: TextField(
-                              controller: _txShooting,
+                              controller: txShooting,
                               decoration: InputDecoration(
                                   hintText:
                                       'Cannon, hooded shooter, twin flywheel etc'),
@@ -606,6 +607,20 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     ]),
                   ),
                 ),
+              ),
+              PitPowerCells(
+                pitData: pitData,
+                txShooting: txShooting,
+                styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(200) : scrollDown(0);
+                },
+
               ),
               PitClimb(
                 pitData: pitData,

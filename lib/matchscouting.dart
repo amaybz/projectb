@@ -777,106 +777,106 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         matchScoutingData: matchScoutingData,
         onCellAttemptsChanged: (int value) {
           setState(() {
-            matchScoutingData.cellAttempts = value;
+            matchScoutingData.teleNumCellAttempt = value;
           });
         },
         onCellSuccessChanged: (int value) {
           setState(() {
-            matchScoutingData.cellSuccess = value;
+            matchScoutingData.teleNumCellSuccess = value;
           });
-          print(matchScoutingData.cellSuccess);
+          print(matchScoutingData.teleNumCellSuccess);
         },
         onEndgameParkChanged: (bool value) {
           setState(() {
-            matchScoutingData.endgamePark = value;
+            matchScoutingData.teleFlPark = value;
           });
         },
         onEndgameClimbChanged: (String value) {
-          matchScoutingData.endgameClimb = value;
+          matchScoutingData.teleIdClimb = value;
         },
         onPowerPortOuterChanged: (bool value) {
           setState(() {
-            matchScoutingData.powerPortOuter = value;
+            matchScoutingData.teleFlOuter = value;
           });
         },
         onPowerPortInnerChanged: (bool value) {
           setState(() {
-            matchScoutingData.powerPortInner = value;
+            matchScoutingData.teleFlInner = value;
           });
         },
         onPowerPortLowerChanged: (bool value) {
           setState(() {
-            matchScoutingData.powerPortLower = value;
+            matchScoutingData.teleFlLower = value;
           });
         },
         onCPRotationControlChanged: (bool value) {
           setState(() {
-            matchScoutingData.cpRotationControl = value;
+            matchScoutingData.teleFlPanelRotation = value;
           });
         },
         onCPRotationTimeTakenChange: (String value) {
           setState(() {
-            matchScoutingData.cpRotationTimeTaken = value;
+            matchScoutingData.teleIdPanelRotationTime = value;
           });
         },
         onCPPositionControlChanged: (bool value) {
           setState(() {
-            matchScoutingData.cpPositionControl = value;
+            matchScoutingData.teleFlPanelPosition = value;
           });
         },
         onCPPositionTimeTakenChange: (String value) {
           setState(() {
-            matchScoutingData.cpPositionTimeTaken = value;
+            matchScoutingData.teleIdPanelPositionTime = value;
           });
         },
         onCPPanelAttemptsChanged: (int value) {
           setState(() {
-            matchScoutingData.cpPanelAttempts = value;
+            matchScoutingData.teleNumPanelAttempt = value;
           });
         },
         onCPPanelSuccessChanged: (int value) {
           setState(() {
-            matchScoutingData.cpPanelSuccess = value;
+            matchScoutingData.teleNumPanelSuccess = value;
           });
         },
         onEndgameTimeToGripChanged: (String value) {
           setState(() {
-            matchScoutingData.endgameTimeToGrip = value;
+            matchScoutingData.teleIdClimbGrabTime = value;
           });
         },
         onEndgameTimeFromGripToClimbChanged: (String value) {
           setState(() {
-            matchScoutingData.endgameTimeFromGripToClimb = value;
+            matchScoutingData.teleIdClimbTime = value;
           });
         },
         onEndgameOutcomeChanged: (String value) {
           setState(() {
-            matchScoutingData.endgameOutcome = value;
+            matchScoutingData.teleIdClimbOutcome = value;
           });
         },
         onEndgamePreferredPositionChanged: (String value) {
           setState(() {
-            matchScoutingData.endgamePreferredPosition = value;
+            matchScoutingData.teleIdClimbPos = value;
           });
         },
         onEndgameBuddiesChanged: (int value) {
           setState(() {
-            matchScoutingData.endgameBuddies = value;
+            matchScoutingData.teleNumClimbOthers = value;
           });
         },
         onEndgameBalanceChanged: (bool value) {
           setState(() {
-            matchScoutingData.endgameBalance = value;
+            matchScoutingData.teleFlClimbBalance = value;
           });
         },
         onEndgameBalanceCorrectionChanged: (bool value) {
           setState(() {
-            matchScoutingData.endgameBalanceCorrection = value;
+            matchScoutingData.teleFlClimbCorrection = value;
           });
         },
         onEndgameFallChanged: (bool value) {
           setState(() {
-            matchScoutingData.endgameFall = value;
+            matchScoutingData.teleFlClimbFall = value;
           });
         },
       );
@@ -890,104 +890,104 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           onShootingWallZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.shootingWall = value;
+              matchScoutingData.commFlShotWall = value;
             });
           },
           onShootingNearZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.shootingNearZone = value;
+              matchScoutingData.commFlShotNear = value;
             });
           },
           onShootingMidZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.shootingMidZone = value;
+              matchScoutingData.commFlShotMid = value;
             });
           },
           onShootingFarZoneChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.shootingFarZone = value;
+              matchScoutingData.commFlShotFar = value;
             });
           },
           onOtherRobotChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.intakeOtherRobot = value;
+              matchScoutingData.commFlIntakeRobot = value;
             });
           },
           onHighIntakeChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.intakeHigh = value;
+              matchScoutingData.commFlIntakeHigh = value;
             });
           },
           onGroundIntakeChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.intakeGround = value;
+              matchScoutingData.commFlIntakeGround = value;
             });
           },
           onAssistOtherRobotChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsAssistRobot = value;
+              matchScoutingData.commFlAssist = value;
             });
           },
           onSelectedDriveRatingChanged: (String value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsDriveRating = value;
+              matchScoutingData.commIdDriveRating = value;
             });
           },
           onSelectedDefenceRatingChanged: (String value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsDefenceRating = value;
+              matchScoutingData.commIdDefenceRating = value;
             });
           },
           onRecoveredChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsRecovered = value;
+              matchScoutingData.commFlRecovery = value;
             });
           },
           onNoTeamWorkChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsNoTeamWork = value;
+              matchScoutingData.commFlOwnThing = value;
             });
           },
           onWorkedToStrategyChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsWorkedToAStrategy = value;
+              matchScoutingData.commFlStrategy = value;
             });
           },
           onWorkedWithAllianceChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.quickRatingsWorkedWithAlliance = value;
+              matchScoutingData.commFlAlliance = value;
             });
           },
           onWarningChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.warning = value;
+              matchScoutingData.commFlWarning = value;
             });
           },
           onHighlightTeamChanged: (bool value) {
             //Update Value
             setState(() {
-              matchScoutingData.highlightTeam = value;
+              matchScoutingData.commFlHighlight = value;
             });
 
           },
           onCommentsChanged: (String value) {
             //Update Value
             setState(() {
-              matchScoutingData.comments = value;
+              matchScoutingData.commTxNotes = value;
             });
 
           },

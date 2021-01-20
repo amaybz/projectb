@@ -56,44 +56,44 @@ class LocalDB {
       'autoFlOuter TEXT,'
       'autoFlInner TEXT,'
       'autoFlLower TEXT,'
-      "cellAttempts INTEGER,"
-      "cellSuccess INTEGER,"
-      "powerPortOuter TEXT,"
-      "powerPortInner TEXT,"
-      "powerPortLower TEXT,"
-      "cpRotationControl TEXT,"
-      "cpRotationTimeTaken TEXT,"
-      "cpPositionControl TEXT,"
-      "cpPositionTimeTaken TEXT,"
-      "cpPanelAttempts INTEGER,"
-      "cpPanelSuccess INTEGER,"
-      "endgamePark TEXT,"
-      "endgameClimb TEXT,"
-      "endgameTimeToGrip TEXT,"
-      "endgameTimeFromGripToClimb TEXT,"
-      "endgameOutcome TEXT,"
-      "endgamePreferredPosition TEXT,"
-      "endgameBuddies INTEGER,"
-      "endgameBalance TEXT,"
-      "endgameBalanceCorrection TEXT,"
-      "endgameFall TEXT,"
-      "quickRatingsDriveRating TEXT,"
-      "quickRatingsDefenceRating TEXT,"
-      "quickRatingsAssistRobot TEXT,"
-      "quickRatingsWorkedWithAlliance TEXT,"
-      "quickRatingsWorkedToAStrategy TEXT,"
-      "quickRatingsRecovered TEXT,"
-      "quickRatingsNoTeamWork TEXT,"
-      "intakeGround TEXT,"
-      "intakeHigh TEXT,"
-      "intakeOtherRobot TEXT,"
-      "shootingWall TEXT,"
-      "shootingNearZone TEXT,"
-      "shootingMidZone TEXT,"
-      "shootingFarZone TEXT,"
-      "comments TEXT,"
-      "highlightTeam ,"
-      "warning TEXT"
+      'teleFlPanelRotation TEXT,'
+      'teleIdPanelRotationTime TEXT,'
+      'teleFlPanelPosition TEXT,'
+      'teleIdPanelPositionTime TEXT,'
+      'teleNumPanelAttempt INTEGER,'
+      'teleNumPanelSuccess INTEGER,'
+      'teleFlPark TEXT,'
+      'teleIdClimb TEXT,'
+      'teleIdClimbGrabTime TEXT,'
+      'teleIdClimbTime TEXT,'
+      'teleIdClimbOutcome TEXT,'
+      'teleIdClimbPos TEXT,'
+      'teleNumClimbOthers INTEGER,'
+      'teleFlClimbBalance TEXT,'
+      'teleFlClimbCorrection TEXT,'
+      'teleFlClimbFall TEXT,'
+      'teleNumCellAttempt INTEGER,'
+      'teleNumCellSuccess INTEGER,'
+      'teleFlOuter TEXT,'
+      'teleFlInner TEXT,'
+      'teleFlLower TEXT,'
+      'commFlAssist TEXT,'
+      'commIdDriveRating TEXT,'
+      'commIdDefenceRating TEXT,'
+      'commFlAlliance TEXT,'
+      'commFlStrategy TEXT,'
+      'commFlOwnThing TEXT,'
+      'commFlRecovery TEXT,'
+      'commFlWarning TEXT,'
+      'commFlHighlight TEXT,'
+      'commFlShotFar TEXT,'
+      'commFlShotMid TEXT,'
+      'commFlShotNear TEXT,'
+      'commFlShotWall TEXT,'
+      'commFlIntakeGround TEXT,'
+      'commFlIntakeHigh TEXT,'
+      'commFlIntakeRobot TEXT,'
+      'commTxNotes TEXT'
       ")";
   final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
       'id INTEGER PRIMARY KEY, '
@@ -447,45 +447,45 @@ class MatchScoutingData {
   bool autoFlLower;
 
   //Tele Op Tab
-  int cellAttempts;
-  int cellSuccess;
-  bool powerPortOuter;
-  bool powerPortInner;
-  bool powerPortLower;
-  bool cpRotationControl;
-  String cpRotationTimeTaken;
-  bool cpPositionControl;
-  String cpPositionTimeTaken;
-  int cpPanelAttempts;
-  int cpPanelSuccess;
-  bool endgamePark;
-  String endgameClimb;
-  String endgameTimeToGrip;
-  String endgameTimeFromGripToClimb;
-  String endgameOutcome;
-  String endgamePreferredPosition;
-  int endgameBuddies;
-  bool endgameBalance;
-  bool endgameBalanceCorrection;
-  bool endgameFall;
+  int teleNumCellAttempt;
+  int teleNumCellSuccess;
+  bool teleFlOuter;
+  bool teleFlInner;
+  bool teleFlLower;
+  bool teleFlPanelRotation;
+  String teleIdPanelRotationTime;
+  bool teleFlPanelPosition;
+  String teleIdPanelPositionTime;
+  int teleNumPanelAttempt;
+  int teleNumPanelSuccess;
+  bool teleFlPark;
+  String teleIdClimb;
+  String teleIdClimbGrabTime;
+  String teleIdClimbTime;
+  String teleIdClimbOutcome;
+  String teleIdClimbPos;
+  int teleNumClimbOthers;
+  bool teleFlClimbBalance;
+  bool teleFlClimbCorrection;
+  bool teleFlClimbFall;
   //Ratings Tab
-  String quickRatingsDriveRating;
-  String quickRatingsDefenceRating;
-  bool quickRatingsAssistRobot;
-  bool quickRatingsWorkedWithAlliance;
-  bool quickRatingsWorkedToAStrategy;
-  bool quickRatingsRecovered;
-  bool quickRatingsNoTeamWork;
-  bool intakeGround;
-  bool intakeHigh;
-  bool intakeOtherRobot;
-  bool shootingWall;
-  bool shootingNearZone;
-  bool shootingMidZone;
-  bool shootingFarZone;
-  String comments;
-  bool highlightTeam;
-  bool warning;
+  String commIdDriveRating;
+  String commIdDefenceRating;
+  bool commFlAssist;
+  bool commFlAlliance;
+  bool commFlStrategy;
+  bool commFlRecovery;
+  bool commFlOwnThing;
+  bool commFlIntakeGround;
+  bool commFlIntakeHigh;
+  bool commFlIntakeRobot;
+  bool commFlShotWall;
+  bool commFlShotNear;
+  bool commFlShotMid;
+  bool commFlShotFar;
+  String commTxNotes;
+  bool commFlHighlight;
+  bool commFlWarning;
 
   MatchScoutingData({
     this.id,
@@ -518,48 +518,49 @@ class MatchScoutingData {
     this.autoFlOuter = false,
     this.autoFlInner = false,
     this.autoFlLower = false,
-
-
     //Tele OP Tab
-    this.cellAttempts = 0,
-    this.cellSuccess = 0,
-    this.powerPortInner = false,
-    this.powerPortLower = false,
-    this.powerPortOuter = false,
-    this.cpRotationControl = false,
-    this.cpRotationTimeTaken,
-    this.cpPositionControl = false,
-    this.cpPositionTimeTaken,
-    this.cpPanelAttempts = 0,
-    this.cpPanelSuccess = 0,
-    this.endgameClimb,
-    this.endgamePark = false,
-    this.endgameTimeToGrip,
-    this.endgameTimeFromGripToClimb,
-    this.endgameOutcome,
-    this.endgamePreferredPosition,
-    this.endgameBuddies = 0,
-    this.endgameBalance = false,
-    this.endgameBalanceCorrection = false,
-    this.endgameFall = false,
+    //Tele - Control Panel
+    this.teleFlPanelRotation = false,
+    this.teleIdPanelRotationTime,
+    this.teleFlPanelPosition = false,
+    this.teleIdPanelPositionTime,
+    this.teleNumPanelAttempt = 0,
+    this.teleNumPanelSuccess = 0,
+    //Tele - Endgame
+    this.teleFlPark = false,
+    this.teleIdClimb,
+    this.teleIdClimbGrabTime,
+    this.teleIdClimbTime,
+    this.teleIdClimbOutcome,
+    this.teleIdClimbPos,
+    this.teleNumClimbOthers = 0,
+    this.teleFlClimbBalance = false,
+    this.teleFlClimbCorrection = false,
+    this.teleFlClimbFall = false,
+    //Tele - Performance
+    this.teleNumCellAttempt = 0,
+    this.teleNumCellSuccess = 0,
+    this.teleFlOuter = false,
+    this.teleFlInner = false,
+    this.teleFlLower = false,
     //Ratings Tab
-    this.quickRatingsDriveRating,
-    this.quickRatingsDefenceRating,
-    this.quickRatingsAssistRobot = false,
-    this.quickRatingsWorkedWithAlliance = false,
-    this.quickRatingsWorkedToAStrategy = false,
-    this.quickRatingsRecovered = false,
-    this.quickRatingsNoTeamWork = false,
-    this.intakeGround = false,
-    this.intakeHigh = false,
-    this.intakeOtherRobot = false,
-    this.shootingWall = false,
-    this.shootingNearZone = false,
-    this.shootingMidZone = false,
-    this.shootingFarZone = false,
-    this.comments,
-    this.highlightTeam = false,
-    this.warning = false,
+    this.commIdDriveRating,
+    this.commIdDefenceRating,
+    this.commFlAssist = false,
+    this.commFlAlliance = false,
+    this.commFlStrategy = false,
+    this.commFlRecovery = false,
+    this.commFlOwnThing = false,
+    this.commFlIntakeGround = false,
+    this.commFlIntakeHigh = false,
+    this.commFlIntakeRobot = false,
+    this.commFlShotWall = false,
+    this.commFlShotNear = false,
+    this.commFlShotMid = false,
+    this.commFlShotFar = false,
+    this.commTxNotes,
+    this.commFlHighlight = false,
+    this.commFlWarning = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -593,45 +594,45 @@ class MatchScoutingData {
       'autoFlInner' : autoFlInner,
       'autoFlLower' : autoFlLower,
       //Tele OP Tab
-      'cellAttempts': cellAttempts,
-      'cellSuccess': cellSuccess,
-      'powerPortLower': powerPortLower,
-      'powerPortInner': powerPortInner,
-      'powerPortOuter': powerPortOuter,
-      'cpRotationControl': cpRotationControl,
-      'cpRotationTimeTaken': cpRotationTimeTaken,
-      'cpPositionControl': cpPositionControl,
-      'cpPositionTimeTaken': cpPositionTimeTaken,
-      'cpPanelAttempts': cpPanelAttempts,
-      'cpPanelSuccess': cpPanelSuccess,
-      'endgamePark': endgamePark,
-      'endgameClimb': endgameClimb,
-      'endgameTimeToGrip': endgameTimeToGrip,
-      'endgameTimeFromGripToClimb': endgameTimeFromGripToClimb,
-      'endgameOutcome': endgameOutcome,
-      'endgamePreferredPosition': endgamePreferredPosition,
-      'endgameBuddies': endgameBuddies,
-      'endgameBalance': endgameBalance,
-      'endgameBalanceCorrection': endgameBalanceCorrection,
-      'endgameFall': endgameFall,
+      'teleFlPanelRotation' : teleFlPanelRotation,
+      'teleIdPanelRotationTime' : teleIdPanelRotationTime,
+      'teleFlPanelPosition' : teleFlPanelPosition,
+      'teleIdPanelPositionTime' : teleIdPanelPositionTime,
+      'teleNumPanelAttempt' : teleNumPanelAttempt,
+      'teleNumPanelSuccess' : teleNumPanelSuccess,
+      'teleFlPark' : teleFlPark,
+      'teleIdClimb' : teleIdClimb,
+      'teleIdClimbGrabTime' : teleIdClimbGrabTime,
+      'teleIdClimbTime' : teleIdClimbTime,
+      'teleIdClimbOutcome' : teleIdClimbOutcome,
+      'teleIdClimbPos' : teleIdClimbPos,
+      'teleNumClimbOthers' : teleNumClimbOthers,
+      'teleFlClimbBalance' : teleFlClimbBalance,
+      'teleFlClimbCorrection' : teleFlClimbCorrection,
+      'teleFlClimbFall' : teleFlClimbFall,
+      'teleNumCellAttempt' : teleNumCellAttempt,
+      'teleNumCellSuccess' : teleNumCellSuccess,
+      'teleFlOuter' : teleFlOuter,
+      'teleFlInner' : teleFlInner,
+      'teleFlLower' : teleFlLower,
       //RatingsTab
-      'quickRatingsDriveRating': quickRatingsDriveRating,
-      'quickRatingsDefenceRating': quickRatingsDefenceRating,
-      'quickRatingsAssistRobot': quickRatingsAssistRobot,
-      'quickRatingsWorkedWithAlliance': quickRatingsWorkedWithAlliance,
-      'quickRatingsWorkedToAStrategy': quickRatingsWorkedToAStrategy,
-      'quickRatingsRecovered': quickRatingsRecovered,
-      'quickRatingsNoTeamWork': quickRatingsNoTeamWork,
-      'intakeGround': intakeGround,
-      'intakeHigh': intakeHigh,
-      'intakeOtherRobot': intakeOtherRobot,
-      'shootingWall': shootingWall,
-      'shootingNearZone': shootingNearZone,
-      'shootingMidZone': shootingMidZone,
-      'shootingFarZone': shootingFarZone,
-      'comments': comments,
-      'highlightTeam': highlightTeam,
-      'warning': warning,
+      'commFlAssist' : commFlAssist,
+      'commIdDriveRating' : commIdDriveRating,
+      'commIdDefenceRating' : commIdDefenceRating,
+      'commFlAlliance' : commFlAlliance,
+      'commFlStrategy' : commFlStrategy,
+      'commFlOwnThing' : commFlOwnThing,
+      'commFlRecovery' : commFlRecovery,
+      'commFlWarning' : commFlWarning,
+      'commFlHighlight' : commFlHighlight,
+      'commFlShotFar' : commFlShotFar,
+      'commFlShotMid' : commFlShotMid,
+      'commFlShotNear' : commFlShotNear,
+      'commFlShotWall' : commFlShotWall,
+      'commFlIntakeGround' : commFlIntakeGround,
+      'commFlIntakeHigh' : commFlIntakeHigh,
+      'commFlIntakeRobot' : commFlIntakeRobot,
+      'commTxNotes' : commTxNotes,
     };
   }
 
@@ -666,45 +667,45 @@ class MatchScoutingData {
       'autoFlInner': autoFlInner.toString(),
       'autoFlLower': autoFlLower.toString(),
       //Tele OP Tab
-      'cellAttempts': cellAttempts,
-      'cellSuccess': cellSuccess,
-      'powerPortLower': powerPortLower.toString(),
-      'powerPortInner': powerPortInner.toString(),
-      'powerPortOuter': powerPortOuter.toString(),
-      'cpRotationControl': cpRotationControl.toString(),
-      'cpRotationTimeTaken': cpRotationTimeTaken.toString(),
-      'cpPositionControl': cpPositionControl.toString(),
-      'cpPositionTimeTaken': cpPositionTimeTaken.toString(),
-      'cpPanelAttempts': cpPanelAttempts,
-      'cpPanelSuccess': cpPanelSuccess,
-      'endgamePark': endgamePark.toString(),
-      'endgameClimb': endgameClimb.toString(),
-      'endgameTimeToGrip': endgameTimeToGrip.toString(),
-      'endgameTimeFromGripToClimb': endgameTimeFromGripToClimb.toString(),
-      'endgameOutcome': endgameOutcome.toString(),
-      'endgamePreferredPosition': endgamePreferredPosition.toString(),
-      'endgameBuddies': endgameBuddies,
-      'endgameBalance': endgameBalance.toString(),
-      'endgameBalanceCorrection': endgameBalanceCorrection.toString(),
-      'endgameFall': endgameFall.toString(),
+      'teleFlPanelRotation': teleFlPanelRotation.toString(),
+      'teleIdPanelRotationTime': teleIdPanelRotationTime,
+      'teleFlPanelPosition': teleFlPanelPosition.toString(),
+      'teleIdPanelPositionTime': teleIdPanelPositionTime,
+      'teleNumPanelAttempt': teleNumPanelAttempt,
+      'teleNumPanelSuccess': teleNumPanelSuccess,
+      'teleFlPark': teleFlPark.toString(),
+      'teleIdClimb': teleIdClimb,
+      'teleIdClimbGrabTime': teleIdClimbGrabTime,
+      'teleIdClimbTime': teleIdClimbTime,
+      'teleIdClimbOutcome': teleIdClimbOutcome,
+      'teleIdClimbPos': teleIdClimbPos,
+      'teleNumClimbOthers': teleNumClimbOthers,
+      'teleFlClimbBalance': teleFlClimbBalance.toString(),
+      'teleFlClimbCorrection': teleFlClimbCorrection.toString(),
+      'teleFlClimbFall': teleFlClimbFall.toString(),
+      'teleNumCellAttempt': teleNumCellAttempt,
+      'teleNumCellSuccess': teleNumCellSuccess,
+      'teleFlOuter': teleFlOuter.toString(),
+      'teleFlInner': teleFlInner.toString(),
+      'teleFlLower': teleFlLower.toString(),
       //Ratings Tab
-      'quickRatingsDriveRating': quickRatingsDriveRating,
-      'quickRatingsDefenceRating': quickRatingsDefenceRating,
-      'quickRatingsAssistRobot': quickRatingsAssistRobot.toString(),
-      'quickRatingsWorkedWithAlliance': quickRatingsWorkedWithAlliance.toString(),
-      'quickRatingsWorkedToAStrategy': quickRatingsWorkedToAStrategy.toString(),
-      'quickRatingsRecovered': quickRatingsRecovered.toString(),
-      'quickRatingsNoTeamWork': quickRatingsNoTeamWork.toString(),
-      'intakeGround': intakeGround.toString(),
-      'intakeHigh': intakeHigh.toString(),
-      'intakeOtherRobot': intakeOtherRobot.toString(),
-      'shootingWall': shootingWall.toString(),
-      'shootingNearZone': shootingNearZone.toString(),
-      'shootingMidZone': shootingMidZone.toString(),
-      'shootingFarZone': shootingFarZone.toString(),
-      'comments': comments.toString(),
-      'highlightTeam': highlightTeam.toString(),
-      'warning': warning.toString(),
+      'commFlAssist': commFlAssist.toString(),
+      'commIdDriveRating': commIdDriveRating,
+      'commIdDefenceRating': commIdDefenceRating,
+      'commFlAlliance': commFlAlliance.toString(),
+      'commFlStrategy': commFlStrategy.toString(),
+      'commFlOwnThing': commFlOwnThing.toString(),
+      'commFlRecovery': commFlRecovery.toString(),
+      'commFlWarning': commFlWarning.toString(),
+      'commFlHighlight': commFlHighlight.toString(),
+      'commFlShotFar': commFlShotFar.toString(),
+      'commFlShotMid': commFlShotMid.toString(),
+      'commFlShotNear': commFlShotNear.toString(),
+      'commFlShotWall': commFlShotWall.toString(),
+      'commFlIntakeGround': commFlIntakeGround.toString(),
+      'commFlIntakeHigh': commFlIntakeHigh.toString(),
+      'commFlIntakeRobot': commFlIntakeRobot.toString(),
+      'commTxNotes': commTxNotes,
     };
   }
 
@@ -738,50 +739,45 @@ class MatchScoutingData {
     this.autoFlInner = map['autoFlInner'].toString().toLowerCase() == 'true';
     this.autoFlLower = map['autoFlLower'].toString().toLowerCase() == 'true';
     //Tele OP Tab
-    this.cellAttempts = map['cellAttempts'];
-    this.cellSuccess = map['cellSuccess'];
-    this.powerPortLower =
-        map['powerPortLower'].toString().toLowerCase() == 'true';
-    this.powerPortInner =
-        map['powerPortInner'].toString().toLowerCase() == 'true';
-    this.powerPortOuter =
-        map['powerPortOuter'].toString().toLowerCase() == 'true';
-    this.cpRotationControl =
-        map['cpRotationControl'].toString().toLowerCase() == 'true';
-    this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
-    this.cpPositionControl =
-        map['cpPositionControl'].toString().toLowerCase() == 'true';
-    this.cpPanelAttempts = map['cpPanelAttempts'];
-    this.cpPanelSuccess = map['cpPanelSuccess'];
-    this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
-    this.endgamePark = map['endgamePark'].toString().toLowerCase() == 'true';
-    this.endgameClimb = map['endgameClimb'];
-    this.endgameTimeToGrip = map['endgameTimeToGrip'];
-    this.endgameTimeFromGripToClimb = map['endgameTimeFromGripToClimb'];
-    this.endgameOutcome = map['endgameOutcome'];
-    this.endgamePreferredPosition = map['endgamePreferredPosition'];
-    this.endgameBuddies = map['endgameBuddies'];
-    this.endgameBalance = map['endgameBalance'].toString().toLowerCase() == 'true';
-    this.endgameBalanceCorrection = map['endgameBalanceCorrection'].toString().toLowerCase() == 'true';
-    this.endgameFall = map['endgameFall'].toString().toLowerCase() == 'true';
+    this.teleFlPanelRotation = map['teleFlPanelRotation'].toString().toLowerCase() == 'true';
+    this.teleIdPanelRotationTime = map['teleIdPanelRotationTime'];
+    this.teleFlPanelPosition = map['teleFlPanelPosition'].toString().toLowerCase() == 'true';
+    this.teleIdPanelPositionTime = map['teleIdPanelPositionTime'];
+    this.teleNumPanelAttempt = map['teleNumPanelAttempt'];
+    this.teleNumPanelSuccess = map['teleNumPanelSuccess'];
+    this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
+    this.teleIdClimb = map['teleIdClimb'];
+    this.teleIdClimbGrabTime = map['teleIdClimbGrabTime'];
+    this.teleIdClimbTime = map['teleIdClimbTime'];
+    this.teleIdClimbOutcome = map['teleIdClimbOutcome'];
+    this.teleIdClimbPos = map['teleIdClimbPos'];
+    this.teleNumClimbOthers = map['teleNumClimbOthers'];
+    this.teleFlClimbBalance = map['teleFlClimbBalance'].toString().toLowerCase() == 'true';
+    this.teleFlClimbCorrection = map['teleFlClimbCorrection'].toString().toLowerCase() == 'true';
+    this.teleFlClimbFall = map['teleFlClimbFall'].toString().toLowerCase() == 'true';
+    this.teleNumCellAttempt = map['teleNumCellAttempt'];
+    this.teleNumCellSuccess = map['teleNumCellSuccess'];
+    this.teleFlOuter = map['teleFlOuter'].toString().toLowerCase() == 'true';
+    this.teleFlInner = map['teleFlInner'].toString().toLowerCase() == 'true';
+    this.teleFlLower = map['teleFlLower'].toString().toLowerCase() == 'true';
     //Ratings Tab
-    this.quickRatingsDriveRating = map['quickRatingsDriveRating'];
-    this.quickRatingsDefenceRating = map['quickRatingsDefenceRating'];
-    this.quickRatingsAssistRobot = map['quickRatingsAssistRobot'].toString().toLowerCase() == 'true';
-    this.quickRatingsWorkedWithAlliance = map['quickRatingsWorkedWithAlliance'].toString().toLowerCase() == 'true';
-    this.quickRatingsWorkedToAStrategy = map['quickRatingsWorkedToAStrategy'].toString().toLowerCase() == 'true';
-    this.quickRatingsRecovered = map['quickRatingsRecovered'].toString().toLowerCase() == 'true';
-    this.quickRatingsNoTeamWork = map['quickRatingsNoTeamWork'].toString().toLowerCase() == 'true';
-    this.intakeGround = map['intakeGround'].toString().toLowerCase() == 'true';
-    this.intakeHigh = map['intakeHigh'].toString().toLowerCase() == 'true';
-    this.intakeOtherRobot = map['intakeOtherRobot'].toString().toLowerCase() == 'true';
-    this.shootingWall = map['shootingWall'].toString().toLowerCase() == 'true';
-    this.shootingNearZone = map['shootingNearZone'].toString().toLowerCase() == 'true';
-    this.shootingMidZone = map['shootingMidZone'].toString().toLowerCase() == 'true';
-    this.shootingFarZone = map['shootingFarZone'].toString().toLowerCase() == 'true';
-    this.comments = map['comments'];
-    this.highlightTeam = map['highlightTeam'].toString().toLowerCase() == 'true';
-    this.warning = map['warning'].toString().toLowerCase() == 'true';
+    this.commFlAssist = map['commFlAssist'].toString().toLowerCase() == 'true';
+    this.commIdDriveRating = map['commIdDriveRating'];
+    this.commIdDefenceRating = map['commIdDefenceRating'];
+    this.commFlAlliance = map['commFlAlliance'].toString().toLowerCase() == 'true';
+    this.commFlStrategy = map['commFlStrategy'].toString().toLowerCase() == 'true';
+    this.commFlOwnThing = map['commFlOwnThing'].toString().toLowerCase() == 'true';
+    this.commFlRecovery = map['commFlRecovery'].toString().toLowerCase() == 'true';
+    this.commFlWarning = map['commFlWarning'].toString().toLowerCase() == 'true';
+    this.commFlHighlight = map['commFlHighlight'].toString().toLowerCase() == 'true';
+    this.commFlShotFar = map['commFlShotFar'].toString().toLowerCase() == 'true';
+    this.commFlShotMid = map['commFlShotMid'].toString().toLowerCase() == 'true';
+    this.commFlShotNear = map['commFlShotNear'].toString().toLowerCase() == 'true';
+    this.commFlShotWall = map['commFlShotWall'].toString().toLowerCase() == 'true';
+    this.commFlIntakeGround = map['commFlIntakeGround'].toString().toLowerCase() == 'true';
+    this.commFlIntakeHigh = map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
+    this.commFlIntakeRobot = map['commFlIntakeRobot'].toString().toLowerCase() == 'true';
+    this.commTxNotes = map['commTxNotes'];
   }
 
   MatchScoutingData.fromMap(Map<String, dynamic> map) {
@@ -814,45 +810,45 @@ class MatchScoutingData {
     this.autoFlInner = map['autoFlInner'];
     this.autoFlLower = map['autoFlLower'];
     //Tele OP Tab
-    this.cellAttempts = map['cellAttempts'];
-    this.cellSuccess = map['cellSuccess'];
-    this.powerPortLower = map['powerPortLower'];
-    this.powerPortInner = map['powerPortInner'];
-    this.powerPortOuter = map['powerPortOuter'];
-    this.cpRotationControl = map['cpRotationControl'];
-    this.cpRotationTimeTaken = map['cpRotationTimeTaken'];
-    this.cpPositionControl = map['cpPositionControl'];
-    this.cpPositionTimeTaken = map['cpPositionTimeTaken'];
-    this.cpPanelAttempts = map['cpPanelAttempts'];
-    this.cpPanelSuccess = map['cpPanelSuccess'];
-    this.endgamePark = map['endgamePark'];
-    this.endgameClimb = map['endgameClimb'];
-    this.endgameTimeToGrip = map['endgameTimeToGrip'];
-    this.endgameTimeFromGripToClimb = map['endgameTimeFromGripToClimb'];
-    this.endgameOutcome = map['endgameOutcome'];
-    this.endgamePreferredPosition = map['endgamePreferredPosition'];
-    this.endgameBuddies = map['endgameBuddies'];
-    this.endgameBalance = map['endgameBalance'];
-    this.endgameBalanceCorrection = map['endgameBalanceCorrection'];
-    this.endgameFall = map['endgameFall'];
+    this.teleFlPanelRotation = map['teleFlPanelRotation'];
+    this.teleIdPanelRotationTime = map['teleIdPanelRotationTime'];
+    this.teleFlPanelPosition = map['teleFlPanelPosition'];
+    this.teleIdPanelPositionTime = map['teleIdPanelPositionTime'];
+    this.teleNumPanelAttempt = map['teleNumPanelAttempt'];
+    this.teleNumPanelSuccess = map['teleNumPanelSuccess'];
+    this.teleFlPark = map['teleFlPark'];
+    this.teleIdClimb = map['teleIdClimb'];
+    this.teleIdClimbGrabTime = map['teleIdClimbGrabTime'];
+    this.teleIdClimbTime = map['teleIdClimbTime'];
+    this.teleIdClimbOutcome = map['teleIdClimbOutcome'];
+    this.teleIdClimbPos = map['teleIdClimbPos'];
+    this.teleNumClimbOthers = map['teleNumClimbOthers'];
+    this.teleFlClimbBalance = map['teleFlClimbBalance'];
+    this.teleFlClimbCorrection = map['teleFlClimbCorrection'];
+    this.teleFlClimbFall = map['teleFlClimbFall'];
+    this.teleNumCellAttempt = map['teleNumCellAttempt'];
+    this.teleNumCellSuccess = map['teleNumCellSuccess'];
+    this.teleFlOuter = map['teleFlOuter'];
+    this.teleFlInner = map['teleFlInner'];
+    this.teleFlLower = map['teleFlLower'];
     //Ratings Tab
-    this.quickRatingsDriveRating = map['quickRatingsDriveRating'];
-    this.quickRatingsDefenceRating = map['quickRatingsDefenceRating'];
-    this.quickRatingsAssistRobot = map['quickRatingsAssistRobot'];
-    this.quickRatingsWorkedWithAlliance = map['quickRatingsWorkedWithAlliance'];
-    this.quickRatingsWorkedToAStrategy = map['quickRatingsWorkedToAStrategy'];
-    this.quickRatingsRecovered = map['quickRatingsRecovered'];
-    this.quickRatingsNoTeamWork = map['quickRatingsNoTeamWork'];
-    this.intakeGround = map['intakeGround'];
-    this.intakeHigh = map['intakeHigh'];
-    this.intakeOtherRobot = map['intakeOtherRobot'];
-    this.shootingWall = map['shootingWall'];
-    this.shootingNearZone = map['shootingNearZone'];
-    this.shootingMidZone = map['shootingMidZone'];
-    this.shootingFarZone = map['shootingFarZone'];
-    this.comments = map['comments'];
-    this.highlightTeam = map['highlightTeam'];
-    this.warning = map['warning'];
+    this.commFlAssist = map['commFlAssist'];
+    this.commIdDriveRating = map['commIdDriveRating'];
+    this.commIdDefenceRating = map['commIdDefenceRating'];
+    this.commFlAlliance = map['commFlAlliance'];
+    this.commFlStrategy = map['commFlStrategy'];
+    this.commFlOwnThing = map['commFlOwnThing'];
+    this.commFlRecovery = map['commFlRecovery'];
+    this.commFlWarning = map['commFlWarning'];
+    this.commFlHighlight = map['commFlHighlight'];
+    this.commFlShotFar = map['commFlShotFar'];
+    this.commFlShotMid = map['commFlShotMid'];
+    this.commFlShotNear = map['commFlShotNear'];
+    this.commFlShotWall = map['commFlShotWall'];
+    this.commFlIntakeGround = map['commFlIntakeGround'];
+    this.commFlIntakeHigh = map['commFlIntakeHigh'];
+    this.commFlIntakeRobot = map['commFlIntakeRobot'];
+    this.commTxNotes = map['commTxNotes'];
   }
 
   // Implement toString to make it easier to see information about

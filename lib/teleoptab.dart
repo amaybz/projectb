@@ -73,11 +73,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   updateValues() async {
     setState(() {
-      intPenalAttempts = widget.matchScoutingData.cpPanelAttempts;
-      intPenalSuccess = widget.matchScoutingData.cpPanelSuccess;
-      intBuddies = widget.matchScoutingData.endgameBuddies;
-      intCellAttempts = widget.matchScoutingData.cellAttempts;
-      intCellSuccess = widget.matchScoutingData.cellSuccess;
+      intPenalAttempts = widget.matchScoutingData.teleNumPanelAttempt;
+      intPenalSuccess = widget.matchScoutingData.teleNumPanelSuccess;
+      intBuddies = widget.matchScoutingData.teleNumClimbOthers;
+      intCellAttempts = widget.matchScoutingData.teleNumCellAttempt;
+      intCellSuccess = widget.matchScoutingData.teleNumCellSuccess;
     });
   }
 
@@ -178,11 +178,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       PerformanceWidget(
         styleImgFieldWidth: styleImgFieldWidth,
         styleFontSizeBody: styleFontSizeBody,
-        numCellAttempt: widget.matchScoutingData.cellAttempts,
-        numCellSuccess: widget.matchScoutingData.cellSuccess,
-        flInner: widget.matchScoutingData.powerPortInner,
-        flOuter: widget.matchScoutingData.powerPortOuter,
-        flLower: widget.matchScoutingData.powerPortLower,
+        numCellAttempt: widget.matchScoutingData.teleNumCellAttempt,
+        numCellSuccess: widget.matchScoutingData.teleNumCellSuccess,
+        flInner: widget.matchScoutingData.teleFlInner,
+        flOuter: widget.matchScoutingData.teleFlOuter,
+        flLower: widget.matchScoutingData.teleFlLower,
         onCellAttemptsChanged: (int value) {
           setState(() {
             widget.onCellAttemptsChanged(value);
@@ -247,7 +247,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                 Text("Rotation Control:"),
                                 Switch(
                                     value: widget
-                                        .matchScoutingData.cpRotationControl,
+                                        .matchScoutingData.teleFlPanelRotation,
                                     onChanged: (value) {
                                       mySharedPrefs.saveBool(
                                           "selectedRotationControl", value);
@@ -258,7 +258,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                     }),
                               ]),
                           DropDownWidget(
-                            value: widget.matchScoutingData.cpRotationTimeTaken,
+                            value: widget.matchScoutingData.teleIdPanelRotationTime,
                             title: "Time Taken",
                             list: listTime,
                             styleFieldWidth: styleTimeTakenWidth,
@@ -285,7 +285,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             },
                           ),
                           CounterWidget(
-                            value: widget.matchScoutingData.cpPanelSuccess,
+                            value: widget.matchScoutingData.teleNumPanelSuccess,
                             title: "Panel Success",
                             styleFontSize: styleFontSizeBody,
                             onIncreaseStateChanged: (int increase) {
@@ -310,7 +310,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                 Text("Position Control:"),
                                 Switch(
                                     value: widget
-                                        .matchScoutingData.cpPositionControl,
+                                        .matchScoutingData.teleFlPanelPosition,
                                     onChanged: (value) {
                                       setState(() {
                                         widget
@@ -321,7 +321,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           Row(children: [
                             DropDownWidget(
                               value:
-                                  widget.matchScoutingData.cpPositionTimeTaken,
+                                  widget.matchScoutingData.teleIdPanelPositionTime,
                               title: "Time Taken",
                               list: listTime,
                               styleFieldWidth: styleTimeTakenWidth,
@@ -383,7 +383,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Park:"),
                           Switch(
-                              value: widget.matchScoutingData.endgamePark,
+                              value: widget.matchScoutingData.teleFlPark,
                               onChanged: (value) {
                                 setState(() {
                                   widget.onEndgameParkChanged(value);
@@ -391,7 +391,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               }),
                         ]),
                     DropDownWidget(
-                        value: widget.matchScoutingData.endgameClimb,
+                        value: widget.matchScoutingData.teleIdClimb,
                         title: "Climb",
                         list: listSuccessFailNA,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -401,7 +401,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownWidget(
-                        value: widget.matchScoutingData.endgameTimeToGrip,
+                        value: widget.matchScoutingData.teleIdClimbGrabTime,
                         title: "Time to Grip",
                         list: listTime,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -412,7 +412,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         }),
                     DropDownWidget(
                       value:
-                          widget.matchScoutingData.endgameTimeFromGripToClimb,
+                          widget.matchScoutingData.teleIdClimbTime,
                       title: "Time from Grip to Climb",
                       list: listTime,
                       styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -423,7 +423,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       },
                     ),
                     DropDownWidget(
-                        value: widget.matchScoutingData.endgameOutcome,
+                        value: widget.matchScoutingData.teleIdClimbOutcome,
                         title: "Outcome",
                         list: listOutcomes,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -434,7 +434,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         }),
                     DropDownWidget(
                         value:
-                            widget.matchScoutingData.endgamePreferredPosition,
+                            widget.matchScoutingData.teleIdClimbPos,
                         title: "Preferred Position",
                         list: listPositions,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -449,7 +449,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       children: [
                         Text("Buddies:"),
                         CounterWidget(
-                          value: widget.matchScoutingData.endgameBuddies,
+                          value: widget.matchScoutingData.teleNumClimbOthers,
                           onIncreaseStateChanged: (int value) {
                             setState(() {
                               intBuddies = intBuddies + 1;
@@ -475,7 +475,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Balance:"),
                           Switch(
-                              value: widget.matchScoutingData.endgameBalance,
+                              value: widget.matchScoutingData.teleFlClimbBalance,
                               onChanged: (bool value) {
                                 setState(() {
                                   widget.onEndgameBalanceChanged(value);
@@ -488,7 +488,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           Text("Balance Correction:"),
                           Switch(
                               value: widget
-                                  .matchScoutingData.endgameBalanceCorrection,
+                                  .matchScoutingData.teleFlClimbCorrection,
                               onChanged: (bool value) {
                                 setState(() {
                                   widget
@@ -501,7 +501,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         children: [
                           Text("Fall:"),
                           Switch(
-                              value: widget.matchScoutingData.endgameFall,
+                              value: widget.matchScoutingData.teleFlClimbFall,
                               onChanged: (bool value) {
                                 setState(() {
                                   widget.onEndgameFallChanged(value);

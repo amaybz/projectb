@@ -74,7 +74,7 @@ class _RatingsTabState extends State<RatingsTab> {
 
   updateValues() {
     setState(() {
-      _txtComments.text = widget.matchScoutingData.comments;
+      _txtComments.text = widget.matchScoutingData.commTxNotes;
     });
   }
 
@@ -109,7 +109,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     DropDownWidget(
-                      value: widget.matchScoutingData.quickRatingsDriveRating,
+                      value: widget.matchScoutingData.commIdDriveRating,
                       title: null,
                       list: listRatings,
                       onStateChanged: (String value) {
@@ -130,7 +130,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     DropDownWidget(
-                      value: widget.matchScoutingData.quickRatingsDefenceRating,
+                      value: widget.matchScoutingData.commIdDefenceRating,
                       title: null,
                       list: listRatings,
                       onStateChanged: (String value) {
@@ -151,7 +151,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.quickRatingsAssistRobot,
+                      value: widget.matchScoutingData.commFlAssist,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onAssistOtherRobotChanged(value);
@@ -169,7 +169,7 @@ class _RatingsTabState extends State<RatingsTab> {
                     ),
                     Switch(
                       value: widget
-                          .matchScoutingData.quickRatingsWorkedWithAlliance,
+                          .matchScoutingData.commFlAlliance,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onWorkedWithAllianceChanged(value);
@@ -187,7 +187,7 @@ class _RatingsTabState extends State<RatingsTab> {
                     ),
                     Switch(
                       value: widget
-                          .matchScoutingData.quickRatingsWorkedToAStrategy,
+                          .matchScoutingData.commFlStrategy,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onWorkedToStrategyChanged(value);
@@ -204,7 +204,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.quickRatingsRecovered,
+                      value: widget.matchScoutingData.commFlRecovery,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onRecoveredChanged(value);
@@ -221,7 +221,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.quickRatingsNoTeamWork,
+                      value: widget.matchScoutingData.commFlOwnThing,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onNoTeamWorkChanged(value);
@@ -261,7 +261,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.intakeGround,
+                      value: widget.matchScoutingData.commFlIntakeGround,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onGroundIntakeChanged(value);
@@ -278,7 +278,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.intakeHigh,
+                      value: widget.matchScoutingData.commFlIntakeHigh,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onHighIntakeChanged(value);
@@ -295,7 +295,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.intakeOtherRobot,
+                      value: widget.matchScoutingData.commFlIntakeRobot,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onOtherRobotChanged(value);
@@ -335,7 +335,7 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.shootingWall,
+                        value: widget.matchScoutingData.commFlShotWall,
                         onChanged: (bool value) {
                           setState(() {
                             widget.onShootingWallZoneChanged(value);
@@ -352,7 +352,7 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.shootingNearZone,
+                        value: widget.matchScoutingData.commFlShotNear,
                         onChanged: (bool value) {
                           setState(() {
                             widget.onShootingNearZoneChanged(value);
@@ -369,7 +369,7 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.shootingMidZone,
+                        value: widget.matchScoutingData.commFlShotMid,
                         onChanged: (bool value) {
                           setState(() {
                             widget.onShootingMidZoneChanged(value);
@@ -386,7 +386,7 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.shootingFarZone,
+                        value: widget.matchScoutingData.commFlShotFar,
                         onChanged: (bool value) {
                           setState(() {
                             widget.onShootingFarZoneChanged(value);
@@ -446,7 +446,7 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.highlightTeam,
+                        value: widget.matchScoutingData.commFlHighlight,
                         onChanged: (bool value) {
                           setState(() {
                             widget.onHighlightTeamChanged(value);
@@ -463,7 +463,7 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.warning,
+                        value: widget.matchScoutingData.commFlWarning,
                         onChanged: (bool value) {
                           setState(() {
                             widget.onWarningChanged(value);

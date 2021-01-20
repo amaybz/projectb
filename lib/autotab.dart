@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/widget_performace.dart';
 import 'package:projectb/localdb.dart';
-import 'package:projectb/widget_counter.dart';
 
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
     Key key,
     @required this.styleImgFieldMapWidth,
-    this.styleImgFieldPerformanceWidth = 150,
     @required this.matchScoutingData,
-    this.boolLoseStartObject = false,
-    this.boolContactWithRobot = false,
-    this.boolCrossSector = false,
-    this.boolFoul = false,
-    this.boolDoesAuto = false,
-    this.boolLeaveLine = false,
+    this.styleImgFieldPerformanceWidth = 150,
     this.onLoseStartObjectChange,
     this.onContactWithRobotChange,
     this.onCrossSectorChange,
@@ -45,12 +38,7 @@ class AutoTab extends StatefulWidget {
   final ValueChanged<bool> onAutoFlInnerChange;
   final ValueChanged<bool> onAutoFlLowerChange;
   final ValueChanged<MatchScoutingData> onChanged;
-  final bool boolLoseStartObject;
-  final bool boolContactWithRobot;
-  final bool boolCrossSector;
-  final bool boolFoul;
-  final bool boolDoesAuto;
-  final bool boolLeaveLine;
+
 
   @override
   _AutoTabState createState() => _AutoTabState();
@@ -227,7 +215,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Lose Start Object"),
                   ),
                   Switch(
-                    value: widget.boolLoseStartObject,
+                    value: widget.matchScoutingData.autoFlLoseStartObject,
                     onChanged: (bool value) {
                       setState(() {
                         widget.onLoseStartObjectChange(value);
@@ -244,7 +232,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Contact with Robot"),
                   ),
                   Switch(
-                      value: widget.boolContactWithRobot,
+                      value: widget.matchScoutingData.autoFlRobotContact,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onContactWithRobotChange(value);
@@ -260,7 +248,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Cross Sector"),
                   ),
                   Switch(
-                    value: widget.boolCrossSector,
+                    value: widget.matchScoutingData.autoFlCrossOver,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onCrossSectorChange(value);
@@ -277,7 +265,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Foul"),
                   ),
                   Switch(
-                    value: widget.boolFoul,
+                    value: widget.matchScoutingData.autoFlFoul,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onFoulChange(value);
@@ -320,7 +308,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Does Auto"),
                   ),
                   Switch(
-                    value: widget.boolDoesAuto,
+                    value: widget.matchScoutingData.autoFlStart,
                     onChanged: (bool value) {
                       setState(() {
                         widget.onDoesAutoChange(value);
@@ -337,7 +325,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Leave Line"),
                   ),
                   Switch(
-                    value: widget.boolLeaveLine,
+                    value: widget.matchScoutingData.autoFlBaseLine,
                     onChanged: (bool value) {
                       setState(() {
                         widget.onLeaveLineChange(value);

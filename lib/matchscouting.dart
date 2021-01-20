@@ -741,12 +741,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         styleImgFieldPerformanceWidth: styleImgFieldPerformanceWidth,
         matchScoutingData: matchScoutingData,
         styleImgFieldMapWidth: styleImgFieldMapWidth,
-        boolLoseStartObject: matchScoutingData.autoFlLoseStartObject,
-        boolContactWithRobot: matchScoutingData.autoFlRobotContact,
-        boolCrossSector: matchScoutingData.autoFlCrossOver,
-        boolFoul: matchScoutingData.autoFlFoul,
-        boolDoesAuto: matchScoutingData.autoFlStart,
-        boolLeaveLine: matchScoutingData.autoFlBaseLine,
         onChanged: (MatchScoutingData updates) {
           setState(() {
             matchScoutingData = updates;

@@ -561,11 +561,11 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                         ],
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text("Storage Capacity:"),
                             CounterWidget(
                               value: pitData.numStorage,
-                              title: "Storage Capacity",
                               onIncreaseStateChanged: (int value) {
                                 setState(() {
                                   pitData.numStorage++;

@@ -121,10 +121,10 @@ class _PitClimbState extends State<PitClimb> {
                   });
                 },
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text("Height:"),
                 CounterWidget(
                   value: widget.pitData.numClimbHeight,
-                  title: "Height",
                   onIncreaseStateChanged: (int value) {
                     setState(() {
                       widget.pitData.numClimbHeight++;

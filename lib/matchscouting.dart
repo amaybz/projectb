@@ -770,18 +770,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.autoFlFoul = value;
           });
         },
-        onDoesAutoChange: (bool value) {
-          //save values
-          setState(() {
-            matchScoutingData.autoFlStart = value;
-          });
-        },
-        onLeaveLineChange: (bool value) {
-          //save values
-          setState(() {
-            matchScoutingData.autoFlBaseLine = value;
-          });
-        },
       );
     }
     if (index == 1) {

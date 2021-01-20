@@ -443,26 +443,33 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             widget.onEndgamePreferredPositionChanged(newValue);
                           });
                         }),
-                    CounterWidget(
-                      value: widget.matchScoutingData.endgameBuddies,
-                      title: 'Buddies',
-                      onIncreaseStateChanged: (int value) {
-                        setState(() {
-                          intBuddies = intBuddies + 1;
-                          widget.onEndgameBuddiesChanged(intBuddies);
-                        });
-                      },
-                      onDecreaseStateChanged: (int value) {
-                        setState(() {
-                          intBuddies = intBuddies - 1;
-                          widget.onEndgameBuddiesChanged(intBuddies);
-                        });
-                      },
-                      onSetValue: (int value) {
-                        intBuddies = value;
-                        widget.onEndgameBuddiesChanged(intBuddies);
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center  ,
+                      children: [
+                        Text("Buddies:"),
+                        CounterWidget(
+                          value: widget.matchScoutingData.endgameBuddies,
+                          onIncreaseStateChanged: (int value) {
+                            setState(() {
+                              intBuddies = intBuddies + 1;
+                              widget.onEndgameBuddiesChanged(intBuddies);
+                            });
+                          },
+                          onDecreaseStateChanged: (int value) {
+                            setState(() {
+                              intBuddies = intBuddies - 1;
+                              widget.onEndgameBuddiesChanged(intBuddies);
+                            });
+                          },
+                          onSetValue: (int value) {
+                            intBuddies = value;
+                            widget.onEndgameBuddiesChanged(intBuddies);
+                          },
+                        ),
+                      ],
                     ),
+
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

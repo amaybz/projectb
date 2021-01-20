@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/widget_performace.dart';
 import 'package:projectb/localdb.dart';
-
+import 'package:projectb/widget_counter.dart';
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
@@ -13,8 +13,6 @@ class AutoTab extends StatefulWidget {
     this.onContactWithRobotChange,
     this.onCrossSectorChange,
     this.onFoulChange,
-    this.onDoesAutoChange,
-    this.onLeaveLineChange,
     this.onAutoFlInnerChange,
     this.onAutoFlLowerChange,
     this.onAutoFlOuterChange,
@@ -32,21 +30,16 @@ class AutoTab extends StatefulWidget {
   final ValueChanged<bool> onContactWithRobotChange;
   final ValueChanged<bool> onCrossSectorChange;
   final ValueChanged<bool> onFoulChange;
-  final ValueChanged<bool> onDoesAutoChange;
-  final ValueChanged<bool> onLeaveLineChange;
   final ValueChanged<bool> onAutoFlOuterChange;
   final ValueChanged<bool> onAutoFlInnerChange;
   final ValueChanged<bool> onAutoFlLowerChange;
   final ValueChanged<MatchScoutingData> onChanged;
-
 
   @override
   _AutoTabState createState() => _AutoTabState();
 }
 
 class _AutoTabState extends State<AutoTab> {
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -187,6 +180,7 @@ class _AutoTabState extends State<AutoTab> {
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(
+            padding: EdgeInsets.all(4.0),
             margin: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
@@ -248,13 +242,12 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Cross Sector"),
                   ),
                   Switch(
-                    value: widget.matchScoutingData.autoFlCrossOver,
+                      value: widget.matchScoutingData.autoFlCrossOver,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onCrossSectorChange(value);
                         });
-                      }
-                  ),
+                      }),
                 ],
               ),
               Row(
@@ -266,11 +259,11 @@ class _AutoTabState extends State<AutoTab> {
                   ),
                   Switch(
                     value: widget.matchScoutingData.autoFlFoul,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.onFoulChange(value);
-                        });
-                      },
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.onFoulChange(value);
+                      });
+                    },
                   ),
                 ],
               ),
@@ -280,6 +273,7 @@ class _AutoTabState extends State<AutoTab> {
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(
+            padding: EdgeInsets.all(5.0),
             margin: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
@@ -304,14 +298,14 @@ class _AutoTabState extends State<AutoTab> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.all(5.0),
                     child: Text("Does Auto"),
                   ),
                   Switch(
                     value: widget.matchScoutingData.autoFlStart,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.onDoesAutoChange(value);
+                        widget.matchScoutingData.autoFlStart = value;
+                        widget.onChanged(widget.matchScoutingData);
                       });
                     },
                   ),
@@ -321,19 +315,45 @@ class _AutoTabState extends State<AutoTab> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: const EdgeInsets.all(5.0),
                     child: Text("Leave Line"),
                   ),
                   Switch(
                     value: widget.matchScoutingData.autoFlBaseLine,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.onLeaveLineChange(value);
+                        widget.matchScoutingData.autoFlBaseLine = value;
+                        widget.onChanged(widget.matchScoutingData);
                       });
                     },
                   ),
                 ],
               ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                Container(
+                  child: Text("Pickup new cells?"),
+                ),
+                CounterWidget(
+                  value: widget.matchScoutingData.autoNumCellLoad,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.matchScoutingData.autoNumCellLoad++;
+                      widget.onChanged(widget.matchScoutingData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.matchScoutingData.autoNumCellLoad--;
+                      widget.onChanged(widget.matchScoutingData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    widget.matchScoutingData.autoNumCellLoad = value;
+                    widget.onChanged(widget.matchScoutingData);
+                  },
+                ),
+              ]),
             ]),
           ),
         ),

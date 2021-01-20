@@ -82,7 +82,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldPaddingSides = 10.0;
   double styleFieldWidthFacing = 90;
   double styleFieldWidthTeam = 90;
-  double styleImgFieldWidth = 90;
+  double styleImgFieldMapWidth = 90;
+  double styleImgFieldPerformanceWidth = 150;
   double styleFontSizeBody = 16;
   double styleFontSizeHeadings = 18;
   double styleRedBoxSize = 300;
@@ -294,7 +295,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 3.0;
       styleFieldWidthFacing = 140;
-      styleImgFieldWidth = 250;
+      styleImgFieldMapWidth = 250;
       styleFieldWidthTeam = 300;
       styleFontSizeBody = 12;
       styleFontSizeHeadings = 16;
@@ -307,7 +308,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldPadding = 2.0;
       styleFieldPaddingSides = 2.0;
       styleFieldWidthFacing = 140;
-      styleImgFieldWidth = 250;
+      styleImgFieldMapWidth = 250;
       styleFieldWidthTeam = 250;
       styleFontSizeBody = 11;
       styleFontSizeHeadings = 16;
@@ -320,9 +321,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 10.0;
       styleFieldWidthFacing = 200;
-      styleImgFieldWidth = 400;
+      styleImgFieldMapWidth = 400;
       styleFieldWidthTeam = 400;
       styleFontSizeBody = 16;
+      styleImgFieldPerformanceWidth = 200;
     }
 
     return WillPopScope(
@@ -736,13 +738,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   _showTab(int index) {
     if (index == 0) {
       return AutoTab(
-        styleImgFieldWidth: styleImgFieldWidth,
+        styleImgFieldPerformanceWidth: styleImgFieldPerformanceWidth,
+        matchScoutingData: matchScoutingData,
+        styleImgFieldMapWidth: styleImgFieldMapWidth,
         boolLoseStartObject: matchScoutingData.autoFlLoseStartObject,
         boolContactWithRobot: matchScoutingData.autoFlRobotContact,
         boolCrossSector: matchScoutingData.autoFlCrossOver,
         boolFoul: matchScoutingData.autoFlFoul,
         boolDoesAuto: matchScoutingData.autoFlStart,
         boolLeaveLine: matchScoutingData.autoFlBaseLine,
+        onChanged: (MatchScoutingData updates) {
+          setState(() {
+            matchScoutingData = updates;
+          });
+        },
         onLoseStartObjectChange: (bool value) {
           //save values
           setState(() {

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:projectb/widget_performace.dart';
+import 'package:projectb/localdb.dart';
+import 'package:projectb/widget_counter.dart';
 
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
     Key key,
-    @required this.styleImgFieldWidth,
+    @required this.styleImgFieldMapWidth,
+    this.styleImgFieldPerformanceWidth = 150,
+    @required this.matchScoutingData,
     this.boolLoseStartObject = false,
     this.boolContactWithRobot = false,
     this.boolCrossSector = false,
@@ -17,15 +22,29 @@ class AutoTab extends StatefulWidget {
     this.onFoulChange,
     this.onDoesAutoChange,
     this.onLeaveLineChange,
+    this.onAutoFlInnerChange,
+    this.onAutoFlLowerChange,
+    this.onAutoFlOuterChange,
+    this.onAutoNumCellAttemptChange,
+    this.onAutoNumCellSuccessChange,
+    this.onChanged,
   }) : super(key: key);
 
-  final double styleImgFieldWidth;
+  final MatchScoutingData matchScoutingData;
+  final double styleImgFieldMapWidth;
+  final double styleImgFieldPerformanceWidth;
+  final ValueChanged<int> onAutoNumCellAttemptChange;
+  final ValueChanged<int> onAutoNumCellSuccessChange;
   final ValueChanged<bool> onLoseStartObjectChange;
   final ValueChanged<bool> onContactWithRobotChange;
   final ValueChanged<bool> onCrossSectorChange;
   final ValueChanged<bool> onFoulChange;
   final ValueChanged<bool> onDoesAutoChange;
   final ValueChanged<bool> onLeaveLineChange;
+  final ValueChanged<bool> onAutoFlOuterChange;
+  final ValueChanged<bool> onAutoFlInnerChange;
+  final ValueChanged<bool> onAutoFlLowerChange;
+  final ValueChanged<MatchScoutingData> onChanged;
   final bool boolLoseStartObject;
   final bool boolContactWithRobot;
   final bool boolCrossSector;
@@ -120,8 +139,8 @@ class _AutoTabState extends State<AutoTab> {
                       ]),
                       Column(children: <Widget>[
                         SizedBox(
-                          width: widget.styleImgFieldWidth,
-                          height: (widget.styleImgFieldWidth * 0.5),
+                          width: widget.styleImgFieldMapWidth,
+                          height: (widget.styleImgFieldMapWidth * 0.5),
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
@@ -329,6 +348,44 @@ class _AutoTabState extends State<AutoTab> {
               ),
             ]),
           ),
+        ),
+        PerformanceWidget(
+          styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
+          numCellAttempt: widget.matchScoutingData.autoNumCellAttempt,
+          numCellSuccess: widget.matchScoutingData.autoNumCellSuccess,
+          flInner: widget.matchScoutingData.autoFlInner,
+          flOuter: widget.matchScoutingData.autoFlOuter,
+          flLower: widget.matchScoutingData.autoFlLower,
+          onCellAttemptsChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCellAttempt = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onCellSuccessChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCellSuccess = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onFlOuterChanged: (bool value) {
+            setState(() {
+              widget.matchScoutingData.autoFlOuter = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onFlInnerChanged: (bool value) {
+            setState(() {
+              widget.matchScoutingData.autoFlInner = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onFlLowerChanged: (bool value) {
+            setState(() {
+              widget.matchScoutingData.autoFlLower = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
         ),
       ],
     );

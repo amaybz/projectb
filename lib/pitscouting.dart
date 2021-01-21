@@ -20,10 +20,13 @@ class PitScoutingScreen extends StatefulWidget {
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
+    this.deviceName,
+
   }) : super(key: key);
 
   final String eventName;
   final String eventKey;
+  final String deviceName;
   final List<LocalTeam> eventTeams;
 
   @override
@@ -42,6 +45,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txShooting = TextEditingController();
   final TextEditingController txClimb = TextEditingController();
   final TextEditingController txPanelSensor = TextEditingController();
+  final TextEditingController txPitNotes = TextEditingController();
 
   LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
@@ -200,19 +204,20 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     print("saving record");
     pitData.id = null;
     DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
+    //DateTime date = new DateTime(now.year, now.month, now.day);
     if (recordID > 0) {
       pitData.id = recordID;
-      pitData.dtModified = date.toString();
+      pitData.dtModified = now.toString();
     }
     else{
-      pitData.dtCreation = date.toString();
-      pitData.dtModified = date.toString();
+      pitData.dtCreation = now.toString();
+      pitData.dtModified = now.toString();
     }
     if(selectedTeam == null) return false;
     pitData.idTeam = selectedTeam.teamNumber;
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
+    pitData.txComputerName = widget.deviceName;
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
     if (pitData.id > 0) {
@@ -251,6 +256,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   double styleFieldScoutNameMaxWidth = 300;
   double styleFieldTxShootingMaxWidth = 350;
   double styleFieldTxClimbMaxWidth = 350;
+  double styleFieldTxPitNotesMaxWidth = 350;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
   double styleFontSizeBody = 15;
@@ -276,6 +282,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     }
     if (width >= 600) {
       styleFontSizeBody = 15;
+      styleFieldTxShootingMaxWidth = 400;
+      styleFieldScoutNameMaxWidth = 400;
+      styleFieldTxPitNotesMaxWidth = 500;
+      styleFieldTxClimbMaxWidth = 420;
     }
 
     return WillPopScope(
@@ -491,6 +501,53 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   (value == true) ? scrollDown(100) : scrollDown(0);
                 },
               ),
+              FractionallySizedBox(
+                widthFactor: 0.99,
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(children: <Widget>[
+                      HeadingMain(
+                        styleFontSize: styleFontSizeHeadings,
+                        headingText: "Comments",
+                        //backGroundColor: Colors.green,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Notes: ",
+                              style: TextStyle(fontSize: styleFontSizeBody),
+                            ),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxWidth: styleFieldTxPitNotesMaxWidth),
+                              child: TextField(
+                                controller: txPitNotes,
+                                decoration: InputDecoration(
+                                    hintText: 'General Notes'),
+                                onChanged: (String text) {
+                                  setState(() {
+                                    txPitNotes.text = text;
+                                  });
+                                },
+                              ),
+                            ),
+                          ]),
+                    ]),
+                  ),
+                ),
+              ),
               FinishTab(
                 onSavePressed: (bool value) async {
                   if (recordSaved == true) {
@@ -505,6 +562,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
 
                 },
               ),
+
             ]),
 
       ),

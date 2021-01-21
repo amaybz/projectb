@@ -439,175 +439,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   ),
                 ),
               ),
-              FractionallySizedBox(
-                widthFactor: 0.99,
-                child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(children: <Widget>[
-                      HeadingMain(
-                        styleFontSize: styleFontSizeHeadings,
-                        headingText: "Power Cells",
-                        //backGroundColor: Colors.green,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Manipulate:",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Switch(
-                            value: pitData.flCells,
-                            onChanged: (bool value) {
-                              setState(() {
-                                pitData.flCells = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Ground Intake:",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Switch(
-                            value: pitData.flIntakeGround,
-                            onChanged: (bool value) {
-                              setState(() {
-                                pitData.flIntakeGround = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Loading Station Intake:",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Switch(
-                            value: pitData.flIntakeHigh,
-                            onChanged: (bool value) {
-                              setState(() {
-                                pitData.flIntakeHigh = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Target (Lower):",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Switch(
-                            value: pitData.flTargetLow,
-                            onChanged: (bool value) {
-                              setState(() {
-                                pitData.flTargetLow = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Target (Outer):",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Switch(
-                            value: pitData.flTargetOuter,
-                            onChanged: (bool value) {
-                              setState(() {
-                                pitData.flTargetOuter = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Target (Inner):",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          Switch(
-                            value: pitData.flTargetInner,
-                            onChanged: (bool value) {
-                              setState(() {
-                                pitData.flTargetInner = value;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Storage Capacity:"),
-                            CounterWidget(
-                              value: pitData.numStorage,
-                              onIncreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numStorage++;
-                                });
-                              },
-                              onDecreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numStorage--;
-                                });
-                              },
-                              onSetValue: (int value) {
-                                setState(() {
-                                  pitData.numStorage = value;
-                                });
-                              },
-                            ),
-                          ]),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Shooting Mechanism: ",
-                            style: TextStyle(fontSize: styleFontSizeBody),
-                          ),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxWidth: styleFieldTxShootingMaxWidth),
-                            child: TextField(
-                              controller: txShooting,
-                              decoration: InputDecoration(
-                                  hintText:
-                                      'Cannon, hooded shooter, twin flywheel etc'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ]),
-                  ),
-                ),
-              ),
               PitPowerCells(
                 pitData: pitData,
                 txShooting: txShooting,
@@ -618,7 +449,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   });
                 },
                 onExpanded: (value) {
-                  (value == true) ? scrollDown(200) : scrollDown(0);
+                  (value == true) ? scrollDown(180) : scrollDown(0);
                 },
 
               ),
@@ -632,7 +463,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   });
                 },
                 onExpanded: (value) {
-                  (value == true) ? scrollDown(200) : scrollDown(0);
+                  (value == true) ? scrollDown(180) : scrollDown(0);
                 },
               ),
               PitControlPanel(
@@ -645,7 +476,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   });
                 },
                 onExpanded: (value) {
-                  (value == true) ? scrollDown(200) : scrollDown(0);
+                  (value == true) ? scrollDown(180) : scrollDown(0);
                 },
               ),
               FinishTab(

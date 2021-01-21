@@ -12,6 +12,7 @@ import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/pit/widget_pit_climb.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/pit/widget_pit_powercells.dart';
+import 'package:projectb/pit/widget_pit_auto.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
@@ -477,6 +478,17 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 },
                 onExpanded: (value) {
                   (value == true) ? scrollDown(180) : scrollDown(0);
+                },
+              ),
+              PitAuto(
+                pitData: pitData,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(100) : scrollDown(0);
                 },
               ),
               FinishTab(

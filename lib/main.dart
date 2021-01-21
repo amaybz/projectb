@@ -9,7 +9,7 @@ import 'package:projectb/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
-import 'package:permission_handler/permission_handler.dart';
+//import 'package:permission_handler/permission_handler.dart';
 import 'package:projectb/qrreaderscreen.dart';
 
 void main() {
@@ -119,12 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void downloadData() async {
-    if (await Permission.storage.status == PermissionStatus.granted) {
-      print(await Permission.storage.status);
-    } else {
-      print(await Permission.storage.status);
-      await Permission.storage.request();
-    }
+    //if (await Permission.storage.status == PermissionStatus.granted) {
+    //  print(await Permission.storage.status);
+    //} else {
+    //  print(await Permission.storage.status);
+    //  await Permission.storage.request();
+    //}
     //display downloading icon
     setState(() {
       _downloadingData = 1;
@@ -402,6 +402,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 selectedEvent = eventsForLocation.firstWhere(
                                     (loc) => loc.key == item,
                                     orElse: () => eventsForLocation.first);
+
                               });
                               print("Key: " + selectedEvent.key.toString());
                               getEventTeamsFromAPI(selectedEvent.key);

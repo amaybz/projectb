@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-        return MaterialApp(
+    return MaterialApp(
       title: 'Project B',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -40,7 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
@@ -98,7 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
 
     setState(() {
-      selectedLocalEvent = listSelectedLocalEvents.length > 0 ? listSelectedLocalEvents.first : null ;
+      selectedLocalEvent = listSelectedLocalEvents.length > 0
+          ? listSelectedLocalEvents.first
+          : null;
       _countOfTeams =
           listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
@@ -246,8 +247,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -276,7 +275,6 @@ class _MyHomePageState extends State<MyHomePage> {
         styleFontSize = 16;
       });
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -426,7 +424,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 selectedEvent = eventsForLocation.firstWhere(
                                     (loc) => loc.key == item,
                                     orElse: () => eventsForLocation.first);
-
                               });
                               print("Key: " + selectedEvent.key.toString());
                               getEventTeamsFromAPI(selectedEvent.key);
@@ -527,7 +524,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventName: selectedLocalEvent.shortName,
                 eventKey: selectedLocalEvent.key,
                 eventTeams: teams,
-              styleFontSize: this.styleFontSize,
+                styleFontSize: this.styleFontSize,
               )),
     );
   }
@@ -541,11 +538,11 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => PitScoutingScreen(
-            eventName: selectedLocalEvent.shortName,
-            eventKey: selectedLocalEvent.key,
-            eventTeams: teams,
-            deviceName: _txtDeviceName.text,
-          )),
+                eventName: selectedLocalEvent.shortName,
+                eventKey: selectedLocalEvent.key,
+                eventTeams: teams,
+                deviceName: _txtDeviceName.text,
+              )),
     );
   }
 
@@ -556,10 +553,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(
-          builder: (context) => QRReaderScreen(
-
-          )),
+      MaterialPageRoute(builder: (context) => QRReaderScreen()),
     );
   }
 }

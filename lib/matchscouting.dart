@@ -301,7 +301,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFontSizeHeadings = 16;
       styleRedBoxSize = 180;
     }
-    if (width < 395) {
+    if (width < 391) {
       styleFieldWidth = 100.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 75.0;

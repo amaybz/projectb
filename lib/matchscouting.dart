@@ -309,7 +309,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldPaddingSides = 2.0;
       styleFieldWidthFacing = 140;
       styleImgFieldMapWidth = 250;
-      styleFieldWidthTeam = 250;
+      styleFieldWidthTeam = 210;
       styleFontSizeBody = 11;
       styleFontSizeHeadings = 16;
       styleRedBoxSize = 180;
@@ -465,6 +465,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             style: TextStyle(fontSize: styleFontSizeBody),
                           ),
                           DropdownButton(
+                            isDense: true,
                             value:
                                 selectedTeam == null ? null : selectedTeam.key,
                             //title: "Team",

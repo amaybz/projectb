@@ -12,18 +12,21 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 
-
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
     Key key,
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
+    this.styleFontSize = 16,
   }) : super(key: key);
 
   final String eventName;
   final String eventKey;
   final List<LocalTeam> eventTeams;
+
+  //style
+  final double styleFontSize;
 
   @override
   _MatchScoutingScreenState createState() => _MatchScoutingScreenState();
@@ -46,8 +49,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   final List<String> _listAlliance = ['Red', 'Blue'];
 
-  MatchScoutingData matchScoutingData = MatchScoutingData( );
-
+  MatchScoutingData matchScoutingData = MatchScoutingData();
 
   List<String> _listDriveStation = [
     'none',
@@ -84,7 +86,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthTeam = 90;
   double styleImgFieldMapWidth = 90;
   double styleImgFieldPerformanceWidth = 150;
-  double styleFontSizeBody = 16;
+
   double styleFontSizeHeadings = 18;
   double styleRedBoxSize = 300;
 
@@ -222,8 +224,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         false;
   }
 
-
-
   void clearMatch() async {
     mySharedPrefs.saveInt("CellAttempts", 0);
     mySharedPrefs.saveInt("CellSuccess", 0);
@@ -247,7 +247,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       _txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
       selectedTeam = null;
-
     });
   }
 
@@ -297,22 +296,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthFacing = 140;
       styleImgFieldMapWidth = 250;
       styleFieldWidthTeam = 300;
-      styleFontSizeBody = 12;
+
       styleFontSizeHeadings = 16;
       styleRedBoxSize = 180;
     }
-    if (width < 391) {
-      styleFieldWidth = 100.0;
-      styleFieldMatchNumber = 80.0;
-      styleFieldAlliance = 75.0;
-      styleFieldPadding = 2.0;
-      styleFieldPaddingSides = 2.0;
-      styleFieldWidthFacing = 140;
-      styleImgFieldMapWidth = 250;
-      styleFieldWidthTeam = 210;
-      styleFontSizeBody = 11;
-      styleFontSizeHeadings = 16;
-      styleRedBoxSize = 180;
+    if (width < 393) {
+      setState(() {
+        styleFieldWidth = 100.0;
+        styleFieldMatchNumber = 80.0;
+        styleFieldAlliance = 75.0;
+        styleFieldPadding = 2.0;
+        styleFieldPaddingSides = 2.0;
+        styleFieldWidthFacing = 140;
+        styleImgFieldMapWidth = 250;
+        styleFieldWidthTeam = 210;
+
+        styleFontSizeHeadings = 16;
+        styleRedBoxSize = 180;
+      });
     }
     if (width >= 600) {
       styleFieldWidth = 150.0;
@@ -323,7 +324,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthFacing = 200;
       styleImgFieldMapWidth = 400;
       styleFieldWidthTeam = 400;
-      styleFontSizeBody = 16;
       styleImgFieldPerformanceWidth = 200;
     }
 
@@ -365,18 +365,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         children: <Widget>[
                           Text(
                             "Event Name: " + widget.eventName,
-                            style: TextStyle(fontSize: styleFontSizeBody),
+                            style: TextStyle(fontSize: widget.styleFontSize),
                           ),
                           Text(
                             " - Scout: ",
-                            style: TextStyle(fontSize: styleFontSizeBody),
+                            style: TextStyle(fontSize: widget.styleFontSize),
                           ),
                           Expanded(
                             child: TextField(
                               controller: _txtScoutName,
+                              style: TextStyle(fontSize: widget.styleFontSize),
                               decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Scout Name'),
+                                border: InputBorder.none,
+                                hintText: 'Scout Name',
+                              ),
                             ),
                           )
                         ]),
@@ -411,7 +413,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             width: styleFieldMatchNumber,
                             height: 58,
                             child: TextField(
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                              style: TextStyle(fontSize: widget.styleFontSize),
                               controller: _txtMatchNumber,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
@@ -430,7 +432,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               value: matchScoutingData.idAlliance,
                               title: "Alliance",
                               list: _listAlliance,
-                              styleFontSize: styleFontSizeBody,
+                              styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldAlliance,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -446,7 +448,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               value: matchScoutingData.idDriveStation,
                               title: "Drive Station",
                               list: _listDriveStation,
-                              styleFontSize: styleFontSizeBody,
+                              styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -462,7 +464,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         children: <Widget>[
                           Text(
                             "Team ",
-                            style: TextStyle(fontSize: styleFontSizeBody),
+                            style: TextStyle(fontSize: widget.styleFontSize),
                           ),
                           DropdownButton(
                             isDense: true,
@@ -492,7 +494,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               value: matchScoutingData.idStartFacing,
                               title: "Facing",
                               list: _listFacing,
-                              styleFontSize: styleFontSizeBody,
+                              styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidthFacing,
                               onStateChanged: (String newValue) {
                                 setState(() {
@@ -503,7 +505,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               value: matchScoutingData.idStartPosition,
                               title: "Robot Position",
                               list: _listRobotPosition,
-                              styleFontSize: styleFontSizeBody,
+                              styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -518,7 +520,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 horizontal: styleFieldPaddingSides),
                             width: styleFieldWidth,
                             child: TextField(
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                              style: TextStyle(fontSize: widget.styleFontSize),
                               controller: _txtStartingCells,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
@@ -527,7 +529,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               decoration: InputDecoration(
                                 labelText: "Starting Cells",
                                 labelStyle:
-                                    TextStyle(fontSize: styleFontSizeBody),
+                                    TextStyle(fontSize: widget.styleFontSize),
                                 border: InputBorder.none,
                                 isDense: true,
                               ),
@@ -582,7 +584,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   Text(
                                     "Total Robot Failure ",
                                     style: TextStyle(
-                                        fontSize: styleFontSizeBody,
+                                        fontSize: widget.styleFontSize,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Switch(
@@ -601,7 +603,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 Text(
                                   "Yellow Card ",
                                   style: TextStyle(
-                                      fontSize: styleFontSizeBody,
+                                      fontSize: widget.styleFontSize,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
@@ -619,7 +621,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 Text(
                                   "Red Card ",
                                   style: TextStyle(
-                                      fontSize: styleFontSizeBody,
+                                      fontSize: widget.styleFontSize,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
@@ -657,7 +659,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   Text(
                                     "RP #1",
                                     style: TextStyle(
-                                        fontSize: styleFontSizeBody,
+                                        fontSize: widget.styleFontSize,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Container(
@@ -679,7 +681,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   Text(
                                     "RP #2",
                                     style: TextStyle(
-                                        fontSize: styleFontSizeBody,
+                                        fontSize: widget.styleFontSize,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Container(
@@ -886,7 +888,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       return Container(
         child: RatingsTab(
           matchScoutingData: matchScoutingData,
-          styleFontSize: styleFontSizeBody,
+          styleFontSize: widget.styleFontSize,
           styleFontSizeHeadings: styleFontSizeHeadings,
           onShootingWallZoneChanged: (bool value) {
             //Update Value
@@ -983,14 +985,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             setState(() {
               matchScoutingData.commFlHighlight = value;
             });
-
           },
           onCommentsChanged: (String value) {
             //Update Value
             setState(() {
               matchScoutingData.commTxNotes = value;
             });
-
           },
         ),
       );
@@ -1022,6 +1022,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     super.initState();
     // Call the getJSONData() method when the app initializes
     //_getScoringData();
-    setEventTeams(14);
+    setEventTeams(widget.styleFontSize);
   }
 }

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+        return MaterialApp(
       title: 'Project B',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -44,6 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
+  //style
+  double styleFontSize;
 
   TextEditingController _txtDeviceName = TextEditingController();
   static int _downloadingData = 0;
@@ -244,6 +246,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -252,6 +256,27 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    //style
+
+    double width = MediaQuery.of(context).size.width;
+    print("Screen Size: " + width.toString());
+
+    if (width < 500) {
+      setState(() {
+        styleFontSize = 14;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleFontSize = 11;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleFontSize = 16;
+      });
+    }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -502,6 +527,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventName: selectedLocalEvent.shortName,
                 eventKey: selectedLocalEvent.key,
                 eventTeams: teams,
+              styleFontSize: this.styleFontSize,
               )),
     );
   }

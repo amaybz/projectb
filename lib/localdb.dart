@@ -7,7 +7,7 @@ import 'package:projectb/class_pitdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 20;
+  static final _databaseVersion = 21;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";

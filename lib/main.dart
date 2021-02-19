@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static int _downloadingData = 0;
   static int _countOfTeams = 0;
   String _downloadingText = "Please select Location and Event to download data";
-
+  String txtEventHelpText = "Please choose a event";
   String locationDropDown;
   String selectedYear = "2021";
   final List<String> _locations = [
@@ -234,6 +234,15 @@ class _MyHomePageState extends State<MyHomePage> {
     eventsForLocation.forEach((i) {
       eventsList.add(EventsList(name: i.shortName, key: i.key));
     });
+
+    if(eventsList.length == 0)
+    {
+      txtEventHelpText = "No Events for this location!";
+    }
+    else
+    {
+      txtEventHelpText = "Please choose a event";
+    }
     //update dropdown box with the new events
     for (EventsList event in eventsList) {
       setState(() {
@@ -415,7 +424,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           child: DropdownButton<String>(
                             isExpanded: true,
-                            hint: Text('Please choose a event'),
+                            hint: Text(txtEventHelpText),
                             value: selectedEvent == null
                                 ? null
                                 : selectedEvent.key,

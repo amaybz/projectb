@@ -36,6 +36,7 @@ dependencies:
   permission_handler: ^5.0.1+1
   googleapis: ^0.54.0
   google_sign_in:
+  package_info: ^0.4.0+13
 
 dev_dependencies:
   flutter_test:

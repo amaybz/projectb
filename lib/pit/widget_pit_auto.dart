@@ -138,6 +138,7 @@ class _PitAutoState extends State<PitAuto> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("#Balls:"),
                 CounterWidget(
+                  title: "",
                   value: widget.pitData.numAutoShoot,
                   onIncreaseStateChanged: (int value) {
                     setState(() {

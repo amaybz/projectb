@@ -11,6 +11,7 @@ import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
 //import 'package:permission_handler/permission_handler.dart';
 import 'package:projectb/qrreaderscreen.dart';
+import 'package:package_info/package_info.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,6 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   //style
   double styleFontSize;
+  String versionName = "";
+  String versionCode = "";
 
   TextEditingController _txtDeviceName = TextEditingController();
   static int _downloadingData = 0;
@@ -88,6 +91,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //update device name from local db
     getDeviceName();
     setLocalEvent();
+    getVersionInfo();
+  }
+
+  void getVersionInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      versionName = packageInfo.version;
+      versionCode = packageInfo.buildNumber;
+    });
+
+
   }
 
   void setLocalEvent() async {
@@ -296,7 +310,14 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child: Text('Scouting'),
+              child:
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Text('Robot Scouting'),
+          Text('Version: ' + versionName),
+        ],),
+
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),

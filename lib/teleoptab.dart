@@ -449,6 +449,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       children: [
                         Text("Buddies:"),
                         CounterWidget(
+                          title: "",
                           value: widget.matchScoutingData.teleNumClimbOthers,
                           onIncreaseStateChanged: (int value) {
                             setState(() {

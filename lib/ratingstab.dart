@@ -56,10 +56,17 @@ class RatingsTab extends StatefulWidget {
 class _RatingsTabState extends State<RatingsTab> {
   //lists
   final List<String> listRatings = [
-    'Poor',
+    'Terrible',
     'Average',
     'Good',
     'Amazing',
+  ];
+
+  final List<String> listRatingsDefence = [
+    'N/A',
+    'Weak',
+    'Harassment',
+    'Game Changing',
   ];
 
   final TextEditingController _txtComments = TextEditingController();
@@ -132,7 +139,7 @@ class _RatingsTabState extends State<RatingsTab> {
                     DropDownWidget(
                       value: widget.matchScoutingData.commIdDefenceRating,
                       title: null,
-                      list: listRatings,
+                      list: listRatingsDefence,
                       onStateChanged: (String value) {
                         setState(
                           () {
@@ -441,10 +448,20 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Highlight Team (Consider Regardless of performance):",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                        Text(
+                          "Highlight Team:",
+                          style: TextStyle(fontSize: widget.styleFontSize),
+                        ),
+                        Text(
+                          "(Consider Regardless of performance)",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],),
                       Switch(
                         value: widget.matchScoutingData.commFlHighlight,
                         onChanged: (bool value) {
@@ -458,10 +475,20 @@ class _RatingsTabState extends State<RatingsTab> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Warning (Scout Team Futher before Considering):",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            "Warning:",
+                            style: TextStyle(fontSize: widget.styleFontSize),
+                          ),
+                          Text(
+                            "(Scout Team Futher before Considering)",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],),
                       Switch(
                         value: widget.matchScoutingData.commFlWarning,
                         onChanged: (bool value) {

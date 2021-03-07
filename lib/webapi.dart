@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/widgets.dart';
-import 'package:path/path.dart';
 
 class WebAPI {
   final String strAPIKey =
@@ -60,7 +58,7 @@ class WebAPI {
     return teams;
   } on Exception
   catch (e) {
-    print("ERROR: unable to connect to remote API");
+    print("ERROR: unable to connect to remote API: " + e.toString());
   }
 
 
@@ -246,7 +244,7 @@ class EventData {
     stateProv = json['state_prov'];
     timezone = json['timezone'];
     if (json['webcasts'] != null) {
-      webcasts = new List<WebCasts>();
+      webcasts = <WebCasts>[];
       json['webcasts'].forEach((v) {
         webcasts.add(new WebCasts.fromJson(v));
       });

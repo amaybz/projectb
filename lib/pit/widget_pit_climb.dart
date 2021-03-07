@@ -148,6 +148,7 @@ class _PitClimbState extends State<PitClimb> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("Height:"),
                 CounterWidget(
+                  title: "",
                   value: widget.pitData.numClimbHeight,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
@@ -391,6 +392,7 @@ class _PitClimbState extends State<PitClimb> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("#Buddy:"),
                 CounterWidget(
+                  title: "",
                   value: widget.pitData.numClimbOther,
                   onIncreaseStateChanged: (int value) {
                     setState(() {

@@ -335,6 +335,7 @@ class _AutoTabState extends State<AutoTab> {
                   child: Text("Pickup new cells?"),
                 ),
                 CounterWidget(
+                  title: "",
                   value: widget.matchScoutingData.autoNumCellLoad,
                   onIncreaseStateChanged: (int value) {
                     setState(() {

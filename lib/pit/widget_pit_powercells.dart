@@ -190,6 +190,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("Storage Capacity:"),
                 CounterWidget(
+                  title: "",
                   value: widget.pitData.numStorage,
                   onIncreaseStateChanged: (int value) {
                     setState(() {

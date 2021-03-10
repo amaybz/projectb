@@ -530,13 +530,15 @@ class _MyHomePageState extends State<MyHomePage> {
   _navigateToStoredData(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
+    var eventShortName = (selectedLocalEvent == null) ? "None Selected" : selectedLocalEvent.shortName;
+    var eventKey= (selectedLocalEvent == null) ? "NA" : selectedLocalEvent.key;
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
         builder: (context) => ScoringDataScreen(
-          eventName: selectedLocalEvent.shortName,
-          eventKey: selectedLocalEvent.key,
+          eventName: eventShortName,
+          eventKey: eventKey,
         ),
       ),
     );

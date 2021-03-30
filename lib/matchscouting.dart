@@ -84,6 +84,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthTeam = 90;
   double styleImgFieldMapWidth = 90;
   double styleImgFieldPerformanceWidth = 150;
+  double styleFieldScoutName = 300;
+
 
   double styleFontSizeHeadings = 18;
   double styleRedBoxSize = 300;
@@ -357,29 +359,49 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           bottomRight: Radius.circular(10)),
                     ),
                     padding: EdgeInsets.all(4.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Event Name: " + widget.eventName,
-                            style: TextStyle(fontSize: widget.styleFontSize),
-                          ),
-                          Text(
-                            " - Scout: ",
-                            style: TextStyle(fontSize: widget.styleFontSize),
-                          ),
-                          Expanded(
-                            child: TextField(
-                              controller: _txtScoutName,
-                              style: TextStyle(fontSize: widget.styleFontSize),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Scout Name',
+                    child: Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Event Name: " + widget.eventName,
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
                               ),
-                            ),
-                          )
-                        ]),
+                            ]),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: styleFieldPadding,
+                          horizontal: styleFieldPaddingSides),
+                      width: styleFieldScoutName,
+                      height: 50,
+                      child:
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Scout Name: ",
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  controller: _txtScoutName,
+                                  style:
+                                      TextStyle(fontSize: widget.styleFontSize),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Scout Name',
+                                  ),
+                                ),
+                              ),
+                            ]),
+                    ),
+                      ],
+                    ),
                   )),
             ),
           ),

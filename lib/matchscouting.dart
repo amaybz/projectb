@@ -16,7 +16,7 @@ class MatchScoutingScreen extends StatefulWidget {
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
-    this.styleFontSize = 16,
+    this.styleFontSize = 14,
   }) : super(key: key);
 
   final String eventName;
@@ -63,6 +63,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     'Blue 3',
   ];
 
+  final List<String> _listStartingCells = [
+    '1',
+    '2',
+    '3',
+  ];
+
   //String _selectedFacing;
   final List<String> _listFacing = ['Own Station', 'Opponent Station'];
 
@@ -77,6 +83,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   //style
   double styleFieldWidth = 99.0;
   double styleFieldMatchNumber = 85.0;
+  double styleFieldWidthStartingCells = 99.0;
   double styleFieldAlliance = 75.0;
   double styleFieldPadding = 5.0;
   double styleFieldPaddingSides = 10.0;
@@ -87,7 +94,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldScoutName = 300;
 
 
-  double styleFontSizeHeadings = 18;
+  double styleFontSizeHeadings = 16;
   double styleRedBoxSize = 300;
 
   LocalTeam selectedTeam;
@@ -244,7 +251,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       matchScoutingData = null;
       matchScoutingData = MatchScoutingData();
       _selectedTab = 0;
-      _txtStartingCells.text = '0';
+      //_txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
       selectedTeam = null;
     });
@@ -260,7 +267,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     matchScoutingData.txEvent = widget.eventKey;
     matchScoutingData.idTeam = selectedTeam.teamNumber;
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
-    matchScoutingData.numStartCells = int.parse(_txtStartingCells.text);
     matchScoutingData.txScoutName = _txtScoutName.text;
     this.recordID = await localDB.insertScoringData(matchScoutingData);
     if (this.recordID > 0) {
@@ -297,7 +303,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleImgFieldMapWidth = 250;
       styleFieldWidthTeam = 300;
 
-      styleFontSizeHeadings = 16;
+      styleFontSizeHeadings = 15;
       styleRedBoxSize = 180;
     }
     if (width < 393) {
@@ -311,20 +317,22 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         styleImgFieldMapWidth = 250;
         styleFieldWidthTeam = 210;
 
-        styleFontSizeHeadings = 16;
+        styleFontSizeHeadings = 15;
         styleRedBoxSize = 180;
       });
     }
     if (width >= 600) {
+      styleFontSizeHeadings = 15;
       styleFieldWidth = 150.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 100.0;
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 10.0;
-      styleFieldWidthFacing = 200;
+      styleFieldWidthFacing = 190;
       styleImgFieldMapWidth = 400;
       styleFieldWidthTeam = 400;
       styleImgFieldPerformanceWidth = 200;
+      styleFieldWidthStartingCells = 150;
     }
 
     return WillPopScope(
@@ -534,27 +542,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   matchScoutingData.idStartPosition = newValue;
                                 });
                               }),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: styleFieldPadding,
-                                horizontal: styleFieldPaddingSides),
-                            width: styleFieldWidth,
-                            child: TextField(
-                              style: TextStyle(fontSize: widget.styleFontSize),
-                              controller: _txtStartingCells,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                labelText: "Starting Cells",
-                                labelStyle:
-                                    TextStyle(fontSize: widget.styleFontSize),
-                                border: InputBorder.none,
-                                isDense: true,
-                              ),
-                            ),
-                          ),
+                          DropDownWidget(
+                              value: matchScoutingData.idStartCells,
+                              title: "Starting Cells",
+                              list: _listStartingCells,
+                              styleFontSize: widget.styleFontSize,
+                              styleFieldWidth: styleFieldWidthStartingCells,
+                              styleFieldPadding: styleFieldPadding,
+                              styleFieldPaddingSides: styleFieldPaddingSides,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  matchScoutingData.idStartCells = newValue;
+                                });
+                              }),
+
                         ]),
                   ]),
             ),

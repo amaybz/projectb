@@ -295,7 +295,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (width >= 600) {
       setState(() {
-        styleFontSize = 16;
+        styleFontSize = 15;
       });
     }
 

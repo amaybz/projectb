@@ -498,7 +498,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
-                    child: FlatButton(
+                    child: ElevatedButton(
                       child: Text("Set Event"),
                       onPressed: () {
                         updateDeviceName();

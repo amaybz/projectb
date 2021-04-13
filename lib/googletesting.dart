@@ -133,7 +133,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
           title: Text('Google Drive Testing'),
         ),
         body: Column(children: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               _googleSignIn();
             },
@@ -148,26 +148,26 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
           title: Text('Google Drive Testing'),
         ),
         body: Column(children: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               _googleSignOut();
             },
             child: Text("Sign Out of Google"),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               _googleDriveFolders();
             },
             child: Text("Print Folders to Console"),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
-              writeFileAndUploadToGoogle(MatchScoutingData(id: 1, txScoutName: "Aiden", idTeam: "1234 - test", numMatch: 123, numStartCells: 3, idDriveStation: "red 3"));
+              writeFileAndUploadToGoogle(MatchScoutingData(id: 1, txScoutName: "Aiden", idTeam: "1234 - test", numMatch: 123, idStartCells: "3", idDriveStation: "red 3"));
 
             },
             child: Text("write test File to google"),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               readFile();
             },

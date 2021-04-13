@@ -150,13 +150,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text("Clear Data"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -185,7 +185,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("ok"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -217,11 +217,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             title: new Text('EXIT?'),
             content: new Text('This will clear the current Match?'),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: new Text('No'),
               ),
-              new FlatButton(
+              new TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
                 child: new Text('Yes'),
               ),

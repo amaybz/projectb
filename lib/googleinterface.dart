@@ -143,7 +143,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
   Widget build(BuildContext context) {
     if(widget.googleLoginState == false) {
       return Container(
-        child: FlatButton(
+        child: TextButton(
           onPressed: () {
             widget.onLoginPressed(true);
           },
@@ -153,7 +153,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
     }
     else {
       return Container(
-        child: FlatButton(
+        child: TextButton(
           onPressed: () {
             widget.onLoginPressed(false);
           },

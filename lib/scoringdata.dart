@@ -35,7 +35,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("ok"),
       onPressed: () {
         Navigator.of(context).pop();

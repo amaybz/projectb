@@ -37,27 +37,21 @@ class _CounterWidgetState extends State<CounterWidget> {
       SizedBox(
         height: 25,
         width: 30,
-        child: Container(
-          padding: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.green),
-            color: Colors.green,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5),
-                topRight: Radius.circular(5),
-                bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5)),
-          ),
-          child: FlatButton(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
-            child: Text(
-              "+",
-              style: TextStyle(fontWeight: FontWeight.bold),
+        child: ElevatedButton(
+          //padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
+          style: ElevatedButton.styleFrom(
+              primary: Colors.green,
+              padding: EdgeInsets.symmetric(vertical: 0.0)),
+          child: Text(
+            "+",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
             ),
-            onPressed: () {
-              widget.onIncreaseStateChanged(1);
-            },
+            textAlign: TextAlign.center,
           ),
+          onPressed: () {
+            widget.onIncreaseStateChanged(1);
+          },
         ),
       ),
       Container(
@@ -87,27 +81,17 @@ class _CounterWidgetState extends State<CounterWidget> {
       SizedBox(
         height: 25,
         width: 30,
-        child: Container(
-          padding: EdgeInsets.zero,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.red),
-            color: Colors.red,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5),
-                topRight: Radius.circular(5),
-                bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5)),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: Colors.red,
+              padding: EdgeInsets.symmetric(vertical: 0.0)),
+          child: Text(
+            "-",
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          child: FlatButton(
-            padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
-            child: Text(
-              "-",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              widget.onDecreaseStateChanged(-1);
-            },
-          ),
+          onPressed: () {
+            widget.onDecreaseStateChanged(-1);
+          },
         ),
       ),
     ]);

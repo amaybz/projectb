@@ -97,19 +97,19 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
+                child: ElevatedButton(
+                    //color: Colors.blue,
+                    //textColor: Colors.white,
+                    //splashColor: Colors.blueGrey,
                     onPressed: scanMatchScouting,
                     child: const Text('Scan Match Scouting Data')),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
+                child: ElevatedButton(
+                    //color: Colors.blue,
+                    //textColor: Colors.white,
+                    //splashColor: Colors.blueGrey,
                     onPressed: scanPit,
                     child: const Text('Scan Pit Data')),
               ),

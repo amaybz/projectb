@@ -43,9 +43,11 @@ class _FinishTabState extends State<FinishTab> {
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () {widget.onSavePressed(true);},
-                    child: Text("Save to local Database"),)
+                  TextButton(
+                      onPressed: () {
+                        widget.onSavePressed(true);
+                      },
+                      child: Text("Save to local Database")),
                 ],
               ),
             ),

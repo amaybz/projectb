@@ -43,7 +43,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
-  final TextEditingController _txtStartingCells = TextEditingController();
 
   final List<String> _listAlliance = ['Red', 'Blue'];
 

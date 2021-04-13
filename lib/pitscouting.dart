@@ -217,6 +217,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.idTeam = selectedTeam.teamNumber;
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
+    pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
@@ -536,11 +537,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 controller: txPitNotes,
                                 decoration: InputDecoration(
                                     hintText: 'General Notes'),
-                                onChanged: (String text) {
-                                  setState(() {
-                                    txPitNotes.text = text;
-                                  });
-                                },
                               ),
                             ),
                           ]),

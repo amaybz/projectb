@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/widget_performace.dart';
+import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/widget_counter.dart';
 

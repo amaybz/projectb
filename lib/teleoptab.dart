@@ -3,7 +3,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/widget_counter.dart';
-import 'package:projectb/widget_performace.dart';
+import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
@@ -147,8 +147,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   _decreasePenalSuccess() async {
     setState(() {
+      intPenalAttempts = intPenalAttempts - 1;
       intPenalSuccess = intPenalSuccess - 1;
       widget.onCPPanelSuccessChanged(intPenalSuccess);
+      widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
   }
 

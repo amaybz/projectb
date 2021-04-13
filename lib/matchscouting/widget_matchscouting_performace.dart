@@ -95,6 +95,7 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
+                          widget.onCellAttemptsChanged(widget.numCellAttempt - 1);
                           widget.onCellSuccessChanged(widget.numCellSuccess - 1);
                         });
                       },

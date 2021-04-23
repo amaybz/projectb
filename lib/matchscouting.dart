@@ -67,12 +67,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     DropDownValue(id: "2", value: "Opponent Station")
   ];
 
-  //String _selectedRobotPosition;
-  final List<String> _listRobotPosition = [
-    'Trench',
-    'Power Port',
-    'Loading',
-    'Other',
+
+  final List<DropDownValue> _listRobotPosition = [
+    DropDownValue(id: "1", value: "Trench"),
+    DropDownValue(id: "2", value: "Power Port"),
+    DropDownValue(id: "3", value: "Loading"),
+    DropDownValue(id: "4", value: "Other"),
   ];
 
   //style
@@ -487,22 +487,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   print(matchScoutingData.idDriveStation);
                                 });
                              }),
-
-                          //DropdownButton(
-                          //  isDense: true,
-                          //  value: matchScoutingData.idDriveStation,
-                          //  hint: Text("Drive Station",
-                          //      style:
-                           //         TextStyle(fontSize: widget.styleFontSize)),
-                           // items: _listDriveStation,
-                           // onChanged: (item) {
-                           //   setState(() {
-                           //     matchScoutingData.idDriveStation =
-                           //         item.toString();
-                           //   });
-                           //   print("Drive Station: " + item.toString());
-                           // },
-                          //),
                         ]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -547,10 +531,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   matchScoutingData.idStartFacing = newValue;
                                 });
                               }),
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idStartPosition,
                               title: "Robot Position",
-                              list: _listRobotPosition,
+                              dropDownValues: _listRobotPosition,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,

@@ -105,7 +105,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     return File('$path/temp.json');
   }
 
-  Future<File> writeFileAndUploadToGoogle(
+  Future<File> writeMatchFileAndUploadToGoogle(
       MatchScoutingData matchScoutingData) async {
     print("get file Path");
     final file = await _localFile;
@@ -116,9 +116,27 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
         newFile,
-        matchScoutingData.numMatch.toString() +
+        "MATCH_" + matchScoutingData.numMatch.toString() +
             " " +
             matchScoutingData.idTeam.toString());
+    print("Upload Complete");
+    checkIsSignedInToGoogle();
+    showAlertOKDialog(context, "Upload", "Result uploaded to Google");
+    return newFile;
+  }
+
+  Future<File> writePitFileAndUploadToGoogle(
+      PitData pitData) async {
+    print("get file Path");
+    final file = await _localFile;
+    // Write the file.
+    print("write file");
+    var dataToWrite = json.encode(pitData.toMap());
+    File newFile = await file.writeAsString(dataToWrite.toString());
+    print("JSON: " + dataToWrite);
+    await googleInterface.uploadFile(
+        newFile,
+        "PIT_" + pitData.idTeam.toString());
     print("Upload Complete");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
@@ -243,7 +261,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         _showDialogMatchQRCode(context, item.id.toString());
       },
       onLongPress: () {
-        writeFileAndUploadToGoogle(item);
+        writeMatchFileAndUploadToGoogle(item);
       },
     );
   }
@@ -269,7 +287,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         _showDialogPitQRCode(context, item.id.toString());
       },
       onLongPress: () {
-        //writeFileAndUploadToGoogle(item);
+        writePitFileAndUploadToGoogle(item);
       },
     );
   }

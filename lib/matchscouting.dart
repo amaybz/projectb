@@ -7,6 +7,7 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/teleoptab.dart';
 import 'package:projectb/widget_dropdown.dart';
+import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 
@@ -44,23 +45,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
 
-  final List<String> _listAlliance = ['Red', 'Blue'];
+  //final List<String> _listAlliance = ['Red', 'Blue'];
+  final List<DropDownValue> _listAlliance = [
+    DropDownValue(id: "1", value: "Red"),
+    DropDownValue(id: "2", value: "Blue")
+  ];
+
 
   MatchScoutingData matchScoutingData = MatchScoutingData();
-
-  List<String> _listDriveStation = [
-    'none',
-  ];
-  final List<String> _listRedDriveStations = [
-    'Red 1',
-    'Red 2',
-    'Red 3',
-  ];
-  final List<String> _listBlueDriveStations = [
-    'Blue 1',
-    'Blue 2',
-    'Blue 3',
-  ];
 
   final List<String> _listStartingCells = [
     '1',
@@ -69,7 +61,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   ];
 
   //String _selectedFacing;
-  final List<String> _listFacing = ['Own Station', 'Opponent Station'];
+  //final List<String> _listFacing = ['Own Station', 'Opponent Station'];
+  final List<DropDownValue> _listFacing = [
+    DropDownValue(id: "1", value: "Own Station"),
+    DropDownValue(id: "2", value: "Opponent Station")
+  ];
 
   //String _selectedRobotPosition;
   final List<String> _listRobotPosition = [
@@ -92,12 +88,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleImgFieldPerformanceWidth = 150;
   double styleFieldScoutName = 300;
 
-
   double styleFontSizeHeadings = 16;
   double styleRedBoxSize = 300;
 
   LocalTeam? selectedTeam;
   List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
+  List<DropDownValue> listDriveStations = [];
 
   setEventTeams(double styleFontSize) async {
     //clear current selected event and dropdown box
@@ -132,17 +128,23 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
-  getDriveStationsByTeam(team) {
-    if (team == "Blue") {
+  getDriveStationsByTeam(team, double styleFontSize) {
+    if (team == "1") {
       setState(() {
         matchScoutingData.idDriveStation = null;
-        _listDriveStation = _listBlueDriveStations;
+        listDriveStations.clear();
+        listDriveStations.add(DropDownValue(id: "1", value: "Red 1"));
+        listDriveStations.add(DropDownValue(id: "2", value: "Red 2"));
+        listDriveStations.add(DropDownValue(id: "3", value: "Red 3"));
       });
     }
-    if (team == "Red") {
+    if (team == "2") {
       setState(() {
         matchScoutingData.idDriveStation = null;
-        _listDriveStation = _listRedDriveStations;
+        listDriveStations.clear();
+        listDriveStations.add(DropDownValue(id: "1", value: "Blue 1"));
+        listDriveStations.add(DropDownValue(id: "2", value: "Blue 2"));
+        listDriveStations.add(DropDownValue(id: "3", value: "Blue 3"));
       });
     }
   }
@@ -378,35 +380,34 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     TextStyle(fontSize: widget.styleFontSize),
                               ),
                             ]),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: styleFieldPadding,
-                          horizontal: styleFieldPaddingSides),
-                      width: styleFieldScoutName,
-                      height: 50,
-                      child:
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Scout Name: ",
-                                style:
-                                    TextStyle(fontSize: widget.styleFontSize),
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  controller: _txtScoutName,
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides),
+                          width: styleFieldScoutName,
+                          height: 50,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Scout Name: ",
                                   style:
                                       TextStyle(fontSize: widget.styleFontSize),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Scout Name',
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _txtScoutName,
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Scout Name',
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ]),
-                    ),
+                              ]),
+                        ),
                       ],
                     ),
                   )),
@@ -455,10 +456,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           ),
                           //Expanded(
                           //child:
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idAlliance,
                               title: "Alliance",
-                              list: _listAlliance,
+                              dropDownValues: _listAlliance,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldAlliance,
                               styleFieldPadding: styleFieldPadding,
@@ -467,14 +468,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 setState(() {
                                   matchScoutingData.idAlliance = newValue;
                                 });
-                                getDriveStationsByTeam(newValue);
+                                getDriveStationsByTeam(
+                                    newValue, widget.styleFontSize);
                                 print(matchScoutingData.idAlliance);
                               }),
 
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idDriveStation,
                               title: "Drive Station",
-                              list: _listDriveStation,
+                              dropDownValues: listDriveStations,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
@@ -482,8 +484,25 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               onStateChanged: (String newValue) {
                                 setState(() {
                                   matchScoutingData.idDriveStation = newValue;
+                                  print(matchScoutingData.idDriveStation);
                                 });
-                              }),
+                             }),
+
+                          //DropdownButton(
+                          //  isDense: true,
+                          //  value: matchScoutingData.idDriveStation,
+                          //  hint: Text("Drive Station",
+                          //      style:
+                           //         TextStyle(fontSize: widget.styleFontSize)),
+                           // items: _listDriveStation,
+                           // onChanged: (item) {
+                           //   setState(() {
+                           //     matchScoutingData.idDriveStation =
+                           //         item.toString();
+                           //   });
+                           //   print("Drive Station: " + item.toString());
+                           // },
+                          //),
                         ]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -517,10 +536,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idStartFacing,
                               title: "Facing",
-                              list: _listFacing,
+                              dropDownValues: _listFacing,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidthFacing,
                               onStateChanged: (String newValue) {
@@ -554,7 +573,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   matchScoutingData.idStartCells = newValue;
                                 });
                               }),
-
                         ]),
                   ]),
             ),

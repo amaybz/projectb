@@ -116,7 +116,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
         newFile,
-        "MATCH_" + matchScoutingData.numMatch.toString() +
+        "MATCH_" +
+            matchScoutingData.numMatch.toString() +
             " " +
             matchScoutingData.idTeam.toString());
     print("Upload Complete");
@@ -125,8 +126,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     return newFile;
   }
 
-  Future<File> writePitFileAndUploadToGoogle(
-      PitData pitData) async {
+  Future<File> writePitFileAndUploadToGoogle(PitData pitData) async {
     print("get file Path");
     final file = await _localFile;
     // Write the file.
@@ -135,8 +135,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     File newFile = await file.writeAsString(dataToWrite.toString());
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
-        newFile,
-        "PIT_" + pitData.idTeam.toString());
+        newFile, "PIT_" + pitData.idTeam.toString());
     print("Upload Complete");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");

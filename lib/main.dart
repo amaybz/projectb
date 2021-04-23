@@ -14,12 +14,18 @@ import 'package:projectb/widget_loading.dart';
 //import 'package:permission_handler/permission_handler.dart';
 import 'package:projectb/qrreaderscreen.dart';
 import 'package:package_info/package_info.dart';
+import 'package:camera/camera.dart';
 
 void main() {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+// can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+
+class MyApp  extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -28,14 +34,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Robot Match Scouting'),
+      home: MyHomePage(title: 'Home - Set Event'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title, this.camera}) : super(key: key);
 
+  CameraDescription? camera;
   final String? title;
 
   @override
@@ -68,7 +75,17 @@ class _MyHomePageState extends State<MyHomePage> {
     'Taiwan',
     'Turkey',
     'USA',
+    'Local',
   ];
+
+  Future<CameraDescription> findCamera() async {
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+// Get a specific camera from the list of available cameras.
+    final firstCamera = cameras.first;
+    return firstCamera;
+  }
 
   final List<String> _year = ['2020', '2021'];
 
@@ -94,6 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
     getDeviceName();
     setLocalEvent();
     getVersionInfo();
+    getCameras();
+  }
+
+  void getCameras() async {
+    widget.camera = await findCamera();
   }
 
   void getVersionInfo() async {
@@ -153,6 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //update Events from API
     await updateEventsFromAPI(selectedYear);
     //update teams if event is selected
+
     if (selectedEvent!.key != null) {
       await getEventTeamsFromAPI(selectedEvent!.key);
     }
@@ -189,7 +212,6 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(year);
-
     //setEventItems();
   }
 

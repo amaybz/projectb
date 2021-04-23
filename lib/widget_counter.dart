@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CounterWidget extends StatefulWidget {
   CounterWidget({
-    Key key,
+    Key? key,
     @required this.value,
     @required this.title,
     this.onIncreaseStateChanged,
@@ -16,11 +16,11 @@ class CounterWidget extends StatefulWidget {
     this.styleFontSize = 12,
   }) : super(key: key);
 
-  final int value;
-  final String title;
-  final ValueChanged<int> onIncreaseStateChanged;
-  final ValueChanged<int> onDecreaseStateChanged;
-  final ValueChanged<int> onSetValue;
+  final int? value;
+  final String? title;
+  final ValueChanged<int>? onIncreaseStateChanged;
+  final ValueChanged<int>? onDecreaseStateChanged;
+  final ValueChanged<int>? onSetValue;
   final double styleFieldCellsWidth;
   final double styleFieldPadding;
   final double styleFieldPaddingSides;
@@ -50,7 +50,7 @@ class _CounterWidgetState extends State<CounterWidget> {
             textAlign: TextAlign.center,
           ),
           onPressed: () {
-            widget.onIncreaseStateChanged(1);
+            widget.onIncreaseStateChanged!(1);
           },
         ),
       ),
@@ -69,7 +69,7 @@ class _CounterWidgetState extends State<CounterWidget> {
             if (widget.txtCounterValue.text != "") {
               newValue = int.parse(widget.txtCounterValue.text);
             }
-            widget.onSetValue(newValue);
+            widget.onSetValue!(newValue);
           },
           decoration: InputDecoration(
             labelStyle: TextStyle(fontSize: widget.styleFontSize),
@@ -90,7 +90,7 @@ class _CounterWidgetState extends State<CounterWidget> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           onPressed: () {
-            widget.onDecreaseStateChanged(-1);
+            widget.onDecreaseStateChanged!(-1);
           },
         ),
       ),
@@ -106,7 +106,7 @@ class _CounterWidgetState extends State<CounterWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.title,
+              widget.title!,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             _counter(),

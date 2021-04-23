@@ -12,16 +12,16 @@ import 'package:projectb/finishtab.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
-    Key key,
+    Key? key,
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
     this.styleFontSize = 14,
   }) : super(key: key);
 
-  final String eventName;
-  final String eventKey;
-  final List<LocalTeam> eventTeams;
+  final String? eventName;
+  final String? eventKey;
+  final List<LocalTeam>? eventTeams;
 
   //style
   final double styleFontSize;
@@ -36,7 +36,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   //manage save record
   bool recordSaved = false;
-  int recordID;
+  int? recordID;
 
   int _selectedTab = 0;
 
@@ -96,7 +96,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFontSizeHeadings = 16;
   double styleRedBoxSize = 300;
 
-  LocalTeam selectedTeam;
+  LocalTeam? selectedTeam;
   List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
 
   setEventTeams(double styleFontSize) async {
@@ -120,7 +120,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
 
     //update dropdown box with Teams
-    for (LocalTeam team in widget.eventTeams) {
+    for (LocalTeam team in widget.eventTeams!) {
       setState(() {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
@@ -247,7 +247,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     mySharedPrefs.saveBool("selectedFall", false);
     recordSaved = false;
     setState(() {
-      matchScoutingData = null;
+      //matchScoutingData = MatchScoutingData();
       matchScoutingData = MatchScoutingData();
       _selectedTab = 0;
       //_txtStartingCells.text = '0';
@@ -264,11 +264,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       matchScoutingData.id = recordID;
     }
     matchScoutingData.txEvent = widget.eventKey;
-    matchScoutingData.idTeam = selectedTeam.teamNumber;
+    matchScoutingData.idTeam = selectedTeam!.teamNumber;
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
     matchScoutingData.txScoutName = _txtScoutName.text;
     this.recordID = await localDB.insertScoringData(matchScoutingData);
-    if (this.recordID > 0) {
+    if (this.recordID! > 0) {
       recordSaved = true;
     }
     print("Record Saved: " + recordSaved.toString());
@@ -373,7 +373,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Event Name: " + widget.eventName,
+                                "Event Name: " + widget.eventName!,
                                 style:
                                     TextStyle(fontSize: widget.styleFontSize),
                               ),
@@ -496,16 +496,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           DropdownButton(
                             isDense: true,
                             value:
-                                selectedTeam == null ? null : selectedTeam.key,
+                                selectedTeam == null ? null : selectedTeam!.key,
                             //title: "Team",
                             items: eventTeamsListDropDown,
                             onChanged: (item) {
                               setState(() {
-                                selectedTeam = widget.eventTeams.firstWhere(
+                                selectedTeam = widget.eventTeams!.firstWhere(
                                     (team) => team.key == item,
-                                    orElse: () => widget.eventTeams.first);
+                                    orElse: () => widget.eventTeams!.first);
                               });
-                              print("Key: " + selectedTeam.key);
+                              print("Key: " + selectedTeam!.key);
                             },
                             //styleFontSize: styleFontSizeBody,
                             //styleFieldWidth: styleFieldWidthTeam,
@@ -1019,7 +1019,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       return FinishTab(
         onSavePressed: (bool value) {
           if (recordSaved == true) {
-            saveMatchScout(recordID: recordID);
+            saveMatchScout(recordID: recordID!);
           } else {
             saveMatchScout();
           }

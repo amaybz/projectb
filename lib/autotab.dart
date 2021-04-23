@@ -1,3 +1,4 @@
+// @dart = 2.7
 import 'package:flutter/material.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 import 'package:projectb/localdb.dart';

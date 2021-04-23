@@ -3,13 +3,13 @@ import 'package:loading_gifs/loading_gifs.dart';
 
 class LoadingImage extends StatefulWidget {
   LoadingImage({
-    Key key,
-    @required this.state,
+    Key? key,
+    required this.state,
     this.text
   }) : super(key: key);
 
   final int state;
-  final String text;
+  final String? text;
   @override
   _LoadingImageState createState() => _LoadingImageState();
 }
@@ -32,7 +32,7 @@ class _LoadingImageState extends State<LoadingImage> {
       );
     } else {
       return Container(
-        child: Text(widget.text),
+        child: Text(widget.text!),
       );
     }
   }

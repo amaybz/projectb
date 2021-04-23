@@ -4,7 +4,7 @@ import 'package:projectb/widget_headingmain.dart';
 
 class PerformanceWidget extends StatefulWidget {
   const PerformanceWidget({
-    Key key,
+    Key? key,
 
     this.numCellAttempt,
     this.numCellSuccess,
@@ -23,16 +23,16 @@ class PerformanceWidget extends StatefulWidget {
     this.styleImgFieldWidth = 150,
   }) : super(key: key);
 
-  final int numCellAttempt;
-  final int numCellSuccess;
-  final bool flOuter;
-  final bool flInner;
-  final bool flLower;
-  final ValueChanged<bool> onFlLowerChanged;
-  final ValueChanged<bool> onFlInnerChanged;
-  final ValueChanged<bool> onFlOuterChanged;
-  final ValueChanged<int> onCellAttemptsChanged;
-  final ValueChanged<int> onCellSuccessChanged;
+  final int? numCellAttempt;
+  final int? numCellSuccess;
+  final bool? flOuter;
+  final bool? flInner;
+  final bool? flLower;
+  final ValueChanged<bool>? onFlLowerChanged;
+  final ValueChanged<bool>? onFlInnerChanged;
+  final ValueChanged<bool>? onFlOuterChanged;
+  final ValueChanged<int>? onCellAttemptsChanged;
+  final ValueChanged<int>? onCellSuccessChanged;
   final double styleFontSizeBody;
   final double styleFontSizeHeadings;
   final double styleImgFieldWidth;
@@ -71,16 +71,16 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       styleFontSize: widget.styleFontSizeBody,
                       onIncreaseStateChanged: (int increase) {
                         setState(() {
-                          widget.onCellAttemptsChanged(widget.numCellAttempt + 1);
+                          widget.onCellAttemptsChanged!(widget.numCellAttempt! + 1);
                         });
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
-                          widget.onCellAttemptsChanged(widget.numCellAttempt - 1);
+                          widget.onCellAttemptsChanged!(widget.numCellAttempt! - 1);
                         });
                       },
                       onSetValue: (int value) {
-                        widget.onCellAttemptsChanged(value);
+                        widget.onCellAttemptsChanged!(value);
                       },
                     ),
                     CounterWidget(
@@ -89,18 +89,18 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       styleFontSize: widget.styleFontSizeBody,
                       onIncreaseStateChanged: (int increase) {
                         setState(() {
-                          widget.onCellAttemptsChanged(widget.numCellAttempt + 1);
-                          widget.onCellSuccessChanged(widget.numCellSuccess + 1);
+                          widget.onCellAttemptsChanged!(widget.numCellAttempt! + 1);
+                          widget.onCellSuccessChanged!(widget.numCellSuccess! + 1);
                         });
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
-                          widget.onCellAttemptsChanged(widget.numCellAttempt - 1);
-                          widget.onCellSuccessChanged(widget.numCellSuccess - 1);
+                          widget.onCellAttemptsChanged!(widget.numCellAttempt! - 1);
+                          widget.onCellSuccessChanged!(widget.numCellSuccess! - 1);
                         });
                       },
                       onSetValue: (int value) {
-                       widget.onCellSuccessChanged(value);
+                       widget.onCellSuccessChanged!(value);
                       },
                     ),
                   ]),
@@ -123,30 +123,30 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                     Row(children: [
                       Text("Outer"),
                       Switch(
-                          value: widget.flOuter,
+                          value: widget.flOuter!,
                           onChanged: (value) {
                             setState(() {
-                              widget.onFlOuterChanged(value);
+                              widget.onFlOuterChanged!(value);
                             });
                           }),
                     ]),
                     Row(children: [
                       Text("Inner"),
                       Switch(
-                          value: widget.flInner,
+                          value: widget.flInner!,
                           onChanged: (value) {
                             setState(() {
-                              widget.onFlInnerChanged(value);
+                              widget.onFlInnerChanged!(value);
                             });
                           }),
                     ]),
                     Row(children: [
                       Text("Lower"),
                       Switch(
-                          value: widget.flLower,
+                          value: widget.flLower!,
                           onChanged: (value) {
                             setState(() {
-                              widget.onFlLowerChanged(value);
+                              widget.onFlLowerChanged!(value);
                             });
                           }),
                     ]),

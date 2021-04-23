@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class FinishTab extends StatefulWidget {
   const FinishTab({
-    Key key,
+    Key? key,
     this.onSavePressed,
   }) : super(key: key);
 
-  final ValueChanged<bool> onSavePressed;
+  final ValueChanged<bool>? onSavePressed;
 
   @override
   _FinishTabState createState() => _FinishTabState();
@@ -45,7 +45,7 @@ class _FinishTabState extends State<FinishTab> {
                   ),
                   TextButton(
                       onPressed: () {
-                        widget.onSavePressed(true);
+                        widget.onSavePressed!(true);
                       },
                       child: Text("Save to local Database")),
                 ],

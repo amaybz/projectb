@@ -11,13 +11,13 @@ import 'package:projectb/widget_headingmain.dart';
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
-    Key key,
+    Key? key,
     @required this.eventName,
     @required this.eventKey,
   }) : super(key: key);
 
-  final String eventName;
-  final String eventKey;
+  final String? eventName;
+  final String? eventKey;
 
   @override
   _ScoringDataScreenState createState() => _ScoringDataScreenState();
@@ -26,9 +26,9 @@ class ScoringDataScreen extends StatefulWidget {
 class _ScoringDataScreenState extends State<ScoringDataScreen> {
   GoogleInterface googleInterface = GoogleInterface.instance;
   LocalDB localDB = LocalDB.instance;
-  List unitMemberList;
-  List<MatchScoutingData> dataList;
-  List<PitData> listPitData;
+  List? unitMemberList;
+  List<MatchScoutingData>? dataList;
+  List<PitData>? listPitData;
   String googleEmail = "Not Signed In";
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
@@ -149,7 +149,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 BoxDecoration(border: Border.all(color: Colors.blueAccent)),
             padding: EdgeInsets.all(4.0),
             child: Text(
-              "Event Name: " + widget.eventName,
+              "Event Name: " + widget.eventName!,
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -225,9 +225,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget _buildListViewMatchData() {
     return ListView.builder(
         padding: const EdgeInsets.all(10.0),
-        itemCount: dataList == null ? 0 : dataList.length,
+        itemCount: dataList == null ? 0 : dataList!.length,
         itemBuilder: (context, index) {
-          return _buildRowMatchData(dataList[index]);
+          return _buildRowMatchData(dataList![index]);
         });
   }
 
@@ -237,7 +237,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       title: Text(
         item.id.toString() + ". Match: " + item.numMatch.toString(),
       ),
-      subtitle: Text("Team: " + item.idTeam),
+      subtitle: Text("Team: " + item.idTeam!),
       trailing: Icon(Icons.share),
       onTap: () {
         _showDialogMatchQRCode(context, item.id.toString());
@@ -251,9 +251,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget _buildListViewPitData() {
     return ListView.builder(
         padding: const EdgeInsets.all(10.0),
-        itemCount: listPitData == null ? 0 : listPitData.length,
+        itemCount: listPitData == null ? 0 : listPitData!.length,
         itemBuilder: (context, index) {
-          return _buildRowPitData(listPitData[index]);
+          return _buildRowPitData(listPitData![index]);
         });
   }
 

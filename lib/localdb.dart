@@ -1,3 +1,5 @@
+// @dart = 2.7
+
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
@@ -148,6 +150,7 @@ class LocalDB {
   LocalDB._privateConstructor();
   static final LocalDB instance = LocalDB._privateConstructor();
 
+
   void _createTables(Database db, int version) async {
     await db.execute(createTblEvents);
     await db.execute(createTblScoringData);
@@ -257,7 +260,9 @@ class LocalDB {
     if (maps.length > 0) {
       return DeviceName.fromMap(maps.first);
     }
-    return null;
+    DeviceName deviceName;
+    deviceName.name = "";
+    return deviceName;
   }
 
   Future<MatchScoutingData> getScoringDataRecord(int id) async {
@@ -267,7 +272,9 @@ class LocalDB {
     if (maps.length > 0) {
       return MatchScoutingData.fromLocalDB(maps.first);
     }
-    return null;
+    MatchScoutingData matchScoutingData;
+    matchScoutingData.idTeam = "0";
+    return matchScoutingData;
   }
   Future<PitData> getPitDataRecord(int id) async {
     Database db = await database;
@@ -276,7 +283,9 @@ class LocalDB {
     if (maps.length > 0) {
       return PitData.fromLocalDB(maps.first);
     }
-    return null;
+    PitData pitData;
+    pitData.idTeam = "0";
+    return pitData;
   }
 
   Future<List<LocalEvent>> listEvents() async {
@@ -709,7 +718,7 @@ class MatchScoutingData {
     };
   }
 
-  MatchScoutingData.fromLocalDB(Map<String, dynamic> map) {
+  MatchScoutingData.fromLocalDB(Map<dynamic, dynamic> map) {
     this.id = map['id'];
     this.txEvent = map['txEvent'];
     this.numMatch = map['numMatch'];
@@ -727,7 +736,7 @@ class MatchScoutingData {
     this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';
     //Auto Tab
     this.autoFlStart = map['autoFlStart'].toString().toLowerCase() == 'true';
-    this.autoFlBaseLine = map['autoFlBaseLine'].toString().toLowerCase() == 'true';
+     this.autoFlBaseLine = map['autoFlBaseLine'].toString().toLowerCase() == 'true';
     this.autoNumCellLoad = map['autoNumCellLoad'];
     this.autoFlFoul = map['autoFlFoul'].toString().toLowerCase() == 'true';
     this.autoFlRobotContact = map['autoFlRobotContact'].toString().toLowerCase() == 'true';
@@ -781,6 +790,7 @@ class MatchScoutingData {
   }
 
   MatchScoutingData.fromMap(Map<String, dynamic> map) {
+
     this.id = map['id'];
     this.txEvent = map['txEvent'];
     this.numMatch = map['numMatch'];
@@ -883,7 +893,7 @@ class DeviceName {
     };
   }
 
-  DeviceName.fromMap(Map<String, dynamic> map) {
+  DeviceName.fromMap(Map<dynamic, dynamic> map) {
     id = map['id'];
     name = map['name'];
     location = map['location'];

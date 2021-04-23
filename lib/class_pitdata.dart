@@ -1,3 +1,5 @@
+// @dart = 2.7
+
 class PitData {
   int id;
   String txEvent;
@@ -140,7 +142,7 @@ class PitData {
     };
   }
 
-  PitData.fromLocalDB(Map<String, dynamic> map) {
+  PitData.fromLocalDB(Map<dynamic, dynamic> map) {
     this.id = map['id'];
     this.txEvent = map['txEvent'];
     this.idTeam = map['idTeam'].toString();

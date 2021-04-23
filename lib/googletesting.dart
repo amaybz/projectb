@@ -1,3 +1,5 @@
+// @dart = 2.7
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
@@ -16,7 +18,7 @@ class GoogleLoginRequest extends StatefulWidget {
 class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
 
   final googleSignIn =
-  signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
+  signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.driveFileScope]);
   signIn.GoogleSignInAccount account;
 
   Future<String> get _localPath async {
@@ -83,7 +85,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     final authHeaders = await account.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
-    googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
+    googleSignIn.requestScopes([drive.DriveApi.driveFileScope]);
     //print("auth Headers: " + authHeaders.toString());
     //create file
     Stream<List<int>> mediaStream = file.openRead().asBroadcastStream();
@@ -104,7 +106,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
   final authHeaders = await account.authHeaders;
   final authenticateClient = GoogleAuthClient(authHeaders);
   final driveApi = drive.DriveApi(authenticateClient);
-  googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
+  googleSignIn.requestScopes([drive.DriveApi.driveFileScope]);
   //print(authenticateClient);
 
 

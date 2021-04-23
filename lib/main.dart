@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -32,9 +34,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -45,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   WebAPI webAPI = new WebAPI();
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   //style
-  double styleFontSize;
+  double styleFontSize = 14;
   String versionName = "";
   String versionCode = "";
 
@@ -54,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static int _countOfTeams = 0;
   String _downloadingText = "Please select Location and Event to download data";
   String txtEventHelpText = "Please choose a event";
-  String locationDropDown;
+  String? locationDropDown;
   String selectedYear = "2021";
   final List<String> _locations = [
     'Australia',
@@ -71,17 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<String> _year = ['2020', '2021'];
 
   //used to store all events from API
-  List<EventData> allEvents;
+  List<EventData>? allEvents;
   //used to store events for a location
-  List<EventData> eventsForLocation;
+  List<EventData>? eventsForLocation;
   //used to fill the dropdown box
   List<EventsList> eventsList = [];
   List<DropdownMenuItem<String>> eventListDropDown = [];
   //used to store the current selected event
-  EventData selectedEvent;
-  LocalEvent selectedLocalEvent;
+  EventData? selectedEvent;
+  LocalEvent? selectedLocalEvent;
 
-  List<TeamsList> eventTeams;
+  List<TeamsList>? eventTeams;
 
   @override
   void initState() {
@@ -123,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print("No Teams");
     } else {
       localDB.clearLocalTeams();
-      for (TeamsList team in eventTeams) {
+      for (TeamsList team in eventTeams!) {
         LocalTeam insertTeam = LocalTeam(
             key: team.key,
             name: team.name,
@@ -151,8 +153,8 @@ class _MyHomePageState extends State<MyHomePage> {
     //update Events from API
     await updateEventsFromAPI(selectedYear);
     //update teams if event is selected
-    if (selectedEvent.key != null) {
-      await getEventTeamsFromAPI(selectedEvent.key);
+    if (selectedEvent!.key != null) {
+      await getEventTeamsFromAPI(selectedEvent!.key);
     }
     //set Downloading status to complete
     setState(() {
@@ -198,15 +200,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //add event to local DB
     LocalEvent event = LocalEvent(
-      key: selectedEvent.key,
-      name: selectedEvent.name,
-      shortName: selectedEvent.shortName,
-      location: selectedEvent.country,
+      key: selectedEvent!.key,
+      name: selectedEvent!.name,
+      shortName: selectedEvent!.shortName,
+      location: selectedEvent!.country,
     );
     localDB.insertEvent(event);
 
     eventTeams = await webAPI.getTeamsByEvent(eventKey);
-    print(eventTeams.length);
+    print(eventTeams!.length);
     if (eventTeams == null) {
       setState(() {
         _downloadingData = 0;
@@ -218,7 +220,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _downloadingText = "Please select Location and Event to download data";
       });
       localDB.clearLocalTeams();
-      for (TeamsList team in eventTeams) {
+      for (TeamsList team in eventTeams!) {
         LocalTeam insertTeam = LocalTeam(
             key: team.key,
             name: team.name,
@@ -242,10 +244,10 @@ class _MyHomePageState extends State<MyHomePage> {
       updateEventsFromAPI(selectedYear);
     }
     eventsForLocation =
-        allEvents.where((i) => i.country == locationDropDown).toList();
+        allEvents!.where((i) => i.country == locationDropDown).toList();
     //clear event list and update it with new events
     eventsList.clear();
-    eventsForLocation.forEach((i) {
+    eventsForLocation!.forEach((i) {
       eventsList.add(EventsList(name: i.shortName, key: i.key));
     });
 
@@ -263,7 +265,7 @@ class _MyHomePageState extends State<MyHomePage> {
         eventListDropDown.add(new DropdownMenuItem(
             value: event.key,
             child: Text(
-              event.name,
+              event.name!,
               style: TextStyle(fontSize: 16),
             )));
       });
@@ -303,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       drawer: Drawer(
         child: ListView(
@@ -392,9 +394,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: DropdownButton<String>(
                             hint: Text('Please select Year'),
                             value: selectedYear,
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               setState(() {
-                                selectedYear = newValue;
+                                selectedYear = newValue!;
                                 locationDropDown = null;
                                 selectedEvent = null;
                               });
@@ -420,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: DropdownButton<String>(
                             hint: Text('Please choose a location'),
                             value: locationDropDown,
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               setState(() {
                                 locationDropDown = newValue;
                               });
@@ -448,15 +450,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             hint: Text(txtEventHelpText),
                             value: selectedEvent == null
                                 ? null
-                                : selectedEvent.key,
+                                : selectedEvent!.key,
                             onChanged: (item) {
                               setState(() {
-                                selectedEvent = eventsForLocation.firstWhere(
+                                selectedEvent = eventsForLocation!.firstWhere(
                                     (loc) => loc.key == item,
-                                    orElse: () => eventsForLocation.first);
+                                    orElse: () => eventsForLocation!.first);
                               });
-                              print("Key: " + selectedEvent.key.toString());
-                              getEventTeamsFromAPI(selectedEvent.key);
+                              print("Key: " + selectedEvent!.key.toString());
+                              getEventTeamsFromAPI(selectedEvent!.key);
                             },
                             items: eventListDropDown,
                           ),
@@ -488,7 +490,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
                               Text(selectedLocalEvent == null
                                   ? "none"
-                                  : selectedLocalEvent.name),
+                                  : selectedLocalEvent!.name),
                               Text("Teams Loaded: " + _countOfTeams.toString()),
                             ],
                           ),
@@ -504,7 +506,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         updateDeviceName();
                         if (selectedEvent != null) {
                           mySharedPrefs.saveStr(
-                              "currentEvent", selectedEvent.key);
+                              "currentEvent", selectedEvent!.key);
                           setLocalEvent();
                         }
                       },
@@ -530,8 +532,8 @@ class _MyHomePageState extends State<MyHomePage> {
   _navigateToStoredData(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    var eventShortName = (selectedLocalEvent == null) ? "None Selected" : selectedLocalEvent.shortName;
-    var eventKey= (selectedLocalEvent == null) ? "NA" : selectedLocalEvent.key;
+    var eventShortName = (selectedLocalEvent == null) ? "None Selected" : selectedLocalEvent!.shortName;
+    var eventKey= (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
@@ -553,8 +555,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
-                eventName: selectedLocalEvent.shortName,
-                eventKey: selectedLocalEvent.key,
+                eventName: selectedLocalEvent!.shortName,
+                eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
                 styleFontSize: this.styleFontSize,
               )),
@@ -570,8 +572,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => PitScoutingScreen(
-                eventName: selectedLocalEvent.shortName,
-                eventKey: selectedLocalEvent.key,
+                eventName: selectedLocalEvent!.shortName,
+                eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
                 deviceName: _txtDeviceName.text,
               )),
@@ -591,8 +593,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class EventsList {
-  final String key;
-  final String name;
+  final String? key;
+  final String? name;
 
   EventsList({this.key, this.name});
 }

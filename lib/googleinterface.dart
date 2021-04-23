@@ -6,25 +6,25 @@ import 'dart:io';
 
 class GoogleInterface {
   final googleSignIn =
-  signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
+  signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.driveFileScope]);
   String appFolderID = "";
 
   // Make this a singleton class.
   GoogleInterface._privateConstructor();
   static final GoogleInterface instance = GoogleInterface._privateConstructor();
 
-  static signIn.GoogleSignInAccount _account;
-  Future<signIn.GoogleSignInAccount> get account async {
+  static signIn.GoogleSignInAccount? _account;
+  Future<signIn.GoogleSignInAccount?> get account async {
     if (_account != null) return _account;
     _account = await googleSignIn.signIn();
     return _account;
   }
 
-  static drive.DriveApi _driveApi;
-  Future<drive.DriveApi> get driveApi async {
+  static drive.DriveApi? _driveApi;
+  Future<drive.DriveApi?>? get driveApi async {
     //if (_driveApi != null) return _driveApi;
-    final signIn.GoogleSignInAccount googleAccount  = await account;
-    final authHeaders = await googleAccount.authHeaders;
+    final signIn.GoogleSignInAccount? googleAccount  = await account;
+    final authHeaders = await googleAccount!.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     _driveApi = drive.DriveApi(authenticateClient);
     return _driveApi;
@@ -37,7 +37,7 @@ class GoogleInterface {
   Future<String> getEmail() async {
     //final signIn.GoogleSignInAccount googleAccount  = await account;
     //googleAccount.authHeaders;
-    if (_account != null) return _account.email;
+    if (_account != null) return _account!.email;
     return "Not Signed In";
   }
 
@@ -47,7 +47,7 @@ class GoogleInterface {
   }
 
   Future<void> doSignIn() async {
-    final signIn.GoogleSignInAccount googleAccount  = await account;
+    final signIn.GoogleSignInAccount googleAccount  = (await account)!;
     print("User account $googleAccount");
     //var test =  await _account.authentication;
    // print(test.idToken);
@@ -71,8 +71,8 @@ class GoogleInterface {
     //final signIn.GoogleSignInAccount googleAccount  = await account;
     //final authHeaders = await googleAccount.authHeaders;
     //final authenticateClient = GoogleAuthClient(authHeaders);
-    final drive.DriveApi gDriveApi = await driveApi;
-    googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
+    final drive.DriveApi gDriveApi = (await driveApi)!;
+    googleSignIn.requestScopes([drive.DriveApi.driveFileScope]);
     //Process file
     Stream<List<int>> mediaStream = file.openRead().asBroadcastStream();
     int mediaStreamLength = await file.length();
@@ -85,23 +85,22 @@ class GoogleInterface {
     driveFile.parents = driveAppFolder;
     final result = await gDriveApi.files.create(driveFile, uploadMedia: media);
     print("Upload result: $result");
-    return true;
   }
 
   Future<void> _checkIfAppFolderExists() async {
 
-    final drive.DriveApi gDriveApi = await driveApi;
+    final drive.DriveApi gDriveApi = (await driveApi)!;
     print("Printing list");
     //check folders to see if it has already been created.
     var f = await gDriveApi.files
         .list(q: "mimeType = 'application/vnd.google-apps.folder'");
-    f.files.forEach((f) {
+    f.files!.forEach((f) {
       if (f.name == "FRC-APP") {
-        appFolderID = f.id;
+        appFolderID = f.id!;
         print("Folder Exists:  " + f.id.toString());
       }
 
-      print(f.name + ": " + f.id);
+      print(f.name! + ": " + f.id!);
       }
 
     );
@@ -110,14 +109,14 @@ class GoogleInterface {
   }
 
   Future<void> _createAppFolder() async {
-    final drive.DriveApi gDriveApi = await driveApi;
+    final drive.DriveApi gDriveApi = (await driveApi)!;
     print("Creating folder.");
     var driveFolder = new drive.File();
     driveFolder.name = "FRC-APP";
     driveFolder.mimeType = "application/vnd.google-apps.folder";
     final createFolder = await gDriveApi.files.create(driveFolder);
     print("Uploaded Folder: " + createFolder.id.toString());
-    appFolderID = createFolder.id;
+    appFolderID = createFolder.id!;
   }
 
 
@@ -125,13 +124,13 @@ class GoogleInterface {
 
 class GoogleLoginButton extends StatefulWidget {
   const GoogleLoginButton({
-    Key key,
+    Key? key,
     this.googleLoginState = false,
     this.onLoginPressed,
   }) : super(key: key);
 
   final bool googleLoginState;
-  final ValueChanged<bool> onLoginPressed;
+  final ValueChanged<bool>? onLoginPressed;
 
   @override
   _GoogleLoginButtonState createState() => _GoogleLoginButtonState();
@@ -145,7 +144,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
       return Container(
         child: TextButton(
           onPressed: () {
-            widget.onLoginPressed(true);
+            widget.onLoginPressed!(true);
           },
           child: Text("Sign into Google"),
         ),
@@ -155,7 +154,7 @@ class _GoogleLoginButtonState extends State<GoogleLoginButton> {
       return Container(
         child: TextButton(
           onPressed: () {
-            widget.onLoginPressed(false);
+            widget.onLoginPressed!(false);
           },
           child: Text("Sign Out of Google"),
         ),

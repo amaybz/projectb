@@ -22,13 +22,14 @@ class PitScoutingScreen extends StatefulWidget {
     @required this.eventKey,
     this.eventTeams,
     this.deviceName,
-
+    this.styleFontSize = 14,
   }) : super(key: key);
 
   final String eventName;
   final String eventKey;
   final String deviceName;
   final List<LocalTeam> eventTeams;
+  final double styleFontSize;
 
   @override
   _PitScoutingScreenState createState() => _PitScoutingScreenState();
@@ -261,7 +262,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   double styleFieldTxPitNotesMaxWidth = 350;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
-  double styleFontSizeBody = 15;
   double styleFontSizeHeadings = 18;
 
   @override
@@ -270,20 +270,21 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
     if (width < 500) {
-      styleFontSizeBody = 12;
+
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 250;
       styleFieldTxShootingMaxWidth = 250;
       styleFieldTxClimbMaxWidth = 240;
+      styleFieldTxPitNotesMaxWidth = 300;
     }
     if (width < 395) {
-      styleFontSizeBody = 11;
+
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 200;
       styleFieldTxShootingMaxWidth = 198;
+      styleFieldTxPitNotesMaxWidth = 250;
     }
     if (width >= 600) {
-      styleFontSizeBody = 15;
       styleFieldTxShootingMaxWidth = 400;
       styleFieldScoutNameMaxWidth = 400;
       styleFieldTxPitNotesMaxWidth = 500;
@@ -332,7 +333,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           children: <Widget>[
                             Text(
                               "Event Name: " + widget.eventName,
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                              style: TextStyle(fontSize: styleFontSizeHeadings),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -340,7 +341,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               children: [
                                 Text(
                                   "Scout: ",
-                                  style: TextStyle(fontSize: styleFontSizeBody),
+                                  style: TextStyle(fontSize: widget.styleFontSize),
                                 ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
@@ -361,7 +362,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   Text(
                                     "Team ",
                                     style:
-                                        TextStyle(fontSize: styleFontSizeBody),
+                                        TextStyle(fontSize: widget.styleFontSize),
                                   ),
                                   DropdownButton(
                                     value: selectedTeam == null
@@ -529,7 +530,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           children: [
                             Text(
                               "Notes: ",
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                              style: TextStyle(fontSize: widget.styleFontSize),
                             ),
                             ConstrainedBox(
                               constraints: BoxConstraints(

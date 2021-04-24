@@ -9,7 +9,7 @@ import 'package:projectb/class_pitdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 23;
+  static final _databaseVersion = 24;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -40,7 +40,7 @@ class LocalDB {
       'txScoutName TEXT,'
       'idStartFacing TEXT,'
       'idStartPosition TEXT,'
-      'idStartCells TEXT,'
+      'numStartCells TEXT,'
       'flRed TEXT,'
       'flYellow TEXT,'
       'flCrash TEXT,'
@@ -433,7 +433,7 @@ class MatchScoutingData {
   String idDriveStation;
   String idStartFacing;
   String idStartPosition;
-  String idStartCells;
+  String numStartCells;
   bool flCrash;
   bool flYellow;
   bool flRed;
@@ -506,7 +506,7 @@ class MatchScoutingData {
     this.idStartFacing,
     this.numMatch = 0,
     this.idStartPosition,
-    this.idStartCells,
+    this.numStartCells,
     this.flCrash = false,
     this.flYellow = false,
     this.flRed = false,
@@ -583,7 +583,7 @@ class MatchScoutingData {
       'txScoutName' : txScoutName,
       'idStartFacing' : idStartFacing,
       'idStartPosition' : idStartPosition,
-      'idStartCells' : idStartCells,
+      'numStartCells' : numStartCells,
       'flRed' : flRed,
       'flYellow' : flYellow,
       'flCrash' : flCrash,
@@ -656,7 +656,7 @@ class MatchScoutingData {
       'txScoutName': txScoutName,
       'idStartFacing': idStartFacing,
       'idStartPosition': idStartPosition,
-      'idStartCells': idStartCells,
+      'numStartCells': numStartCells,
       'flRed': flRed.toString(),
       'flYellow': flYellow.toString(),
       'flCrash': flCrash.toString(),
@@ -728,7 +728,7 @@ class MatchScoutingData {
     this.txScoutName = map['txScoutName'];
     this.idStartFacing = map['idStartFacing'];
     this.idStartPosition = map['idStartPosition'];
-    this.idStartCells = map['idStartCells'];
+    this.numStartCells = map['numStartCells'];
     this.flRed = map['flRed'].toString().toLowerCase() == 'true';
     this.flYellow = map['flYellow'].toString().toLowerCase() == 'true';
     this.flCrash = map['flCrash'].toString().toLowerCase() == 'true';
@@ -800,7 +800,7 @@ class MatchScoutingData {
     this.txScoutName = map['txScoutName'];
     this.idStartFacing = map['idStartFacing'];
     this.idStartPosition = map['idStartPosition'];
-    this.idStartCells = map['idStartCells'];
+    this.numStartCells = map['numStartCells'];
     this.flRed = map['flRed'];
     this.flYellow = map['flYellow'];
     this.flCrash = map['flCrash'];
@@ -873,7 +873,7 @@ class MatchScoutingData {
         'facing: $idStartFacing, '
         'numMatch: $numMatch, '
         'robotPosition: $idStartPosition, '
-        'idStartCells: $idStartCells, '
+        'numStartCells: $numStartCells, '
         '}';
   }
 }

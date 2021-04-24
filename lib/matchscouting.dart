@@ -23,7 +23,6 @@ class MatchScoutingScreen extends StatefulWidget {
   final String? eventName;
   final String? eventKey;
   final List<LocalTeam>? eventTeams;
-
   //style
   final double styleFontSize;
 
@@ -303,7 +302,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthFacing = 140;
       styleImgFieldMapWidth = 250;
       styleFieldWidthTeam = 300;
-
       styleFontSizeHeadings = 15;
       styleRedBoxSize = 180;
     }
@@ -503,7 +501,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             //title: "Team",
                             items: eventTeamsListDropDown,
                             onChanged: (item) {
+
                               setState(() {
+
                                 selectedTeam = widget.eventTeams!.firstWhere(
                                     (team) => team.key == item,
                                     orElse: () => widget.eventTeams!.first);
@@ -527,6 +527,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidthFacing,
                               onStateChanged: (String newValue) {
+                                FocusScope.of(context).unfocus();
                                 setState(() {
                                   matchScoutingData.idStartFacing = newValue;
                                 });
@@ -545,7 +546,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 });
                               }),
                           DropDownWidget(
-                              value: matchScoutingData.idStartCells,
+                              value: matchScoutingData.numStartCells,
                               title: "Starting Cells",
                               list: _listStartingCells,
                               styleFontSize: widget.styleFontSize,
@@ -554,7 +555,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               styleFieldPaddingSides: styleFieldPaddingSides,
                               onStateChanged: (String newValue) {
                                 setState(() {
-                                  matchScoutingData.idStartCells = newValue;
+                                  matchScoutingData.numStartCells = newValue;
                                 });
                               }),
                         ]),
@@ -604,7 +605,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
-                                    "Total Robot Failure ",
+                                    "Total Failure ",
                                     style: TextStyle(
                                         fontSize: widget.styleFontSize,
                                         fontWeight: FontWeight.bold),

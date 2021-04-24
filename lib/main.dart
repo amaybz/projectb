@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -23,18 +21,33 @@ void main() {
   runApp(MyApp());
 }
 
-
-class MyApp  extends StatelessWidget {
-
+class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Project B',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        //if (!currentFocus.hasPrimaryFocus) {
+        //  currentFocus.unfocus();
+        //}
+
+        //if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) { currentFocus.focusedChild!.unfocus(); } },
+
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+
+      },
+      child: MaterialApp(
+        title: 'Project B',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(title: 'Home - Set Event'),
       ),
-      home: MyHomePage(title: 'Home - Set Event'),
     );
   }
 }
@@ -42,7 +55,7 @@ class MyApp  extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title, this.camera}) : super(key: key);
 
-  CameraDescription? camera;
+  final CameraDescription? camera;
   final String? title;
 
   @override
@@ -115,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getCameras() async {
-    widget.camera = await findCamera();
+    //widget.camera = await findCamera();
   }
 
   void getVersionInfo() async {
@@ -124,8 +137,6 @@ class _MyHomePageState extends State<MyHomePage> {
       versionName = packageInfo.version;
       versionCode = packageInfo.buildNumber;
     });
-
-
   }
 
   void setLocalEvent() async {
@@ -273,12 +284,9 @@ class _MyHomePageState extends State<MyHomePage> {
       eventsList.add(EventsList(name: i.shortName, key: i.key));
     });
 
-    if(eventsList.length == 0)
-    {
+    if (eventsList.length == 0) {
       txtEventHelpText = "No Events for this location!";
-    }
-    else
-    {
+    } else {
       txtEventHelpText = "Please choose a event";
     }
     //update dropdown box with the new events
@@ -309,7 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (width < 500) {
       setState(() {
-        styleFontSize = 14;
+        styleFontSize = 13;
       });
     }
     if (width < 393) {
@@ -334,14 +342,13 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child:
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text('Robot Scouting'),
-          Text('Version: ' + versionName),
-        ],),
-
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Robot Scouting'),
+                  Text('Version: ' + versionName),
+                ],
+              ),
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
@@ -554,8 +561,11 @@ class _MyHomePageState extends State<MyHomePage> {
   _navigateToStoredData(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    var eventShortName = (selectedLocalEvent == null) ? "None Selected" : selectedLocalEvent!.shortName;
-    var eventKey= (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
+    var eventShortName = (selectedLocalEvent == null)
+        ? "None Selected"
+        : selectedLocalEvent!.shortName;
+    var eventKey =
+        (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
@@ -598,6 +608,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
                 deviceName: _txtDeviceName.text,
+                styleFontSize: this.styleFontSize,
               )),
     );
   }

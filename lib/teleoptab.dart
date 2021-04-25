@@ -93,11 +93,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   //lists
   final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
 
-  final List<String> listTime = [
-    'NA',
-    'Slow (> 7 Secs)',
-    'Medium ( 3-7 Secs)',
-    'Fast ( <3 Secs)',
+  final List<DropDownValue> listTime = [
+    DropDownValue(id: "1" , value: "NA"),
+    DropDownValue(id: "2" , value: "Slow (> 7 Secs)"),
+    DropDownValue(id: "3" , value: "Medium (3-7 Secs)"),
+    DropDownValue(id: "4" , value: "Fast <3 Secs"),
   ];
 
   final List<String> listOutcomes = [
@@ -261,10 +261,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                       });
                                     }),
                               ]),
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                             value: widget.matchScoutingData.teleIdPanelRotationTime,
                             title: "Time Taken",
-                            list: listTime,
+                            dropDownValues: listTime,
                             styleFieldWidth: styleTimeTakenWidth,
                             onStateChanged: (String value) {
                               setState(() {
@@ -323,11 +323,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                     }),
                               ]),
                           Row(children: [
-                            DropDownWidget(
+                            DropDownIndexedWidget(
                               value:
                                   widget.matchScoutingData.teleIdPanelPositionTime,
                               title: "Time Taken",
-                              list: listTime,
+                              dropDownValues: listTime,
                               styleFieldWidth: styleTimeTakenWidth,
                               onStateChanged: (String value) {
                                 setState(() {
@@ -404,21 +404,21 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                             widget.onEndgameClimbChanged(newValue);
                           });
                         }),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                         value: widget.matchScoutingData.teleIdClimbGrabTime,
                         title: "Time to Grip",
-                        list: listTime,
+                        dropDownValues: listTime,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                         onStateChanged: (String value) {
                           setState(() {
                             widget.onEndgameTimeToGripChanged(value);
                           });
                         }),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                       value:
                           widget.matchScoutingData.teleIdClimbTime,
                       title: "Time from Grip to Climb",
-                      list: listTime,
+                      dropDownValues: listTime,
                       styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                       onStateChanged: (String value) {
                         setState(() {

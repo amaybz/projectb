@@ -91,7 +91,12 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   int intBuddies = 0;
 
   //lists
-  final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
+  //final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
+  final List<DropDownValue> listSuccessFailNA = [
+    DropDownValue(id: "1" , value: "NA"),
+    DropDownValue(id: "2" , value: "Success"),
+    DropDownValue(id: "3" , value: "Fail"),
+  ];
 
   final List<DropDownValue> listTime = [
     DropDownValue(id: "1" , value: "NA"),
@@ -100,18 +105,18 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     DropDownValue(id: "4" , value: "Fast <3 Secs"),
   ];
 
-  final List<String> listOutcomes = [
-    'NA',
-    'Self',
-    'Self + Others',
-    'Others',
+  final List<DropDownValue> listOutcomes = [
+    DropDownValue(id: "1" , value: "NA"),
+    DropDownValue(id: "2" , value: "Self"),
+    DropDownValue(id: "3" , value: "Self + Others"),
+    DropDownValue(id: "4" , value: "Others"),
   ];
 
-  final List<String> listPositions = [
-    'NA',
-    'Inner',
-    'Middle',
-    'Outer',
+  final List<DropDownValue> listPositions = [
+    DropDownValue(id: "1" , value: "NA"),
+    DropDownValue(id: "2" , value: "Inner"),
+    DropDownValue(id: "3" , value: "Middle"),
+    DropDownValue(id: "4" , value: "Outer"),
   ];
 
   //style
@@ -394,10 +399,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                 });
                               }),
                         ]),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                         value: widget.matchScoutingData.teleIdClimb,
                         title: "Climb",
-                        list: listSuccessFailNA,
+                        dropDownValues: listSuccessFailNA,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                         onStateChanged: (String newValue) {
                           setState(() {
@@ -426,21 +431,21 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         });
                       },
                     ),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                         value: widget.matchScoutingData.teleIdClimbOutcome,
                         title: "Outcome",
-                        list: listOutcomes,
+                        dropDownValues: listOutcomes,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                         onStateChanged: (String value) {
                           setState(() {
                             widget.onEndgameOutcomeChanged(value);
                           });
                         }),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                         value:
                             widget.matchScoutingData.teleIdClimbPos,
                         title: "Preferred Position",
-                        list: listPositions,
+                        dropDownValues: listPositions,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
                         onStateChanged: (String newValue) {
                           setState(() {

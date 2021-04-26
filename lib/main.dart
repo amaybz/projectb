@@ -13,15 +13,29 @@ import 'package:projectb/widget_loading.dart';
 import 'package:projectb/qrreaderscreen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:camera/camera.dart';
+import 'package:projectb/take_picture.dart';
 
-void main() {
+Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
 // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
+  final CameraDescription? camera;
+
+  const MyApp({
+    Key? key,
+    @required this.camera,
+  }) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -46,7 +60,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(title: 'Home - Set Event'),
+        home: MyHomePage(title: 'Home - Set Event', camera: camera,),
       ),
     );
   }
@@ -91,14 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
     'Local',
   ];
 
-  Future<CameraDescription> findCamera() async {
-    // Obtain a list of the available cameras on the device.
-    final cameras = await availableCameras();
-
-// Get a specific camera from the list of available cameras.
-    final firstCamera = cameras.first;
-    return firstCamera;
-  }
 
   final List<String> _year = ['2020', '2021'];
 
@@ -124,11 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
     getDeviceName();
     setLocalEvent();
     getVersionInfo();
-    getCameras();
-  }
-
-  void getCameras() async {
-    //widget.camera = await findCamera();
   }
 
   void getVersionInfo() async {
@@ -385,6 +386,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 _navigateToQRReaderScreen(context);
               },
             ),
+            ListTile(
+              title: Text('CameraTesting'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToCamera(context);
+              },
+            ),
           ],
         ),
       ),
@@ -610,6 +618,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
               )),
+    );
+  }
+
+  _navigateToCamera(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    List<LocalTeam> teams = await localDB.listLocalTeams();
+    final result = await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(
+          builder: (context) => TakePictureScreen(
+         camera: widget.camera,
+          )),
     );
   }
 

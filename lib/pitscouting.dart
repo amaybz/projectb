@@ -1,6 +1,7 @@
 // @dart = 2.7
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
@@ -48,6 +49,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txClimb = TextEditingController();
   final TextEditingController txPanelSensor = TextEditingController();
   final TextEditingController txPitNotes = TextEditingController();
+  final TextEditingController txWeight = TextEditingController();
+  final TextEditingController txHeight = TextEditingController();
 
   LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
@@ -148,6 +151,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       selectedTeam = null;
       txShooting.text = "";
       txClimb.text = "";
+      txHeight.text = "0";
+      txWeight.text = "0";
     });
     print("Pit Cleared");
   }
@@ -221,6 +226,24 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txScoutName = _txtScoutName.text;
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
+
+    try {
+      pitData.numWeight = int.parse(txWeight.text);
+    }
+    catch (e) {
+      pitData.numWeight = 0;
+      print("Error Converting txWeight: " + e.toString());
+    }
+
+    try {
+      pitData.numHeight = int.parse(txHeight.text);
+    }
+    catch (e) {
+      pitData.numHeight = 0;
+      print("Error Converting txHeight: " + e.toString());
+    }
+
+
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
     if (pitData.id > 0) {
@@ -410,43 +433,45 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CounterWidget(
-                              value: pitData.numWeight,
-                              title: "Weight",
-                              onIncreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numWeight++;
-                                });
-                              },
-                              onDecreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numWeight--;
-                                });
-                              },
-                              onSetValue: (int value) {
-                                setState(() {
-                                  pitData.numWeight = value;
-                                });
-                              },
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 150,
+                              height: 58,
+                              child: TextField(
+                                style: TextStyle(fontSize: widget.styleFontSize),
+                                controller: txWeight,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Weight",
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
                             ),
-                            CounterWidget(
-                              value: pitData.numHeight,
-                              title: "Height",
-                              onIncreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numHeight++;
-                                });
-                              },
-                              onDecreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numHeight--;
-                                });
-                              },
-                              onSetValue: (int value) {
-                                setState(() {
-                                  pitData.numHeight = value;
-                                });
-                              },
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 150,
+                              height: 58,
+                              child: TextField(
+                                style: TextStyle(fontSize: widget.styleFontSize),
+                                controller: txHeight,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Height",
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
                             ),
                           ]),
                     ]),

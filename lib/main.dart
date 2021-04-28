@@ -598,6 +598,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventName: selectedLocalEvent!.shortName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
+                deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
               )),
     );

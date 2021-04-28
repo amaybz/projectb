@@ -18,11 +18,13 @@ class MatchScoutingScreen extends StatefulWidget {
     @required this.eventKey,
     this.eventTeams,
     this.styleFontSize = 14,
+    this.deviceName,
   }) : super(key: key);
 
   final String? eventName;
   final String? eventKey;
   final List<LocalTeam>? eventTeams;
+  final String? deviceName;
   //style
   final double styleFontSize;
 
@@ -264,6 +266,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (recordID > 0) {
       matchScoutingData.id = recordID;
     }
+    matchScoutingData.txDeviceName = widget.deviceName;
     matchScoutingData.txEvent = widget.eventKey;
     matchScoutingData.idTeam = selectedTeam!.teamNumber;
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);

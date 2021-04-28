@@ -9,7 +9,7 @@ import 'package:projectb/class_pitdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 24;
+  static final _databaseVersion = 25;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -33,6 +33,7 @@ class LocalDB {
   final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
       "id INTEGER PRIMARY KEY, "
       'txEvent TEXT,'
+      'txDeviceName TEXT,'
       'numMatch INTEGER,'
       'idAlliance TEXT,'
       'idDriveStation TEXT,'
@@ -426,6 +427,7 @@ class LocalEvent {
 class MatchScoutingData {
   int id;
   String txEvent;
+  String txDeviceName;
   String idTeam;
   String txScoutName;
   int numMatch;
@@ -499,6 +501,7 @@ class MatchScoutingData {
   MatchScoutingData({
     this.id,
     this.txEvent,
+    this.txDeviceName,
     this.idTeam,
     this.txScoutName,
     this.idAlliance,
@@ -576,6 +579,7 @@ class MatchScoutingData {
     return {
       'id': id,
       'txEvent' : txEvent,
+      'txDeviceName' : txDeviceName,
       'numMatch' : numMatch,
       'idAlliance' : idAlliance,
       'idDriveStation' : idDriveStation,
@@ -649,6 +653,7 @@ class MatchScoutingData {
     return {
       'id': id,
       'txEvent': txEvent,
+      'txDeviceName': txDeviceName,
       'numMatch': numMatch,
       'idAlliance': idAlliance,
       'idDriveStation': idDriveStation,
@@ -721,6 +726,7 @@ class MatchScoutingData {
   MatchScoutingData.fromLocalDB(Map<dynamic, dynamic> map) {
     this.id = map['id'];
     this.txEvent = map['txEvent'];
+    this.txDeviceName = map['txDeviceName'];
     this.numMatch = map['numMatch'];
     this.idAlliance = map['idAlliance'];
     this.idDriveStation = map['idDriveStation'];
@@ -793,6 +799,7 @@ class MatchScoutingData {
 
     this.id = map['id'];
     this.txEvent = map['txEvent'];
+    this.txDeviceName = map['txDeviceName'];
     this.numMatch = map['numMatch'];
     this.idAlliance = map['idAlliance'];
     this.idDriveStation = map['idDriveStation'];

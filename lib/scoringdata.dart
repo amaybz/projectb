@@ -119,7 +119,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         "MATCH_" +
             matchScoutingData.numMatch.toString() +
             " " +
-            matchScoutingData.idTeam.toString());
+            matchScoutingData.idTeam.toString()+ " - " + DateTime.now().toString());
     print("Upload Complete");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
@@ -135,7 +135,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     File newFile = await file.writeAsString(dataToWrite.toString());
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
-        newFile, "PIT_" + pitData.idTeam.toString());
+        newFile, "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString());
     print("Upload Complete");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");

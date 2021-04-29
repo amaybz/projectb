@@ -298,7 +298,6 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       else {
         eventsList.add(EventsList(name: i.name, key: i.key));
-
         }
 
     });
@@ -615,12 +614,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     List<LocalTeam> teams = await localDB.listLocalTeams();
+    String eventName = "";
+    if (selectedLocalEvent!.shortName != null && selectedLocalEvent!.shortName != "") {
+      eventName = selectedLocalEvent!.shortName;
+    }
+    else {
+      eventName = selectedLocalEvent!.name;
+    }
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
-                eventName: selectedLocalEvent!.shortName,
+                eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
                 deviceName: _txtDeviceName.text,
@@ -633,12 +639,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     List<LocalTeam> teams = await localDB.listLocalTeams();
+    String eventName = "";
+    if (selectedLocalEvent!.shortName != null && selectedLocalEvent!.shortName != "") {
+      eventName = selectedLocalEvent!.shortName;
+    }
+    else {
+      eventName = selectedLocalEvent!.name;
+    }
     final result = await Navigator.push(
       context,
-      // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => PitScoutingScreen(
-                eventName: selectedLocalEvent!.shortName,
+                eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
                 deviceName: _txtDeviceName.text,

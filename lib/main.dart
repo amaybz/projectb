@@ -14,6 +14,7 @@ import 'package:projectb/qrreaderscreen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/take_picture.dart';
+import 'package:projectb/addteamscreen.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -53,14 +54,16 @@ class MyApp extends StatelessWidget {
             currentFocus.focusedChild != null) {
           FocusManager.instance.primaryFocus!.unfocus();
         }
-
       },
       child: MaterialApp(
         title: 'Project B',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(title: 'Home - Set Event', camera: camera,),
+        home: MyHomePage(
+          title: 'Home - Set Event',
+          camera: camera,
+        ),
       ),
     );
   }
@@ -105,7 +108,6 @@ class _MyHomePageState extends State<MyHomePage> {
     'Local',
   ];
 
-
   final List<String> _year = ['2020', '2021'];
 
   //used to store all events from API
@@ -137,6 +139,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       versionName = packageInfo.version;
       versionCode = packageInfo.buildNumber;
+    });
+  }
+
+  void refreshLocalTeamsCount() async
+  {
+    List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
+    setState(() {
+      _countOfTeams =
+      listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
   }
 
@@ -282,7 +293,14 @@ class _MyHomePageState extends State<MyHomePage> {
     //clear event list and update it with new events
     eventsList.clear();
     eventsForLocation!.forEach((i) {
-      eventsList.add(EventsList(name: i.shortName, key: i.key));
+      if (i.shortName != null && i.shortName != "") {
+          eventsList.add(EventsList(name: i.shortName, key: i.key));
+        }
+      else {
+        eventsList.add(EventsList(name: i.name, key: i.key));
+
+        }
+
     });
 
     if (eventsList.length == 0) {
@@ -387,12 +405,19 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('CameraTesting'),
+              title: Text('Add Local Team'),
               onTap: () {
                 Navigator.pop(context);
-                _navigateToCamera(context);
+                _navigateToAddTeamScreen(context);
               },
             ),
+            //ListTile(
+            //  title: Text('CameraTesting'),
+            //  onTap: () {
+            //   Navigator.pop(context);
+            //    _navigateToCamera(context);
+            // },
+            //),
           ],
         ),
       ),
@@ -631,8 +656,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => TakePictureScreen(
-         camera: widget.camera,
-          )),
+                camera: widget.camera,
+              )),
     );
   }
 
@@ -645,6 +670,18 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(builder: (context) => QRReaderScreen()),
     );
+  }
+
+  _navigateToAddTeamScreen(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    //List<LocalTeam> teams = await localDB.listLocalTeams();
+    final result = await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => AddTeam()),
+    );
+    refreshLocalTeamsCount();
   }
 }
 

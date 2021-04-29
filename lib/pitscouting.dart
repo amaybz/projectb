@@ -205,7 +205,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         false;
   }
 
-  Future<bool> savePitData ({
+  Future<bool> savePitData({
     int recordID = 0,
   }) async {
     print("saving record");
@@ -215,34 +215,31 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     if (recordID > 0) {
       pitData.id = recordID;
       pitData.dtModified = now.toString();
-    }
-    else{
+    } else {
       pitData.dtCreation = now.toString();
       pitData.dtModified = now.toString();
     }
-    if(selectedTeam == null) return false;
+    if (selectedTeam == null) return false;
     pitData.idTeam = selectedTeam.teamNumber;
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
+    pitData.txShooting = txShooting.text;
 
     try {
       pitData.numWeight = int.parse(txWeight.text);
-    }
-    catch (e) {
+    } catch (e) {
       pitData.numWeight = 0;
       print("Error Converting txWeight: " + e.toString());
     }
 
     try {
       pitData.numHeight = int.parse(txHeight.text);
-    }
-    catch (e) {
+    } catch (e) {
       pitData.numHeight = 0;
       print("Error Converting txHeight: " + e.toString());
     }
-
 
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
@@ -251,14 +248,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       print("Record Saved: " + recordSaved.toString());
       print("Record ID: " + pitData.id.toString());
       return true;
+    } else {
+      print("ERROR Saving Record: " + recordSaved.toString());
+      return false;
     }
-    else
-      {
-        print("ERROR Saving Record: " + recordSaved.toString());
-        return false;
-      }
-
-
   }
 
   void handleMenuClick(String value) async {
@@ -293,7 +286,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
     if (width < 500) {
-
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 250;
       styleFieldTxShootingMaxWidth = 250;
@@ -301,7 +293,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       styleFieldTxPitNotesMaxWidth = 300;
     }
     if (width < 395) {
-
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 200;
       styleFieldTxShootingMaxWidth = 198;
@@ -364,7 +355,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               children: [
                                 Text(
                                   "Scout: ",
-                                  style: TextStyle(fontSize: widget.styleFontSize),
+                                  style:
+                                      TextStyle(fontSize: widget.styleFontSize),
                                 ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
@@ -384,8 +376,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 children: <Widget>[
                                   Text(
                                     "Team ",
-                                    style:
-                                        TextStyle(fontSize: widget.styleFontSize),
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize),
                                   ),
                                   DropdownButton(
                                     value: selectedTeam == null
@@ -440,7 +432,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               width: 150,
                               height: 58,
                               child: TextField(
-                                style: TextStyle(fontSize: widget.styleFontSize),
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
                                 controller: txWeight,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -460,7 +453,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               width: 150,
                               height: 58,
                               child: TextField(
-                                style: TextStyle(fontSize: widget.styleFontSize),
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
                                 controller: txHeight,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -490,7 +484,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 onExpanded: (value) {
                   (value == true) ? scrollDown(180) : scrollDown(0);
                 },
-
               ),
               PitClimb(
                 pitData: pitData,
@@ -562,8 +555,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   maxWidth: styleFieldTxPitNotesMaxWidth),
                               child: TextField(
                                 controller: txPitNotes,
-                                decoration: InputDecoration(
-                                    hintText: 'General Notes'),
+                                decoration:
+                                    InputDecoration(hintText: 'General Notes'),
                               ),
                             ),
                           ]),
@@ -579,15 +572,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     await savePitData();
                   }
                   String alertMsg;
-                  alertMsg = (recordSaved == true) ? "Pit has been saved to Local Database" : "FAILED to Save Record";
-                  showAlertOKDialog(
-                      context, "Saved", alertMsg);
-
+                  alertMsg = (recordSaved == true)
+                      ? "Pit has been saved to Local Database"
+                      : "FAILED to Save Record";
+                  showAlertOKDialog(context, "Saved", alertMsg);
                 },
               ),
-
             ]),
-
       ),
     );
   }

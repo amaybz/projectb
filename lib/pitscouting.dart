@@ -230,6 +230,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
     pitData.txShooting = txShooting.text;
+    if (pitData.imgTeamUniform == null) return false;
+    if (pitData.imgRobotSide == null) return false;
+    if (pitData.imgRobotFront == null) return false;
 
     try {
       pitData.numWeight = int.parse(txWeight.text);

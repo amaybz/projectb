@@ -410,13 +410,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 _navigateToAddTeamScreen(context);
               },
             ),
-            ListTile(
-              title: Text('CameraTesting'),
-              onTap: () {
-               Navigator.pop(context);
-                _navigateToCamera(context);
-             },
-            ),
           ],
         ),
       ),
@@ -660,19 +653,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _navigateToCamera(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-    List<LocalTeam> teams = await localDB.listLocalTeams();
-    final result = await Navigator.push(
-      context,
-      // Create the SelectionScreen in the next step.
-      MaterialPageRoute(
-          builder: (context) => TakePictureScreen(
-                camera: widget.camera,
-              )),
-    );
-  }
 
   _navigateToQRReaderScreen(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling

@@ -58,7 +58,11 @@ class GoogleInterface {
     print("User account $_account");
   }
 
-  Future<void> uploadFile(File file, String name) async {
+  Future<void> uploadFile(File file, String name, String? type) async {
+    if(type == null){
+      type = "json";
+    }
+
     print("check if APP folder exists");
     print(await isSignedIn());
     await _checkIfAppFolderExists();
@@ -81,7 +85,7 @@ class GoogleInterface {
     var media = new drive.Media(mediaStream,mediaStreamLength);
     var driveFile = new drive.File();
     final List<String> driveAppFolder = [appFolderID];
-    driveFile.name = name.toString() + ".json";
+    driveFile.name = name.toString() + "." + type;
     driveFile.parents = driveAppFolder;
     final result = await gDriveApi.files.create(driveFile, uploadMedia: media);
     print("Upload result: $result");

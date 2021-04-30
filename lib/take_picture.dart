@@ -1,16 +1,20 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:projectb/googleinterface.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription? camera;
+  final ValueChanged<File>? onCaptureImage;
 
   const TakePictureScreen({
     Key? key,
     @required this.camera,
+    this.onCaptureImage,
   }) : super(key: key);
 
   @override
@@ -78,16 +82,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             final image = await _controller!.takePicture();
 
             // If the picture was taken, display it on a new screen.
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
-                ),
-              ),
-            );
+            widget.onCaptureImage!(File(image.path));
+            Navigator.pop(context);
+            //Navigator.push(
+             // context,
+            //  MaterialPageRoute(
+            //    builder: (context) => DisplayPictureScreen(
+            //      // Pass the automatically generated path to
+            //      // the DisplayPictureScreen widget.
+            //      imagePath: image.path,
+             //   ),
+             // ),
+            //);
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
@@ -110,10 +116,42 @@ class DisplayPictureScreen extends StatelessWidget {
       appBar: AppBar(title: Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath!)),
+      body: ListView(
+        children: [
+          Image.file(File(imagePath!)),
+          ElevatedButton(
+            onPressed: () {
+              uploadToGoogle(File(imagePath!));
+            },
+            child: Text("Save to Google"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              saveToDevice(File(imagePath!), "TestPicture" + DateTime.now().toString());
+            },
+            child: Text("Save to Device"),
+          ),
+        ],
+      ),
     );
   }
+
+  Future<File> saveToDevice(File file, String fileName) async {
+
+    final appDirectory = await getApplicationDocumentsDirectory();
+    final appExternalDirectory = await getExternalStorageDirectory();
+    final String newPath = appExternalDirectory!.path + "/" + fileName + ".jpg";
+    final File localImage = await file.copy(newPath);
+    print(file.path);
+    print(localImage.path);
+    return localImage;
+  }
+
+  Future<File> uploadToGoogle(File file) async {
+    GoogleInterface googleInterface = GoogleInterface.instance;
+    await googleInterface.uploadFile(
+        file, "TESTPicture" + DateTime.now().toString(), "jpg");
+    print("Upload Complete");
+    return file;
+  }
 }
-
-
-

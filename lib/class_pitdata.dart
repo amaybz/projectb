@@ -1,4 +1,5 @@
 // @dart = 2.7
+import 'dart:io';
 
 class PitData {
   int id;
@@ -45,6 +46,9 @@ class PitData {
   String dtCreation;
   String dtModified;
   String txComputerName;
+  File imgTeamUniform;
+  File imgRobotFront;
+  File imgRobotSide;
 
   PitData({
     this.id = 0,
@@ -91,6 +95,9 @@ class PitData {
     this.dtCreation,
     this.dtModified,
     this.txComputerName,
+    this.imgRobotFront,
+    this.imgRobotSide,
+    this.imgTeamUniform,
   });
 
   Map<String, dynamic> toLocalDB() {
@@ -139,6 +146,9 @@ class PitData {
       'dtCreation': dtCreation.toString(),
       'dtModified': dtModified.toString(),
       'txComputerName': txComputerName,
+      'imgRobotFront': imgRobotFront.path,
+      'imgRobotSide': imgRobotSide.path,
+      'imgTeamUniform': imgTeamUniform.path,
     };
   }
 
@@ -150,33 +160,41 @@ class PitData {
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
     this.flCells = map['flCells'].toString().toLowerCase() == 'true';
-    this.flIntakeGround = map['flIntakeGround'].toString().toLowerCase() == 'true';
+    this.flIntakeGround =
+        map['flIntakeGround'].toString().toLowerCase() == 'true';
     this.flIntakeHigh = map['flIntakeHigh'].toString().toLowerCase() == 'true';
     this.numStorage = map['numStorage'];
     this.txShooting = map['txShooting'];
     this.flTargetLow = map['flTargetLow'].toString().toLowerCase() == 'true';
-    this.flTargetOuter = map['flTargetOuter'].toString().toLowerCase() == 'true';
-    this.flTargetInner = map['flTargetInner'].toString().toLowerCase() == 'true';
+    this.flTargetOuter =
+        map['flTargetOuter'].toString().toLowerCase() == 'true';
+    this.flTargetInner =
+        map['flTargetInner'].toString().toLowerCase() == 'true';
     this.flClimb = map['flClimb'].toString().toLowerCase() == 'true';
     this.idClimbType = map['idClimbType'];
     this.numClimbHeight = map['numClimbHeight'];
-    this.flClimbSecure = map['flClimbSecure'].toString().toLowerCase() == 'true';
+    this.flClimbSecure =
+        map['flClimbSecure'].toString().toLowerCase() == 'true';
     this.idClimbGrab = map['idClimbGrab'];
     this.idClimbSpeed = map['idClimbSpeed'];
     this.flClimbTilt = map['flClimbTilt'].toString().toLowerCase() == 'true';
     this.txClimb = map['txClimb'];
     this.idClimbPos = map['idClimbPos'];
     this.flClimbLevel = map['flClimbLevel'].toString().toLowerCase() == 'true';
-    this.flClimbLevelSelf = map['flClimbLevelSelf'].toString().toLowerCase() == 'true';
-    this.flClimbLevelOther = map['flClimbLevelOther'].toString().toLowerCase() == 'true';
+    this.flClimbLevelSelf =
+        map['flClimbLevelSelf'].toString().toLowerCase() == 'true';
+    this.flClimbLevelOther =
+        map['flClimbLevelOther'].toString().toLowerCase() == 'true';
     this.flClimbMove = map['flClimbMove'].toString().toLowerCase() == 'true';
     this.flClimbOther = map['flClimbOther'].toString().toLowerCase() == 'true';
     this.numClimbOther = map['numClimbOther'];
     this.flPanel = map['flPanel'].toString().toLowerCase() == 'true';
     this.flPanelBrake = map['flPanelBrake'].toString().toLowerCase() == 'true';
-    this.flPanelRotation = map['flPanelRotation'].toString().toLowerCase() == 'true';
+    this.flPanelRotation =
+        map['flPanelRotation'].toString().toLowerCase() == 'true';
     this.flPanelPos = map['flPanelPos'].toString().toLowerCase() == 'true';
-    this.flPanelSensor = map['flPanelSensor'].toString().toLowerCase() == 'true';
+    this.flPanelSensor =
+        map['flPanelSensor'].toString().toLowerCase() == 'true';
     this.txPanelSensor = map['txPanelSensor'];
     this.flAuto = map['flAuto'].toString().toLowerCase() == 'true';
     this.flAutoLine = map['flAutoLine'].toString().toLowerCase() == 'true';
@@ -187,7 +205,9 @@ class PitData {
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
-
+    this.imgRobotFront = File(map['imgRobotFront']);
+    this.imgRobotSide = File(map['imgRobotSide']);
+    this.imgTeamUniform = File(map['imgTeamUniform']);
   }
 
   Map<String, dynamic> toMap() {
@@ -236,6 +256,9 @@ class PitData {
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
     data['txComputerName'] = this.txComputerName;
+    data['imgRobotFront'] = this.imgRobotFront.path;
+    data['imgRobotSide'] = this.imgRobotSide.path;
+    data['imgTeamUniform'] = this.imgTeamUniform.path;
     return data;
   }
 
@@ -284,5 +307,8 @@ class PitData {
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
+    this.imgRobotFront = File(map['imgRobotFront']);
+    this.imgRobotSide = File(map['imgRobotSide']);
+    this.imgTeamUniform = File(map['imgTeamUniform']);
   }
 }

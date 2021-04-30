@@ -410,13 +410,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 _navigateToAddTeamScreen(context);
               },
             ),
-            //ListTile(
-            //  title: Text('CameraTesting'),
-            //  onTap: () {
-            //   Navigator.pop(context);
-            //    _navigateToCamera(context);
-            // },
-            //),
+            ListTile(
+              title: Text('CameraTesting'),
+              onTap: () {
+               Navigator.pop(context);
+                _navigateToCamera(context);
+             },
+            ),
           ],
         ),
       ),
@@ -653,6 +653,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
+              camera: widget.camera,
                 deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
               )),

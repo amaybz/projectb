@@ -1,6 +1,5 @@
 // @dart = 2.7
 import 'package:flutter/material.dart';
-import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/widget_counter.dart';

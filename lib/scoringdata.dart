@@ -119,7 +119,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         "MATCH_" +
             matchScoutingData.numMatch.toString() +
             " " +
-            matchScoutingData.idTeam.toString()+ " - " + DateTime.now().toString());
+            matchScoutingData.idTeam.toString()+ " - " + DateTime.now().toString(), "json");
     print("Upload Complete");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
@@ -135,8 +135,14 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     File newFile = await file.writeAsString(dataToWrite.toString());
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
-        newFile, "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString());
-    print("Upload Complete");
+        newFile, "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(), "json");
+    print("Upload Complete: JSON");
+    await googleInterface.uploadFile(
+        pitData.imgTeamUniform, "PIT_TeamUniform" + pitData.idTeam.toString() + DateTime.now().toString(), "jpg");
+    await googleInterface.uploadFile(
+        pitData.imgRobotSide, "PIT_RobotSide" + pitData.idTeam.toString() + DateTime.now().toString(), "jpg");
+    await googleInterface.uploadFile(
+        pitData.imgRobotFront, "PIT_RobotFront" + pitData.idTeam.toString() + DateTime.now().toString(), "jpg");
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
     return newFile;

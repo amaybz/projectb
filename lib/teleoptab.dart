@@ -93,8 +93,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   //final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
   final List<DropDownValue> listSuccessFailNA = [
     DropDownValue(id: "1" , value: "NA"),
-    DropDownValue(id: "2" , value: "Success"),
-    DropDownValue(id: "3" , value: "Fail"),
+    DropDownValue(id: "2" , value: "Fail"),
+    DropDownValue(id: "3" , value: "Success"),
   ];
 
   final List<DropDownValue> listTime = [

@@ -56,6 +56,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   MatchScoutingData matchScoutingData = MatchScoutingData();
 
   final List<String> _listStartingCells = [
+    '0',
     '1',
     '2',
     '3',

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/widget_headingmain.dart';
+import 'package:projectb/widget_dropdown_indexed.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(
@@ -56,18 +57,18 @@ class RatingsTab extends StatefulWidget {
 
 class _RatingsTabState extends State<RatingsTab> {
   //lists
-  final List<String> listRatings = [
-    'Terrible',
-    'Average',
-    'Good',
-    'Amazing',
+  final List<DropDownValue> listRatings = [
+    DropDownValue(id: "1" , value: "Terrible"),
+    DropDownValue(id: "2" , value: "Average"),
+    DropDownValue(id: "3" , value: "Good"),
+    DropDownValue(id: "4" , value: "Amazing"),
   ];
 
-  final List<String> listRatingsDefence = [
-    'N/A',
-    'Weak',
-    'Harassment',
-    'Game Changing',
+  final List<DropDownValue> listRatingsDefence = [
+    DropDownValue(id: "1" , value: "N/A"),
+    DropDownValue(id: "2" , value: "Weak"),
+    DropDownValue(id: "3" , value: "Harassment"),
+    DropDownValue(id: "4" , value: "Game Changing"),
   ];
 
   final TextEditingController _txtComments = TextEditingController();
@@ -116,10 +117,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       "Drive Rating:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                       value: widget.matchScoutingData.commIdDriveRating,
                       title: null,
-                      list: listRatings,
+                      dropDownValues: listRatings,
                       onStateChanged: (String value) {
                         setState(
                           () {
@@ -137,10 +138,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       "Defence Rating:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
-                    DropDownWidget(
+                    DropDownIndexedWidget(
                       value: widget.matchScoutingData.commIdDefenceRating,
                       title: null,
-                      list: listRatingsDefence,
+                      dropDownValues: listRatingsDefence,
                       onStateChanged: (String value) {
                         setState(
                           () {

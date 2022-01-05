@@ -53,11 +53,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txPitNotes = TextEditingController();
   final TextEditingController txWeight = TextEditingController();
   final TextEditingController txHeight = TextEditingController();
+  final TextEditingController numClimbHeight = TextEditingController();
   File imgPitTeamShirt;
   File imgPitRobotFront;
   File imgPitRobotSide;
   LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
+
 
   @override
   void initState() {
@@ -65,6 +67,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     // Call the getJSONData() method when the app initializes
     //_getScoringData();
     setEventTeams(14);
+    numClimbHeight.text = "0";
   }
 
   setEventTeams(double styleFontSize) async {
@@ -230,6 +233,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
     pitData.txShooting = txShooting.text;
+    pitData.numClimbHeight = int.parse(numClimbHeight.text);
     if (pitData.imgTeamUniform == null) return false;
     if (pitData.imgRobotSide == null) return false;
     if (pitData.imgRobotFront == null) return false;
@@ -447,7 +451,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 decoration: InputDecoration(
-                                  labelText: "Weight",
+                                  labelText: "Weight (lbs)",
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -468,7 +472,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 decoration: InputDecoration(
-                                  labelText: "Height",
+                                  labelText: "Height(inchs)",
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -495,6 +499,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               PitClimb(
                 pitData: pitData,
                 txClimb: txClimb,
+                numClimbHeight: numClimbHeight,
                 styleFieldTxClimbMaxWidth: styleFieldTxClimbMaxWidth,
                 onChanged: (PitData updates) {
                   setState(() {

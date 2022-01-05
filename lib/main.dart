@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _downloadingText = "Please select Location and Event to download data";
   String txtEventHelpText = "Please choose a event";
   String? locationDropDown;
-  String selectedYear = "2021";
+  String selectedYear = "2022";
   final List<String> _locations = [
     'Australia',
     'Canada',
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
     'Local',
   ];
 
-  final List<String> _year = ['2020', '2021'];
+  final List<String> _year = ['2020', '2021', '2022'];
 
   //used to store all events from API
   List<EventData>? allEvents;
@@ -142,12 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void refreshLocalTeamsCount() async
-  {
+  void refreshLocalTeamsCount() async {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
     setState(() {
       _countOfTeams =
-      listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
   }
 
@@ -294,12 +293,10 @@ class _MyHomePageState extends State<MyHomePage> {
     eventsList.clear();
     eventsForLocation!.forEach((i) {
       if (i.shortName != null && i.shortName != "") {
-          eventsList.add(EventsList(name: i.shortName, key: i.key));
-        }
-      else {
+        eventsList.add(EventsList(name: i.shortName, key: i.key));
+      } else {
         eventsList.add(EventsList(name: i.name, key: i.key));
-        }
-
+      }
     });
 
     if (eventsList.length == 0) {
@@ -608,10 +605,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.pop on the Selection Screen.
     List<LocalTeam> teams = await localDB.listLocalTeams();
     String eventName = "";
-    if (selectedLocalEvent!.shortName != null && selectedLocalEvent!.shortName != "") {
+    if (selectedLocalEvent!.shortName != null &&
+        selectedLocalEvent!.shortName != "") {
       eventName = selectedLocalEvent!.shortName;
-    }
-    else {
+    } else {
       eventName = selectedLocalEvent!.name;
     }
     final result = await Navigator.push(
@@ -633,10 +630,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.pop on the Selection Screen.
     List<LocalTeam> teams = await localDB.listLocalTeams();
     String eventName = "";
-    if (selectedLocalEvent!.shortName != null && selectedLocalEvent!.shortName != "") {
+    if (selectedLocalEvent!.shortName != null &&
+        selectedLocalEvent!.shortName != "") {
       eventName = selectedLocalEvent!.shortName;
-    }
-    else {
+    } else {
       eventName = selectedLocalEvent!.name;
     }
     final result = await Navigator.push(
@@ -646,13 +643,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
-              camera: widget.camera,
+                camera: widget.camera,
                 deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
               )),
     );
   }
-
 
   _navigateToQRReaderScreen(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling

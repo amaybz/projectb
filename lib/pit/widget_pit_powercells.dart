@@ -142,7 +142,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Lower):",
+                    "Score (Lower):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -159,7 +159,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Outer):",
+                    "Score (Outer):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -176,7 +176,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Inner):",
+                    "Score (Inner):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -216,7 +216,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Shooting Mechanism: ",
+                    "Delivery Mechanism: ",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   ConstrainedBox(

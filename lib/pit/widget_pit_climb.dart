@@ -1,6 +1,7 @@
 // @dart = 2.7
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
@@ -15,6 +16,7 @@ class PitClimb extends StatefulWidget {
     this.styleFieldTxClimbMaxWidth = 300,
     this.onChanged,
     this.txClimb,
+   @required this.numClimbHeight,
     this.onExpanded
   }) : super(key: key);
 
@@ -25,6 +27,7 @@ class PitClimb extends StatefulWidget {
   final ValueChanged<PitData> onChanged;
   final ValueChanged<bool> onExpanded;
   final TextEditingController txClimb;
+  final TextEditingController numClimbHeight;
 
   @override
   _PitClimbState createState() => _PitClimbState();
@@ -33,9 +36,9 @@ class PitClimb extends StatefulWidget {
 class _PitClimbState extends State<PitClimb> {
   List<DropdownMenuItem<String>> ddsSpeed = [
     DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Slow")),
-    DropdownMenuItem(value: "3", child: Text("Med")),
-    DropdownMenuItem(value: "4", child: Text("Fast")),
+    DropdownMenuItem(value: "2", child: Text("Slow (> 7 Secs)")),
+    DropdownMenuItem(value: "3", child: Text("Medium (3-7 Secs)")),
+    DropdownMenuItem(value: "4", child: Text("Fast <3 Secs")),
   ];
 
   List<DropdownMenuItem<String>> ddsPosition = [
@@ -51,8 +54,11 @@ class _PitClimbState extends State<PitClimb> {
     DropdownMenuItem(value: "2", child: Text("Flexible")),
   ];
 
+
+
   @override
   Widget build(BuildContext context) {
+
     if (widget.pitData.flClimb == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
@@ -148,36 +154,30 @@ class _PitClimbState extends State<PitClimb> {
                 ],
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Height:"),
-                CounterWidget(
-                  title: "",
-                  value: widget.pitData.numClimbHeight,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbHeight++;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    PitData newPitData = widget.pitData;
-                    setState(() {
-                      newPitData.numClimbHeight--;
-                      widget.onChanged(newPitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbHeight = value;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
+                Text("Height Above Ground (inches):"),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxWidth: 60),
+                  child: TextField(
+                    controller: widget.numClimbHeight,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                        hintText: 'inchs'),
+                    onChanged: (String text) {
+                      setState(() {
+                        widget.pitData.txClimb = text;
+                        widget.onChanged(widget.pitData);
+                      });
+                    },
+                  ),
                 ),
               ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Secure Hold?:",
+                    "Powered Grip?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -241,7 +241,7 @@ class _PitClimbState extends State<PitClimb> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Tilting?:",
+                    "Climb a tilted bar?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -305,7 +305,7 @@ class _PitClimbState extends State<PitClimb> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Level Generator:",
+                    "Can level Generator?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -323,7 +323,7 @@ class _PitClimbState extends State<PitClimb> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Level (Self):",
+                    "Can level by self?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -341,7 +341,7 @@ class _PitClimbState extends State<PitClimb> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Level (Other):",
+                    "Can level with others?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(

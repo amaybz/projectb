@@ -32,6 +32,8 @@ class PitControlPanel extends StatefulWidget {
 }
 
 class _PitControlPanelState extends State<PitControlPanel> {
+
+
   @override
   Widget build(BuildContext context) {
     if (widget.pitData.flPanel == false) {
@@ -108,7 +110,7 @@ class _PitControlPanelState extends State<PitControlPanel> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Brakes?:",
+                    "Controlled movement?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(

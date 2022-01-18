@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/widget_headingmain.dart';
-import 'package:projectb/pit/widget_pit_controlpenal.dart';
+//import 'package:projectb/pit/widget_pit_controlpenal.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
@@ -53,7 +53,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txPitNotes = TextEditingController();
   final TextEditingController txWeight = TextEditingController();
   final TextEditingController txHeight = TextEditingController();
+  final TextEditingController txWidth = TextEditingController();
   final TextEditingController numClimbHeight = TextEditingController();
+  final TextEditingController numClimbWidth = TextEditingController();
   File imgPitTeamShirt;
   File imgPitRobotFront;
   File imgPitRobotSide;
@@ -159,6 +161,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       txClimb.text = "";
       txHeight.text = "0";
       txWeight.text = "0";
+      txWidth.text = "0";
+      numClimbHeight.text = "0";
+      numClimbWidth.text = "0";
     });
     print("Pit Cleared");
   }
@@ -232,7 +237,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
     pitData.txShooting = txShooting.text;
-    pitData.numClimbHeight = int.parse(numClimbHeight.text);
     if (pitData.imgTeamUniform == null) return false;
     if (pitData.imgRobotSide == null) return false;
     if (pitData.imgRobotFront == null) return false;
@@ -249,6 +253,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     } catch (e) {
       pitData.numHeight = 0;
       print("Error Converting txHeight: " + e.toString());
+    }
+
+    try {
+      pitData.numWidth = int.parse(txWidth.text);
+    } catch (e) {
+      pitData.numWidth = 0;
+      print("Error Converting txWidth: " + e.toString());
     }
 
     //insert Pit Record
@@ -439,7 +450,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
-                              width: 150,
+                              width: 100,
                               height: 58,
                               child: TextField(
                                 style:
@@ -460,7 +471,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
-                              width: 150,
+                              width: 100,
                               height: 58,
                               child: TextField(
                                 style:
@@ -472,6 +483,27 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Height(inchs)",
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 100,
+                              height: 58,
+                              child: TextField(
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
+                                controller: txWidth,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Width (inchs)",
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -499,23 +531,11 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 pitData: pitData,
                 txClimb: txClimb,
                 numClimbHeight: numClimbHeight,
+                numClimbWidth: numClimbWidth,
                 styleFieldTxClimbMaxWidth: styleFieldTxClimbMaxWidth,
                 onChanged: (PitData updates) {
                   setState(() {
                     pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(180) : scrollDown(0);
-                },
-              ),
-              PitControlPanel(
-                pitData: pitData,
-                txPanelSensor: txPanelSensor,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                    print("Pit_Climb: Updated to Parent");
                   });
                 },
                 onExpanded: (value) {

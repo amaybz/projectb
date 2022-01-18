@@ -10,7 +10,7 @@ import 'package:projectb/class_macthscoutingdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 27;
+  static final _databaseVersion = 28;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -130,8 +130,8 @@ class LocalDB {
       'idClimbPos TEXT,'
       'flClimbMove TEXT,'
       'txClimb TEXT,'
-      'flClimbTransistion TEXT,'
-      'idTransistion TEXT,'
+      'flClimbTransition TEXT,'
+      'idTransition TEXT,'
       'idTransitionSpeed TEXT,'
       'flHuman TEXT,'
       'intHumanAccuracy INTEGER,'

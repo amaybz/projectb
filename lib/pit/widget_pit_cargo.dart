@@ -142,6 +142,40 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
+                    "Bounce Intake:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flIntakeBounce,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flIntakeBounce = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Reject Cargo:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flIntakeSort,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flIntakeSort = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     "Hub (Lower):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),

@@ -6,7 +6,6 @@ import 'package:projectb/widget_row_heading.dart';
 import 'package:projectb/widget_counter.dart';
 
 class PitAuto extends StatefulWidget {
-
   PitAuto({
     Key key,
     @required this.pitData,
@@ -66,8 +65,7 @@ class _PitAutoState extends State<PitAuto> {
           ),
         ),
       );
-    }
-    else {
+    } else {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -112,6 +110,24 @@ class _PitAutoState extends State<PitAuto> {
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flAutoLine = value;
+                        widget.onChanged(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sort Cargo?:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flAutoSort,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flAutoSort = value;
                         widget.onChanged(widget.pitData);
                       });
                     },

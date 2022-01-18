@@ -10,6 +10,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -52,7 +53,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     DropDownValue(id: "2", value: "Blue")
   ];
 
-
   MatchScoutingData matchScoutingData = MatchScoutingData();
 
   final List<String> _listStartingCells = [
@@ -68,7 +68,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     DropDownValue(id: "1", value: "Own Station"),
     DropDownValue(id: "2", value: "Opponent Station")
   ];
-
 
   final List<DropDownValue> _listRobotPosition = [
     DropDownValue(id: "1", value: "Trench"),
@@ -488,7 +487,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   matchScoutingData.idDriveStation = newValue;
                                   print(matchScoutingData.idDriveStation);
                                 });
-                             }),
+                              }),
                         ]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -505,9 +504,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             //title: "Team",
                             items: eventTeamsListDropDown,
                             onChanged: (item) {
-
                               setState(() {
-
                                 selectedTeam = widget.eventTeams!.firstWhere(
                                     (team) => team.key == item,
                                     orElse: () => widget.eventTeams!.first);

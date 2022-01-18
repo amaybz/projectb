@@ -8,17 +8,17 @@ import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_row_heading.dart';
 
 class PitClimb extends StatefulWidget {
-  PitClimb({
-    Key key,
-    @required this.pitData,
-    this.styleFontSize = 16,
-    this.styleFontSizeHeadings = 18,
-    this.styleFieldTxClimbMaxWidth = 300,
-    this.onChanged,
-    this.txClimb,
-   @required this.numClimbHeight,
-    this.onExpanded
-  }) : super(key: key);
+  PitClimb(
+      {Key key,
+      @required this.pitData,
+      this.styleFontSize = 16,
+      this.styleFontSizeHeadings = 18,
+      this.styleFieldTxClimbMaxWidth = 300,
+      this.onChanged,
+      this.txClimb,
+      @required this.numClimbHeight,
+      this.onExpanded})
+      : super(key: key);
 
   final PitData pitData;
   final double styleFontSize;
@@ -54,11 +54,8 @@ class _PitClimbState extends State<PitClimb> {
     DropdownMenuItem(value: "2", child: Text("Flexible")),
   ];
 
-
-
   @override
   Widget build(BuildContext context) {
-
     if (widget.pitData.flClimb == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
@@ -129,7 +126,6 @@ class _PitClimbState extends State<PitClimb> {
                   });
                 },
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,14 +152,12 @@ class _PitClimbState extends State<PitClimb> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("Height Above Ground (inches):"),
                 ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxWidth: 60),
+                  constraints: BoxConstraints(maxWidth: 60),
                   child: TextField(
                     controller: widget.numClimbHeight,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                        hintText: 'inchs'),
+                    decoration: InputDecoration(hintText: 'inchs'),
                     onChanged: (String text) {
                       setState(() {
                         widget.pitData.txClimb = text;
@@ -260,7 +254,7 @@ class _PitClimbState extends State<PitClimb> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Climb Mechanism: ",
+                      "Mechanism: ",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     ConstrainedBox(

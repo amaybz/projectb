@@ -8,17 +8,21 @@ class PitData {
   String txScoutName;
   int numWeight;
   int numHeight;
-  bool flCells;
+  int numWidth;
+  bool flCargo;
   bool flIntakeGround;
   bool flIntakeHigh;
+  bool flIntakeBounce;
+  bool flIntakeSort;
   int numStorage;
   String txShooting;
   bool flTargetLow;
-  bool flTargetOuter;
-  bool flTargetInner;
+  bool flTargetUpper;
+  bool flTargetTerminal;
   bool flClimb;
   String idClimbType;
   int numClimbHeight;
+  int numClimbWidth;
   bool flClimbSecure;
   String idClimbGrab;
   String idClimbSpeed;
@@ -31,6 +35,11 @@ class PitData {
   bool flClimbMove;
   bool flClimbOther;
   int numClimbOther;
+  bool flClimbTransition;
+  String idTransition;
+  String idTransitionSpeed;
+  bool flHuman;
+  int intHumanAccuracy;
   bool flPanel;
   bool flPanelBrake;
   bool flPanelRotation;
@@ -40,6 +49,7 @@ class PitData {
   bool flAuto;
   bool flAutoLine;
   bool flAutoShoot;
+  bool flAutoSort;
   int numAutoShoot;
   int numAutoLoad;
   String txPitNotes;
@@ -57,14 +67,14 @@ class PitData {
     this.txScoutName,
     this.numWeight = 0,
     this.numHeight = 0,
-    this.flCells = false,
+    this.flCargo = false,
     this.flIntakeGround = false,
     this.flIntakeHigh = false,
     this.numStorage = 0,
     this.txShooting,
     this.flTargetLow = false,
-    this.flTargetOuter = false,
-    this.flTargetInner = false,
+    this.flTargetUpper = false,
+    this.flTargetTerminal = false,
     this.flClimb = false,
     this.idClimbType,
     this.numClimbHeight = 0,
@@ -108,14 +118,14 @@ class PitData {
       'txScoutName': txScoutName,
       'numWeight': numWeight,
       'numHeight': numHeight,
-      'flCells': flCells.toString(),
+      'flCargo': flCargo.toString(),
       'flIntakeGround': flIntakeGround.toString(),
       'flIntakeHigh': flIntakeHigh.toString(),
       'numStorage': numStorage,
       'txShooting': txShooting,
       'flTargetLow': flTargetLow.toString(),
-      'flTargetOuter': flTargetOuter.toString(),
-      'flTargetInner': flTargetInner.toString(),
+      'flTargetUpper': flTargetUpper.toString(),
+      'flTargetTerminal': flTargetTerminal.toString(),
       'flClimb': flClimb.toString(),
       'idClimbType': idClimbType,
       'numClimbHeight': numClimbHeight,
@@ -159,17 +169,17 @@ class PitData {
     this.txScoutName = map['txScoutName'];
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
-    this.flCells = map['flCells'].toString().toLowerCase() == 'true';
+    this.flCargo = map['flCargo'].toString().toLowerCase() == 'true';
     this.flIntakeGround =
         map['flIntakeGround'].toString().toLowerCase() == 'true';
     this.flIntakeHigh = map['flIntakeHigh'].toString().toLowerCase() == 'true';
     this.numStorage = map['numStorage'];
     this.txShooting = map['txShooting'];
     this.flTargetLow = map['flTargetLow'].toString().toLowerCase() == 'true';
-    this.flTargetOuter =
-        map['flTargetOuter'].toString().toLowerCase() == 'true';
-    this.flTargetInner =
-        map['flTargetInner'].toString().toLowerCase() == 'true';
+    this.flTargetUpper =
+        map['flTargetUpper'].toString().toLowerCase() == 'true';
+    this.flTargetTerminal =
+        map['flTargetTerminal'].toString().toLowerCase() == 'true';
     this.flClimb = map['flClimb'].toString().toLowerCase() == 'true';
     this.idClimbType = map['idClimbType'];
     this.numClimbHeight = map['numClimbHeight'];
@@ -218,14 +228,14 @@ class PitData {
     data['txScoutName'] = this.txScoutName;
     data['numWeight'] = this.numWeight;
     data['numHeight'] = this.numHeight;
-    data['flCells'] = this.flCells;
+    data['flCargo'] = this.flCargo;
     data['flIntakeGround'] = this.flIntakeGround;
     data['flIntakeHigh'] = this.flIntakeHigh;
     data['numStorage'] = this.numStorage;
     data['txShooting'] = this.txShooting;
     data['flTargetLow'] = this.flTargetLow;
-    data['flTargetOuter'] = this.flTargetOuter;
-    data['flTargetInner'] = this.flTargetInner;
+    data['flTargetUpper'] = this.flTargetUpper;
+    data['flTargetTerminal'] = this.flTargetTerminal;
     data['flClimb'] = this.flClimb;
     data['idClimbType'] = this.idClimbType;
     data['numClimbHeight'] = this.numClimbHeight;
@@ -269,14 +279,14 @@ class PitData {
     this.txScoutName = map['txScoutName'];
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
-    this.flCells = map['flCells'];
+    this.flCargo = map['flCargo'];
     this.flIntakeGround = map['flIntakeGround'];
     this.flIntakeHigh = map['flIntakeHigh'];
     this.numStorage = map['numStorage'];
     this.txShooting = map['txShooting'];
     this.flTargetLow = map['flTargetLow'];
-    this.flTargetOuter = map['flTargetOuter'];
-    this.flTargetInner = map['flTargetInner'];
+    this.flTargetUpper = map['flTargetUpper'];
+    this.flTargetTerminal = map['flTargetTerminal'];
     this.flClimb = map['flClimb'];
     this.idClimbType = map['idClimbType'];
     this.numClimbHeight = map['numClimbHeight'];

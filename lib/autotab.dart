@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/widget_counter.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
@@ -329,33 +330,34 @@ class _AutoTabState extends State<AutoTab> {
                   ),
                 ],
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                Container(
-                  child: Text("Pickup new cells?"),
-                ),
-                CounterWidget(
-                  title: "",
-                  value: widget.matchScoutingData.autoNumCellLoad,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.matchScoutingData.autoNumCellLoad++;
-                      widget.onChanged(widget.matchScoutingData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.matchScoutingData.autoNumCellLoad--;
-                      widget.onChanged(widget.matchScoutingData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    widget.matchScoutingData.autoNumCellLoad = value;
-                    widget.onChanged(widget.matchScoutingData);
-                  },
-                ),
-              ]),
+                    Container(
+                      child: Text("Pickup new cells?"),
+                    ),
+                    CounterWidget(
+                      title: "",
+                      value: widget.matchScoutingData.autoNumCellLoad,
+                      onIncreaseStateChanged: (int value) {
+                        setState(() {
+                          widget.matchScoutingData.autoNumCellLoad++;
+                          widget.onChanged(widget.matchScoutingData);
+                        });
+                      },
+                      onDecreaseStateChanged: (int value) {
+                        setState(() {
+                          widget.matchScoutingData.autoNumCellLoad--;
+                          widget.onChanged(widget.matchScoutingData);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        widget.matchScoutingData.autoNumCellLoad = value;
+                        widget.onChanged(widget.matchScoutingData);
+                      },
+                    ),
+                  ]),
             ]),
           ),
         ),

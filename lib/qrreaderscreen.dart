@@ -7,7 +7,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:projectb/class_pitdata.dart';
 import 'dart:convert';
 import 'package:projectb/localdb.dart';
-
+import 'package:projectb/class_macthscoutingdata.dart';
 
 class QRReaderScreen extends StatefulWidget {
   @override
@@ -36,10 +36,10 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       print("PitData ID: " + pitData.id.toString());
       print("PitData event: " + pitData.txEvent.toString());
       pitData.id = null;
-      status = (await localDB.insertPitData(pitData) > 0 )? "Record Saved" : "Failed to Save Record";
-      setState(() {
-
-      });
+      status = (await localDB.insertPitData(pitData) > 0)
+          ? "Record Saved"
+          : "Failed to Save Record";
+      setState(() {});
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         setState(() {
@@ -50,7 +50,7 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       }
     } on FormatException {
       setState(() => this.barcode =
-      'null (User returned using the "back"-button before scanning anything. Result)');
+          'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
       setState(() => this.barcode = 'Unknown error: $e');
     }
@@ -66,10 +66,10 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       print("matchScoutingData ID: " + matchScoutingData.id.toString());
       print("matchScoutingData Team: " + matchScoutingData.idTeam);
       matchScoutingData.id = null;
-      status = (await localDB.insertScoringData(matchScoutingData) > 0 )? "Record Saved" : "Failed to Save Record";
-      setState(() {
-
-      });
+      status = (await localDB.insertScoringData(matchScoutingData) > 0)
+          ? "Record Saved"
+          : "Failed to Save Record";
+      setState(() {});
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.cameraAccessDenied) {
         setState(() {
@@ -80,7 +80,7 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
       }
     } on FormatException {
       setState(() => this.barcode =
-      'null (User returned using the "back"-button before scanning anything. Result)');
+          'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
       setState(() => this.barcode = 'Unknown error: $e');
     }
@@ -134,4 +134,3 @@ class _QRReaderScreenState extends State<QRReaderScreen> {
         ));
   }
 }
-

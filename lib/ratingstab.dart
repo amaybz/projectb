@@ -4,6 +4,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(
@@ -58,17 +59,17 @@ class RatingsTab extends StatefulWidget {
 class _RatingsTabState extends State<RatingsTab> {
   //lists
   final List<DropDownValue> listRatings = [
-    DropDownValue(id: "1" , value: "Terrible"),
-    DropDownValue(id: "2" , value: "Average"),
-    DropDownValue(id: "3" , value: "Good"),
-    DropDownValue(id: "4" , value: "Amazing"),
+    DropDownValue(id: "1", value: "Terrible"),
+    DropDownValue(id: "2", value: "Average"),
+    DropDownValue(id: "3", value: "Good"),
+    DropDownValue(id: "4", value: "Amazing"),
   ];
 
   final List<DropDownValue> listRatingsDefence = [
-    DropDownValue(id: "1" , value: "N/A"),
-    DropDownValue(id: "2" , value: "Weak"),
-    DropDownValue(id: "3" , value: "Harassment"),
-    DropDownValue(id: "4" , value: "Game Changing"),
+    DropDownValue(id: "1", value: "N/A"),
+    DropDownValue(id: "2", value: "Weak"),
+    DropDownValue(id: "3", value: "Harassment"),
+    DropDownValue(id: "4", value: "Game Changing"),
   ];
 
   final TextEditingController _txtComments = TextEditingController();
@@ -177,8 +178,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget
-                          .matchScoutingData.commFlAlliance,
+                      value: widget.matchScoutingData.commFlAlliance,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onWorkedWithAllianceChanged(value);
@@ -195,8 +195,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget
-                          .matchScoutingData.commFlStrategy,
+                      value: widget.matchScoutingData.commFlStrategy,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onWorkedToStrategyChanged(value);
@@ -454,16 +453,16 @@ class _RatingsTabState extends State<RatingsTab> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                        Text(
-                          "Highlight Team:",
-                          style: TextStyle(fontSize: widget.styleFontSize),
-                        ),
-                        Text(
-                          "(Consider Regardless of performance)",
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ],),
+                          Text(
+                            "Highlight Team:",
+                            style: TextStyle(fontSize: widget.styleFontSize),
+                          ),
+                          Text(
+                            "(Consider Regardless of performance)",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
                       Switch(
                         value: widget.matchScoutingData.commFlHighlight,
                         onChanged: (bool value) {
@@ -481,7 +480,6 @@ class _RatingsTabState extends State<RatingsTab> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Text(
                             "Warning:",
                             style: TextStyle(fontSize: widget.styleFontSize),
@@ -490,7 +488,8 @@ class _RatingsTabState extends State<RatingsTab> {
                             "(Scout Team Futher before Considering)",
                             style: TextStyle(fontSize: 10),
                           ),
-                        ],),
+                        ],
+                      ),
                       Switch(
                         value: widget.matchScoutingData.commFlWarning,
                         onChanged: (bool value) {

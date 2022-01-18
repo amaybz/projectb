@@ -5,6 +5,7 @@ import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/widget_counter.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
@@ -92,30 +93,30 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   //lists
   //final List<String> listSuccessFailNA = ['NA', 'Success', 'Fail'];
   final List<DropDownValue> listSuccessFailNA = [
-    DropDownValue(id: "1" , value: "NA"),
-    DropDownValue(id: "2" , value: "Fail"),
-    DropDownValue(id: "3" , value: "Success"),
+    DropDownValue(id: "1", value: "NA"),
+    DropDownValue(id: "2", value: "Fail"),
+    DropDownValue(id: "3", value: "Success"),
   ];
 
   final List<DropDownValue> listTime = [
-    DropDownValue(id: "1" , value: "NA"),
-    DropDownValue(id: "2" , value: "Slow (> 7 Secs)"),
-    DropDownValue(id: "3" , value: "Medium (3-7 Secs)"),
-    DropDownValue(id: "4" , value: "Fast <3 Secs"),
+    DropDownValue(id: "1", value: "NA"),
+    DropDownValue(id: "2", value: "Slow (> 7 Secs)"),
+    DropDownValue(id: "3", value: "Medium (3-7 Secs)"),
+    DropDownValue(id: "4", value: "Fast <3 Secs"),
   ];
 
   final List<DropDownValue> listOutcomes = [
-    DropDownValue(id: "1" , value: "NA"),
-    DropDownValue(id: "2" , value: "Self"),
-    DropDownValue(id: "3" , value: "Self + Others"),
-    DropDownValue(id: "4" , value: "Others"),
+    DropDownValue(id: "1", value: "NA"),
+    DropDownValue(id: "2", value: "Self"),
+    DropDownValue(id: "3", value: "Self + Others"),
+    DropDownValue(id: "4", value: "Others"),
   ];
 
   final List<DropDownValue> listPositions = [
-    DropDownValue(id: "1" , value: "NA"),
-    DropDownValue(id: "2" , value: "Inner"),
-    DropDownValue(id: "3" , value: "Middle"),
-    DropDownValue(id: "4" , value: "Outer"),
+    DropDownValue(id: "1", value: "NA"),
+    DropDownValue(id: "2", value: "Inner"),
+    DropDownValue(id: "3", value: "Middle"),
+    DropDownValue(id: "4", value: "Outer"),
   ];
 
   //style
@@ -159,8 +160,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       widget.onCPPanelAttemptsChanged(intPenalAttempts);
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -266,7 +265,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                                     }),
                               ]),
                           DropDownIndexedWidget(
-                            value: widget.matchScoutingData.teleIdPanelRotationTime,
+                            value: widget
+                                .matchScoutingData.teleIdPanelRotationTime,
                             title: "Time Taken",
                             dropDownValues: listTime,
                             styleFieldWidth: styleTimeTakenWidth,
@@ -328,8 +328,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                               ]),
                           Row(children: [
                             DropDownIndexedWidget(
-                              value:
-                                  widget.matchScoutingData.teleIdPanelPositionTime,
+                              value: widget
+                                  .matchScoutingData.teleIdPanelPositionTime,
                               title: "Time Taken",
                               dropDownValues: listTime,
                               styleFieldWidth: styleTimeTakenWidth,
@@ -419,8 +419,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownIndexedWidget(
-                      value:
-                          widget.matchScoutingData.teleIdClimbTime,
+                      value: widget.matchScoutingData.teleIdClimbTime,
                       title: "Time from Grip to Climb",
                       dropDownValues: listTime,
                       styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -441,8 +440,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                           });
                         }),
                     DropDownIndexedWidget(
-                        value:
-                            widget.matchScoutingData.teleIdClimbPos,
+                        value: widget.matchScoutingData.teleIdClimbPos,
                         title: "Preferred Position",
                         dropDownValues: listPositions,
                         styleFieldWidth: styleFieldControlPanelDropDownsWidth,
@@ -453,7 +451,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         }),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center  ,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text("Buddies:"),
                         CounterWidget(
@@ -478,13 +476,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         ),
                       ],
                     ),
-
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Balance:"),
                           Switch(
-                              value: widget.matchScoutingData.teleFlClimbBalance,
+                              value:
+                                  widget.matchScoutingData.teleFlClimbBalance,
                               onChanged: (bool value) {
                                 setState(() {
                                   widget.onEndgameBalanceChanged(value);

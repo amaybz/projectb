@@ -11,7 +11,7 @@ import 'dart:async';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/pit/widget_pit_climb.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/pit/widget_pit_powercells.dart';
+import 'package:projectb/pit/widget_pit_cargo.dart';
 import 'package:projectb/pit/widget_pit_auto.dart';
 import 'package:projectb/pit/widget_pit_images.dart';
 import 'dart:io';
@@ -59,7 +59,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   File imgPitRobotSide;
   LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
-
 
   @override
   void initState() {
@@ -577,44 +576,40 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-
-
-                  PitImages(
-                    title: "Team Shirt",
-                    camera: widget.camera,
-                    onCapture: (newImage) {
-                      setState(() {
-                        pitData.imgTeamUniform = newImage;
-                      });
-                    },
-                    image: pitData.imgTeamUniform,
-                  ),
-                  PitImages(
-                    title: "Robot Side",
-                    camera: widget.camera,
-                    onCapture: (newImage) {
-                      setState(() {
-                        pitData.imgRobotSide = newImage;
-                      });
-
-                    },
-                    image: pitData.imgRobotSide,
-                  ),
-                  PitImages(
-                    title: "Robot Front",
-                    camera: widget.camera,
-                    onCapture: (newImage) {
-                      setState(() {
-                        pitData.imgRobotFront = newImage;
-                      });
-
-                    },
-                    image: pitData.imgRobotFront,
-                  ),
-              ]),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    PitImages(
+                      title: "Team Shirt",
+                      camera: widget.camera,
+                      onCapture: (newImage) {
+                        setState(() {
+                          pitData.imgTeamUniform = newImage;
+                        });
+                      },
+                      image: pitData.imgTeamUniform,
+                    ),
+                    PitImages(
+                      title: "Robot Side",
+                      camera: widget.camera,
+                      onCapture: (newImage) {
+                        setState(() {
+                          pitData.imgRobotSide = newImage;
+                        });
+                      },
+                      image: pitData.imgRobotSide,
+                    ),
+                    PitImages(
+                      title: "Robot Front",
+                      camera: widget.camera,
+                      onCapture: (newImage) {
+                        setState(() {
+                          pitData.imgRobotFront = newImage;
+                        });
+                      },
+                      image: pitData.imgRobotFront,
+                    ),
+                  ]),
               FinishTab(
                 onSavePressed: (bool value) async {
                   if (recordSaved == true) {

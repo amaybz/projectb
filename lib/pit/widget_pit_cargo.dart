@@ -33,7 +33,7 @@ class PitPowerCells extends StatefulWidget {
 class _PitPowerCellsState extends State<PitPowerCells> {
   @override
   Widget build(BuildContext context) {
-    if (widget.pitData.flCells == false) {
+    if (widget.pitData.flCargo == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -51,16 +51,16 @@ class _PitPowerCellsState extends State<PitPowerCells> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Power Cells",
+                headingText: "Cargo",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
                 text: "Manipulate:",
-                value: widget.pitData.flCells,
+                value: widget.pitData.flCargo,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flCells = value;
+                    widget.pitData.flCargo = value;
                     widget.onChanged(widget.pitData);
                     widget.onExpanded(true);
                   });
@@ -88,17 +88,17 @@ class _PitPowerCellsState extends State<PitPowerCells> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Power Cells",
+                headingText: "Cargo",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
                 text: "Manipulate:",
-                value: widget.pitData.flCells,
+                value: widget.pitData.flCargo,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flCells = value;
+                    widget.pitData.flCargo = value;
                     widget.onChanged(widget.pitData);
                     widget.onExpanded(true);
                   });
@@ -125,7 +125,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Loading Station Intake:",
+                    "Terminal Intake:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -142,7 +142,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Score (Lower):",
+                    "Hub (Lower):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -159,14 +159,14 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Score (Outer):",
+                    "Target (Upper):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetOuter,
+                    value: widget.pitData.flTargetUpper,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flTargetOuter = value;
+                        widget.pitData.flTargetUpper = value;
                       });
                     },
                   ),
@@ -176,14 +176,14 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Score (Inner):",
+                    "Target (Terminal):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetInner,
+                    value: widget.pitData.flTargetTerminal,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flTargetInner = value;
+                        widget.pitData.flTargetTerminal = value;
                       });
                     },
                   ),

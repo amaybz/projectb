@@ -55,7 +55,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   MatchScoutingData matchScoutingData = MatchScoutingData();
 
-  final List<String> _listStartingCells = [
+  final List<String> _listStartingCargo = [
     '0',
     '1',
     '2',
@@ -70,10 +70,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   ];
 
   final List<DropDownValue> _listRobotPosition = [
-    DropDownValue(id: "1", value: "Trench"),
-    DropDownValue(id: "2", value: "Power Port"),
-    DropDownValue(id: "3", value: "Loading"),
-    DropDownValue(id: "4", value: "Other"),
+    DropDownValue(id: "1", value: "N/A"),
+    DropDownValue(id: "2", value: "Shared Tarmac"),
+    DropDownValue(id: "3", value: "Solo Tarmac"),
   ];
 
   //style
@@ -548,8 +547,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               }),
                           DropDownWidget(
                               value: matchScoutingData.numStartCells,
-                              title: "Starting Cells",
-                              list: _listStartingCells,
+                              title: "Starting Cargo",
+                              list: _listStartingCargo,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidthStartingCells,
                               styleFieldPadding: styleFieldPadding,

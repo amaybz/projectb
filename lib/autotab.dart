@@ -1,8 +1,7 @@
 // @dart = 2.7
 import 'package:flutter/material.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
-import 'package:projectb/localdb.dart';
-import 'package:projectb/widget_counter.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 
 class AutoTab extends StatefulWidget {
@@ -23,7 +22,7 @@ class AutoTab extends StatefulWidget {
     this.onChanged,
   }) : super(key: key);
 
-  final MatchScoutingData matchScoutingData;
+  final matchScoutingData;
   final double styleImgFieldMapWidth;
   final double styleImgFieldPerformanceWidth;
   final ValueChanged<int> onAutoNumCellAttemptChange;
@@ -179,6 +178,15 @@ class _AutoTabState extends State<AutoTab> {
             ]),
           ),
         ),
+        MatchAuto(
+          matchScoutingData: widget.matchScoutingData,
+          onChanged: (MatchScoutingData updates) {
+            setState(() {
+              widget.onChanged(updates);
+            });
+          },
+          onExpanded: (value) {},
+        ),
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(
@@ -208,7 +216,7 @@ class _AutoTabState extends State<AutoTab> {
                 children: [
                   Container(
                     margin: const EdgeInsets.all(5.0),
-                    child: Text("Lose Start Object"),
+                    child: Text("Lose Cargo"),
                   ),
                   Switch(
                     value: widget.matchScoutingData.autoFlLoseStartObject,
@@ -225,7 +233,7 @@ class _AutoTabState extends State<AutoTab> {
                 children: [
                   Container(
                     margin: const EdgeInsets.all(5.0),
-                    child: Text("Contact with Robot"),
+                    child: Text("Hit Robot"),
                   ),
                   Switch(
                       value: widget.matchScoutingData.autoFlRobotContact,
@@ -269,95 +277,6 @@ class _AutoTabState extends State<AutoTab> {
                   ),
                 ],
               ),
-            ]),
-          ),
-        ),
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Container(
-            padding: EdgeInsets.all(5.0),
-            margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-            ),
-            child: Column(children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  color: Colors.grey,
-                ),
-                child: Text(
-                  "Auto",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Text("Does Auto"),
-                  ),
-                  Switch(
-                    value: widget.matchScoutingData.autoFlStart,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.matchScoutingData.autoFlStart = value;
-                        widget.onChanged(widget.matchScoutingData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Text("Leave Line"),
-                  ),
-                  Switch(
-                    value: widget.matchScoutingData.autoFlBaseLine,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.matchScoutingData.autoFlBaseLine = value;
-                        widget.onChanged(widget.matchScoutingData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Text("Pickup new cells?"),
-                    ),
-                    CounterWidget(
-                      title: "",
-                      value: widget.matchScoutingData.autoNumCellLoad,
-                      onIncreaseStateChanged: (int value) {
-                        setState(() {
-                          widget.matchScoutingData.autoNumCellLoad++;
-                          widget.onChanged(widget.matchScoutingData);
-                        });
-                      },
-                      onDecreaseStateChanged: (int value) {
-                        setState(() {
-                          widget.matchScoutingData.autoNumCellLoad--;
-                          widget.onChanged(widget.matchScoutingData);
-                        });
-                      },
-                      onSetValue: (int value) {
-                        widget.matchScoutingData.autoNumCellLoad = value;
-                        widget.onChanged(widget.matchScoutingData);
-                      },
-                    ),
-                  ]),
             ]),
           ),
         ),

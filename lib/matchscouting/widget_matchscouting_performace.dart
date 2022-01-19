@@ -5,7 +5,6 @@ import 'package:projectb/widget_headingmain.dart';
 class PerformanceWidget extends StatefulWidget {
   const PerformanceWidget({
     Key? key,
-
     this.numCellAttempt,
     this.numCellSuccess,
     this.flLower,
@@ -59,7 +58,9 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
         ),
         padding: EdgeInsets.all(4.0),
         child: Column(children: [
-          HeadingMain(headingText: "Performance", styleFontSize: widget.styleFontSizeHeadings),
+          HeadingMain(
+              headingText: "Performance",
+              styleFontSize: widget.styleFontSizeHeadings),
           Container(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,12 +72,14 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       styleFontSize: widget.styleFontSizeBody,
                       onIncreaseStateChanged: (int increase) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(widget.numCellAttempt! + 1);
+                          widget.onCellAttemptsChanged!(
+                              widget.numCellAttempt! + 1);
                         });
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(widget.numCellAttempt! - 1);
+                          widget.onCellAttemptsChanged!(
+                              widget.numCellAttempt! - 1);
                         });
                       },
                       onSetValue: (int value) {
@@ -89,35 +92,24 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       styleFontSize: widget.styleFontSizeBody,
                       onIncreaseStateChanged: (int increase) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(widget.numCellAttempt! + 1);
-                          widget.onCellSuccessChanged!(widget.numCellSuccess! + 1);
+                          widget.onCellAttemptsChanged!(
+                              widget.numCellAttempt! + 1);
+                          widget.onCellSuccessChanged!(
+                              widget.numCellSuccess! + 1);
                         });
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(widget.numCellAttempt! - 1);
-                          widget.onCellSuccessChanged!(widget.numCellSuccess! - 1);
+                          widget.onCellAttemptsChanged!(
+                              widget.numCellAttempt! - 1);
+                          widget.onCellSuccessChanged!(
+                              widget.numCellSuccess! - 1);
                         });
                       },
                       onSetValue: (int value) {
-                       widget.onCellSuccessChanged!(value);
+                        widget.onCellSuccessChanged!(value);
                       },
                     ),
-                  ]),
-                  Column(children: [
-                    Row(children: [
-                      SizedBox(
-                        width: widget.styleImgFieldWidth,
-                        height: (widget.styleImgFieldWidth * 0.5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            //border: Border.all(color: Colors.grey),
-                            //color: Colors.white,
-                          ),
-                          child: Image.asset("assets/imgs/ports.png"),
-                        ),
-                      ),
-                    ])
                   ]),
                   Column(children: [
                     Row(children: [

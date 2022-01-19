@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:projectb/pit/widget_pit_human.dart';
 import 'package:projectb/widget_headingmain.dart';
 //import 'package:projectb/pit/widget_pit_controlpenal.dart';
 import 'package:camera/camera.dart';
@@ -56,6 +57,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txWidth = TextEditingController();
   final TextEditingController numClimbHeight = TextEditingController();
   final TextEditingController numClimbWidth = TextEditingController();
+  final TextEditingController numHumanAccuracy = TextEditingController();
   File imgPitTeamShirt;
   File imgPitRobotFront;
   File imgPitRobotSide;
@@ -551,6 +553,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 },
                 onExpanded: (value) {
                   (value == true) ? scrollDown(100) : scrollDown(0);
+                },
+              ),
+              PitHuman(
+                pitData: pitData,
+                numHumanAccuracy: numHumanAccuracy,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(50) : scrollDown(0);
                 },
               ),
               FractionallySizedBox(

@@ -94,6 +94,7 @@ class PitData {
     this.flAutoSort = false,
     this.numAutoShoot = 0,
     this.numAutoLoad = 0,
+    this.flHuman = false,
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,
@@ -140,6 +141,8 @@ class PitData {
       'numAutoShoot': numAutoShoot,
       'numAutoLoad': numAutoLoad,
       'flAutoSort': flAutoSort.toString(),
+      'flHuman': flHuman.toString(),
+      'intHumanAccuracy': intHumanAccuracy,
       'txPitNotes': txPitNotes,
       'dtCreation': dtCreation.toString(),
       'dtModified': dtModified.toString(),
@@ -193,6 +196,8 @@ class PitData {
     this.flAutoSort = map['flAutoSort'].toString().toLowerCase() == 'true';
     this.numAutoShoot = map['numAutoShoot'];
     this.numAutoLoad = map['numAutoLoad'];
+    this.flHuman = map['flHuman'].toString().toLowerCase() == 'true';
+    this.intHumanAccuracy = map['intHumanAccuracy'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
@@ -239,6 +244,8 @@ class PitData {
     data['numAutoShoot'] = this.numAutoShoot;
     data['numAutoLoad'] = this.numAutoLoad;
     data['flAutoSort'] = this.flAutoSort;
+    data['flHuman'] = this.flHuman;
+    data['intHumanAccuracy'] = this.intHumanAccuracy;
     data['txPitNotes'] = this.txPitNotes;
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
@@ -285,6 +292,8 @@ class PitData {
     this.numAutoShoot = map['numAutoShoot'];
     this.flAutoSort = map['flAutoSort'];
     this.numAutoLoad = map['numAutoLoad'];
+    this.flHuman = map['flHuman'];
+    this.intHumanAccuracy = map['intHumanAccuracy'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];

@@ -168,7 +168,13 @@ class _PitClimbState extends State<PitClimb> {
                     decoration: InputDecoration(hintText: 'inchs'),
                     onChanged: (String text) {
                       setState(() {
-                        widget.pitData.txClimb = text;
+                        try {
+                          widget.pitData.numClimbHeight = int.parse(text);
+                        } catch (e) {
+                          widget.pitData.numClimbHeight = 0;
+                          print("Error Converting numClimbHeight: " +
+                              e.toString());
+                        }
                         widget.onChanged(widget.pitData);
                       });
                     },
@@ -186,7 +192,13 @@ class _PitClimbState extends State<PitClimb> {
                     decoration: InputDecoration(hintText: 'inchs'),
                     onChanged: (String text) {
                       setState(() {
-                        widget.pitData.txClimb = text;
+                        try {
+                          widget.pitData.numClimbWidth = int.parse(text);
+                        } catch (e) {
+                          widget.pitData.numClimbWidth = 0;
+                          print("Error Converting numClimbWidth: " +
+                              e.toString());
+                        }
                         widget.onChanged(widget.pitData);
                       });
                     },

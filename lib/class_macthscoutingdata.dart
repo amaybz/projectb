@@ -28,24 +28,20 @@ class MatchScoutingData {
   bool autoFlLoseStartObject;
   bool autoFlCrossOver;
   //Auto - Performance
-  int autoNumCellAttempt;
-  int autoNumCellSuccess;
-  bool autoFlOuter;
-  bool autoFlInner;
-  bool autoFlLower;
+  int autoNumCargoHighAttempt;
+  int autoNumCargoHighSuccess;
+  int autoNumCargoLowAttempt;
+  int autoNumCargoLowSuccess;
+  int autoNumCargoTerminalAttempt;
+  int autoNumCargoTerminalSuccess;
 
   //Tele Op Tab
-  int teleNumCellAttempt;
-  int teleNumCellSuccess;
-  bool teleFlOuter;
-  bool teleFlInner;
-  bool teleFlLower;
-  bool teleFlPanelRotation;
-  String teleIdPanelRotationTime;
-  bool teleFlPanelPosition;
-  String teleIdPanelPositionTime;
-  int teleNumPanelAttempt;
-  int teleNumPanelSuccess;
+  int teleNumCargoHighAttempt;
+  int teleNumCargoHighSuccess;
+  int teleNumCargoLowAttempt;
+  int teleNumCargoLowSuccess;
+  int teleNumCargoTerminalAttempt;
+  int teleNumCargoTerminalSuccess;
   bool teleFlPark;
   String teleIdClimb;
   String teleIdClimbGrabTime;
@@ -56,6 +52,7 @@ class MatchScoutingData {
   bool teleFlClimbBalance;
   bool teleFlClimbCorrection;
   bool teleFlClimbFall;
+
   //Ratings Tab
   String commIdDriveRating;
   String commIdDefenceRating;
@@ -102,19 +99,15 @@ class MatchScoutingData {
     this.autoFlCrossOver = false,
     this.autoFlFoul = false,
     //Auto - Performance
-    this.autoNumCellAttempt = 0,
-    this.autoNumCellSuccess = 0,
-    this.autoFlOuter = false,
-    this.autoFlInner = false,
-    this.autoFlLower = false,
+    this.autoNumCargoHighAttempt = 0,
+    this.autoNumCargoHighSuccess = 0,
+    this.autoNumCargoLowAttempt = 0,
+    this.autoNumCargoLowSuccess = 0,
+    this.autoNumCargoTerminalAttempt = 0,
+    this.autoNumCargoTerminalSuccess = 0,
     //Tele OP Tab
     //Tele - Control Panel
-    this.teleFlPanelRotation = false,
-    this.teleIdPanelRotationTime,
-    this.teleFlPanelPosition = false,
-    this.teleIdPanelPositionTime,
-    this.teleNumPanelAttempt = 0,
-    this.teleNumPanelSuccess = 0,
+
     //Tele - Endgame
     this.teleFlPark = false,
     this.teleIdClimb,
@@ -126,12 +119,15 @@ class MatchScoutingData {
     this.teleFlClimbBalance = false,
     this.teleFlClimbCorrection = false,
     this.teleFlClimbFall = false,
+
     //Tele - Performance
-    this.teleNumCellAttempt = 0,
-    this.teleNumCellSuccess = 0,
-    this.teleFlOuter = false,
-    this.teleFlInner = false,
-    this.teleFlLower = false,
+    this.teleNumCargoHighAttempt = 0,
+    this.teleNumCargoHighSuccess = 0,
+    this.teleNumCargoLowAttempt = 0,
+    this.teleNumCargoLowSuccess = 0,
+    this.teleNumCargoTerminalAttempt = 0,
+    this.teleNumCargoTerminalSuccess = 0,
+
     //Ratings Tab
     this.commIdDriveRating,
     this.commIdDefenceRating,
@@ -178,18 +174,14 @@ class MatchScoutingData {
       'autoFlRobotContact': autoFlRobotContact,
       'autoFlLoseStartObject': autoFlLoseStartObject,
       'autoFlCrossOver': autoFlCrossOver,
-      'autoNumCellAttempt': autoNumCellAttempt,
-      'autoNumCellSuccess': autoNumCellSuccess,
-      'autoFlOuter': autoFlOuter,
-      'autoFlInner': autoFlInner,
-      'autoFlLower': autoFlLower,
+      'autoNumCargoHighAttempt': autoNumCargoHighAttempt,
+      'autoNumCargoHighSuccess': autoNumCargoHighSuccess,
+      'autoNumCargoLowAttempt': autoNumCargoLowAttempt,
+      'autoNumCargoLowSuccess': autoNumCargoLowSuccess,
+      'autoNumCargoTerminalAttempt': autoNumCargoTerminalAttempt,
+      'autoNumCargoTerminalSuccess': autoNumCargoTerminalSuccess,
+
       //Tele OP Tab
-      'teleFlPanelRotation': teleFlPanelRotation,
-      'teleIdPanelRotationTime': teleIdPanelRotationTime,
-      'teleFlPanelPosition': teleFlPanelPosition,
-      'teleIdPanelPositionTime': teleIdPanelPositionTime,
-      'teleNumPanelAttempt': teleNumPanelAttempt,
-      'teleNumPanelSuccess': teleNumPanelSuccess,
       'teleFlPark': teleFlPark,
       'teleIdClimb': teleIdClimb,
       'teleIdClimbGrabTime': teleIdClimbGrabTime,
@@ -200,11 +192,12 @@ class MatchScoutingData {
       'teleFlClimbBalance': teleFlClimbBalance,
       'teleFlClimbCorrection': teleFlClimbCorrection,
       'teleFlClimbFall': teleFlClimbFall,
-      'teleNumCellAttempt': teleNumCellAttempt,
-      'teleNumCellSuccess': teleNumCellSuccess,
-      'teleFlOuter': teleFlOuter,
-      'teleFlInner': teleFlInner,
-      'teleFlLower': teleFlLower,
+      'teleNumCargoHighAttempt': teleNumCargoHighAttempt,
+      'teleNumCargoHighSuccess': teleNumCargoHighSuccess,
+      'teleNumCargoLowAttempt': teleNumCargoLowAttempt,
+      'teleNumCargoLowSuccess': teleNumCargoLowSuccess,
+      'teleNumCargoTerminalAttempt': teleNumCargoTerminalAttempt,
+      'teleNumCargoTerminalSuccess': teleNumCargoTerminalSuccess,
       //RatingsTab
       'commFlAssist': commFlAssist,
       'commIdDriveRating': commIdDriveRating,
@@ -252,18 +245,14 @@ class MatchScoutingData {
       'autoFlRobotContact': autoFlRobotContact.toString(),
       'autoFlLoseStartObject': autoFlLoseStartObject.toString(),
       'autoFlCrossOver': autoFlCrossOver.toString(),
-      'autoNumCellAttempt': autoNumCellAttempt,
-      'autoNumCellSuccess': autoNumCellSuccess,
-      'autoFlOuter': autoFlOuter.toString(),
-      'autoFlInner': autoFlInner.toString(),
-      'autoFlLower': autoFlLower.toString(),
+      'autoNumCargoHighAttempt': autoNumCargoHighAttempt,
+      'autoNumCargoHighSuccess': autoNumCargoHighSuccess,
+      'autoNumCargoLowAttempt': autoNumCargoLowAttempt,
+      'autoNumCargoLowSuccess': autoNumCargoLowSuccess,
+      'autoNumCargoTerminalAttempt': autoNumCargoTerminalAttempt,
+      'autoNumCargoTerminalSuccess': autoNumCargoTerminalSuccess,
+
       //Tele OP Tab
-      'teleFlPanelRotation': teleFlPanelRotation.toString(),
-      'teleIdPanelRotationTime': teleIdPanelRotationTime,
-      'teleFlPanelPosition': teleFlPanelPosition.toString(),
-      'teleIdPanelPositionTime': teleIdPanelPositionTime,
-      'teleNumPanelAttempt': teleNumPanelAttempt,
-      'teleNumPanelSuccess': teleNumPanelSuccess,
       'teleFlPark': teleFlPark.toString(),
       'teleIdClimb': teleIdClimb,
       'teleIdClimbGrabTime': teleIdClimbGrabTime,
@@ -274,11 +263,13 @@ class MatchScoutingData {
       'teleFlClimbBalance': teleFlClimbBalance.toString(),
       'teleFlClimbCorrection': teleFlClimbCorrection.toString(),
       'teleFlClimbFall': teleFlClimbFall.toString(),
-      'teleNumCellAttempt': teleNumCellAttempt,
-      'teleNumCellSuccess': teleNumCellSuccess,
-      'teleFlOuter': teleFlOuter.toString(),
-      'teleFlInner': teleFlInner.toString(),
-      'teleFlLower': teleFlLower.toString(),
+      'teleNumCargoHighAttempt': teleNumCargoHighAttempt,
+      'teleNumCargoHighSuccess': teleNumCargoHighSuccess,
+      'teleNumCargoLowAttempt': teleNumCargoLowAttempt,
+      'teleNumCargoLowSuccess': teleNumCargoLowSuccess,
+      'teleNumCargoTerminalAttempt': teleNumCargoTerminalAttempt,
+      'teleNumCargoTerminalSuccess': teleNumCargoTerminalSuccess,
+
       //Ratings Tab
       'commFlAssist': commFlAssist.toString(),
       'commIdDriveRating': commIdDriveRating,
@@ -329,20 +320,14 @@ class MatchScoutingData {
         map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
     this.autoFlCrossOver =
         map['autoFlCrossOver'].toString().toLowerCase() == 'true';
-    this.autoNumCellAttempt = map['autoNumCellAttempt'];
-    this.autoNumCellSuccess = map['autoNumCellSuccess'];
-    this.autoFlOuter = map['autoFlOuter'].toString().toLowerCase() == 'true';
-    this.autoFlInner = map['autoFlInner'].toString().toLowerCase() == 'true';
-    this.autoFlLower = map['autoFlLower'].toString().toLowerCase() == 'true';
+    this.autoNumCargoHighAttempt = map['autoNumCargoHighAttempt'];
+    this.autoNumCargoHighSuccess = map['autoNumCargoHighSuccess'];
+    this.autoNumCargoLowAttempt = map['autoNumCargoLowAttempt'];
+    this.autoNumCargoLowSuccess = map['autoNumCargoLowSuccess'];
+    this.autoNumCargoTerminalAttempt = map['autoNumCargoTerminalAttempt'];
+    this.autoNumCargoTerminalSuccess = map['autoNumCargoTerminalSuccess'];
+
     //Tele OP Tab
-    this.teleFlPanelRotation =
-        map['teleFlPanelRotation'].toString().toLowerCase() == 'true';
-    this.teleIdPanelRotationTime = map['teleIdPanelRotationTime'];
-    this.teleFlPanelPosition =
-        map['teleFlPanelPosition'].toString().toLowerCase() == 'true';
-    this.teleIdPanelPositionTime = map['teleIdPanelPositionTime'];
-    this.teleNumPanelAttempt = map['teleNumPanelAttempt'];
-    this.teleNumPanelSuccess = map['teleNumPanelSuccess'];
     this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
     this.teleIdClimb = map['teleIdClimb'];
     this.teleIdClimbGrabTime = map['teleIdClimbGrabTime'];
@@ -356,11 +341,13 @@ class MatchScoutingData {
         map['teleFlClimbCorrection'].toString().toLowerCase() == 'true';
     this.teleFlClimbFall =
         map['teleFlClimbFall'].toString().toLowerCase() == 'true';
-    this.teleNumCellAttempt = map['teleNumCellAttempt'];
-    this.teleNumCellSuccess = map['teleNumCellSuccess'];
-    this.teleFlOuter = map['teleFlOuter'].toString().toLowerCase() == 'true';
-    this.teleFlInner = map['teleFlInner'].toString().toLowerCase() == 'true';
-    this.teleFlLower = map['teleFlLower'].toString().toLowerCase() == 'true';
+    this.teleNumCargoHighAttempt = map['teleNumCargoHighAttempt'];
+    this.teleNumCargoHighSuccess = map['teleNumCargoHighSuccess'];
+    this.teleNumCargoLowAttempt = map['teleNumCargoLowAttempt'];
+    this.teleNumCargoLowSuccess = map['teleNumCargoLowSuccess'];
+    this.teleNumCargoTerminalAttempt = map['teleNumCargoTerminalAttempt'];
+    this.teleNumCargoTerminalSuccess = map['teleNumCargoTerminalSuccess'];
+
     //Ratings Tab
     this.commFlAssist = map['commFlAssist'].toString().toLowerCase() == 'true';
     this.commIdDriveRating = map['commIdDriveRating'];
@@ -419,18 +406,14 @@ class MatchScoutingData {
     this.autoFlRobotContact = map['autoFlRobotContact'];
     this.autoFlLoseStartObject = map['autoFlLoseStartObject'];
     this.autoFlCrossOver = map['autoFlCrossOver'];
-    this.autoNumCellAttempt = map['autoNumCellAttempt'];
-    this.autoNumCellSuccess = map['autoNumCellSuccess'];
-    this.autoFlOuter = map['autoFlOuter'];
-    this.autoFlInner = map['autoFlInner'];
-    this.autoFlLower = map['autoFlLower'];
+    this.autoNumCargoHighAttempt = map['autoNumCargoHighAttempt'];
+    this.autoNumCargoHighSuccess = map['autoNumCargoHighSuccess'];
+    this.autoNumCargoLowAttempt = map['autoNumCargoLowAttempt'];
+    this.autoNumCargoLowSuccess = map['autoNumCargoLowSuccess'];
+    this.autoNumCargoTerminalAttempt = map['autoNumCargoTerminalAttempt'];
+    this.autoNumCargoTerminalSuccess = map['autoNumCargoTerminalSuccess'];
+
     //Tele OP Tab
-    this.teleFlPanelRotation = map['teleFlPanelRotation'];
-    this.teleIdPanelRotationTime = map['teleIdPanelRotationTime'];
-    this.teleFlPanelPosition = map['teleFlPanelPosition'];
-    this.teleIdPanelPositionTime = map['teleIdPanelPositionTime'];
-    this.teleNumPanelAttempt = map['teleNumPanelAttempt'];
-    this.teleNumPanelSuccess = map['teleNumPanelSuccess'];
     this.teleFlPark = map['teleFlPark'];
     this.teleIdClimb = map['teleIdClimb'];
     this.teleIdClimbGrabTime = map['teleIdClimbGrabTime'];
@@ -441,11 +424,13 @@ class MatchScoutingData {
     this.teleFlClimbBalance = map['teleFlClimbBalance'];
     this.teleFlClimbCorrection = map['teleFlClimbCorrection'];
     this.teleFlClimbFall = map['teleFlClimbFall'];
-    this.teleNumCellAttempt = map['teleNumCellAttempt'];
-    this.teleNumCellSuccess = map['teleNumCellSuccess'];
-    this.teleFlOuter = map['teleFlOuter'];
-    this.teleFlInner = map['teleFlInner'];
-    this.teleFlLower = map['teleFlLower'];
+    this.teleNumCargoHighAttempt = map['teleNumCargoHighAttempt'];
+    this.teleNumCargoHighSuccess = map['teleNumCargoHighSuccess'];
+    this.teleNumCargoLowAttempt = map['teleNumCargoLowAttempt'];
+    this.teleNumCargoLowSuccess = map['teleNumCargoLowSuccess'];
+    this.teleNumCargoTerminalAttempt = map['teleNumCargoTerminalAttempt'];
+    this.teleNumCargoTerminalSuccess = map['teleNumCargoTerminalSuccess'];
+
     //Ratings Tab
     this.commFlAssist = map['commFlAssist'];
     this.commIdDriveRating = map['commIdDriveRating'];

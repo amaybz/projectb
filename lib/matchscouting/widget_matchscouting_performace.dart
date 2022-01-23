@@ -5,33 +5,37 @@ import 'package:projectb/widget_headingmain.dart';
 class PerformanceWidget extends StatefulWidget {
   const PerformanceWidget({
     Key? key,
-    this.numCellAttempt,
-    this.numCellSuccess,
-    this.flLower,
-    this.flInner,
-    this.flOuter,
+    this.numCargoHighAttempt,
+    this.numCargoHighSuccess,
+    this.numCargoLowAttempt,
+    this.numCargoLowSuccess,
+    this.numCargoTerminalAttempt,
+    this.numCargoTerminalSuccess,
     //onchange
-    this.onCellAttemptsChanged,
-    this.onCellSuccessChanged,
-    this.onFlInnerChanged,
-    this.onFlLowerChanged,
-    this.onFlOuterChanged,
+    this.onNumCargoHighAttemptChanged,
+    this.onNumCargoHighSuccessChanged,
+    this.onNumCargoLowAttemptChanged,
+    this.onNumCargoLowSuccessChanged,
+    this.onNumCargoTerminalAttemptChanged,
+    this.onNumCargoTerminalSuccessChanged,
     //style
     this.styleFontSizeBody = 16,
     this.styleFontSizeHeadings = 18,
     this.styleImgFieldWidth = 150,
   }) : super(key: key);
 
-  final int? numCellAttempt;
-  final int? numCellSuccess;
-  final bool? flOuter;
-  final bool? flInner;
-  final bool? flLower;
-  final ValueChanged<bool>? onFlLowerChanged;
-  final ValueChanged<bool>? onFlInnerChanged;
-  final ValueChanged<bool>? onFlOuterChanged;
-  final ValueChanged<int>? onCellAttemptsChanged;
-  final ValueChanged<int>? onCellSuccessChanged;
+  final int? numCargoHighAttempt;
+  final int? numCargoHighSuccess;
+  final int? numCargoLowAttempt;
+  final int? numCargoLowSuccess;
+  final int? numCargoTerminalAttempt;
+  final int? numCargoTerminalSuccess;
+  final ValueChanged<int>? onNumCargoHighAttemptChanged;
+  final ValueChanged<int>? onNumCargoHighSuccessChanged;
+  final ValueChanged<int>? onNumCargoLowAttemptChanged;
+  final ValueChanged<int>? onNumCargoLowSuccessChanged;
+  final ValueChanged<int>? onNumCargoTerminalAttemptChanged;
+  final ValueChanged<int>? onNumCargoTerminalSuccessChanged;
   final double styleFontSizeBody;
   final double styleFontSizeHeadings;
   final double styleImgFieldWidth;
@@ -67,81 +71,141 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                 children: [
                   Column(children: [
                     CounterWidget(
-                      value: widget.numCellAttempt,
-                      title: "Cells Fired",
+                      value: widget.numCargoHighAttempt,
+                      title: "Fired High",
                       styleFontSize: widget.styleFontSizeBody,
                       onIncreaseStateChanged: (int increase) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(
-                              widget.numCellAttempt! + 1);
+                          widget.onNumCargoHighAttemptChanged!(
+                              widget.numCargoHighAttempt! + 1);
                         });
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(
-                              widget.numCellAttempt! - 1);
+                          widget.onNumCargoHighAttemptChanged!(
+                              widget.numCargoHighAttempt! - 1);
                         });
                       },
                       onSetValue: (int value) {
-                        widget.onCellAttemptsChanged!(value);
+                        widget.onNumCargoHighAttemptChanged!(value);
                       },
                     ),
                     CounterWidget(
-                      value: widget.numCellSuccess,
-                      title: "Cells Scored",
+                      value: widget.numCargoHighSuccess,
+                      title: "Scored High",
                       styleFontSize: widget.styleFontSizeBody,
                       onIncreaseStateChanged: (int increase) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(
-                              widget.numCellAttempt! + 1);
-                          widget.onCellSuccessChanged!(
-                              widget.numCellSuccess! + 1);
+                          widget.onNumCargoHighAttemptChanged!(
+                              widget.numCargoHighAttempt! + 1);
+                          widget.onNumCargoHighSuccessChanged!(
+                              widget.numCargoHighSuccess! + 1);
                         });
                       },
                       onDecreaseStateChanged: (int decrease) {
                         setState(() {
-                          widget.onCellAttemptsChanged!(
-                              widget.numCellAttempt! - 1);
-                          widget.onCellSuccessChanged!(
-                              widget.numCellSuccess! - 1);
+                          widget.onNumCargoHighAttemptChanged!(
+                              widget.numCargoHighAttempt! - 1);
+                          widget.onNumCargoHighSuccessChanged!(
+                              widget.numCargoHighSuccess! - 1);
                         });
                       },
                       onSetValue: (int value) {
-                        widget.onCellSuccessChanged!(value);
+                        widget.onNumCargoHighSuccessChanged!(value);
                       },
                     ),
                   ]),
                   Column(children: [
-                    Row(children: [
-                      Text("Outer"),
-                      Switch(
-                          value: widget.flOuter!,
-                          onChanged: (value) {
-                            setState(() {
-                              widget.onFlOuterChanged!(value);
-                            });
-                          }),
-                    ]),
-                    Row(children: [
-                      Text("Inner"),
-                      Switch(
-                          value: widget.flInner!,
-                          onChanged: (value) {
-                            setState(() {
-                              widget.onFlInnerChanged!(value);
-                            });
-                          }),
-                    ]),
-                    Row(children: [
-                      Text("Lower"),
-                      Switch(
-                          value: widget.flLower!,
-                          onChanged: (value) {
-                            setState(() {
-                              widget.onFlLowerChanged!(value);
-                            });
-                          }),
-                    ]),
+                    CounterWidget(
+                      value: widget.numCargoLowAttempt,
+                      title: "Fired Low",
+                      styleFontSize: widget.styleFontSizeBody,
+                      onIncreaseStateChanged: (int increase) {
+                        setState(() {
+                          widget.onNumCargoLowAttemptChanged!(
+                              widget.numCargoLowAttempt! + 1);
+                        });
+                      },
+                      onDecreaseStateChanged: (int decrease) {
+                        setState(() {
+                          widget.onNumCargoLowAttemptChanged!(
+                              widget.numCargoLowAttempt! - 1);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        widget.onNumCargoLowAttemptChanged!(value);
+                      },
+                    ),
+                    CounterWidget(
+                      value: widget.numCargoLowSuccess,
+                      title: "Scored Low",
+                      styleFontSize: widget.styleFontSizeBody,
+                      onIncreaseStateChanged: (int increase) {
+                        setState(() {
+                          widget.onNumCargoLowAttemptChanged!(
+                              widget.numCargoLowAttempt! + 1);
+                          widget.onNumCargoLowSuccessChanged!(
+                              widget.numCargoLowSuccess! + 1);
+                        });
+                      },
+                      onDecreaseStateChanged: (int decrease) {
+                        setState(() {
+                          widget.onNumCargoLowAttemptChanged!(
+                              widget.numCargoLowAttempt! - 1);
+                          widget.onNumCargoLowSuccessChanged!(
+                              widget.numCargoLowSuccess! - 1);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        widget.onNumCargoLowSuccessChanged!(value);
+                      },
+                    ),
+                  ]),
+                  Column(children: [
+                    CounterWidget(
+                      value: widget.numCargoTerminalAttempt,
+                      title: "Fired Terminal",
+                      styleFontSize: widget.styleFontSizeBody,
+                      onIncreaseStateChanged: (int increase) {
+                        setState(() {
+                          widget.onNumCargoTerminalAttemptChanged!(
+                              widget.numCargoTerminalAttempt! + 1);
+                        });
+                      },
+                      onDecreaseStateChanged: (int decrease) {
+                        setState(() {
+                          widget.onNumCargoTerminalAttemptChanged!(
+                              widget.numCargoTerminalAttempt! - 1);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        widget.onNumCargoTerminalAttemptChanged!(value);
+                      },
+                    ),
+                    CounterWidget(
+                      value: widget.numCargoTerminalSuccess,
+                      title: "Scored Terminal",
+                      styleFontSize: widget.styleFontSizeBody,
+                      onIncreaseStateChanged: (int increase) {
+                        setState(() {
+                          widget.onNumCargoTerminalAttemptChanged!(
+                              widget.numCargoTerminalAttempt! + 1);
+                          widget.onNumCargoTerminalSuccessChanged!(
+                              widget.numCargoTerminalSuccess! + 1);
+                        });
+                      },
+                      onDecreaseStateChanged: (int decrease) {
+                        setState(() {
+                          widget.onNumCargoTerminalAttemptChanged!(
+                              widget.numCargoTerminalAttempt! - 1);
+                          widget.onNumCargoTerminalSuccessChanged!(
+                              widget.numCargoTerminalSuccess! - 1);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        widget.onNumCargoTerminalSuccessChanged!(value);
+                      },
+                    ),
                   ]),
                 ]),
           ),

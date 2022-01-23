@@ -75,11 +75,9 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   updateValues() async {
     setState(() {
-      intPenalAttempts = widget.matchScoutingData.teleNumPanelAttempt;
-      intPenalSuccess = widget.matchScoutingData.teleNumPanelSuccess;
       intBuddies = widget.matchScoutingData.teleNumClimbOthers;
-      intCellAttempts = widget.matchScoutingData.teleNumCellAttempt;
-      intCellSuccess = widget.matchScoutingData.teleNumCellSuccess;
+      intCellAttempts = widget.matchScoutingData.teleNumCargoHighAttempt;
+      intCellSuccess = widget.matchScoutingData.teleNumCargoHighSuccess;
     });
   }
 
@@ -182,181 +180,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     }
 
     return Column(children: [
-      PerformanceWidget(
-        styleImgFieldWidth: styleImgFieldWidth,
-        styleFontSizeBody: styleFontSizeBody,
-        numCellAttempt: widget.matchScoutingData.teleNumCellAttempt,
-        numCellSuccess: widget.matchScoutingData.teleNumCellSuccess,
-        flInner: widget.matchScoutingData.teleFlInner,
-        flOuter: widget.matchScoutingData.teleFlOuter,
-        flLower: widget.matchScoutingData.teleFlLower,
-        onCellAttemptsChanged: (int value) {
-          setState(() {
-            widget.onCellAttemptsChanged(value);
-          });
-        },
-        onCellSuccessChanged: (int value) {
-          setState(() {
-            widget.onCellSuccessChanged(value);
-          });
-        },
-        onFlOuterChanged: (bool value) {
-          setState(() {
-            widget.onPowerPortOuterChanged(value);
-          });
-        },
-        onFlInnerChanged: (bool value) {
-          setState(() {
-            widget.onPowerPortInnerChanged(value);
-          });
-        },
-        onFlLowerChanged: (bool value) {
-          setState(() {
-            widget.onPowerPortLowerChanged(value);
-          });
-        },
-      ),
-      FractionallySizedBox(
-        widthFactor: 0.99,
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            //color: Colors.red,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          padding: EdgeInsets.all(4.0),
-          child: Column(children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                color: Colors.grey,
-              ),
-              child: Column(children: [
-                Text("Control Panel"),
-              ]),
-            ),
-            Container(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Rotation Control:"),
-                                Switch(
-                                    value: widget
-                                        .matchScoutingData.teleFlPanelRotation,
-                                    onChanged: (value) {
-                                      mySharedPrefs.saveBool(
-                                          "selectedRotationControl", value);
-                                      setState(() {
-                                        widget
-                                            .onCPRotationControlChanged(value);
-                                      });
-                                    }),
-                              ]),
-                          DropDownIndexedWidget(
-                            value: widget
-                                .matchScoutingData.teleIdPanelRotationTime,
-                            title: "Time Taken",
-                            dropDownValues: listTime,
-                            styleFieldWidth: styleTimeTakenWidth,
-                            onStateChanged: (String value) {
-                              setState(() {
-                                widget.onCPRotationTimeTakenChange(value);
-                              });
-                            },
-                          ),
-                          CounterWidget(
-                            value: intPenalAttempts,
-                            title: "Panel Attempts",
-                            styleFontSize: styleFontSizeBody,
-                            onIncreaseStateChanged: (int increase) {
-                              _increasePenalAttempts();
-                            },
-                            onDecreaseStateChanged: (int decrease) {
-                              _decreasePenalAttempts();
-                            },
-                            onSetValue: (int value) {
-                              intPenalAttempts = value;
-                              mySharedPrefs.saveInt(
-                                  "PenalAttempts", intPenalAttempts);
-                            },
-                          ),
-                          CounterWidget(
-                            value: widget.matchScoutingData.teleNumPanelSuccess,
-                            title: "Panel Success",
-                            styleFontSize: styleFontSizeBody,
-                            onIncreaseStateChanged: (int increase) {
-                              _increasePenalSuccess();
-                            },
-                            onDecreaseStateChanged: (int decrease) {
-                              _decreasePenalSuccess();
-                            },
-                            onSetValue: (int value) {
-                              intPenalSuccess = value;
-                              widget.onCPPanelSuccessChanged(value);
-                            },
-                          ),
-                        ]),
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text("Position Control:"),
-                                Switch(
-                                    value: widget
-                                        .matchScoutingData.teleFlPanelPosition,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        widget
-                                            .onCPPositionControlChanged(value);
-                                      });
-                                    }),
-                              ]),
-                          Row(children: [
-                            DropDownIndexedWidget(
-                              value: widget
-                                  .matchScoutingData.teleIdPanelPositionTime,
-                              title: "Time Taken",
-                              dropDownValues: listTime,
-                              styleFieldWidth: styleTimeTakenWidth,
-                              onStateChanged: (String value) {
-                                setState(() {
-                                  widget.onCPPositionTimeTakenChange(value);
-                                });
-                              },
-                            ),
-                          ]),
-                          SizedBox(
-                            width: styleImgFieldWidth,
-                            height: (styleImgFieldWidth * 0.5),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  //border: Border.all(color: Colors.grey),
-                                  //color: Colors.white,
-                                  ),
-                              child: Image.asset("assets/imgs/tele.png"),
-                            ),
-                          ),
-                        ]),
-                  ]),
-            ),
-          ]),
-        ),
-      ),
       FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -519,6 +342,46 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             ),
           ]),
         ),
+      ),
+      PerformanceWidget(
+        numCargoHighAttempt: widget.matchScoutingData.teleNumCargoHighAttempt,
+        numCargoHighSuccess: widget.matchScoutingData.teleNumCargoHighSuccess,
+        numCargoLowAttempt: widget.matchScoutingData.teleNumCargoLowAttempt,
+        numCargoLowSuccess: widget.matchScoutingData.teleNumCargoLowSuccess,
+        numCargoTerminalAttempt:
+            widget.matchScoutingData.teleNumCargoTerminalAttempt,
+        numCargoTerminalSuccess:
+            widget.matchScoutingData.teleNumCargoTerminalSuccess,
+        onNumCargoHighAttemptChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoHighAttempt = value;
+          });
+        },
+        onNumCargoHighSuccessChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoHighSuccess = value;
+          });
+        },
+        onNumCargoLowAttemptChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoLowAttempt = value;
+          });
+        },
+        onNumCargoLowSuccessChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoLowSuccess = value;
+          });
+        },
+        onNumCargoTerminalAttemptChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoTerminalAttempt = value;
+          });
+        },
+        onNumCargoTerminalSuccessChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoTerminalSuccess = value;
+          });
+        },
       ),
     ]);
   }

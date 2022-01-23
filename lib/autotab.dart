@@ -144,7 +144,7 @@ class _AutoTabState extends State<AutoTab> {
                                 color: Colors.red,
                               ),
                               child: Text(
-                                "1",
+                                "3",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -168,7 +168,7 @@ class _AutoTabState extends State<AutoTab> {
                                 color: Colors.red,
                               ),
                               child: Text(
-                                "3",
+                                "1",
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -282,38 +282,47 @@ class _AutoTabState extends State<AutoTab> {
         ),
         PerformanceWidget(
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
-          numCellAttempt: widget.matchScoutingData.autoNumCellAttempt,
-          numCellSuccess: widget.matchScoutingData.autoNumCellSuccess,
-          flInner: widget.matchScoutingData.autoFlInner,
-          flOuter: widget.matchScoutingData.autoFlOuter,
-          flLower: widget.matchScoutingData.autoFlLower,
-          onCellAttemptsChanged: (int value) {
+          numCargoHighAttempt: widget.matchScoutingData.autoNumCargoHighAttempt,
+          numCargoHighSuccess: widget.matchScoutingData.autoNumCargoHighSuccess,
+          numCargoLowAttempt: widget.matchScoutingData.autoNumCargoLowAttempt,
+          numCargoLowSuccess: widget.matchScoutingData.autoNumCargoLowSuccess,
+          numCargoTerminalAttempt:
+              widget.matchScoutingData.autoNumCargoTerminalAttempt,
+          numCargoTerminalSuccess:
+              widget.matchScoutingData.autoNumCargoTerminalSuccess,
+          onNumCargoHighAttemptChanged: (int value) {
             setState(() {
-              widget.matchScoutingData.autoNumCellAttempt = value;
+              widget.matchScoutingData.autoNumCargoHighAttempt = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
-          onCellSuccessChanged: (int value) {
+          onNumCargoHighSuccessChanged: (int value) {
             setState(() {
-              widget.matchScoutingData.autoNumCellSuccess = value;
+              widget.matchScoutingData.autoNumCargoHighSuccess = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
-          onFlOuterChanged: (bool value) {
+          onNumCargoLowAttemptChanged: (int value) {
             setState(() {
-              widget.matchScoutingData.autoFlOuter = value;
+              widget.matchScoutingData.autoNumCargoLowAttempt = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
-          onFlInnerChanged: (bool value) {
+          onNumCargoLowSuccessChanged: (int value) {
             setState(() {
-              widget.matchScoutingData.autoFlInner = value;
+              widget.matchScoutingData.autoNumCargoLowSuccess = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
-          onFlLowerChanged: (bool value) {
+          onNumCargoTerminalAttemptChanged: (int value) {
             setState(() {
-              widget.matchScoutingData.autoFlLower = value;
+              widget.matchScoutingData.autoNumCargoTerminalAttempt = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onNumCargoTerminalSuccessChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCargoTerminalSuccess = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },

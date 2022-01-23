@@ -803,14 +803,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         matchScoutingData: matchScoutingData,
         onCellAttemptsChanged: (int value) {
           setState(() {
-            matchScoutingData.teleNumCellAttempt = value;
+            matchScoutingData.teleNumCargoHighAttempt = value;
           });
         },
         onCellSuccessChanged: (int value) {
           setState(() {
-            matchScoutingData.teleNumCellSuccess = value;
+            matchScoutingData.teleNumCargoHighSuccess = value;
           });
-          print(matchScoutingData.teleNumCellSuccess);
+          print(matchScoutingData.teleNumCargoHighSuccess);
         },
         onEndgameParkChanged: (bool value) {
           setState(() {
@@ -819,51 +819,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         },
         onEndgameClimbChanged: (String value) {
           matchScoutingData.teleIdClimb = value;
-        },
-        onPowerPortOuterChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlOuter = value;
-          });
-        },
-        onPowerPortInnerChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlInner = value;
-          });
-        },
-        onPowerPortLowerChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlLower = value;
-          });
-        },
-        onCPRotationControlChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlPanelRotation = value;
-          });
-        },
-        onCPRotationTimeTakenChange: (String value) {
-          setState(() {
-            matchScoutingData.teleIdPanelRotationTime = value;
-          });
-        },
-        onCPPositionControlChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlPanelPosition = value;
-          });
-        },
-        onCPPositionTimeTakenChange: (String value) {
-          setState(() {
-            matchScoutingData.teleIdPanelPositionTime = value;
-          });
-        },
-        onCPPanelAttemptsChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumPanelAttempt = value;
-          });
-        },
-        onCPPanelSuccessChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumPanelSuccess = value;
-          });
         },
         onEndgameTimeToGripChanged: (String value) {
           setState(() {

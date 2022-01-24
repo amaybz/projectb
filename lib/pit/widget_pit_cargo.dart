@@ -193,7 +193,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Upper):",
+                    "Hub (Upper):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -210,7 +210,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Terminal):",
+                    "Terminal:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(

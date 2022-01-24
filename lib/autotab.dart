@@ -122,10 +122,10 @@ class _AutoTabState extends State<AutoTab> {
                       Column(children: <Widget>[
                         SizedBox(
                           width: widget.styleImgFieldMapWidth,
-                          height: (widget.styleImgFieldMapWidth * 0.5),
+                          height: (widget.styleImgFieldMapWidth * 0.45),
                           child: Container(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: Colors.white),
                               color: Colors.grey,
                             ),
                             child: Image.asset("assets/imgs/field.png"),

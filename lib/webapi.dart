@@ -64,6 +64,37 @@ class WebAPI {
 
     return teams;
   }
+
+  Future<List<EventMatches>> getEventMatches(String strEventKey) async {
+    List<EventMatches> eventMatches;
+    var headers = {'X-TBA-Auth-Key': strAPIKey};
+    var request = http.Request(
+        'GET',
+        Uri.parse('https://www.thebluealliance.com/api/v3/event/' +
+            strEventKey +
+            '/matches'));
+    request.body = '''''';
+    request.headers.addAll(headers);
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        String strMatchesList = await response.stream.bytesToString();
+        //print(strEventsList);
+
+        eventMatches = (json.decode(strMatchesList) as List)
+            .map((i) => EventMatches.fromJson(i))
+            .toList();
+      } else {
+        print(response.reasonPhrase);
+      }
+      //print(teams.first.key);
+      return eventMatches;
+    } on Exception catch (e) {
+      print("ERROR: unable to connect to remote API: " + e.toString());
+    }
+
+    return eventMatches;
+  }
 }
 
 class TeamsList {

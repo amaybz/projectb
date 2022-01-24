@@ -7,6 +7,7 @@ class CounterWidget extends StatefulWidget {
     Key? key,
     @required this.value,
     @required this.title,
+    this.title1 = "",
     this.onIncreaseStateChanged,
     this.onDecreaseStateChanged,
     this.onSetValue,
@@ -18,6 +19,7 @@ class CounterWidget extends StatefulWidget {
 
   final int? value;
   final String? title;
+  final String? title1;
   final ValueChanged<int>? onIncreaseStateChanged;
   final ValueChanged<int>? onDecreaseStateChanged;
   final ValueChanged<int>? onSetValue;
@@ -107,6 +109,10 @@ class _CounterWidgetState extends State<CounterWidget> {
           children: [
             Text(
               widget.title!,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              widget.title1!,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             _counter(),

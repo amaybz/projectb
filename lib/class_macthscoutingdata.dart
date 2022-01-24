@@ -35,6 +35,13 @@ class MatchScoutingData {
   int autoNumCargoTerminalAttempt;
   int autoNumCargoTerminalSuccess;
 
+  //Auto - Human
+  int autoNumCargoHumanAttempt;
+  int autoNumCargoHumanHighSuccess;
+  int autoNumCargoHumanLowSuccess;
+  int autoNumCargoHumanField;
+  int autoNumCargoHumanRobot;
+
   //Tele Op Tab
   int teleNumCargoHighAttempt;
   int teleNumCargoHighSuccess;
@@ -105,8 +112,14 @@ class MatchScoutingData {
     this.autoNumCargoLowSuccess = 0,
     this.autoNumCargoTerminalAttempt = 0,
     this.autoNumCargoTerminalSuccess = 0,
+    //Auto - Human
+    this.autoNumCargoHumanAttempt = 0,
+    this.autoNumCargoHumanHighSuccess = 0,
+    this.autoNumCargoHumanLowSuccess = 0,
+    this.autoNumCargoHumanField = 0,
+    this.autoNumCargoHumanRobot = 0,
+
     //Tele OP Tab
-    //Tele - Control Panel
 
     //Tele - Endgame
     this.teleFlPark = false,
@@ -180,6 +193,11 @@ class MatchScoutingData {
       'autoNumCargoLowSuccess': autoNumCargoLowSuccess,
       'autoNumCargoTerminalAttempt': autoNumCargoTerminalAttempt,
       'autoNumCargoTerminalSuccess': autoNumCargoTerminalSuccess,
+      'autoNumCargoHumanAttempt': autoNumCargoHumanAttempt,
+      'autoNumCargoHumanHighSuccess': autoNumCargoHumanHighSuccess,
+      'autoNumCargoHumanLowSuccess': autoNumCargoHumanLowSuccess,
+      'autoNumCargoHumanField': autoNumCargoHumanField,
+      'autoNumCargoHumanRobot': autoNumCargoHumanRobot,
 
       //Tele OP Tab
       'teleFlPark': teleFlPark,
@@ -251,6 +269,11 @@ class MatchScoutingData {
       'autoNumCargoLowSuccess': autoNumCargoLowSuccess,
       'autoNumCargoTerminalAttempt': autoNumCargoTerminalAttempt,
       'autoNumCargoTerminalSuccess': autoNumCargoTerminalSuccess,
+      'autoNumCargoHumanAttempt': autoNumCargoHumanAttempt,
+      'autoNumCargoHumanHighSuccess': autoNumCargoHumanHighSuccess,
+      'autoNumCargoHumanLowSuccess': autoNumCargoHumanLowSuccess,
+      'autoNumCargoHumanField': autoNumCargoHumanField,
+      'autoNumCargoHumanRobot': autoNumCargoHumanRobot,
 
       //Tele OP Tab
       'teleFlPark': teleFlPark.toString(),
@@ -326,6 +349,11 @@ class MatchScoutingData {
     this.autoNumCargoLowSuccess = map['autoNumCargoLowSuccess'];
     this.autoNumCargoTerminalAttempt = map['autoNumCargoTerminalAttempt'];
     this.autoNumCargoTerminalSuccess = map['autoNumCargoTerminalSuccess'];
+    this.autoNumCargoHumanAttempt = map['autoNumCargoHumanAttempt'];
+    this.autoNumCargoHumanHighSuccess = map['autoNumCargoHumanHighSuccess'];
+    this.autoNumCargoHumanLowSuccess = map['autoNumCargoHumanLowSuccess'];
+    this.autoNumCargoHumanField = map['autoNumCargoHumanField'];
+    this.autoNumCargoHumanRobot = map['autoNumCargoHumanRobot'];
 
     //Tele OP Tab
     this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
@@ -412,6 +440,11 @@ class MatchScoutingData {
     this.autoNumCargoLowSuccess = map['autoNumCargoLowSuccess'];
     this.autoNumCargoTerminalAttempt = map['autoNumCargoTerminalAttempt'];
     this.autoNumCargoTerminalSuccess = map['autoNumCargoTerminalSuccess'];
+    this.autoNumCargoHumanAttempt = map['autoNumCargoHumanAttempt'];
+    this.autoNumCargoHumanHighSuccess = map['autoNumCargoHumanHighSuccess'];
+    this.autoNumCargoHumanLowSuccess = map['autoNumCargoHumanLowSuccess'];
+    this.autoNumCargoHumanField = map['autoNumCargoHumanField'];
+    this.autoNumCargoHumanRobot = map['autoNumCargoHumanRobot'];
 
     //Tele OP Tab
     this.teleFlPark = map['teleFlPark'];

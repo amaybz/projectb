@@ -1,6 +1,7 @@
 // @dart = 2.7
 import 'package:flutter/material.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
+import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 
@@ -323,6 +324,48 @@ class _AutoTabState extends State<AutoTab> {
           onNumCargoTerminalSuccessChanged: (int value) {
             setState(() {
               widget.matchScoutingData.autoNumCargoTerminalSuccess = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+        ),
+        HumanWidget(
+          autoNumCargoHumanAttempt:
+              widget.matchScoutingData.autoNumCargoHumanAttempt,
+          autoNumCargoHumanHighSuccess:
+              widget.matchScoutingData.autoNumCargoHumanHighSuccess,
+          autoNumCargoHumanLowSuccess:
+              widget.matchScoutingData.autoNumCargoHumanLowSuccess,
+          autoNumCargoHumanField:
+              widget.matchScoutingData.autoNumCargoHumanField,
+          autoNumCargoHumanRobot:
+              widget.matchScoutingData.autoNumCargoHumanRobot,
+          onAutoNumCargoHumanAttemptChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCargoHumanAttempt = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onAutoNumCargoHumanHighSuccessChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCargoHumanHighSuccess = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onAutoNumCargoHumanLowSuccessChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCargoHumanLowSuccess = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onAutoNumCargoHumanFieldChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCargoHumanField = value;
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
+          onAutoNumCargoHumanRobotChanged: (int value) {
+            setState(() {
+              widget.matchScoutingData.autoNumCargoHumanRobot = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },

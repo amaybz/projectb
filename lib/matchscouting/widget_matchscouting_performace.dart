@@ -246,6 +246,18 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             ),
                           ),
                         ]),
+                        Column(children: <Widget>[
+                          SizedBox(
+                            width: 110,
+                            height: 90,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ]),
                       ]),
                 ]),
           ),

@@ -1,6 +1,7 @@
 // @dart = 2.7
 import 'package:flutter/material.dart';
 import 'package:projectb/localdb.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_endgame_climb.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/widget_counter.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
@@ -25,10 +26,6 @@ class TeleOpScreen extends StatefulWidget {
     this.onCPPanelSuccessChanged,
     this.onEndgameParkChanged,
     this.onEndgameClimbChanged,
-    this.onEndgameTimeToGripChanged,
-    this.onEndgameTimeFromGripToClimbChanged,
-    this.onEndgameOutcomeChanged,
-    this.onEndgamePreferredPositionChanged,
     this.onEndgameBuddiesChanged,
     this.onEndgameBalanceChanged,
     this.onEndgameBalanceCorrectionChanged,
@@ -49,11 +46,7 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<int> onCPPanelAttemptsChanged;
   final ValueChanged<int> onCPPanelSuccessChanged;
   final ValueChanged<bool> onEndgameParkChanged;
-  final ValueChanged<String> onEndgameClimbChanged;
-  final ValueChanged<String> onEndgameTimeToGripChanged;
-  final ValueChanged<String> onEndgameTimeFromGripToClimbChanged;
-  final ValueChanged<String> onEndgameOutcomeChanged;
-  final ValueChanged<String> onEndgamePreferredPositionChanged;
+  final ValueChanged<MatchScoutingData> onEndgameClimbChanged;
   final ValueChanged<int> onEndgameBuddiesChanged;
   final ValueChanged<bool> onEndgameBalanceChanged;
   final ValueChanged<bool> onEndgameBalanceCorrectionChanged;
@@ -212,132 +205,24 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Park:"),
+                          Text("Hangar:"),
                           Switch(
-                              value: widget.matchScoutingData.teleFlPark,
+                              value: widget.matchScoutingData.teleFlHanger,
                               onChanged: (value) {
                                 setState(() {
                                   widget.onEndgameParkChanged(value);
                                 });
                               }),
                         ]),
-                    DropDownIndexedWidget(
-                        value: widget.matchScoutingData.teleIdClimb,
-                        title: "Climb",
-                        dropDownValues: listSuccessFailNA,
-                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String newValue) {
-                          setState(() {
-                            widget.onEndgameClimbChanged(newValue);
-                          });
-                        }),
-                    DropDownIndexedWidget(
-                        value: widget.matchScoutingData.teleIdClimbGrabTime,
-                        title: "Time to Grip",
-                        dropDownValues: listTime,
-                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String value) {
-                          setState(() {
-                            widget.onEndgameTimeToGripChanged(value);
-                          });
-                        }),
-                    DropDownIndexedWidget(
-                      value: widget.matchScoutingData.teleIdClimbTime,
-                      title: "Time from Grip to Climb",
-                      dropDownValues: listTime,
-                      styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                      onStateChanged: (String value) {
+                    EndGameClimb(
+                      matchScoutingData: widget.matchScoutingData,
+                      onChanged: (matchScoutingData) {
                         setState(() {
-                          widget.onEndgameTimeFromGripToClimbChanged(value);
+                          widget.onEndgameClimbChanged(matchScoutingData);
                         });
                       },
+                      onExpanded: (value) {},
                     ),
-                    DropDownIndexedWidget(
-                        value: widget.matchScoutingData.teleIdClimbOutcome,
-                        title: "Outcome",
-                        dropDownValues: listOutcomes,
-                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String value) {
-                          setState(() {
-                            widget.onEndgameOutcomeChanged(value);
-                          });
-                        }),
-                    DropDownIndexedWidget(
-                        value: widget.matchScoutingData.teleIdClimbPos,
-                        title: "Preferred Position",
-                        dropDownValues: listPositions,
-                        styleFieldWidth: styleFieldControlPanelDropDownsWidth,
-                        onStateChanged: (String newValue) {
-                          setState(() {
-                            widget.onEndgamePreferredPositionChanged(newValue);
-                          });
-                        }),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("Buddies:"),
-                        CounterWidget(
-                          title: "",
-                          value: widget.matchScoutingData.teleNumClimbOthers,
-                          onIncreaseStateChanged: (int value) {
-                            setState(() {
-                              intBuddies = intBuddies + 1;
-                              widget.onEndgameBuddiesChanged(intBuddies);
-                            });
-                          },
-                          onDecreaseStateChanged: (int value) {
-                            setState(() {
-                              intBuddies = intBuddies - 1;
-                              widget.onEndgameBuddiesChanged(intBuddies);
-                            });
-                          },
-                          onSetValue: (int value) {
-                            intBuddies = value;
-                            widget.onEndgameBuddiesChanged(intBuddies);
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Balance:"),
-                          Switch(
-                              value:
-                                  widget.matchScoutingData.teleFlClimbBalance,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.onEndgameBalanceChanged(value);
-                                });
-                              }),
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Balance Correction:"),
-                          Switch(
-                              value: widget
-                                  .matchScoutingData.teleFlClimbCorrection,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget
-                                      .onEndgameBalanceCorrectionChanged(value);
-                                });
-                              }),
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Fall:"),
-                          Switch(
-                              value: widget.matchScoutingData.teleFlClimbFall,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.onEndgameFallChanged(value);
-                                });
-                              }),
-                        ]),
                   ]),
             ),
           ]),

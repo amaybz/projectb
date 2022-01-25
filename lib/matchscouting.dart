@@ -814,31 +814,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         },
         onEndgameParkChanged: (bool value) {
           setState(() {
-            matchScoutingData.teleFlPark = value;
+            matchScoutingData.teleFlHanger = value;
           });
         },
-        onEndgameClimbChanged: (String value) {
-          matchScoutingData.teleIdClimb = value;
-        },
-        onEndgameTimeToGripChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbGrabTime = value;
-          });
-        },
-        onEndgameTimeFromGripToClimbChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbTime = value;
-          });
-        },
-        onEndgameOutcomeChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbOutcome = value;
-          });
-        },
-        onEndgamePreferredPositionChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbPos = value;
-          });
+        onEndgameClimbChanged: (MatchScoutingData value) {
+          matchScoutingData = value;
         },
         onEndgameBuddiesChanged: (int value) {
           setState(() {
@@ -944,12 +924,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             //Update Value
             setState(() {
               matchScoutingData.commFlStrategy = value;
-            });
-          },
-          onWorkedWithAllianceChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlAlliance = value;
             });
           },
           onWarningChanged: (bool value) {

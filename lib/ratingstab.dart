@@ -13,7 +13,6 @@ class RatingsTab extends StatefulWidget {
       @required this.styleFontSizeHeadings,
       this.matchScoutingData,
       this.onAssistOtherRobotChanged,
-      this.onWorkedWithAllianceChanged,
       this.onWorkedToStrategyChanged,
       this.onSelectedDriveRatingChanged,
       this.onSelectedDefenceRatingChanged,
@@ -35,7 +34,6 @@ class RatingsTab extends StatefulWidget {
   final double styleFontSizeHeadings;
   final MatchScoutingData matchScoutingData;
   final ValueChanged<bool> onAssistOtherRobotChanged;
-  final ValueChanged<bool> onWorkedWithAllianceChanged;
   final ValueChanged<bool> onWorkedToStrategyChanged;
   final ValueChanged<bool> onRecoveredChanged;
   final ValueChanged<bool> onNoTeamWorkChanged;
@@ -174,23 +172,6 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Worked with Alliance:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
-                    ),
-                    Switch(
-                      value: widget.matchScoutingData.commFlAlliance,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.onWorkedWithAllianceChanged(value);
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
                       "Worked to a Strategy:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
@@ -265,7 +246,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Ground Intake:",
+                      "Intake from Ground:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
@@ -282,7 +263,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "High Intake:",
+                      "Intake from Terminal:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
@@ -299,7 +280,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Other Robot:",
+                      "Intake from other Robot:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
@@ -333,13 +314,13 @@ class _RatingsTabState extends State<RatingsTab> {
                 child: Column(children: <Widget>[
                   HeadingMain(
                     styleFontSize: widget.styleFontSizeHeadings,
-                    headingText: "Shooting",
+                    headingText: "Shot Type",
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Wall:",
+                        "Launchpad:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
@@ -356,7 +337,7 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Near Zone:",
+                        "Tarmac:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
@@ -373,7 +354,7 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Mid Zone:",
+                        "Field Shot:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
@@ -390,7 +371,7 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Far Zone:",
+                        "Terminal:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(

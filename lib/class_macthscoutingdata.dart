@@ -43,13 +43,9 @@ class MatchScoutingData {
   int autoNumCargoHumanRobot;
 
   //Tele Op Tab
-  int teleNumCargoHighAttempt;
-  int teleNumCargoHighSuccess;
-  int teleNumCargoLowAttempt;
-  int teleNumCargoLowSuccess;
-  int teleNumCargoTerminalAttempt;
-  int teleNumCargoTerminalSuccess;
-  bool teleFlPark;
+  //Tele Op - EndGame
+  bool teleFlHanger;
+  String teleNumClimbTime;
   String teleIdClimb;
   String teleIdClimbGrabTime;
   String teleIdClimbTime;
@@ -59,6 +55,13 @@ class MatchScoutingData {
   bool teleFlClimbBalance;
   bool teleFlClimbCorrection;
   bool teleFlClimbFall;
+  //Tele Op - Performance
+  int teleNumCargoHighAttempt;
+  int teleNumCargoHighSuccess;
+  int teleNumCargoLowAttempt;
+  int teleNumCargoLowSuccess;
+  int teleNumCargoTerminalAttempt;
+  int teleNumCargoTerminalSuccess;
 
   //Ratings Tab
   String commIdDriveRating;
@@ -122,8 +125,9 @@ class MatchScoutingData {
     //Tele OP Tab
 
     //Tele - Endgame
-    this.teleFlPark = false,
-    this.teleIdClimb,
+    this.teleFlHanger = false,
+    this.teleNumClimbTime = "00:00",
+    this.teleIdClimb = "1",
     this.teleIdClimbGrabTime,
     this.teleIdClimbTime,
     this.teleIdClimbOutcome,
@@ -200,7 +204,9 @@ class MatchScoutingData {
       'autoNumCargoHumanRobot': autoNumCargoHumanRobot,
 
       //Tele OP Tab
-      'teleFlPark': teleFlPark,
+      //Tele EndGame
+      'teleFlHanger': teleFlHanger,
+      'teleNumClimbTime': teleNumClimbTime,
       'teleIdClimb': teleIdClimb,
       'teleIdClimbGrabTime': teleIdClimbGrabTime,
       'teleIdClimbTime': teleIdClimbTime,
@@ -276,7 +282,9 @@ class MatchScoutingData {
       'autoNumCargoHumanRobot': autoNumCargoHumanRobot,
 
       //Tele OP Tab
-      'teleFlPark': teleFlPark.toString(),
+      //Tele EndGame
+      'teleFlHanger': teleFlHanger.toString(),
+      'teleNumClimbTime': teleNumClimbTime,
       'teleIdClimb': teleIdClimb,
       'teleIdClimbGrabTime': teleIdClimbGrabTime,
       'teleIdClimbTime': teleIdClimbTime,
@@ -356,7 +364,9 @@ class MatchScoutingData {
     this.autoNumCargoHumanRobot = map['autoNumCargoHumanRobot'];
 
     //Tele OP Tab
-    this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
+    //Tele EndGame
+    this.teleFlHanger = map['teleFlHanger'].toString().toLowerCase() == 'true';
+    this.teleNumClimbTime = map['teleNumClimbTime'];
     this.teleIdClimb = map['teleIdClimb'];
     this.teleIdClimbGrabTime = map['teleIdClimbGrabTime'];
     this.teleIdClimbTime = map['teleIdClimbTime'];
@@ -447,7 +457,9 @@ class MatchScoutingData {
     this.autoNumCargoHumanRobot = map['autoNumCargoHumanRobot'];
 
     //Tele OP Tab
-    this.teleFlPark = map['teleFlPark'];
+    //Tele Performance
+    this.teleFlHanger = map['teleFlHanger'];
+    this.teleNumClimbTime = map['teleNumClimbTime'];
     this.teleIdClimb = map['teleIdClimb'];
     this.teleIdClimbGrabTime = map['teleIdClimbGrabTime'];
     this.teleIdClimbTime = map['teleIdClimbTime'];

@@ -87,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double styleFontSize = 14;
   String versionName = "";
   String versionCode = "";
+  String measurements = "kg";
 
   TextEditingController _txtDeviceName = TextEditingController();
   static int _downloadingData = 0;
@@ -225,6 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       setState(() {
         _txtDeviceName.text = deviceName.name;
+        measurements = deviceName.measurements;
       });
     }
   }
@@ -421,6 +423,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  FractionallySizedBox(
+                    widthFactor: 0.99,
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints(maxWidth: 800.0, minWidth: 250.0),
+                        child: Container(
+                          margin: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10)),
+                          ),
+                          padding: EdgeInsets.all(4.0),
+                          child: Column(
+                            children: [
+                              Text("Selected Event:"),
+                              //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
+                              Text(selectedLocalEvent == null
+                                  ? "none"
+                                  : selectedLocalEvent!.name),
+                              Text("Teams Loaded: " + _countOfTeams.toString()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -518,36 +551,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   LoadingImage(
                     state: _downloadingData,
                     text: _downloadingText,
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: 0.99,
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 800.0),
-                        child: Container(
-                          margin: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                          ),
-                          padding: EdgeInsets.all(4.0),
-                          child: Column(
-                            children: [
-                              Text("Selected Event:"),
-                              //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
-                              Text(selectedLocalEvent == null
-                                  ? "none"
-                                  : selectedLocalEvent!.name),
-                              Text("Teams Loaded: " + _countOfTeams.toString()),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),

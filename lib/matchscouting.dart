@@ -840,6 +840,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.teleFlClimbFall = value;
           });
         },
+        onChange: (MatchScoutingData updatedData) {
+          setState(() {
+            matchScoutingData = updatedData;
+          });
+        },
       );
     }
     if (index == 2) {

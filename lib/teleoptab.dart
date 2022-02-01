@@ -30,6 +30,7 @@ class TeleOpScreen extends StatefulWidget {
     this.onEndgameBalanceChanged,
     this.onEndgameBalanceCorrectionChanged,
     this.onEndgameFallChanged,
+    this.onChange,
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
@@ -51,6 +52,7 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<bool> onEndgameBalanceChanged;
   final ValueChanged<bool> onEndgameBalanceCorrectionChanged;
   final ValueChanged<bool> onEndgameFallChanged;
+  final ValueChanged<MatchScoutingData> onChange;
 
   @override
   _TeleOpScreenState createState() => _TeleOpScreenState();
@@ -94,6 +96,13 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     DropDownValue(id: "2", value: "Slow (> 7 Secs)"),
     DropDownValue(id: "3", value: "Medium (3-7 Secs)"),
     DropDownValue(id: "4", value: "Fast <3 Secs"),
+  ];
+
+  List<DropdownMenuItem<String>> ddsSpeed = [
+    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "2", child: Text("Slow (> 7 Secs)")),
+    DropdownMenuItem(value: "3", child: Text("Medium (3-7 Secs)")),
+    DropdownMenuItem(value: "4", child: Text("Fast <3 Secs")),
   ];
 
   final List<DropDownValue> listOutcomes = [
@@ -222,6 +231,44 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         });
                       },
                       onExpanded: (value) {},
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Transition?:"),
+                          Switch(
+                              value: widget.matchScoutingData.flClimbTransition,
+                              onChanged: (value) {
+                                setState(() {
+                                  widget.matchScoutingData.flClimbTransition =
+                                      value;
+                                  widget.onChange(widget.matchScoutingData);
+                                });
+                              }),
+                        ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Time (Transition):",
+                        ),
+                        DropdownButton(
+                          value:
+                              widget.matchScoutingData.idTransitionSpeed == null
+                                  ? null
+                                  : widget.matchScoutingData.idTransitionSpeed,
+                          items: ddsSpeed,
+                          onChanged: (item) {
+                            setState(() {
+                              widget.matchScoutingData.idTransitionSpeed = item;
+                              widget.onChange(widget.matchScoutingData);
+                            });
+                            print("idTransitionSpeed: " +
+                                widget.matchScoutingData.idTransitionSpeed);
+                          },
+                        ),
+                      ],
                     ),
                   ]),
             ),

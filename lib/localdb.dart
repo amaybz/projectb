@@ -10,7 +10,7 @@ import 'package:projectb/class_macthscoutingdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 30;
+  static final _databaseVersion = 31;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -30,7 +30,11 @@ class LocalDB {
       "shortName TEXT, "
       "location TEXT)";
   final String createTblDevice =
-      "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, name TEXT, location TEXT)";
+      "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, "
+      "name TEXT, "
+      "measurements TEXT, "
+      "location TEXT"
+      ")";
   final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
       "id INTEGER PRIMARY KEY, "
       'txEvent TEXT,'
@@ -257,7 +261,9 @@ class LocalDB {
   Future<DeviceName> getDeviceName() async {
     Database db = await database;
     List<Map> maps = await db.query(tblDevice,
-        columns: ['id', 'name', 'location'], where: 'id = ?', whereArgs: [1]);
+        columns: ['id', 'name', 'location', 'measurements'],
+        where: 'id = ?',
+        whereArgs: [1]);
     if (maps.length > 0) {
       return DeviceName.fromMap(maps.first);
     }
@@ -429,14 +435,16 @@ class DeviceName {
   int id;
   String name;
   String location;
+  String measurements;
 
-  DeviceName({this.id, this.name, this.location});
+  DeviceName({this.id, this.name, this.location, this.measurements});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
       'location': location,
+      'measurements': measurements,
     };
   }
 
@@ -444,10 +452,11 @@ class DeviceName {
     id = map['id'];
     name = map['name'];
     location = map['location'];
+    measurements = map['measurements'];
   }
 
   @override
   String toString() {
-    return 'DeviceName{id: $id, name: $name, location: $location}';
+    return 'DeviceName{id: $id, name: $name, location: $location, measurements: $measurements}';
   }
 }

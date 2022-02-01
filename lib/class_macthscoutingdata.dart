@@ -55,6 +55,8 @@ class MatchScoutingData {
   bool teleFlClimbBalance;
   bool teleFlClimbCorrection;
   bool teleFlClimbFall;
+  bool flClimbTransition;
+  String idTransitionSpeed;
   //Tele Op - Performance
   int teleNumCargoHighAttempt;
   int teleNumCargoHighSuccess;
@@ -136,6 +138,8 @@ class MatchScoutingData {
     this.teleFlClimbBalance = false,
     this.teleFlClimbCorrection = false,
     this.teleFlClimbFall = false,
+    this.flClimbTransition = false,
+    this.idTransitionSpeed,
 
     //Tele - Performance
     this.teleNumCargoHighAttempt = 0,
@@ -216,6 +220,9 @@ class MatchScoutingData {
       'teleFlClimbBalance': teleFlClimbBalance,
       'teleFlClimbCorrection': teleFlClimbCorrection,
       'teleFlClimbFall': teleFlClimbFall,
+      'flClimbTransition': flClimbTransition,
+      'idTransitionSpeed': idTransitionSpeed,
+      //Tele Performance
       'teleNumCargoHighAttempt': teleNumCargoHighAttempt,
       'teleNumCargoHighSuccess': teleNumCargoHighSuccess,
       'teleNumCargoLowAttempt': teleNumCargoLowAttempt,
@@ -294,6 +301,10 @@ class MatchScoutingData {
       'teleFlClimbBalance': teleFlClimbBalance.toString(),
       'teleFlClimbCorrection': teleFlClimbCorrection.toString(),
       'teleFlClimbFall': teleFlClimbFall.toString(),
+      'flClimbTransition': flClimbTransition.toString(),
+      'idTransitionSpeed': idTransitionSpeed,
+
+      //Tele Performance
       'teleNumCargoHighAttempt': teleNumCargoHighAttempt,
       'teleNumCargoHighSuccess': teleNumCargoHighSuccess,
       'teleNumCargoLowAttempt': teleNumCargoLowAttempt,
@@ -379,6 +390,10 @@ class MatchScoutingData {
         map['teleFlClimbCorrection'].toString().toLowerCase() == 'true';
     this.teleFlClimbFall =
         map['teleFlClimbFall'].toString().toLowerCase() == 'true';
+    this.flClimbTransition =
+        map['flClimbTransition'].toString().toLowerCase() == 'true';
+    this.idTransitionSpeed = map['idTransitionSpeed'];
+    //Tele Performance
     this.teleNumCargoHighAttempt = map['teleNumCargoHighAttempt'];
     this.teleNumCargoHighSuccess = map['teleNumCargoHighSuccess'];
     this.teleNumCargoLowAttempt = map['teleNumCargoLowAttempt'];
@@ -469,6 +484,8 @@ class MatchScoutingData {
     this.teleFlClimbBalance = map['teleFlClimbBalance'];
     this.teleFlClimbCorrection = map['teleFlClimbCorrection'];
     this.teleFlClimbFall = map['teleFlClimbFall'];
+    this.flClimbTransition = map['flClimbTransition'];
+    this.idTransitionSpeed = map['idTransitionSpeed'];
     this.teleNumCargoHighAttempt = map['teleNumCargoHighAttempt'];
     this.teleNumCargoHighSuccess = map['teleNumCargoHighSuccess'];
     this.teleNumCargoLowAttempt = map['teleNumCargoLowAttempt'];

@@ -27,7 +27,8 @@ class RatingsTab extends StatefulWidget {
       this.onShootingWallZoneChanged,
       this.onHighlightTeamChanged,
       this.onWarningChanged,
-      this.onCommentsChanged})
+      this.onCommentsChanged,
+      this.onChange})
       : super(key: key);
 
   final double styleFontSize;
@@ -49,6 +50,7 @@ class RatingsTab extends StatefulWidget {
   final ValueChanged<String> onSelectedDriveRatingChanged;
   final ValueChanged<String> onSelectedDefenceRatingChanged;
   final ValueChanged<String> onCommentsChanged;
+  final ValueChanged<MatchScoutingData> onChange;
 
   @override
   _RatingsTabState createState() => _RatingsTabState();
@@ -379,6 +381,24 @@ class _RatingsTabState extends State<RatingsTab> {
                         onChanged: (bool value) {
                           setState(() {
                             widget.onShootingFarZoneChanged(value);
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Hub Wall:",
+                        style: TextStyle(fontSize: widget.styleFontSize),
+                      ),
+                      Switch(
+                        value: widget.matchScoutingData.commFlShotHub,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.matchScoutingData.commFlShotHub = value;
+                            widget.onChange(widget.matchScoutingData);
                           });
                         },
                       )

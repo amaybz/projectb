@@ -80,6 +80,7 @@ class MatchScoutingData {
   bool commFlShotNear;
   bool commFlShotMid;
   bool commFlShotFar;
+  bool commFlShotHub;
   String commTxNotes;
   bool commFlHighlight;
   bool commFlWarning;
@@ -164,6 +165,7 @@ class MatchScoutingData {
     this.commFlShotNear = false,
     this.commFlShotMid = false,
     this.commFlShotFar = false,
+    this.commFlShotHub = false,
     this.commTxNotes,
     this.commFlHighlight = false,
     this.commFlWarning = false,
@@ -243,6 +245,7 @@ class MatchScoutingData {
       'commFlShotMid': commFlShotMid,
       'commFlShotNear': commFlShotNear,
       'commFlShotWall': commFlShotWall,
+      'commFlShotHub': commFlShotHub,
       'commFlIntakeGround': commFlIntakeGround,
       'commFlIntakeHigh': commFlIntakeHigh,
       'commFlIntakeRobot': commFlIntakeRobot,
@@ -326,6 +329,7 @@ class MatchScoutingData {
       'commFlShotMid': commFlShotMid.toString(),
       'commFlShotNear': commFlShotNear.toString(),
       'commFlShotWall': commFlShotWall.toString(),
+      'commFlShotHub': commFlShotHub.toString(),
       'commFlIntakeGround': commFlIntakeGround.toString(),
       'commFlIntakeHigh': commFlIntakeHigh.toString(),
       'commFlIntakeRobot': commFlIntakeRobot.toString(),
@@ -425,6 +429,8 @@ class MatchScoutingData {
         map['commFlShotNear'].toString().toLowerCase() == 'true';
     this.commFlShotWall =
         map['commFlShotWall'].toString().toLowerCase() == 'true';
+    this.commFlShotHub =
+        map['commFlShotHub'].toString().toLowerCase() == 'true';
     this.commFlIntakeGround =
         map['commFlIntakeGround'].toString().toLowerCase() == 'true';
     this.commFlIntakeHigh =
@@ -507,6 +513,7 @@ class MatchScoutingData {
     this.commFlShotMid = map['commFlShotMid'];
     this.commFlShotNear = map['commFlShotNear'];
     this.commFlShotWall = map['commFlShotWall'];
+    this.commFlShotHub = map['commFlShotHub'];
     this.commFlIntakeGround = map['commFlIntakeGround'];
     this.commFlIntakeHigh = map['commFlIntakeHigh'];
     this.commFlIntakeRobot = map['commFlIntakeRobot'];

@@ -853,6 +853,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           matchScoutingData: matchScoutingData,
           styleFontSize: widget.styleFontSize,
           styleFontSizeHeadings: styleFontSizeHeadings,
+          onChange: (updates) {
+            setState(() {
+              matchScoutingData = updates;
+            });
+          },
           onShootingWallZoneChanged: (bool value) {
             //Update Value
             setState(() {

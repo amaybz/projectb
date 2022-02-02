@@ -546,7 +546,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 });
                               }),
                           DropDownWidget(
-                              value: matchScoutingData.numStartCells,
+                              value: matchScoutingData.numStartCargo,
                               title: "Starting Cargo",
                               list: _listStartingCargo,
                               styleFontSize: widget.styleFontSize,
@@ -555,7 +555,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               styleFieldPaddingSides: styleFieldPaddingSides,
                               onStateChanged: (String newValue) {
                                 setState(() {
-                                  matchScoutingData.numStartCells = newValue;
+                                  matchScoutingData.numStartCargo = newValue;
                                 });
                               }),
                         ]),

@@ -161,7 +161,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
                   txScoutName: "Aiden",
                   idTeam: "1234 - test",
                   numMatch: 123,
-                  numStartCells: "3",
+                  numStartCargo: "3",
                   idDriveStation: "red 3"));
             },
             child: Text("write test File to google"),

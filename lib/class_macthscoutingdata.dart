@@ -12,7 +12,7 @@ class MatchScoutingData {
   String idDriveStation;
   String idStartFacing;
   String idStartPosition;
-  String numStartCells;
+  String numStartCargo;
   bool flCrash;
   bool flYellow;
   bool flRed;
@@ -96,7 +96,7 @@ class MatchScoutingData {
     this.idStartFacing,
     this.numMatch = 0,
     this.idStartPosition,
-    this.numStartCells,
+    this.numStartCargo,
     this.flCrash = false,
     this.flYellow = false,
     this.flRed = false,
@@ -183,7 +183,7 @@ class MatchScoutingData {
       'txScoutName': txScoutName,
       'idStartFacing': idStartFacing,
       'idStartPosition': idStartPosition,
-      'numStartCells': numStartCells,
+      'numStartCargo': numStartCargo,
       'flRed': flRed,
       'flYellow': flYellow,
       'flCrash': flCrash,
@@ -265,7 +265,7 @@ class MatchScoutingData {
       'txScoutName': txScoutName,
       'idStartFacing': idStartFacing,
       'idStartPosition': idStartPosition,
-      'numStartCells': numStartCells,
+      'numStartCargo': numStartCargo,
       'flRed': flRed.toString(),
       'flYellow': flYellow.toString(),
       'flCrash': flCrash.toString(),
@@ -348,7 +348,7 @@ class MatchScoutingData {
     this.txScoutName = map['txScoutName'];
     this.idStartFacing = map['idStartFacing'];
     this.idStartPosition = map['idStartPosition'];
-    this.numStartCells = map['numStartCells'];
+    this.numStartCargo = map['numStartCargo'];
     this.flRed = map['flRed'].toString().toLowerCase() == 'true';
     this.flYellow = map['flYellow'].toString().toLowerCase() == 'true';
     this.flCrash = map['flCrash'].toString().toLowerCase() == 'true';
@@ -451,7 +451,7 @@ class MatchScoutingData {
     this.txScoutName = map['txScoutName'];
     this.idStartFacing = map['idStartFacing'];
     this.idStartPosition = map['idStartPosition'];
-    this.numStartCells = map['numStartCells'];
+    this.numStartCargo = map['numStartCargo'];
     this.flRed = map['flRed'];
     this.flYellow = map['flYellow'];
     this.flCrash = map['flCrash'];
@@ -532,7 +532,7 @@ class MatchScoutingData {
         'facing: $idStartFacing, '
         'numMatch: $numMatch, '
         'robotPosition: $idStartPosition, '
-        'numStartCells: $numStartCells, '
+        'numStartCells: $numStartCargo, '
         '}';
   }
 }

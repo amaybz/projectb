@@ -226,7 +226,6 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       setState(() {
         _txtDeviceName.text = deviceName.name;
-        measurements = deviceName.measurements;
       });
     }
   }

@@ -6,20 +6,24 @@ import 'package:projectb/widget_row_heading.dart';
 import 'package:projectb/widget_counter.dart';
 
 class PitAuto extends StatefulWidget {
-  PitAuto({
-    Key key,
-    @required this.pitData,
-    this.styleFontSize = 16,
-    this.styleFontSizeHeadings = 18,
-    this.onChanged,
-    this.onExpanded,
-  }) : super(key: key);
+  PitAuto(
+      {Key key,
+      @required this.pitData,
+      this.styleFontSize = 16,
+      this.styleFontSizeHeadings = 18,
+      this.onChanged,
+      this.onExpanded,
+      this.strWeight = "lbs",
+      this.strDistance = "inches"})
+      : super(key: key);
 
   final PitData pitData;
   final double styleFontSize;
   final double styleFontSizeHeadings;
   final ValueChanged<PitData> onChanged;
   final ValueChanged<bool> onExpanded;
+  final String strWeight;
+  final String strDistance;
 
   @override
   _PitAutoState createState() => _PitAutoState();

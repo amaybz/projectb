@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/autotab.dart';
+import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
@@ -36,7 +37,8 @@ class MatchScoutingScreen extends StatefulWidget {
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
-
+  String strWeight = "lbs";
+  String strDistance = "Inches";
   //manage save record
   bool recordSaved = false;
   int? recordID;
@@ -126,6 +128,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             )));
       });
     }
+  }
+
+  void getMetricSystemValue() async {
+    bool currentMetricSystem = await mySharedPrefs.readBool("metricSystem");
+    print("current Metric System: " + currentMetricSystem.toString());
+    if (currentMetricSystem == true) {
+      strWeight = "kgs";
+      strDistance = "cm";
+    } else {
+      strWeight = "lbs";
+      strDistance = "inches";
+    }
+    setState(() {
+      strWeight = strWeight;
+      strDistance = strDistance;
+    });
+    print("strWeight " + strWeight);
+    print("strDistance " + strDistance);
   }
 
   getDriveStationsByTeam(team, double styleFontSize) {
@@ -233,20 +253,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   }
 
   void clearMatch() async {
-    mySharedPrefs.saveInt("CellAttempts", 0);
-    mySharedPrefs.saveInt("CellSuccess", 0);
-    mySharedPrefs.saveInt("PenalAttempts", 0);
-    mySharedPrefs.saveInt("PenalSuccess", 0);
-    mySharedPrefs.saveInt("intBuddies", 0);
-    mySharedPrefs.saveBool("selectedLower", false);
-    mySharedPrefs.saveBool("selectedOuter", false);
-    mySharedPrefs.saveBool("selectedInner", false);
-    mySharedPrefs.saveBool("selectedRotationControl", false);
-    mySharedPrefs.saveBool("selectedPositionControl", false);
-    mySharedPrefs.saveBool("selectedPark", false);
-    mySharedPrefs.saveBool("selectedBalance", false);
-    mySharedPrefs.saveBool("selectedBalanceCorrection", false);
-    mySharedPrefs.saveBool("selectedFall", false);
+    mySharedPrefs.saveStr("Weight", "lbs");
+    mySharedPrefs.readStr("Weight");
+
     recordSaved = false;
     setState(() {
       //matchScoutingData = MatchScoutingData();
@@ -286,8 +295,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         break;
       case 'Settings':
         print("Settings Selected");
+        _navigateToSettings(context);
         break;
     }
+  }
+
+  _navigateToSettings(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => SettingsScreen()),
+    );
+    getMetricSystemValue();
   }
 
   @override
@@ -985,5 +1006,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     // Call the getJSONData() method when the app initializes
     //_getScoringData();
     setEventTeams(widget.styleFontSize);
+    getMetricSystemValue();
   }
 }

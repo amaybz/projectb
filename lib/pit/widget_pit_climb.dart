@@ -18,7 +18,9 @@ class PitClimb extends StatefulWidget {
       this.txClimb,
       @required this.numClimbHeight,
       @required this.numClimbWidth,
-      this.onExpanded})
+      this.onExpanded,
+      this.strWeight = "lbs",
+      this.strDistance = "inches"})
       : super(key: key);
 
   final PitData pitData;
@@ -30,6 +32,8 @@ class PitClimb extends StatefulWidget {
   final TextEditingController txClimb;
   final TextEditingController numClimbHeight;
   final TextEditingController numClimbWidth;
+  final String strWeight;
+  final String strDistance;
 
   @override
   _PitClimbState createState() => _PitClimbState();
@@ -158,14 +162,14 @@ class _PitClimbState extends State<PitClimb> {
                 ],
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Height (inches):"),
+                Text("Height (" + widget.strDistance + "):"),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 60),
                   child: TextField(
                     controller: widget.numClimbHeight,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(hintText: 'inchs'),
+                    decoration: InputDecoration(hintText: widget.strDistance),
                     onChanged: (String text) {
                       setState(() {
                         try {
@@ -182,14 +186,14 @@ class _PitClimbState extends State<PitClimb> {
                 ),
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Width (inches):"),
+                Text("Width (" + widget.strDistance + "):"),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 60),
                   child: TextField(
                     controller: widget.numClimbWidth,
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(hintText: 'inchs'),
+                    decoration: InputDecoration(hintText: widget.strDistance),
                     onChanged: (String text) {
                       setState(() {
                         try {

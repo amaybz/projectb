@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/pit/widget_pit_human.dart';
+import 'package:projectb/settings.dart';
 import 'package:projectb/widget_headingmain.dart';
 //import 'package:projectb/pit/widget_pit_controlpenal.dart';
 import 'package:camera/camera.dart';
@@ -63,6 +64,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   File imgPitRobotSide;
   LocalTeam selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
+  String strWeight = "lbs";
+  String strDistance = "Inches";
 
   @override
   void initState() {
@@ -71,6 +74,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     //_getScoringData();
     setEventTeams(14);
     numClimbHeight.text = "0";
+    getMetricSystemValue();
   }
 
   setEventTeams(double styleFontSize) async {
@@ -152,6 +156,24 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               curve: Curves.fastOutSlowIn,
             ));
     print(_scrollController.position);
+  }
+
+  void getMetricSystemValue() async {
+    bool currentMetricSystem = await mySharedPrefs.readBool("metricSystem");
+    print("current Metric System: " + currentMetricSystem.toString());
+    if (currentMetricSystem == true) {
+      strWeight = "kgs";
+      strDistance = "cm";
+    } else {
+      strWeight = "lbs";
+      strDistance = "inches";
+    }
+    setState(() {
+      strWeight = strWeight;
+      strDistance = strDistance;
+    });
+    print("strWeight " + strWeight);
+    print("strDistance " + strDistance);
   }
 
   void clearPit() async {
@@ -285,8 +307,20 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         break;
       case 'Settings':
         print("Settings Selected");
+        _navigateToSettings(context);
         break;
     }
+  }
+
+  _navigateToSettings(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => SettingsScreen()),
+    );
+    getMetricSystemValue();
   }
 
   //style
@@ -463,7 +497,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 decoration: InputDecoration(
-                                  labelText: "Weight (lbs)",
+                                  labelText: "Weight (" + strWeight + ")",
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -484,7 +518,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 decoration: InputDecoration(
-                                  labelText: "Height(inchs)",
+                                  labelText: "Height(" + strDistance + ")",
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -505,7 +539,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
                                 decoration: InputDecoration(
-                                  labelText: "Width (inchs)",
+                                  labelText: "Width (" + strDistance + ")",
                                   border: InputBorder.none,
                                   isDense: true,
                                 ),
@@ -534,6 +568,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 txClimb: txClimb,
                 numClimbHeight: numClimbHeight,
                 numClimbWidth: numClimbWidth,
+                strWeight: strWeight,
+                strDistance: strDistance,
                 styleFieldTxClimbMaxWidth: styleFieldTxClimbMaxWidth,
                 onChanged: (PitData updates) {
                   setState(() {
@@ -546,6 +582,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               ),
               PitAuto(
                 pitData: pitData,
+                strDistance: strDistance,
+                strWeight: strWeight,
                 onChanged: (PitData updates) {
                   setState(() {
                     pitData = updates;

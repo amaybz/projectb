@@ -32,7 +32,6 @@ class LocalDB {
   final String createTblDevice =
       "CREATE TABLE IF NOT EXISTS Device(id INTEGER PRIMARY KEY, "
       "name TEXT, "
-      "measurements TEXT, "
       "location TEXT"
       ")";
   final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
@@ -435,16 +434,14 @@ class DeviceName {
   int id;
   String name;
   String location;
-  String measurements;
 
-  DeviceName({this.id, this.name, this.location, this.measurements});
+  DeviceName({this.id, this.name, this.location});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
       'location': location,
-      'measurements': measurements,
     };
   }
 
@@ -452,11 +449,10 @@ class DeviceName {
     id = map['id'];
     name = map['name'];
     location = map['location'];
-    measurements = map['measurements'];
   }
 
   @override
   String toString() {
-    return 'DeviceName{id: $id, name: $name, location: $location, measurements: $measurements}';
+    return 'DeviceName{id: $id, name: $name, location: $location}';
   }
 }

@@ -45,6 +45,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   PitData pitData = PitData();
+
   //manage save record
   bool recordSaved = false;
   //define text controllers

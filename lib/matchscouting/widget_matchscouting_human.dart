@@ -145,10 +145,6 @@ class _HumanWidgetState extends State<HumanWidget> {
                             },
                           ),
                         ]),
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
                         Column(children: [
                           CounterWidget(
                             value: widget.autoNumCargoHumanField,

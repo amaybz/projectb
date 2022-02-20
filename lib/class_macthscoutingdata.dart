@@ -51,9 +51,6 @@ class MatchScoutingData {
   String teleIdClimbTime;
   String teleIdClimbOutcome;
   String teleIdClimbPos;
-  int teleNumClimbOthers;
-  bool teleFlClimbBalance;
-  bool teleFlClimbCorrection;
   bool teleFlClimbFall;
   bool flClimbTransition;
   String idTransitionSpeed;
@@ -69,7 +66,6 @@ class MatchScoutingData {
   String commIdDriveRating;
   String commIdDefenceRating;
   bool commFlAssist;
-  bool commFlAlliance;
   bool commFlStrategy;
   bool commFlRecovery;
   bool commFlOwnThing;
@@ -135,9 +131,6 @@ class MatchScoutingData {
     this.teleIdClimbTime,
     this.teleIdClimbOutcome,
     this.teleIdClimbPos,
-    this.teleNumClimbOthers = 0,
-    this.teleFlClimbBalance = false,
-    this.teleFlClimbCorrection = false,
     this.teleFlClimbFall = false,
     this.flClimbTransition = false,
     this.idTransitionSpeed,
@@ -154,7 +147,6 @@ class MatchScoutingData {
     this.commIdDriveRating,
     this.commIdDefenceRating,
     this.commFlAssist = false,
-    this.commFlAlliance = false,
     this.commFlStrategy = false,
     this.commFlRecovery = false,
     this.commFlOwnThing = false,
@@ -218,9 +210,6 @@ class MatchScoutingData {
       'teleIdClimbTime': teleIdClimbTime,
       'teleIdClimbOutcome': teleIdClimbOutcome,
       'teleIdClimbPos': teleIdClimbPos,
-      'teleNumClimbOthers': teleNumClimbOthers,
-      'teleFlClimbBalance': teleFlClimbBalance,
-      'teleFlClimbCorrection': teleFlClimbCorrection,
       'teleFlClimbFall': teleFlClimbFall,
       'flClimbTransition': flClimbTransition,
       'idTransitionSpeed': idTransitionSpeed,
@@ -235,7 +224,6 @@ class MatchScoutingData {
       'commFlAssist': commFlAssist,
       'commIdDriveRating': commIdDriveRating,
       'commIdDefenceRating': commIdDefenceRating,
-      'commFlAlliance': commFlAlliance,
       'commFlStrategy': commFlStrategy,
       'commFlOwnThing': commFlOwnThing,
       'commFlRecovery': commFlRecovery,
@@ -300,9 +288,6 @@ class MatchScoutingData {
       'teleIdClimbTime': teleIdClimbTime,
       'teleIdClimbOutcome': teleIdClimbOutcome,
       'teleIdClimbPos': teleIdClimbPos,
-      'teleNumClimbOthers': teleNumClimbOthers,
-      'teleFlClimbBalance': teleFlClimbBalance.toString(),
-      'teleFlClimbCorrection': teleFlClimbCorrection.toString(),
       'teleFlClimbFall': teleFlClimbFall.toString(),
       'flClimbTransition': flClimbTransition.toString(),
       'idTransitionSpeed': idTransitionSpeed,
@@ -319,7 +304,6 @@ class MatchScoutingData {
       'commFlAssist': commFlAssist.toString(),
       'commIdDriveRating': commIdDriveRating,
       'commIdDefenceRating': commIdDefenceRating,
-      'commFlAlliance': commFlAlliance.toString(),
       'commFlStrategy': commFlStrategy.toString(),
       'commFlOwnThing': commFlOwnThing.toString(),
       'commFlRecovery': commFlRecovery.toString(),
@@ -387,11 +371,6 @@ class MatchScoutingData {
     this.teleIdClimbTime = map['teleIdClimbTime'];
     this.teleIdClimbOutcome = map['teleIdClimbOutcome'];
     this.teleIdClimbPos = map['teleIdClimbPos'];
-    this.teleNumClimbOthers = map['teleNumClimbOthers'];
-    this.teleFlClimbBalance =
-        map['teleFlClimbBalance'].toString().toLowerCase() == 'true';
-    this.teleFlClimbCorrection =
-        map['teleFlClimbCorrection'].toString().toLowerCase() == 'true';
     this.teleFlClimbFall =
         map['teleFlClimbFall'].toString().toLowerCase() == 'true';
     this.flClimbTransition =
@@ -409,8 +388,6 @@ class MatchScoutingData {
     this.commFlAssist = map['commFlAssist'].toString().toLowerCase() == 'true';
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
-    this.commFlAlliance =
-        map['commFlAlliance'].toString().toLowerCase() == 'true';
     this.commFlStrategy =
         map['commFlStrategy'].toString().toLowerCase() == 'true';
     this.commFlOwnThing =
@@ -486,9 +463,6 @@ class MatchScoutingData {
     this.teleIdClimbTime = map['teleIdClimbTime'];
     this.teleIdClimbOutcome = map['teleIdClimbOutcome'];
     this.teleIdClimbPos = map['teleIdClimbPos'];
-    this.teleNumClimbOthers = map['teleNumClimbOthers'];
-    this.teleFlClimbBalance = map['teleFlClimbBalance'];
-    this.teleFlClimbCorrection = map['teleFlClimbCorrection'];
     this.teleFlClimbFall = map['teleFlClimbFall'];
     this.flClimbTransition = map['flClimbTransition'];
     this.idTransitionSpeed = map['idTransitionSpeed'];
@@ -503,7 +477,6 @@ class MatchScoutingData {
     this.commFlAssist = map['commFlAssist'];
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
-    this.commFlAlliance = map['commFlAlliance'];
     this.commFlStrategy = map['commFlStrategy'];
     this.commFlOwnThing = map['commFlOwnThing'];
     this.commFlRecovery = map['commFlRecovery'];

@@ -4,9 +4,11 @@ class FinishTab extends StatefulWidget {
   const FinishTab({
     Key? key,
     this.onSavePressed,
+    this.onUploadToGoogle,
   }) : super(key: key);
 
   final ValueChanged<bool>? onSavePressed;
+  final ValueChanged<bool>? onUploadToGoogle;
 
   @override
   _FinishTabState createState() => _FinishTabState();
@@ -48,6 +50,11 @@ class _FinishTabState extends State<FinishTab> {
                         widget.onSavePressed!(true);
                       },
                       child: Text("Save to local Database")),
+                  TextButton(
+                      onPressed: () {
+                        widget.onUploadToGoogle!(true);
+                      },
+                      child: Text("Save and Upload to Google Drive")),
                 ],
               ),
             ),

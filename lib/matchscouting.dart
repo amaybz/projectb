@@ -12,6 +12,8 @@ import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
+import 'dart:io';
+import 'googleinterface.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -42,6 +44,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   //manage save record
   bool recordSaved = false;
   int? recordID;
+  GoogleInterface googleInterface = GoogleInterface.instance;
 
   int _selectedTab = 0;
 
@@ -841,21 +844,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         onEndgameClimbChanged: (MatchScoutingData value) {
           matchScoutingData = value;
         },
-        onEndgameBuddiesChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumClimbOthers = value;
-          });
-        },
-        onEndgameBalanceChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlClimbBalance = value;
-          });
-        },
-        onEndgameBalanceCorrectionChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlClimbCorrection = value;
-          });
-        },
         onEndgameFallChanged: (bool value) {
           setState(() {
             matchScoutingData.teleFlClimbFall = value;
@@ -989,6 +977,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           showAlertOKDialog(
               context, "Saved", "Match has been saved to Local Database");
         },
+        onUploadToGoogle: (bool value) {
+          if (recordSaved == true) {
+            saveMatchScout(recordID: recordID!);
+          } else {
+            saveMatchScout();
+          }
+          _uploadDataToGoogleDrive(matchScoutingData);
+        },
       );
     } else {
       return Container(
@@ -998,6 +994,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         ),
       );
     }
+  }
+
+  _uploadDataToGoogleDrive(MatchScoutingData matchScoutingData) async {
+    File file =
+        await googleInterface.uploadMatchScoutingData(matchScoutingData);
+    await file.length();
+
+    setState(() {});
   }
 
   @override

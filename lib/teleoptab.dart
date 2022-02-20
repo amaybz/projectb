@@ -26,9 +26,6 @@ class TeleOpScreen extends StatefulWidget {
     this.onCPPanelSuccessChanged,
     this.onEndgameParkChanged,
     this.onEndgameClimbChanged,
-    this.onEndgameBuddiesChanged,
-    this.onEndgameBalanceChanged,
-    this.onEndgameBalanceCorrectionChanged,
     this.onEndgameFallChanged,
     this.onChange,
   }) : super(key: key);
@@ -48,9 +45,6 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<int> onCPPanelSuccessChanged;
   final ValueChanged<bool> onEndgameParkChanged;
   final ValueChanged<MatchScoutingData> onEndgameClimbChanged;
-  final ValueChanged<int> onEndgameBuddiesChanged;
-  final ValueChanged<bool> onEndgameBalanceChanged;
-  final ValueChanged<bool> onEndgameBalanceCorrectionChanged;
   final ValueChanged<bool> onEndgameFallChanged;
   final ValueChanged<MatchScoutingData> onChange;
 
@@ -70,7 +64,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   updateValues() async {
     setState(() {
-      intBuddies = widget.matchScoutingData.teleNumClimbOthers;
       intCellAttempts = widget.matchScoutingData.teleNumCargoHighAttempt;
       intCellSuccess = widget.matchScoutingData.teleNumCargoHighSuccess;
     });

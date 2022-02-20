@@ -30,7 +30,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   List? unitMemberList;
   List<MatchScoutingData>? dataList;
   List<PitData>? listPitData;
-  String googleEmail = "Not Signed In";
+  String googleEmail = "...";
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
 
@@ -167,7 +167,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   checkIsSignedInToGoogle() async {
     isSignedInToGoogle = await googleInterface.isSignedIn();
     googleEmail = await googleInterface.getEmail();
-    setState(() {});
+    setState(() {
+      googleEmail = googleEmail;
+    });
   }
 
   //style
@@ -393,7 +395,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // Call the getJSONData() method when the app initializes
     _getScoringData();
     _getPitData();
-    _updateGoogleEmail();
     checkIsSignedInToGoogle();
+    _updateGoogleEmail();
   }
 }

@@ -71,7 +71,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   //final List<String> _listFacing = ['Own Station', 'Opponent Station'];
   final List<DropDownValue> _listFacing = [
     DropDownValue(id: "1", value: "Own Station"),
-    DropDownValue(id: "2", value: "Opponent Station")
+    DropDownValue(id: "2", value: "Opponent Station"),
+    DropDownValue(id: "3", value: "Other")
   ];
 
   final List<DropDownValue> _listRobotPosition = [
@@ -1000,7 +1001,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     File file =
         await googleInterface.uploadMatchScoutingData(matchScoutingData);
     await file.length();
-
     setState(() {});
   }
 

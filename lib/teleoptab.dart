@@ -98,13 +98,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     DropdownMenuItem(value: "4", child: Text("Fast <3 Secs")),
   ];
 
-  final List<DropDownValue> listOutcomes = [
-    DropDownValue(id: "1", value: "NA"),
-    DropDownValue(id: "2", value: "Self"),
-    DropDownValue(id: "3", value: "Self + Others"),
-    DropDownValue(id: "4", value: "Others"),
-  ];
-
   final List<DropDownValue> listPositions = [
     DropDownValue(id: "1", value: "NA"),
     DropDownValue(id: "2", value: "Inner"),
@@ -121,38 +114,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   double styleFieldControlPanelDropDownsWidth = 550.0;
   double styleFieldControlPanelDropDownsPaddingSides = 1.0;
   double styleTimeTakenWidth = 180;
-
-  _increasePenalAttempts() async {
-    setState(() {
-      intPenalAttempts = intPenalAttempts + 1;
-      widget.onCPPanelAttemptsChanged(intPenalAttempts);
-    });
-  }
-
-  _decreasePenalAttempts() async {
-    setState(() {
-      intPenalAttempts = intPenalAttempts - 1;
-      widget.onCPPanelAttemptsChanged(intPenalAttempts);
-    });
-  }
-
-  _increasePenalSuccess() async {
-    setState(() {
-      intPenalAttempts = intPenalAttempts + 1;
-      intPenalSuccess = intPenalSuccess + 1;
-      widget.onCPPanelSuccessChanged(intPenalSuccess);
-      widget.onCPPanelAttemptsChanged(intPenalAttempts);
-    });
-  }
-
-  _decreasePenalSuccess() async {
-    setState(() {
-      intPenalAttempts = intPenalAttempts - 1;
-      intPenalSuccess = intPenalSuccess - 1;
-      widget.onCPPanelSuccessChanged(intPenalSuccess);
-      widget.onCPPanelAttemptsChanged(intPenalAttempts);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +136,46 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     }
 
     return Column(children: [
+      PerformanceWidget(
+        numCargoHighAttempt: widget.matchScoutingData.teleNumCargoHighAttempt,
+        numCargoHighSuccess: widget.matchScoutingData.teleNumCargoHighSuccess,
+        numCargoLowAttempt: widget.matchScoutingData.teleNumCargoLowAttempt,
+        numCargoLowSuccess: widget.matchScoutingData.teleNumCargoLowSuccess,
+        numCargoTerminalAttempt:
+            widget.matchScoutingData.teleNumCargoTerminalAttempt,
+        numCargoTerminalSuccess:
+            widget.matchScoutingData.teleNumCargoTerminalSuccess,
+        onNumCargoHighAttemptChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoHighAttempt = value;
+          });
+        },
+        onNumCargoHighSuccessChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoHighSuccess = value;
+          });
+        },
+        onNumCargoLowAttemptChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoLowAttempt = value;
+          });
+        },
+        onNumCargoLowSuccessChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoLowSuccess = value;
+          });
+        },
+        onNumCargoTerminalAttemptChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoTerminalAttempt = value;
+          });
+        },
+        onNumCargoTerminalSuccessChanged: (int value) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoTerminalSuccess = value;
+          });
+        },
+      ),
       FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -267,46 +268,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             ),
           ]),
         ),
-      ),
-      PerformanceWidget(
-        numCargoHighAttempt: widget.matchScoutingData.teleNumCargoHighAttempt,
-        numCargoHighSuccess: widget.matchScoutingData.teleNumCargoHighSuccess,
-        numCargoLowAttempt: widget.matchScoutingData.teleNumCargoLowAttempt,
-        numCargoLowSuccess: widget.matchScoutingData.teleNumCargoLowSuccess,
-        numCargoTerminalAttempt:
-            widget.matchScoutingData.teleNumCargoTerminalAttempt,
-        numCargoTerminalSuccess:
-            widget.matchScoutingData.teleNumCargoTerminalSuccess,
-        onNumCargoHighAttemptChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoHighAttempt = value;
-          });
-        },
-        onNumCargoHighSuccessChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoHighSuccess = value;
-          });
-        },
-        onNumCargoLowAttemptChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoLowAttempt = value;
-          });
-        },
-        onNumCargoLowSuccessChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoLowSuccess = value;
-          });
-        },
-        onNumCargoTerminalAttemptChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoTerminalAttempt = value;
-          });
-        },
-        onNumCargoTerminalSuccessChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoTerminalSuccess = value;
-          });
-        },
       ),
     ]);
   }

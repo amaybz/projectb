@@ -179,15 +179,6 @@ class _AutoTabState extends State<AutoTab> {
             ]),
           ),
         ),
-        MatchAuto(
-          matchScoutingData: widget.matchScoutingData,
-          onChanged: (MatchScoutingData updates) {
-            setState(() {
-              widget.onChanged(updates);
-            });
-          },
-          onExpanded: (value) {},
-        ),
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(
@@ -280,6 +271,15 @@ class _AutoTabState extends State<AutoTab> {
               ),
             ]),
           ),
+        ),
+        MatchAuto(
+          matchScoutingData: widget.matchScoutingData,
+          onChanged: (MatchScoutingData updates) {
+            setState(() {
+              widget.onChanged(updates);
+            });
+          },
+          onExpanded: (value) {},
         ),
         PerformanceWidget(
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,

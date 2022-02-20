@@ -51,11 +51,10 @@ class _EndGameClimbState extends State<EndGameClimb> {
     DropdownMenuItem(value: "4", child: Text("Traversal")),
   ];
 
-  List<DropdownMenuItem<String>> ddsOutcome = [
+  List<DropdownMenuItem<String>> listSuccessFailNA = [
     DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Self")),
-    DropdownMenuItem(value: "3", child: Text("Self + Others")),
-    DropdownMenuItem(value: "4", child: Text("Others")),
+    DropdownMenuItem(value: "2", child: Text("Fail")),
+    DropdownMenuItem(value: "3", child: Text("Success")),
   ];
 
   final List<DropDownValue> _listClimbValues = [
@@ -66,7 +65,7 @@ class _EndGameClimbState extends State<EndGameClimb> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.matchScoutingData.teleIdClimb == "1") {
+    if (widget.matchScoutingData.teleIdClimb == "4") {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -180,7 +179,7 @@ class _EndGameClimbState extends State<EndGameClimb> {
                       value: widget.matchScoutingData.teleIdClimbOutcome == null
                           ? null
                           : widget.matchScoutingData.teleIdClimbOutcome,
-                      items: ddsOutcome,
+                      items: listSuccessFailNA,
                       onChanged: (item) {
                         setState(() {
                           widget.matchScoutingData.teleIdClimbOutcome = item;

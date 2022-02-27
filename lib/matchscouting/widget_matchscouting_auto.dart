@@ -28,123 +28,84 @@ class MatchAuto extends StatefulWidget {
 class _MatchAutoState extends State<MatchAuto> {
   @override
   Widget build(BuildContext context) {
-    if (widget.matchScoutingData.autoFlStart == false) {
-      return FractionallySizedBox(
-        widthFactor: 0.99,
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(5.0),
-            child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
-                headingText: "Auto",
-                //backGroundColor: Colors.green,
-              ),
-              RowHeading(
-                styleFontSize: widget.styleFontSize,
-                text: "Does Auto?",
-                value: widget.matchScoutingData.autoFlStart,
-                onChange: (bool value) {
-                  setState(() {
-                    widget.matchScoutingData.autoFlStart = value;
-                    widget.onChanged(widget.matchScoutingData);
-                    widget.onExpanded(true);
-                  });
-                },
-              ),
-            ]),
-          ),
+    return FractionallySizedBox(
+      widthFactor: 0.99,
+      child: Container(
+        margin: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10)),
         ),
-      );
-    } else {
-      return FractionallySizedBox(
-        widthFactor: 0.99,
         child: Container(
-          margin: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(5.0),
-            child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
-                headingText: "Auto",
-                //backGroundColor: Colors.green,
-              ),
-              RowHeading(
-                styleFontSize: widget.styleFontSize,
-                text: "Does Auto?",
-                value: widget.matchScoutingData.autoFlStart,
-                styleBackGroundColor: Colors.green,
-                onChange: (bool value) {
-                  setState(() {
-                    widget.matchScoutingData.autoFlStart = value;
-                    widget.onChanged(widget.matchScoutingData);
-                  });
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Leave Line:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.matchScoutingData.autoFlBaseLine,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.matchScoutingData.autoFlBaseLine = value;
-                        widget.onChanged(widget.matchScoutingData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Pickup new Cargo?:"),
-                CounterWidget(
-                  title: "",
-                  value: widget.matchScoutingData.autoNumCellLoad,
-                  onIncreaseStateChanged: (int value) {
+          padding: EdgeInsets.all(5.0),
+          child: Column(children: <Widget>[
+            HeadingMain(
+              styleFontSize: widget.styleFontSizeHeadings,
+              headingText: "Auto",
+              //backGroundColor: Colors.green,
+            ),
+            RowHeading(
+              styleFontSize: widget.styleFontSize,
+              text: "Does Auto?",
+              value: widget.matchScoutingData.autoFlStart,
+              styleBackGroundColor: Colors.yellow,
+              onChange: (bool value) {
+                setState(() {
+                  widget.matchScoutingData.autoFlStart = value;
+                  widget.onChanged(widget.matchScoutingData);
+                });
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Leave Line:",
+                  style: TextStyle(fontSize: widget.styleFontSize),
+                ),
+                Switch(
+                  value: widget.matchScoutingData.autoFlBaseLine,
+                  onChanged: (bool value) {
                     setState(() {
-                      widget.matchScoutingData.autoNumCellLoad++;
-                      widget.onChanged(widget.matchScoutingData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.matchScoutingData.autoNumCellLoad--;
-                      widget.onChanged(widget.matchScoutingData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.matchScoutingData.autoNumCellLoad = value;
+                      widget.matchScoutingData.autoFlBaseLine = value;
                       widget.onChanged(widget.matchScoutingData);
                     });
                   },
                 ),
-              ]),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text("Pickup new Cargo?:"),
+              CounterWidget(
+                title: "",
+                value: widget.matchScoutingData.autoNumCellLoad,
+                onIncreaseStateChanged: (int value) {
+                  setState(() {
+                    widget.matchScoutingData.autoNumCellLoad++;
+                    widget.onChanged(widget.matchScoutingData);
+                  });
+                },
+                onDecreaseStateChanged: (int value) {
+                  setState(() {
+                    widget.matchScoutingData.autoNumCellLoad--;
+                    widget.onChanged(widget.matchScoutingData);
+                  });
+                },
+                onSetValue: (int value) {
+                  setState(() {
+                    widget.matchScoutingData.autoNumCellLoad = value;
+                    widget.onChanged(widget.matchScoutingData);
+                  });
+                },
+              ),
             ]),
-          ),
+          ]),
         ),
-      );
-    }
+      ),
+    );
   }
 }

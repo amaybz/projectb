@@ -8,6 +8,7 @@ import 'package:projectb/googleauthclient.dart';
 import 'dart:io';
 
 import 'class_macthscoutingdata.dart';
+import 'class_pitdata.dart';
 
 class GoogleInterface {
   final googleSignIn =
@@ -90,6 +91,38 @@ class GoogleInterface {
             DateTime.now().toString(),
         "json");
     print("Upload Complete");
+    return newFile;
+  }
+
+  Future<File> uploadPitData(PitData pitData) async {
+    print("get file Path");
+    final file = await _localFile;
+    // Write the file.
+    print("write file");
+    var dataToWrite = json.encode(pitData.toMap());
+    File newFile = await file.writeAsString(dataToWrite.toString());
+    print("JSON: " + dataToWrite);
+    await uploadFile(
+        newFile,
+        "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
+        "json");
+    print("Upload Complete: JSON");
+    await uploadFile(
+        pitData.imgTeamUniform,
+        "PIT_TeamUniform" +
+            pitData.idTeam.toString() +
+            DateTime.now().toString(),
+        "jpg");
+    await uploadFile(
+        pitData.imgRobotSide,
+        "PIT_RobotSide" + pitData.idTeam.toString() + DateTime.now().toString(),
+        "jpg");
+    await uploadFile(
+        pitData.imgRobotFront,
+        "PIT_RobotFront" +
+            pitData.idTeam.toString() +
+            DateTime.now().toString(),
+        "jpg");
     return newFile;
   }
 

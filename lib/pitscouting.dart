@@ -18,6 +18,8 @@ import 'package:projectb/pit/widget_pit_auto.dart';
 import 'package:projectb/pit/widget_pit_images.dart';
 import 'dart:io';
 
+import 'googleinterface.dart';
+
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
     Key key,
@@ -67,6 +69,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   List<DropdownMenuItem<String>> ddsEventTeams = [];
   String strWeight = "lbs";
   String strDistance = "Inches";
+  int googleUploadStatus = 0;
+  GoogleInterface googleInterface = GoogleInterface.instance;
 
   @override
   void initState() {
@@ -696,9 +700,35 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                       : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
                   showAlertOKDialog(context, "Saved", alertMsg);
                 },
+                googleUploadStatus: googleUploadStatus,
+                onUploadToGoogle: (bool value) async {
+                  if (recordSaved == true) {
+                    await savePitData(recordID: pitData.id);
+                  } else {
+                    await savePitData();
+                  }
+                  if (recordSaved == true) {
+                    _uploadDataToGoogleDrive(pitData);
+                  }
+                  String alertMsg = (recordSaved == true)
+                      ? "Pit has been saved to Local Database."
+                      : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
+                  showAlertOKDialog(context, "Saved", alertMsg);
+                },
               ),
             ]),
       ),
     );
+  }
+
+  _uploadDataToGoogleDrive(PitData pitData) async {
+    setState(() {
+      googleUploadStatus = 1;
+    });
+    File file = await googleInterface.uploadPitData(pitData);
+    await file.length();
+    setState(() {
+      googleUploadStatus = 2;
+    });
   }
 }

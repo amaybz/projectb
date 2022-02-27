@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
 import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
 
 class PerformanceWidget extends StatefulWidget {
   const PerformanceWidget({
     Key? key,
+    required this.matchScoutingData,
     this.numCargoHighAttempt,
     this.numCargoHighSuccess,
     this.numCargoLowAttempt,
@@ -18,12 +20,14 @@ class PerformanceWidget extends StatefulWidget {
     this.onNumCargoLowSuccessChanged,
     this.onNumCargoTerminalAttemptChanged,
     this.onNumCargoTerminalSuccessChanged,
+    this.onChange,
     //style
     this.styleFontSizeBody = 16,
     this.styleFontSizeHeadings = 18,
     this.styleImgFieldWidth = 150,
   }) : super(key: key);
 
+  final MatchScoutingData matchScoutingData;
   final int? numCargoHighAttempt;
   final int? numCargoHighSuccess;
   final int? numCargoLowAttempt;
@@ -36,6 +40,7 @@ class PerformanceWidget extends StatefulWidget {
   final ValueChanged<int>? onNumCargoLowSuccessChanged;
   final ValueChanged<int>? onNumCargoTerminalAttemptChanged;
   final ValueChanged<int>? onNumCargoTerminalSuccessChanged;
+  final ValueChanged<MatchScoutingData>? onChange;
   final double styleFontSizeBody;
   final double styleFontSizeHeadings;
   final double styleImgFieldWidth;
@@ -96,8 +101,7 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                           ),
                           CounterWidget(
                             value: widget.numCargoHighSuccess,
-                            title: "Hub (Upper) ",
-                            title1: " Success",
+                            title: "Success",
                             styleFontSize: widget.styleFontSizeBody,
                             onIncreaseStateChanged: (int increase) {
                               setState(() {
@@ -105,6 +109,7 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                                     widget.numCargoHighAttempt! + 1);
                                 widget.onNumCargoHighSuccessChanged!(
                                     widget.numCargoHighSuccess! + 1);
+                                widget.onChange!(widget.matchScoutingData);
                               });
                             },
                             onDecreaseStateChanged: (int decrease) {
@@ -133,58 +138,6 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             ),
                           ),
                         ]),
-                        Column(children: [
-                          CounterWidget(
-                            value: widget.numCargoLowAttempt,
-                            title: "Hub (Lower)",
-                            title1: " Attempt",
-                            styleFontSize: widget.styleFontSizeBody,
-                            onIncreaseStateChanged: (int increase) {
-                              setState(() {
-                                widget.onNumCargoLowAttemptChanged!(
-                                    widget.numCargoLowAttempt! + 1);
-                              });
-                            },
-                            onDecreaseStateChanged: (int decrease) {
-                              setState(() {
-                                widget.onNumCargoLowAttemptChanged!(
-                                    widget.numCargoLowAttempt! - 1);
-                              });
-                            },
-                            onSetValue: (int value) {
-                              widget.onNumCargoLowAttemptChanged!(value);
-                            },
-                          ),
-                          CounterWidget(
-                            value: widget.numCargoLowSuccess,
-                            title: "Hub (Lower)",
-                            title1: " Success",
-                            styleFontSize: widget.styleFontSizeBody,
-                            onIncreaseStateChanged: (int increase) {
-                              setState(() {
-                                widget.onNumCargoLowAttemptChanged!(
-                                    widget.numCargoLowAttempt! + 1);
-                                widget.onNumCargoLowSuccessChanged!(
-                                    widget.numCargoLowSuccess! + 1);
-                              });
-                            },
-                            onDecreaseStateChanged: (int decrease) {
-                              setState(() {
-                                widget.onNumCargoLowAttemptChanged!(
-                                    widget.numCargoLowAttempt! - 1);
-                                widget.onNumCargoLowSuccessChanged!(
-                                    widget.numCargoLowSuccess! - 1);
-                              });
-                            },
-                            onSetValue: (int value) {
-                              widget.onNumCargoLowSuccessChanged!(value);
-                            },
-                          ),
-                        ]),
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
                         Column(children: [
                           CounterWidget(
                             value: widget.numCargoTerminalAttempt,
@@ -230,6 +183,57 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             },
                             onSetValue: (int value) {
                               widget.onNumCargoTerminalSuccessChanged!(value);
+                            },
+                          ),
+                        ]),
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(children: [
+                          CounterWidget(
+                            value: widget.numCargoLowAttempt,
+                            title: "Hub (Lower)",
+                            title1: " Attempt",
+                            styleFontSize: widget.styleFontSizeBody,
+                            onIncreaseStateChanged: (int increase) {
+                              setState(() {
+                                widget.onNumCargoLowAttemptChanged!(
+                                    widget.numCargoLowAttempt! + 1);
+                              });
+                            },
+                            onDecreaseStateChanged: (int decrease) {
+                              setState(() {
+                                widget.onNumCargoLowAttemptChanged!(
+                                    widget.numCargoLowAttempt! - 1);
+                              });
+                            },
+                            onSetValue: (int value) {
+                              widget.onNumCargoLowAttemptChanged!(value);
+                            },
+                          ),
+                          CounterWidget(
+                            value: widget.numCargoLowSuccess,
+                            title: "Success",
+                            styleFontSize: widget.styleFontSizeBody,
+                            onIncreaseStateChanged: (int increase) {
+                              setState(() {
+                                widget.onNumCargoLowAttemptChanged!(
+                                    widget.numCargoLowAttempt! + 1);
+                                widget.onNumCargoLowSuccessChanged!(
+                                    widget.numCargoLowSuccess! + 1);
+                              });
+                            },
+                            onDecreaseStateChanged: (int decrease) {
+                              setState(() {
+                                widget.onNumCargoLowAttemptChanged!(
+                                    widget.numCargoLowAttempt! - 1);
+                                widget.onNumCargoLowSuccessChanged!(
+                                    widget.numCargoLowSuccess! - 1);
+                              });
+                            },
+                            onSetValue: (int value) {
+                              widget.onNumCargoLowSuccessChanged!(value);
                             },
                           ),
                         ]),

@@ -59,8 +59,8 @@ class _EndGameClimbState extends State<EndGameClimb> {
 
   final List<DropDownValue> _listClimbValues = [
     DropDownValue(id: "1", value: "N/A"),
-    DropDownValue(id: "2", value: "Shared Tarmac"),
-    DropDownValue(id: "3", value: "Solo Tarmac"),
+    DropDownValue(id: "2", value: "Fail"),
+    DropDownValue(id: "3", value: "Success"),
   ];
 
   @override
@@ -108,10 +108,10 @@ class _EndGameClimbState extends State<EndGameClimb> {
             child: Column(children: <Widget>[
               RowHeadingDropDown(
                 styleFontSize: widget.styleFontSize,
-                text: "Can Climb?",
+                text: "Climb?",
                 value: widget.matchScoutingData.teleIdClimb,
                 listValues: _listClimbValues,
-                styleBackGroundColor: Colors.green,
+                styleBackGroundColor: Colors.yellow,
                 onChange: (String value) {
                   setState(() {
                     widget.matchScoutingData.teleIdClimb = value;
@@ -195,7 +195,7 @@ class _EndGameClimbState extends State<EndGameClimb> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Preferred Position:",
+                    "Final Position:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   DropdownButton(

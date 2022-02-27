@@ -283,6 +283,12 @@ class _AutoTabState extends State<AutoTab> {
         ),
         PerformanceWidget(
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
+          matchScoutingData: widget.matchScoutingData,
+          onChange: (MatchScoutingData newData) {
+            setState(() {
+              widget.onChanged(widget.matchScoutingData);
+            });
+          },
           numCargoHighAttempt: widget.matchScoutingData.autoNumCargoHighAttempt,
           numCargoHighSuccess: widget.matchScoutingData.autoNumCargoHighSuccess,
           numCargoLowAttempt: widget.matchScoutingData.autoNumCargoLowAttempt,
@@ -293,36 +299,54 @@ class _AutoTabState extends State<AutoTab> {
               widget.matchScoutingData.autoNumCargoTerminalSuccess,
           onNumCargoHighAttemptChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHighAttempt = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
           onNumCargoHighSuccessChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHighSuccess = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
           onNumCargoLowAttemptChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoLowAttempt = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
           onNumCargoLowSuccessChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoLowSuccess = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
           onNumCargoTerminalAttemptChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoTerminalAttempt = value;
               widget.onChanged(widget.matchScoutingData);
             });
           },
           onNumCargoTerminalSuccessChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoTerminalSuccess = value;
               widget.onChanged(widget.matchScoutingData);
             });

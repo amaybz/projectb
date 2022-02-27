@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:projectb/widget_loading.dart';
 
 class FinishTab extends StatefulWidget {
   const FinishTab({
     Key? key,
     this.onSavePressed,
     this.onUploadToGoogle,
+    this.googleUploadStatus = 0,
   }) : super(key: key);
 
   final ValueChanged<bool>? onSavePressed;
   final ValueChanged<bool>? onUploadToGoogle;
+  final int googleUploadStatus;
 
   @override
   _FinishTabState createState() => _FinishTabState();
@@ -50,11 +53,20 @@ class _FinishTabState extends State<FinishTab> {
                         widget.onSavePressed!(true);
                       },
                       child: Text("Save to local Database")),
-                  TextButton(
-                      onPressed: () {
-                        widget.onUploadToGoogle!(true);
-                      },
-                      child: Text("Save and Upload to Google Drive")),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            widget.onUploadToGoogle!(true);
+                          },
+                          child: Text("Save and Upload to Google Drive")),
+                      LoadingImage(
+                        state: widget.googleUploadStatus,
+                        text: "",
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),

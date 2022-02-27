@@ -44,6 +44,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   //manage save record
   bool recordSaved = false;
   int? recordID;
+  int googleUploadStatus = 0;
   GoogleInterface googleInterface = GoogleInterface.instance;
 
   int _selectedTab = 0;
@@ -969,6 +970,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 3) {
       return FinishTab(
+        googleUploadStatus: googleUploadStatus,
         onSavePressed: (bool value) {
           if (recordSaved == true) {
             saveMatchScout(recordID: recordID!);
@@ -998,10 +1000,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   }
 
   _uploadDataToGoogleDrive(MatchScoutingData matchScoutingData) async {
+    setState(() {
+      googleUploadStatus = 1;
+    });
     File file =
         await googleInterface.uploadMatchScoutingData(matchScoutingData);
     await file.length();
-    setState(() {});
+    setState(() {
+      googleUploadStatus = 2;
+    });
   }
 
   @override

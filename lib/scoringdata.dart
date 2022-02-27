@@ -9,6 +9,7 @@ import 'dart:io';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/widget_loading_popup.dart';
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
@@ -108,6 +109,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Future<File> writeMatchFileAndUploadToGoogle(
       MatchScoutingData matchScoutingData) async {
+    DialogBuilder(context).showLoadingIndicator('Uploading');
     print("get file Path");
     final file = await _localFile;
     // Write the file.
@@ -125,12 +127,15 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             DateTime.now().toString(),
         "json");
     print("Upload Complete");
+    DialogBuilder(context).hideOpenDialog();
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
+
     return newFile;
   }
 
   Future<File> writePitFileAndUploadToGoogle(PitData pitData) async {
+    DialogBuilder(context).showLoadingIndicator('Uploading');
     print("get file Path");
     final file = await _localFile;
     // Write the file.
@@ -159,6 +164,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             pitData.idTeam.toString() +
             DateTime.now().toString(),
         "jpg");
+    DialogBuilder(context).hideOpenDialog();
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
     return newFile;

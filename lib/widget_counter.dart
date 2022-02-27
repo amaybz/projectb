@@ -7,7 +7,7 @@ class CounterWidget extends StatefulWidget {
     Key? key,
     @required this.value,
     @required this.title,
-    this.title1 = "",
+    this.title1,
     this.onIncreaseStateChanged,
     this.onDecreaseStateChanged,
     this.onSetValue,
@@ -102,7 +102,7 @@ class _CounterWidgetState extends State<CounterWidget> {
   @override
   Widget build(BuildContext context) {
     widget.txtCounterValue.text = widget.value.toString();
-    if (widget.title != null) {
+    if (widget.title1 != null) {
       return Column(
           //mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,6 +113,17 @@ class _CounterWidgetState extends State<CounterWidget> {
             ),
             Text(
               widget.title1!,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            _counter(),
+          ]);
+    } else if (widget.title != null) {
+      return Column(
+          //mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.title!,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             _counter(),

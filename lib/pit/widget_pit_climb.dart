@@ -162,7 +162,7 @@ class _PitClimbState extends State<PitClimb> {
                 ],
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Height (" + widget.strDistance + "):"),
+                Text("Height off ground (" + widget.strDistance + "):"),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 60),
                   child: TextField(
@@ -186,7 +186,7 @@ class _PitClimbState extends State<PitClimb> {
                 ),
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Width (" + widget.strDistance + "):"),
+                Text("Width of Climber (" + widget.strDistance + "):"),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 60),
                   child: TextField(
@@ -278,7 +278,7 @@ class _PitClimbState extends State<PitClimb> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Preferred Position:",
+                    "Preferred First Bar:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   DropdownButton(

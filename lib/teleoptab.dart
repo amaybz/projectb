@@ -141,22 +141,40 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
         numCargoHighSuccess: widget.matchScoutingData.teleNumCargoHighSuccess,
         numCargoLowAttempt: widget.matchScoutingData.teleNumCargoLowAttempt,
         numCargoLowSuccess: widget.matchScoutingData.teleNumCargoLowSuccess,
+        onChange: (MatchScoutingData newData) {
+          setState(() {
+            widget.matchScoutingData.teleNumCargoHighAttempt =
+                newData.teleNumCargoHighAttempt;
+            widget.matchScoutingData.teleNumCargoHighSuccess =
+                newData.teleNumCargoHighSuccess;
+            widget.onChange(widget.matchScoutingData);
+          });
+        },
         numCargoTerminalAttempt:
             widget.matchScoutingData.teleNumCargoTerminalAttempt,
         numCargoTerminalSuccess:
             widget.matchScoutingData.teleNumCargoTerminalSuccess,
         onNumCargoHighAttemptChanged: (int value) {
           setState(() {
+            if (value < 0) {
+              value = 0;
+            }
             widget.matchScoutingData.teleNumCargoHighAttempt = value;
           });
         },
         onNumCargoHighSuccessChanged: (int value) {
           setState(() {
+            if (value < 0) {
+              value = 0;
+            }
             widget.matchScoutingData.teleNumCargoHighSuccess = value;
           });
         },
         onNumCargoLowAttemptChanged: (int value) {
           setState(() {
+            if (value < 0) {
+              value = 0;
+            }
             widget.matchScoutingData.teleNumCargoLowAttempt = value;
           });
         },
@@ -167,11 +185,17 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
         },
         onNumCargoTerminalAttemptChanged: (int value) {
           setState(() {
+            if (value < 0) {
+              value = 0;
+            }
             widget.matchScoutingData.teleNumCargoTerminalAttempt = value;
           });
         },
         onNumCargoTerminalSuccessChanged: (int value) {
           setState(() {
+            if (value < 0) {
+              value = 0;
+            }
             widget.matchScoutingData.teleNumCargoTerminalSuccess = value;
           });
         },

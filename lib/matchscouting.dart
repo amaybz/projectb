@@ -272,13 +272,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
   }
 
-  void saveMatchScout({
+  Future<bool> saveMatchScout({
     int recordID = 0,
   }) async {
     print("saving record");
     if (recordID > 0) {
       matchScoutingData.id = recordID;
     }
+    if (selectedTeam == null) return false;
+    if (_txtMatchNumber.text == "") return false;
     matchScoutingData.txDeviceName = widget.deviceName;
     matchScoutingData.txEvent = widget.eventKey;
     matchScoutingData.idTeam = selectedTeam!.teamNumber;
@@ -287,9 +289,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     this.recordID = await localDB.insertScoringData(matchScoutingData);
     if (this.recordID! > 0) {
       recordSaved = true;
+      print("Record Saved: " + recordSaved.toString());
+      print("Record ID: " + this.recordID.toString());
+      return true;
+    } else {
+      recordSaved = false;
+      print("ERROR Saving Record: " + recordSaved.toString());
+      return false;
     }
-    print("Record Saved: " + recordSaved.toString());
-    print("Record ID: " + this.recordID.toString());
   }
 
   void handleMenuClick(String value) async {
@@ -971,14 +978,17 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 3) {
       return FinishTab(
         googleUploadStatus: googleUploadStatus,
-        onSavePressed: (bool value) {
+        onSavePressed: (bool value) async {
           if (recordSaved == true) {
-            saveMatchScout(recordID: recordID!);
+            await saveMatchScout(recordID: recordID!);
           } else {
-            saveMatchScout();
+            await saveMatchScout();
           }
-          showAlertOKDialog(
-              context, "Saved", "Match has been saved to Local Database");
+          String alertMsg;
+          alertMsg = (recordSaved == true)
+              ? "Match has been saved to Local Database"
+              : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
+          showAlertOKDialog(context, "Saved", alertMsg);
         },
         onUploadToGoogle: (bool value) {
           if (recordSaved == true) {

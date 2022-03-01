@@ -85,14 +85,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             widget.onCaptureImage!(File(image.path));
             Navigator.pop(context);
             //Navigator.push(
-             // context,
+            // context,
             //  MaterialPageRoute(
             //    builder: (context) => DisplayPictureScreen(
             //      // Pass the automatically generated path to
             //      // the DisplayPictureScreen widget.
             //      imagePath: image.path,
-             //   ),
-             // ),
+            //   ),
+            // ),
             //);
           } catch (e) {
             // If an error occurs, log the error to the console.
@@ -127,7 +127,8 @@ class DisplayPictureScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              saveToDevice(File(imagePath!), "TestPicture" + DateTime.now().toString());
+              saveToDevice(
+                  File(imagePath!), "TestPicture" + DateTime.now().toString());
             },
             child: Text("Save to Device"),
           ),
@@ -137,7 +138,6 @@ class DisplayPictureScreen extends StatelessWidget {
   }
 
   Future<File> saveToDevice(File file, String fileName) async {
-
     final appDirectory = await getApplicationDocumentsDirectory();
     final appExternalDirectory = await getExternalStorageDirectory();
     final String newPath = appExternalDirectory!.path + "/" + fileName + ".jpg";

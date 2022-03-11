@@ -109,7 +109,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Future<File> writeMatchFileAndUploadToGoogle(
       MatchScoutingData matchScoutingData) async {
-    DialogBuilder(context).showLoadingIndicator('Uploading');
+    DialogBuilder(context).showLoadingIndicator('Uploading Match JSON');
     print("get file Path");
     final file = await _localFile;
     // Write the file.
@@ -135,8 +135,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Future<File> writePitFileAndUploadToGoogle(PitData pitData) async {
-    DialogBuilder(context).showLoadingIndicator('Uploading');
-    print("get file Path");
+    DialogBuilder(context).showLoadingIndicator('Uploading PIT JSON');
+    print("getting file Path");
     final file = await _localFile;
     // Write the file.
     print("write file");
@@ -148,16 +148,22 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
         "json");
     print("Upload Complete: JSON");
+    DialogBuilder(context).hideOpenDialog();
+    DialogBuilder(context).showLoadingIndicator('Uploading Uniform Image');
     await googleInterface.uploadFile(
         pitData.imgTeamUniform,
         "PIT_TeamUniform" +
             pitData.idTeam.toString() +
             DateTime.now().toString(),
         "jpg");
+    DialogBuilder(context).hideOpenDialog();
+    DialogBuilder(context).showLoadingIndicator('Uploading Robot Side Image');
     await googleInterface.uploadFile(
         pitData.imgRobotSide,
         "PIT_RobotSide" + pitData.idTeam.toString() + DateTime.now().toString(),
         "jpg");
+    DialogBuilder(context).hideOpenDialog();
+    DialogBuilder(context).showLoadingIndicator('Uploading Robot Front Image');
     await googleInterface.uploadFile(
         pitData.imgRobotFront,
         "PIT_RobotFront" +

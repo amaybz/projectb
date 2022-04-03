@@ -48,7 +48,7 @@ class _EndGameClimbState extends State<EndGameClimb> {
     DropdownMenuItem(value: "2", child: Text("Low")),
     DropdownMenuItem(value: "3", child: Text("Middle")),
     DropdownMenuItem(value: "4", child: Text("High")),
-    DropdownMenuItem(value: "4", child: Text("Traversal")),
+    DropdownMenuItem(value: "5", child: Text("Traversal")),
   ];
 
   List<DropdownMenuItem<String>> listSuccessFailNA = [

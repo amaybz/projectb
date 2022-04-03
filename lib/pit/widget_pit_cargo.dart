@@ -56,7 +56,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Manipulate:",
+                text: "Manipulate Cargo:",
                 value: widget.pitData.flCargo,
                 onChange: (bool value) {
                   setState(() {
@@ -93,7 +93,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Manipulate:",
+                text: "Manipulate Cargo:",
                 value: widget.pitData.flCargo,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
@@ -103,6 +103,11 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     widget.onExpanded(true);
                   });
                 },
+              ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSize,
+                headingText: "Intake",
+                //backGroundColor: Colors.green,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,11 +160,16 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                   ),
                 ],
               ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSize,
+                headingText: "Scoring",
+                //backGroundColor: Colors.green,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Reject Cargo:",
+                    "Reject Wrong Cargo:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -222,6 +232,11 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     },
                   ),
                 ],
+              ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSize,
+                headingText: "General",
+                //backGroundColor: Colors.green,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("Storage Capacity:"),

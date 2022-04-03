@@ -135,6 +135,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Future<File> writePitFileAndUploadToGoogle(PitData pitData) async {
+    bool fileExists;
     DialogBuilder(context).showLoadingIndicator('Uploading PIT JSON');
     print("getting file Path");
     final file = await _localFile;
@@ -150,26 +151,49 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("Upload Complete: JSON");
     DialogBuilder(context).hideOpenDialog();
     DialogBuilder(context).showLoadingIndicator('Uploading Uniform Image');
-    await googleInterface.uploadFile(
-        pitData.imgTeamUniform,
-        "PIT_TeamUniform" +
-            pitData.idTeam.toString() +
-            DateTime.now().toString(),
-        "jpg");
+    if (pitData.imgTeamUniform != null) {
+      fileExists = await File(pitData.imgTeamUniform.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await googleInterface.uploadFile(
+          pitData.imgTeamUniform,
+          "PIT_TeamUniform" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
     DialogBuilder(context).hideOpenDialog();
     DialogBuilder(context).showLoadingIndicator('Uploading Robot Side Image');
-    await googleInterface.uploadFile(
-        pitData.imgRobotSide,
-        "PIT_RobotSide" + pitData.idTeam.toString() + DateTime.now().toString(),
-        "jpg");
+    if (pitData.imgRobotSide != null) {
+      fileExists = await File(pitData.imgRobotSide.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await googleInterface.uploadFile(
+          pitData.imgRobotSide,
+          "PIT_RobotSide" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
     DialogBuilder(context).hideOpenDialog();
     DialogBuilder(context).showLoadingIndicator('Uploading Robot Front Image');
-    await googleInterface.uploadFile(
-        pitData.imgRobotFront,
-        "PIT_RobotFront" +
-            pitData.idTeam.toString() +
-            DateTime.now().toString(),
-        "jpg");
+    if (pitData.imgRobotFront != null) {
+      fileExists = await File(pitData.imgRobotFront.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await googleInterface.uploadFile(
+          pitData.imgRobotFront,
+          "PIT_RobotFront" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
     DialogBuilder(context).hideOpenDialog();
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");

@@ -54,7 +54,7 @@ class _PitHumanState extends State<PitHuman> {
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Human Player?",
+                text: "Trained Human Player?",
                 value: widget.pitData.flHuman,
                 onChange: (bool value) {
                   setState(() {
@@ -91,7 +91,7 @@ class _PitHumanState extends State<PitHuman> {
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Human Player?",
+                text: "Trained Human Player?",
                 value: widget.pitData.flHuman,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {

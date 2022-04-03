@@ -106,7 +106,7 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Line:",
+                    "Leave Tarmac:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -124,7 +124,7 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Sort Cargo?:",
+                    "Colour Sort Cargo?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -157,7 +157,7 @@ class _PitAutoState extends State<PitAuto> {
                 ],
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("#Balls:"),
+                Text("#Cargo Shot:"),
                 CounterWidget(
                   title: "",
                   value: widget.pitData.numAutoShoot,
@@ -182,7 +182,7 @@ class _PitAutoState extends State<PitAuto> {
                 ),
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("#Pickup:"),
+                Text("#Cargo Pickup:"),
                 CounterWidget(
                   title: "",
                   value: widget.pitData.numAutoLoad,

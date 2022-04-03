@@ -35,7 +35,7 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4+15"
+    version: "0.9.4+16"
   camera_platform_interface:
     dependency: "direct main"
     description:
@@ -169,7 +169,7 @@ packages:
       name: googleapis
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "8.1.0"
   http:
     dependency: "direct main"
     description:

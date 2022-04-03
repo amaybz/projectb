@@ -266,9 +266,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
     pitData.txShooting = txShooting.text;
-    if (pitData.imgTeamUniform == null) return false;
-    if (pitData.imgRobotSide == null) return false;
-    if (pitData.imgRobotFront == null) return false;
+    //if (pitData.imgTeamUniform == null) return false;
+    //if (pitData.imgRobotSide == null) return false;
+    //if (pitData.imgRobotFront == null) return false;
 
     try {
       pitData.numWeight = int.parse(txWeight.text);
@@ -697,7 +697,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   String alertMsg;
                   alertMsg = (recordSaved == true)
                       ? "Pit has been saved to Local Database"
-                      : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
+                      : "FAILED to Save Record: The following fields must be filled in: Team";
                   showAlertOKDialog(context, "Saved", alertMsg);
                 },
                 googleUploadStatus: googleUploadStatus,

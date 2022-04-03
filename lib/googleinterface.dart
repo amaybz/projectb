@@ -95,6 +95,7 @@ class GoogleInterface {
   }
 
   Future<File> uploadPitData(PitData pitData) async {
+    bool fileExists;
     print("get file Path");
     final file = await _localFile;
     // Write the file.
@@ -107,22 +108,46 @@ class GoogleInterface {
         "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
         "json");
     print("Upload Complete: JSON");
-    await uploadFile(
-        pitData.imgTeamUniform,
-        "PIT_TeamUniform" +
-            pitData.idTeam.toString() +
-            DateTime.now().toString(),
-        "jpg");
-    await uploadFile(
-        pitData.imgRobotSide,
-        "PIT_RobotSide" + pitData.idTeam.toString() + DateTime.now().toString(),
-        "jpg");
-    await uploadFile(
-        pitData.imgRobotFront,
-        "PIT_RobotFront" +
-            pitData.idTeam.toString() +
-            DateTime.now().toString(),
-        "jpg");
+    if (pitData.imgTeamUniform != null) {
+      fileExists = await File(pitData.imgTeamUniform.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await uploadFile(
+          pitData.imgTeamUniform,
+          "PIT_TeamUniform" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
+    if (pitData.imgRobotSide != null) {
+      fileExists = await File(pitData.imgRobotSide.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await uploadFile(
+          pitData.imgRobotSide,
+          "PIT_RobotSide" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
+    if (pitData.imgRobotFront != null) {
+      fileExists = await File(pitData.imgRobotFront.path).exists();
+    } else {
+      fileExists = false;
+    }
+
+    if (fileExists == true) {
+      await uploadFile(
+          pitData.imgRobotFront,
+          "PIT_RobotFront" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
     return newFile;
   }
 
@@ -131,15 +156,15 @@ class GoogleInterface {
       type = "json";
     }
 
-    print("check if APP folder exists");
     print(await isSignedIn());
+    print("check if APP folder exists");
     await _checkIfAppFolderExists();
     if (appFolderID == "") {
       //create folder
       print("Create folder");
       await _createAppFolder();
     }
-    print("Setup Drive API");
+    print("Connect to Drive API");
     //final signIn.GoogleSignInAccount googleAccount  = await account;
     //final authHeaders = await googleAccount.authHeaders;
     //final authenticateClient = GoogleAuthClient(authHeaders);
@@ -184,7 +209,7 @@ class GoogleInterface {
     driveFolder.name = "FRC-APP";
     driveFolder.mimeType = "application/vnd.google-apps.folder";
     final createFolder = await gDriveApi.files.create(driveFolder);
-    print("Uploaded Folder: " + createFolder.id.toString());
+    print("Created Folder: " + createFolder.id.toString());
     appFolderID = createFolder.id!;
   }
 }

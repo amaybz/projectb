@@ -105,6 +105,19 @@ class PitData {
   });
 
   Map<String, dynamic> toLocalDB() {
+    String fileRobotFront;
+    if (imgRobotFront != null) {
+      fileRobotFront = imgRobotFront.path;
+    }
+    String fileImgRobotSide;
+    if (imgRobotSide != null) {
+      fileImgRobotSide = imgRobotSide.path;
+    }
+    String fileImgTeamUniform;
+    if (imgTeamUniform != null) {
+      fileImgTeamUniform = imgTeamUniform.path;
+    }
+
     return {
       'id': id,
       'txEvent': txEvent,
@@ -147,9 +160,9 @@ class PitData {
       'dtCreation': dtCreation.toString(),
       'dtModified': dtModified.toString(),
       'txComputerName': txComputerName,
-      'imgRobotFront': imgRobotFront.path,
-      'imgRobotSide': imgRobotSide.path,
-      'imgTeamUniform': imgTeamUniform.path,
+      'imgRobotFront': fileRobotFront,
+      'imgRobotSide': fileImgRobotSide,
+      'imgTeamUniform': fileImgTeamUniform,
     };
   }
 
@@ -202,12 +215,30 @@ class PitData {
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
-    this.imgRobotFront = File(map['imgRobotFront']);
-    this.imgRobotSide = File(map['imgRobotSide']);
-    this.imgTeamUniform = File(map['imgTeamUniform']);
+    if (map['imgRobotFront'] != null) {
+      this.imgRobotFront = File(map['imgRobotFront']);
+    }
+    if (map['imgRobotSide'] != null) {
+      this.imgRobotSide = File(map['imgRobotSide']);
+    }
+    if (map['imgTeamUniform'] != null) {
+      this.imgTeamUniform = File(map['imgTeamUniform']);
+    }
   }
 
   Map<String, dynamic> toMap() {
+    String fileImgRobotFront;
+    if (this.imgRobotFront != null) {
+      fileImgRobotFront = this.imgRobotFront.path;
+    }
+    String fileImgRobotSide;
+    if (this.imgRobotSide != null) {
+      fileImgRobotSide = this.imgRobotSide.path;
+    }
+    String fileImgTeamUniform;
+    if (this.imgTeamUniform != null) {
+      fileImgTeamUniform = this.imgTeamUniform.path;
+    }
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['txEvent'] = this.txEvent;
@@ -250,9 +281,9 @@ class PitData {
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
     data['txComputerName'] = this.txComputerName;
-    data['imgRobotFront'] = this.imgRobotFront.path;
-    data['imgRobotSide'] = this.imgRobotSide.path;
-    data['imgTeamUniform'] = this.imgTeamUniform.path;
+    data['imgRobotFront'] = fileImgRobotFront;
+    data['imgRobotSide'] = fileImgRobotSide;
+    data['imgTeamUniform'] = fileImgTeamUniform;
     return data;
   }
 

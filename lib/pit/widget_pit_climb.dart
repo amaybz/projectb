@@ -299,48 +299,6 @@ class _PitClimbState extends State<PitClimb> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Reposition while hanging:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flClimbMove,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flClimbMove = value;
-                        widget.onChanged(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Mechanism: ",
-                      style: TextStyle(fontSize: widget.styleFontSize),
-                    ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                          maxWidth: widget.styleFieldTxClimbMaxWidth),
-                      child: TextField(
-                        controller: widget.txClimb,
-                        decoration: InputDecoration(
-                            hintText: 'Notes on climb mechanism'),
-                        onChanged: (String text) {
-                          setState(() {
-                            widget.pitData.txClimb = text;
-                            widget.onChanged(widget.pitData);
-                          });
-                        },
-                      ),
-                    ),
-                  ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
                     "Transition?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
@@ -401,6 +359,48 @@ class _PitClimbState extends State<PitClimb> {
                       }),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Reposition while hanging:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flClimbMove,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flClimbMove = value;
+                        widget.onChanged(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Mechanism: ",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxWidth: widget.styleFieldTxClimbMaxWidth),
+                      child: TextField(
+                        controller: widget.txClimb,
+                        decoration: InputDecoration(
+                            hintText: 'Notes on climb mechanism'),
+                        onChanged: (String text) {
+                          setState(() {
+                            widget.pitData.txClimb = text;
+                            widget.onChanged(widget.pitData);
+                          });
+                        },
+                      ),
+                    ),
+                  ]),
             ]),
           ),
         ),

@@ -260,9 +260,7 @@ class LocalDB {
   Future<DeviceName> getDeviceName() async {
     Database db = await database;
     List<Map> maps = await db.query(tblDevice,
-        columns: ['id', 'name', 'location', 'measurements'],
-        where: 'id = ?',
-        whereArgs: [1]);
+        columns: ['id', 'name', 'location'], where: 'id = ?', whereArgs: [1]);
     if (maps.length > 0) {
       return DeviceName.fromMap(maps.first);
     }

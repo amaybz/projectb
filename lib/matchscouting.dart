@@ -64,8 +64,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   final List<String> _listStartingCargo = [
     '0',
     '1',
-    '2',
-    '3',
   ];
 
   //String _selectedFacing;
@@ -844,11 +842,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.teleNumCargoHighSuccess = value;
           });
           print(matchScoutingData.teleNumCargoHighSuccess);
-        },
-        onEndgameParkChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlHanger = value;
-          });
         },
         onEndgameClimbChanged: (MatchScoutingData value) {
           matchScoutingData = value;

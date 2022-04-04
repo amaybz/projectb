@@ -64,7 +64,7 @@ class _MatchAutoState extends State<MatchAuto> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Leave Line:",
+                  "Leave Tarmac:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
@@ -79,7 +79,7 @@ class _MatchAutoState extends State<MatchAuto> {
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text("Pickup new Cargo?:"),
+              Text("#Cargo Pickup?:"),
               CounterWidget(
                 title: "",
                 value: widget.matchScoutingData.autoNumCellLoad,

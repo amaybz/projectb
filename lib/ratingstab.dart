@@ -322,14 +322,15 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Launchpad:",
+                        "Hub Wall:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotWall,
+                        value: widget.matchScoutingData.commFlShotHub,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onShootingWallZoneChanged(value);
+                            widget.matchScoutingData.commFlShotHub = value;
+                            widget.onChange(widget.matchScoutingData);
                           });
                         },
                       )
@@ -373,14 +374,14 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Terminal:",
+                        "Launchpad:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotFar,
+                        value: widget.matchScoutingData.commFlShotWall,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onShootingFarZoneChanged(value);
+                            widget.onShootingWallZoneChanged(value);
                           });
                         },
                       )
@@ -390,15 +391,14 @@ class _RatingsTabState extends State<RatingsTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Hub Wall:",
+                        "Terminal:",
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotHub,
+                        value: widget.matchScoutingData.commFlShotFar,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.matchScoutingData.commFlShotHub = value;
-                            widget.onChange(widget.matchScoutingData);
+                            widget.onShootingFarZoneChanged(value);
                           });
                         },
                       )

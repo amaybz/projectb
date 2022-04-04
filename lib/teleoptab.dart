@@ -1,7 +1,7 @@
 // @dart = 2.7
 import 'package:flutter/material.dart';
 import 'package:projectb/localdb.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_endgame_climb.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/widget_counter.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
@@ -24,7 +24,6 @@ class TeleOpScreen extends StatefulWidget {
     this.onCPPositionTimeTakenChange,
     this.onCPPanelAttemptsChanged,
     this.onCPPanelSuccessChanged,
-    this.onEndgameParkChanged,
     this.onEndgameClimbChanged,
     this.onEndgameFallChanged,
     this.onChange,
@@ -43,7 +42,6 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<String> onCPPositionTimeTakenChange;
   final ValueChanged<int> onCPPanelAttemptsChanged;
   final ValueChanged<int> onCPPanelSuccessChanged;
-  final ValueChanged<bool> onEndgameParkChanged;
   final ValueChanged<MatchScoutingData> onEndgameClimbChanged;
   final ValueChanged<bool> onEndgameFallChanged;
   final ValueChanged<MatchScoutingData> onChange;
@@ -229,19 +227,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Hangar:"),
-                          Switch(
-                              value: widget.matchScoutingData.teleFlHanger,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.onEndgameParkChanged(value);
-                                });
-                              }),
-                        ]),
-                    EndGameClimb(
+                    EndGame(
                       matchScoutingData: widget.matchScoutingData,
                       onChanged: (matchScoutingData) {
                         setState(() {
@@ -249,44 +235,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                         });
                       },
                       onExpanded: (value) {},
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Transition?:"),
-                          Switch(
-                              value: widget.matchScoutingData.flClimbTransition,
-                              onChanged: (value) {
-                                setState(() {
-                                  widget.matchScoutingData.flClimbTransition =
-                                      value;
-                                  widget.onChange(widget.matchScoutingData);
-                                });
-                              }),
-                        ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Time (Transition):",
-                        ),
-                        DropdownButton(
-                          value:
-                              widget.matchScoutingData.idTransitionSpeed == null
-                                  ? null
-                                  : widget.matchScoutingData.idTransitionSpeed,
-                          items: ddsSpeed,
-                          onChanged: (item) {
-                            setState(() {
-                              widget.matchScoutingData.idTransitionSpeed = item;
-                              widget.onChange(widget.matchScoutingData);
-                            });
-                            print("idTransitionSpeed: " +
-                                widget.matchScoutingData.idTransitionSpeed);
-                          },
-                        ),
-                      ],
                     ),
                   ]),
             ),

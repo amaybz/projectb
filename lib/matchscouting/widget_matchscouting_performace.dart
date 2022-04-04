@@ -141,7 +141,7 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                         Column(children: [
                           CounterWidget(
                             value: widget.numCargoTerminalAttempt,
-                            title: "Terminal",
+                            title: "Terminal Deliver",
                             title1: " Attempt",
                             styleFontSize: widget.styleFontSizeBody,
                             onIncreaseStateChanged: (int increase) {
@@ -162,8 +162,7 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                           ),
                           CounterWidget(
                             value: widget.numCargoTerminalSuccess,
-                            title: "Terminal",
-                            title1: " Deliver",
+                            title: "Success",
                             styleFontSize: widget.styleFontSizeBody,
                             onIncreaseStateChanged: (int increase) {
                               setState(() {

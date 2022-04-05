@@ -35,7 +35,7 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4+16"
+    version: "0.9.4+18"
   camera_platform_interface:
     dependency: "direct main"
     description:
@@ -545,7 +545,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.1"
+    version: "2.5.1"
   xdg_directories:
     dependency: transitive
     description:

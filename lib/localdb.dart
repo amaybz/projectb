@@ -227,6 +227,26 @@ class LocalDB {
     return insertedID;
   }
 
+  Future<int> deletePitData(int id) async {
+    // Get a reference to the database.
+    final Database db = await database;
+    //delete all teams in DB
+    int rowCount =
+        await db.delete(tblPitData, where: "id = ?", whereArgs: [id]);
+    print(rowCount);
+    return rowCount;
+  }
+
+  Future<int> deleteMatchData(int id) async {
+    // Get a reference to the database.
+    final Database db = await database;
+    //delete all teams in DB
+    int rowCount =
+        await db.delete(tblScoringData, where: "id = ?", whereArgs: [id]);
+    print(rowCount);
+    return rowCount;
+  }
+
   Future<int> insertLocalTeam(LocalTeam localTeam) async {
     // Get a reference to the database.
     final Database db = await database;

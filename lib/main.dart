@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/pitscouting.dart';
 import 'dart:async';
@@ -9,11 +7,9 @@ import 'package:projectb/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
-//import 'package:permission_handler/permission_handler.dart';
 import 'package:projectb/qrreaderscreen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:camera/camera.dart';
-import 'package:projectb/take_picture.dart';
 import 'package:projectb/addteamscreen.dart';
 
 Future<void> main() async {
@@ -55,25 +51,70 @@ class MyApp extends StatelessWidget {
           FocusManager.instance.primaryFocus!.unfocus();
         }
       },
-      child: MaterialApp(
-        title: 'Project B',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MyHomePage(
-          title: 'Home - Set Event',
-          camera: camera,
-        ),
+      child: DarkLightTheme(camera: camera),
+    );
+  }
+}
+
+class DarkLightTheme extends StatefulWidget {
+  const DarkLightTheme({
+    Key? key,
+    required this.camera,
+  }) : super(key: key);
+  final CameraDescription? camera;
+
+  @override
+  State<DarkLightTheme> createState() => _DarkLightThemeState();
+}
+
+bool _light = false;
+
+class _DarkLightThemeState extends State<DarkLightTheme> {
+  MySharedPrefs mySharedPrefs = new MySharedPrefs();
+
+  ThemeData _darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: Colors.blue,
+  );
+
+  ThemeData _lightTheme = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Colors.blue,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Project B',
+      theme: _light ? _darkTheme : _lightTheme,
+      home: MyHomePage(
+        title: 'Home - Set Event',
+        camera: widget.camera,
+        theme: _light,
+        onchangeTheme: (bool state) {
+          setState(() {
+            _light = state;
+            mySharedPrefs.saveBool("DarkMode", state);
+          });
+        },
       ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title, this.camera}) : super(key: key);
+  MyHomePage(
+      {Key? key,
+      this.title,
+      this.camera,
+      this.theme = true,
+      this.onchangeTheme})
+      : super(key: key);
 
   final CameraDescription? camera;
   final String? title;
+  final bool theme;
+  final ValueChanged<bool>? onchangeTheme;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -133,6 +174,14 @@ class _MyHomePageState extends State<MyHomePage> {
     getDeviceName();
     setLocalEvent();
     getVersionInfo();
+    getTheme();
+  }
+
+  void getTheme() async {
+    bool darkMode = await mySharedPrefs.readBool("DarkMode");
+    setState(() {
+      widget.onchangeTheme!(darkMode);
+    });
   }
 
   void getVersionInfo() async {
@@ -365,9 +414,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text('Version: ' + versionName),
                 ],
               ),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+              decoration:
+                  BoxDecoration(color: Theme.of(context).primaryColorDark),
             ),
             ListTile(
               title: Text('Pit Scouting'),
@@ -407,6 +455,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
                 _navigateToAddTeamScreen(context);
               },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Row(
+                children: [
+                  Text('Dark Mode'),
+                  Switch(
+                      value: widget.theme,
+                      onChanged: (toggle) {
+                        setState(() {
+                          widget.onchangeTheme!(toggle);
+                        });
+                      })
+                ],
+              ),
             ),
           ],
         ),

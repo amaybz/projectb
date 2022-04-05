@@ -222,21 +222,14 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
           widthFactor: 0.9,
           child: Container(
             margin: const EdgeInsets.all(15.0),
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-            padding: EdgeInsets.all(4.0),
-            child: Text(
-              "Event Name: " + widget.eventName!,
-              style: TextStyle(fontSize: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blueAccent),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
             ),
-          ),
-        ),
-        FractionallySizedBox(
-          widthFactor: 0.9,
-          child: Container(
-            margin: const EdgeInsets.all(15.0),
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.blueAccent)),
             padding: EdgeInsets.all(4.0),
             child: Column(
               children: [
@@ -244,27 +237,24 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   "Google Account: " + googleEmail,
                   style: TextStyle(fontSize: 14),
                 ),
-                Text(
-                  "Press and hold a result to upload to google",
-                  style: TextStyle(fontSize: 12),
+                GoogleLoginButton(
+                  googleLoginState: isSignedInToGoogle,
+                  onLoginPressed: (bool value) {
+                    if (value == true) {
+                      _signInToGoogle();
+                    } else {
+                      _signOutOfGoogle();
+                    }
+                  },
                 ),
               ],
             ),
           ),
         ),
-        GoogleLoginButton(
-          googleLoginState: isSignedInToGoogle,
-          onLoginPressed: (bool value) {
-            if (value == true) {
-              _signInToGoogle();
-            } else {
-              _signOutOfGoogle();
-            }
-          },
-        ),
+
         HeadingMain(
           styleFontSize: styleFontSizeHeadings,
-          headingText: "Saved Data",
+          headingText: "Saved Records",
           //backGroundColor: Colors.green,
         ),
         _showTab(_selectedTab)
@@ -309,18 +299,110 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Widget _buildRowMatchData(MatchScoutingData item) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: [
+                Text(
+                  item.id.toString() + ". Match: " + item.numMatch.toString(),
+                ),
+                Text("Team: " + item.idTeam!)
+              ],
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                _showDialogMatchQRCode(context, item.id.toString());
+              },
+              child: Text('QR'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                writeMatchFileAndUploadToGoogle(item);
+              },
+              child: Text('Upload'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                deleteMatchRecord(context, item.id);
+
+                setState(() {});
+              },
+              child: Text('Delete'),
+            ),
+          ]),
+    );
+
     //print(item.defenceRating);
-    return ListTile(
-      title: Text(
-        item.id.toString() + ". Match: " + item.numMatch.toString(),
+    //return ListTile(
+    //  title: Text(
+    //    item.id.toString() + ". Match: " + item.numMatch.toString(),
+    //   ),
+    //   subtitle: Text("Team: " + item.idTeam!),
+    //   trailing: Icon(Icons.share),
+    //   onTap: () {
+    //     _showDialogMatchQRCode(context, item.id.toString());
+    //   },
+    //   onLongPress: () {
+    //     writeMatchFileAndUploadToGoogle(item);
+    //   },
+    //);
+  }
+
+  deleteMatchRecord(BuildContext context, int id) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green, // background
+        onPrimary: Colors.white, // foreground
       ),
-      subtitle: Text("Team: " + item.idTeam!),
-      trailing: Icon(Icons.share),
-      onTap: () {
-        _showDialogMatchQRCode(context, item.id.toString());
+      onPressed: () {
+        Navigator.of(context).pop();
       },
-      onLongPress: () {
-        writeMatchFileAndUploadToGoogle(item);
+      child: Text('Cancel'),
+    );
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.red, // background
+        onPrimary: Colors.white, // foreground
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        localDB.deleteMatchData(id);
+        _getScoringData();
+      },
+      child: Text('Delete'),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("WARNING"),
+      content: Text("Are you sure you want to delete this record?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
@@ -335,18 +417,95 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Widget _buildRowPitData(PitData item) {
-    //print(item.defenceRating);
-    return ListTile(
-      title: Text(
-        item.id.toString() + ". PIT: " + item.idTeam.toString(),
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: [
+                Text(
+                  item.id.toString() + ". PIT: " + item.idTeam.toString(),
+                ),
+                Text("Scout: " + item.txScoutName),
+              ],
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                _showDialogPitQRCode(context, item.id.toString());
+              },
+              child: Text('QR'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                writePitFileAndUploadToGoogle(item);
+              },
+              child: Text('Upload'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                deletePitRecord(context, item.id);
+
+                setState(() {});
+              },
+              child: Text('Delete'),
+            ),
+          ]),
+    );
+  }
+
+  deletePitRecord(BuildContext context, int id) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green, // background
+        onPrimary: Colors.white, // foreground
       ),
-      subtitle: Text("Scout: " + item.txScoutName),
-      trailing: Icon(Icons.share),
-      onTap: () {
-        _showDialogPitQRCode(context, item.id.toString());
+      onPressed: () {
+        Navigator.of(context).pop();
       },
-      onLongPress: () {
-        writePitFileAndUploadToGoogle(item);
+      child: Text('Cancel'),
+    );
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.red, // background
+        onPrimary: Colors.white, // foreground
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        localDB.deletePitData(id);
+        _getPitData();
+      },
+      child: Text('Delete'),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("WARNING"),
+      content: Text("Are you sure you want to delete this record?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }

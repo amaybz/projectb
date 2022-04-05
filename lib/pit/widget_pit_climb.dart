@@ -1,24 +1,21 @@
-// @dart = 2.7
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/class_pitdata.dart';
-import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_row_heading.dart';
 
 class PitClimb extends StatefulWidget {
   PitClimb(
-      {Key key,
-      @required this.pitData,
+      {Key? key,
+      required this.pitData,
       this.styleFontSize = 16,
       this.styleFontSizeHeadings = 18,
       this.styleFieldTxClimbMaxWidth = 300,
-      this.onChanged,
+      required this.onChanged,
       this.txClimb,
-      @required this.numClimbHeight,
-      @required this.numClimbWidth,
-      this.onExpanded,
+      required this.numClimbHeight,
+      required this.numClimbWidth,
+      required this.onExpanded,
       this.strWeight = "lbs",
       this.strDistance = "inches"})
       : super(key: key);
@@ -29,7 +26,7 @@ class PitClimb extends StatefulWidget {
   final double styleFieldTxClimbMaxWidth;
   final ValueChanged<PitData> onChanged;
   final ValueChanged<bool> onExpanded;
-  final TextEditingController txClimb;
+  final TextEditingController? txClimb;
   final TextEditingController numClimbHeight;
   final TextEditingController numClimbWidth;
   final String strWeight;
@@ -153,10 +150,10 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsIdClimbType,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idClimbType = item;
+                        widget.pitData.idClimbType = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbType: " + widget.pitData.idClimbType);
+                      print("idClimbType: " + widget.pitData.idClimbType!);
                     },
                   ),
                 ],
@@ -217,7 +214,7 @@ class _PitClimbState extends State<PitClimb> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flClimbSecure,
+                    value: widget.pitData.flClimbSecure!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flClimbSecure = value;
@@ -242,10 +239,10 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsSpeed,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idClimbGrab = item;
+                        widget.pitData.idClimbGrab = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbGrab: " + widget.pitData.idClimbGrab);
+                      print("idClimbGrab: " + widget.pitData.idClimbGrab!);
                     },
                   ),
                 ],
@@ -265,10 +262,10 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsSpeed,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idClimbSpeed = item;
+                        widget.pitData.idClimbSpeed = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbSpeed: " + widget.pitData.idClimbSpeed);
+                      print("idClimbSpeed: " + widget.pitData.idClimbSpeed!);
                     },
                   ),
                 ],
@@ -288,10 +285,10 @@ class _PitClimbState extends State<PitClimb> {
                       items: ddsPosition,
                       onChanged: (item) {
                         setState(() {
-                          widget.pitData.idClimbPos = item;
+                          widget.pitData.idClimbPos = item as String?;
                           widget.onChanged(widget.pitData);
                         });
-                        print("idClimbSpeed: " + widget.pitData.idClimbPos);
+                        print("idClimbSpeed: " + widget.pitData.idClimbPos!);
                       }),
                 ],
               ),
@@ -303,7 +300,7 @@ class _PitClimbState extends State<PitClimb> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flClimbTransition,
+                    value: widget.pitData.flClimbTransition!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flClimbTransition = value;
@@ -328,10 +325,10 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsTransition,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idTransition = item;
+                        widget.pitData.idTransition = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbSpeed: " + widget.pitData.idTransition);
+                      print("idClimbSpeed: " + widget.pitData.idTransition!);
                     },
                   ),
                 ],
@@ -351,11 +348,11 @@ class _PitClimbState extends State<PitClimb> {
                       items: ddsSpeed,
                       onChanged: (item) {
                         setState(() {
-                          widget.pitData.idTransitionSpeed = item;
+                          widget.pitData.idTransitionSpeed = item as String?;
                           widget.onChanged(widget.pitData);
                         });
                         print("idClimbSpeed: " +
-                            widget.pitData.idTransitionSpeed);
+                            widget.pitData.idTransitionSpeed!);
                       }),
                 ],
               ),
@@ -367,7 +364,7 @@ class _PitClimbState extends State<PitClimb> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flClimbMove,
+                    value: widget.pitData.flClimbMove!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flClimbMove = value;

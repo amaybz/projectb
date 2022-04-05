@@ -1,4 +1,3 @@
-// @dart = 2.7
 import 'package:flutter/material.dart';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_headingmain.dart';
@@ -7,8 +6,8 @@ import 'package:projectb/widget_counter.dart';
 
 class PitAuto extends StatefulWidget {
   PitAuto(
-      {Key key,
-      @required this.pitData,
+      {Key? key,
+      required this.pitData,
       this.styleFontSize = 16,
       this.styleFontSizeHeadings = 18,
       this.onChanged,
@@ -20,8 +19,8 @@ class PitAuto extends StatefulWidget {
   final PitData pitData;
   final double styleFontSize;
   final double styleFontSizeHeadings;
-  final ValueChanged<PitData> onChanged;
-  final ValueChanged<bool> onExpanded;
+  final ValueChanged<PitData>? onChanged;
+  final ValueChanged<bool>? onExpanded;
   final String strWeight;
   final String strDistance;
 
@@ -60,8 +59,8 @@ class _PitAutoState extends State<PitAuto> {
                 onChange: (bool value) {
                   setState(() {
                     widget.pitData.flAuto = value;
-                    widget.onChanged(widget.pitData);
-                    widget.onExpanded(true);
+                    widget.onChanged!(widget.pitData);
+                    widget.onExpanded!(true);
                   });
                 },
               ),
@@ -98,7 +97,7 @@ class _PitAutoState extends State<PitAuto> {
                 onChange: (bool value) {
                   setState(() {
                     widget.pitData.flAuto = value;
-                    widget.onChanged(widget.pitData);
+                    widget.onChanged!(widget.pitData);
                   });
                 },
               ),
@@ -110,11 +109,11 @@ class _PitAutoState extends State<PitAuto> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flAutoLine,
+                    value: widget.pitData.flAutoLine!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flAutoLine = value;
-                        widget.onChanged(widget.pitData);
+                        widget.onChanged!(widget.pitData);
                       });
                     },
                   ),
@@ -128,11 +127,11 @@ class _PitAutoState extends State<PitAuto> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flAutoSort,
+                    value: widget.pitData.flAutoSort!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flAutoSort = value;
-                        widget.onChanged(widget.pitData);
+                        widget.onChanged!(widget.pitData);
                       });
                     },
                   ),
@@ -146,11 +145,11 @@ class _PitAutoState extends State<PitAuto> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flAutoShoot,
+                    value: widget.pitData.flAutoShoot!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flAutoShoot = value;
-                        widget.onChanged(widget.pitData);
+                        widget.onChanged!(widget.pitData);
                       });
                     },
                   ),
@@ -163,20 +162,22 @@ class _PitAutoState extends State<PitAuto> {
                   value: widget.pitData.numAutoShoot,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numAutoShoot++;
-                      widget.onChanged(widget.pitData);
+                      widget.pitData.numAutoShoot =
+                          widget.pitData.numAutoShoot! + 1;
+                      widget.onChanged!(widget.pitData);
                     });
                   },
                   onDecreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numAutoShoot--;
-                      widget.onChanged(widget.pitData);
+                      widget.pitData.numAutoShoot =
+                          widget.pitData.numAutoShoot! - 1;
+                      widget.onChanged!(widget.pitData);
                     });
                   },
                   onSetValue: (int value) {
                     setState(() {
                       widget.pitData.numAutoShoot = value;
-                      widget.onChanged(widget.pitData);
+                      widget.onChanged!(widget.pitData);
                     });
                   },
                 ),
@@ -188,20 +189,22 @@ class _PitAutoState extends State<PitAuto> {
                   value: widget.pitData.numAutoLoad,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numAutoLoad++;
-                      widget.onChanged(widget.pitData);
+                      widget.pitData.numAutoLoad =
+                          widget.pitData.numAutoLoad! + 1;
+                      widget.onChanged!(widget.pitData);
                     });
                   },
                   onDecreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numAutoLoad--;
-                      widget.onChanged(widget.pitData);
+                      widget.pitData.numAutoLoad =
+                          widget.pitData.numAutoLoad! - 1;
+                      widget.onChanged!(widget.pitData);
                     });
                   },
                   onSetValue: (int value) {
                     setState(() {
                       widget.pitData.numAutoLoad = value;
-                      widget.onChanged(widget.pitData);
+                      widget.onChanged!(widget.pitData);
                     });
                   },
                 ),

@@ -109,40 +109,40 @@ class GoogleInterface {
         "json");
     print("Upload Complete: JSON");
     if (pitData.imgTeamUniform != null) {
-      fileExists = await File(pitData.imgTeamUniform.path).exists();
+      fileExists = await File(pitData.imgTeamUniform!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await uploadFile(
-          pitData.imgTeamUniform,
+          pitData.imgTeamUniform!,
           "PIT_TeamUniform" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
     }
     if (pitData.imgRobotSide != null) {
-      fileExists = await File(pitData.imgRobotSide.path).exists();
+      fileExists = await File(pitData.imgRobotSide!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await uploadFile(
-          pitData.imgRobotSide,
+          pitData.imgRobotSide!,
           "PIT_RobotSide" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
     }
     if (pitData.imgRobotFront != null) {
-      fileExists = await File(pitData.imgRobotFront.path).exists();
+      fileExists = await File(pitData.imgRobotFront!.path).exists();
     } else {
       fileExists = false;
     }
 
     if (fileExists == true) {
       await uploadFile(
-          pitData.imgRobotFront,
+          pitData.imgRobotFront!,
           "PIT_RobotFront" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),

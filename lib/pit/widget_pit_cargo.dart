@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 import 'package:flutter/material.dart';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_counter.dart';
@@ -8,8 +6,8 @@ import 'package:projectb/widget_row_heading.dart';
 
 class PitPowerCells extends StatefulWidget {
   PitPowerCells({
-    Key key,
-    @required this.pitData,
+    Key? key,
+    required this.pitData,
     this.styleFontSize = 16,
     this.styleFontSizeHeadings = 18,
     this.styleFieldTxShootingMaxWidth = 300,
@@ -22,9 +20,9 @@ class PitPowerCells extends StatefulWidget {
   final double styleFontSize;
   final double styleFontSizeHeadings;
   final double styleFieldTxShootingMaxWidth;
-  final ValueChanged<PitData> onChanged;
-  final TextEditingController txShooting;
-  final ValueChanged<bool> onExpanded;
+  final ValueChanged<PitData>? onChanged;
+  final TextEditingController? txShooting;
+  final ValueChanged<bool>? onExpanded;
 
   @override
   _PitPowerCellsState createState() => _PitPowerCellsState();
@@ -61,8 +59,8 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 onChange: (bool value) {
                   setState(() {
                     widget.pitData.flCargo = value;
-                    widget.onChanged(widget.pitData);
-                    widget.onExpanded(true);
+                    widget.onChanged!(widget.pitData);
+                    widget.onExpanded!(true);
                   });
                 },
               ),
@@ -99,8 +97,8 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 onChange: (bool value) {
                   setState(() {
                     widget.pitData.flCargo = value;
-                    widget.onChanged(widget.pitData);
-                    widget.onExpanded(true);
+                    widget.onChanged!(widget.pitData);
+                    widget.onExpanded!(true);
                   });
                 },
               ),
@@ -117,7 +115,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flIntakeGround,
+                    value: widget.pitData.flIntakeGround!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flIntakeGround = value;
@@ -134,7 +132,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flIntakeHigh,
+                    value: widget.pitData.flIntakeHigh!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flIntakeHigh = value;
@@ -151,7 +149,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flIntakeBounce,
+                    value: widget.pitData.flIntakeBounce!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flIntakeBounce = value;
@@ -173,7 +171,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flIntakeSort,
+                    value: widget.pitData.flIntakeSort!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flIntakeSort = value;
@@ -190,7 +188,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetLow,
+                    value: widget.pitData.flTargetLow!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flTargetLow = value;
@@ -207,7 +205,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetUpper,
+                    value: widget.pitData.flTargetUpper!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flTargetUpper = value;
@@ -224,7 +222,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetTerminal,
+                    value: widget.pitData.flTargetTerminal!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flTargetTerminal = value;
@@ -245,12 +243,14 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                   value: widget.pitData.numStorage,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numStorage++;
+                      widget.pitData.numStorage =
+                          widget.pitData.numStorage! + 1;
                     });
                   },
                   onDecreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numStorage--;
+                      widget.pitData.numStorage =
+                          widget.pitData.numStorage! - 1;
                     });
                   },
                   onSetValue: (int value) {

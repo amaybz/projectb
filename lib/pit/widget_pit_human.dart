@@ -1,20 +1,18 @@
-// @dart = 2.7
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_row_heading.dart';
-import 'package:projectb/widget_counter.dart';
 
 class PitHuman extends StatefulWidget {
   PitHuman({
-    Key key,
-    @required this.pitData,
-    @required this.numHumanAccuracy,
+    Key? key,
+    required this.pitData,
+    required this.numHumanAccuracy,
     this.styleFontSize = 16,
     this.styleFontSizeHeadings = 18,
-    this.onChanged,
-    this.onExpanded,
+    required this.onChanged,
+    required this.onExpanded,
   }) : super(key: key);
 
   final PitData pitData;

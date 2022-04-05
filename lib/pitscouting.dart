@@ -1,11 +1,8 @@
-// @dart = 2.7
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/pit/widget_pit_human.dart';
 import 'package:projectb/settings.dart';
 import 'package:projectb/widget_headingmain.dart';
-//import 'package:projectb/pit/widget_pit_controlpenal.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
@@ -17,12 +14,11 @@ import 'package:projectb/pit/widget_pit_cargo.dart';
 import 'package:projectb/pit/widget_pit_auto.dart';
 import 'package:projectb/pit/widget_pit_images.dart';
 import 'dart:io';
-
 import 'googleinterface.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
-    Key key,
+    Key? key,
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
@@ -31,12 +27,12 @@ class PitScoutingScreen extends StatefulWidget {
     this.styleFontSize = 14,
   }) : super(key: key);
 
-  final String eventName;
-  final String eventKey;
-  final String deviceName;
-  final List<LocalTeam> eventTeams;
-  final double styleFontSize;
-  final CameraDescription camera;
+  final String? eventName;
+  final String? eventKey;
+  final String? deviceName;
+  final List<LocalTeam>? eventTeams;
+  final double? styleFontSize;
+  final CameraDescription? camera;
 
   @override
   _PitScoutingScreenState createState() => _PitScoutingScreenState();
@@ -62,10 +58,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController numClimbHeight = TextEditingController();
   final TextEditingController numClimbWidth = TextEditingController();
   final TextEditingController numHumanAccuracy = TextEditingController();
-  File imgPitTeamShirt;
-  File imgPitRobotFront;
-  File imgPitRobotSide;
-  LocalTeam selectedTeam;
+  File? imgPitTeamShirt;
+  File? imgPitRobotFront;
+  File? imgPitRobotSide;
+  LocalTeam? selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
   String strWeight = "lbs";
   String strDistance = "Inches";
@@ -103,12 +99,12 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     }
 
     //update dropdown box with Teams
-    for (LocalTeam team in widget.eventTeams) {
+    for (LocalTeam team in widget.eventTeams!) {
       setState(() {
         ddsEventTeams.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber + " - " + team.nickName,
+              team.teamNumber! + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
             )));
       });
@@ -183,14 +179,15 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
 
   void clearPit() async {
     setState(() {
-      pitData = null;
       pitData = PitData();
       selectedTeam = null;
+      _txtScoutName.text = "";
       txShooting.text = "";
       txClimb.text = "";
       txHeight.text = "0";
       txWeight.text = "0";
       txWidth.text = "0";
+      txPitNotes.text = "";
       numClimbHeight.text = "0";
       numClimbWidth.text = "0";
     });
@@ -260,7 +257,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       pitData.dtModified = now.toString();
     }
     if (selectedTeam == null) return false;
-    pitData.idTeam = selectedTeam.teamNumber;
+    pitData.idTeam = selectedTeam?.teamNumber;
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
     pitData.txPitNotes = txPitNotes.text;
@@ -293,7 +290,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
 
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
-    if (pitData.id > 0) {
+    if (pitData.id! > 0) {
       recordSaved = true;
       print("Record Saved: " + recordSaved.toString());
       print("Record ID: " + pitData.id.toString());
@@ -408,7 +405,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "Event Name: " + widget.eventName,
+                              "Event Name: " + widget.eventName!,
                               style: TextStyle(fontSize: styleFontSizeHeadings),
                             ),
                             Row(
@@ -444,18 +441,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   DropdownButton(
                                     value: selectedTeam == null
                                         ? null
-                                        : selectedTeam.key,
+                                        : selectedTeam?.key,
                                     //title: "Team",
                                     items: ddsEventTeams,
                                     onChanged: (item) {
                                       setState(() {
                                         selectedTeam = widget.eventTeams
-                                            .firstWhere(
+                                            ?.firstWhere(
                                                 (team) => team.key == item,
                                                 orElse: () =>
-                                                    widget.eventTeams.first);
+                                                    widget.eventTeams!.first);
                                       });
-                                      print("Team Key: " + selectedTeam.key);
+                                      print("Team Key: " + selectedTeam!.key!);
                                     },
                                   ),
                                 ]),
@@ -658,7 +655,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   children: [
                     PitImages(
                       title: "Team Shirt",
-                      camera: widget.camera,
+                      camera: widget.camera!,
                       onCapture: (newImage) {
                         setState(() {
                           pitData.imgTeamUniform = newImage;
@@ -668,7 +665,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     ),
                     PitImages(
                       title: "Robot Side",
-                      camera: widget.camera,
+                      camera: widget.camera!,
                       onCapture: (newImage) {
                         setState(() {
                           pitData.imgRobotSide = newImage;
@@ -678,7 +675,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     ),
                     PitImages(
                       title: "Robot Front",
-                      camera: widget.camera,
+                      camera: widget.camera!,
                       onCapture: (newImage) {
                         setState(() {
                           pitData.imgRobotFront = newImage;
@@ -690,7 +687,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               FinishTab(
                 onSavePressed: (bool value) async {
                   if (recordSaved == true) {
-                    await savePitData(recordID: pitData.id);
+                    await savePitData(recordID: pitData.id!);
                   } else {
                     await savePitData();
                   }
@@ -703,7 +700,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 googleUploadStatus: googleUploadStatus,
                 onUploadToGoogle: (bool value) async {
                   if (recordSaved == true) {
-                    await savePitData(recordID: pitData.id);
+                    await savePitData(recordID: pitData.id!);
                   } else {
                     await savePitData();
                   }

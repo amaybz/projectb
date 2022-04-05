@@ -126,7 +126,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber + " - " + team.nickName,
+              team.teamNumber! + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
             )));
       });
@@ -539,7 +539,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     (team) => team.key == item,
                                     orElse: () => widget.eventTeams!.first);
                               });
-                              print("Key: " + selectedTeam!.key);
+                              print("Key: " + selectedTeam!.key!);
                             },
                             //styleFontSize: styleFontSizeBody,
                             //styleFieldWidth: styleFieldWidthTeam,

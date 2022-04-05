@@ -274,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } else {
       setState(() {
-        _txtDeviceName.text = deviceName.name;
+        _txtDeviceName.text = deviceName.name!;
       });
     }
   }
@@ -508,7 +508,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
                               Text(selectedLocalEvent == null
                                   ? "none"
-                                  : selectedLocalEvent!.name),
+                                  : selectedLocalEvent!.name!),
                               Text("Teams Loaded: " + _countOfTeams.toString()),
                             ],
                           ),
@@ -672,9 +672,9 @@ class _MyHomePageState extends State<MyHomePage> {
     String eventName = "";
     if (selectedLocalEvent!.shortName != null &&
         selectedLocalEvent!.shortName != "") {
-      eventName = selectedLocalEvent!.shortName;
+      eventName = selectedLocalEvent!.shortName!;
     } else {
-      eventName = selectedLocalEvent!.name;
+      eventName = selectedLocalEvent!.name!;
     }
     final result = await Navigator.push(
       context,
@@ -697,9 +697,9 @@ class _MyHomePageState extends State<MyHomePage> {
     String eventName = "";
     if (selectedLocalEvent!.shortName != null &&
         selectedLocalEvent!.shortName != "") {
-      eventName = selectedLocalEvent!.shortName;
+      eventName = selectedLocalEvent!.shortName!;
     } else {
-      eventName = selectedLocalEvent!.name;
+      eventName = selectedLocalEvent!.name!;
     }
     final result = await Navigator.push(
       context,

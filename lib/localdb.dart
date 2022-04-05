@@ -1,5 +1,3 @@
-// @dart = 2.7
-
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
@@ -172,8 +170,8 @@ class LocalDB {
     _createTables(db, newVersion);
   }
 
-  static Database _database;
-  Future<Database> get database async {
+  static Database? _database;
+  Future<Database?> get database async {
     if (_database != null) return _database;
     _database = await _initDatabase();
     return _database;
@@ -194,20 +192,20 @@ class LocalDB {
 
   Future<void> insertEvent(LocalEvent event) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
     //insert data to DB
-    await db.insert(
+    await db?.insert(
       tblEvents,
       event.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<int> insertScoringData(MatchScoutingData scoringData) async {
+  Future<int?> insertScoringData(MatchScoutingData scoringData) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
-    int insertedID = await db.insert(
+    int? insertedID = await db?.insert(
       tblScoringData,
       scoringData.toLocalDB(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -215,11 +213,11 @@ class LocalDB {
     return insertedID;
   }
 
-  Future<int> insertPitData(PitData pitData) async {
+  Future<int?> insertPitData(PitData pitData) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
-    int insertedID = await db.insert(
+    int? insertedID = await db?.insert(
       tblPitData,
       pitData.toLocalDB(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -227,31 +225,31 @@ class LocalDB {
     return insertedID;
   }
 
-  Future<int> deletePitData(int id) async {
+  Future<int?> deletePitData(int id) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
     //delete all teams in DB
-    int rowCount =
-        await db.delete(tblPitData, where: "id = ?", whereArgs: [id]);
+    int? rowCount =
+        await db?.delete(tblPitData, where: "id = ?", whereArgs: [id]);
     print(rowCount);
     return rowCount;
   }
 
-  Future<int> deleteMatchData(int id) async {
+  Future<int?> deleteMatchData(int id) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
     //delete all teams in DB
-    int rowCount =
-        await db.delete(tblScoringData, where: "id = ?", whereArgs: [id]);
+    int? rowCount =
+        await db?.delete(tblScoringData, where: "id = ?", whereArgs: [id]);
     print(rowCount);
     return rowCount;
   }
 
-  Future<int> insertLocalTeam(LocalTeam localTeam) async {
+  Future<int?> insertLocalTeam(LocalTeam localTeam) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
-    int insertedID = await db.insert(
+    int? insertedID = await db?.insert(
       tblEventTeams,
       localTeam.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -261,16 +259,16 @@ class LocalDB {
 
   Future<void> clearLocalTeams() async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
     //delete all teams in DB
-    await db.execute("delete from " + tblEventTeams);
+    await db?.execute("delete from " + tblEventTeams);
   }
 
   Future<void> updateDeviceDetails(DeviceName deviceName) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
     //update device Record
-    await db.insert(
+    await db?.insert(
       tblDevice,
       deviceName.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -278,50 +276,50 @@ class LocalDB {
   }
 
   Future<DeviceName> getDeviceName() async {
-    Database db = await database;
-    List<Map> maps = await db.query(tblDevice,
+    Database? db = await database;
+    List<Map>? maps = await db?.query(tblDevice,
         columns: ['id', 'name', 'location'], where: 'id = ?', whereArgs: [1]);
-    if (maps.length > 0) {
+    if (maps!.length > 0) {
       return DeviceName.fromMap(maps.first);
     }
-    DeviceName deviceName;
+    DeviceName deviceName = DeviceName();
     deviceName.name = "";
     return deviceName;
   }
 
   Future<MatchScoutingData> getScoringDataRecord(int id) async {
-    Database db = await database;
-    List<Map> maps =
-        await db.query(tblScoringData, where: 'id = ?', whereArgs: [id]);
-    if (maps.length > 0) {
+    Database? db = await database;
+    List<Map>? maps =
+        await db?.query(tblScoringData, where: 'id = ?', whereArgs: [id]);
+    if (maps!.length > 0) {
       return MatchScoutingData.fromLocalDB(maps.first);
     }
-    MatchScoutingData matchScoutingData;
+    MatchScoutingData matchScoutingData = MatchScoutingData();
     matchScoutingData.idTeam = "0";
     return matchScoutingData;
   }
 
   Future<PitData> getPitDataRecord(int id) async {
-    Database db = await database;
-    List<Map> maps =
-        await db.query(tblPitData, where: 'id = ?', whereArgs: [id]);
-    if (maps.length > 0) {
+    Database? db = await database;
+    List<Map>? maps =
+        await db?.query(tblPitData, where: 'id = ?', whereArgs: [id]);
+    if (maps!.length > 0) {
       return PitData.fromLocalDB(maps.first);
     }
-    PitData pitData;
+    PitData pitData = PitData();
     pitData.idTeam = "0";
     return pitData;
   }
 
   Future<List<LocalEvent>> listEvents() async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
     // Query the table for all records.
-    final List<Map<String, dynamic>> maps = await db.query(tblEvents);
+    final List<Map<String, dynamic>>? maps = await db?.query(tblEvents);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
+    return List.generate(maps!.length, (i) {
       return LocalEvent(
         key: maps[i]['key'],
         name: maps[i]['name'],
@@ -332,13 +330,13 @@ class LocalDB {
 
   Future<List<LocalTeam>> listLocalTeams() async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
     // Query the table for all records.
-    final List<Map<String, dynamic>> maps = await db.query(tblEventTeams);
+    final List<Map<String, dynamic>>? maps = await db?.query(tblEventTeams);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
+    return List.generate(maps!.length, (i) {
       return LocalTeam(
         key: maps[i]['key'],
         name: maps[i]['name'],
@@ -350,13 +348,13 @@ class LocalDB {
 
   Future<List<LocalEvent>> getEvent(String key) async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
     // Query the table for all records.
-    final List<Map<String, dynamic>> maps =
-        await db.query(tblEvents, where: 'key=?', whereArgs: [key]);
+    final List<Map<String, dynamic>>? maps =
+        await db?.query(tblEvents, where: 'key=?', whereArgs: [key]);
 
     // Convert the List<Map<String, dynamic> into a List
-    return List.generate(maps.length, (i) {
+    return List.generate(maps!.length, (i) {
       return LocalEvent(
         key: maps[i]['key'],
         name: maps[i]['name'],
@@ -368,36 +366,36 @@ class LocalDB {
 
   Future<List<MatchScoutingData>> listScoringData() async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
     // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query(tblScoringData);
+    final List<Map<String, dynamic>>? maps = await db?.query(tblScoringData);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
+    return List.generate(maps!.length, (i) {
       return MatchScoutingData.fromLocalDB(maps[i]);
     });
   }
 
   Future<List<PitData>> listPitData() async {
     // Get a reference to the database.
-    final Database db = await database;
+    final Database? db = await database;
 
     // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query(tblPitData);
+    final List<Map<String, dynamic>>? maps = await db?.query(tblPitData);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
+    return List.generate(maps!.length, (i) {
       return PitData.fromLocalDB(maps[i]);
     });
   }
 }
 
 class LocalTeam {
-  String key;
-  String name;
-  String teamNumber;
-  String nickName;
+  String? key;
+  String? name;
+  String? teamNumber;
+  String? nickName;
 
   LocalTeam({
     @required this.key,
@@ -424,10 +422,10 @@ class LocalTeam {
 }
 
 class LocalEvent {
-  final String key;
-  final String name;
-  final String location;
-  final String shortName;
+  final String? key;
+  final String? name;
+  final String? location;
+  final String? shortName;
 
   LocalEvent({this.name, this.shortName, this.location, @required this.key});
 
@@ -449,9 +447,9 @@ class LocalEvent {
 }
 
 class DeviceName {
-  int id;
-  String name;
-  String location;
+  int? id;
+  String? name;
+  String? location;
 
   DeviceName({this.id, this.name, this.location});
 

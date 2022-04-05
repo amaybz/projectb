@@ -1,67 +1,66 @@
-// @dart = 2.7
 import 'dart:io';
 
 class PitData {
-  int id;
-  String txEvent;
-  String idTeam;
-  String txScoutName;
-  int numWeight;
-  int numHeight;
-  int numWidth;
-  bool flCargo;
-  bool flIntakeGround;
-  bool flIntakeHigh;
-  bool flIntakeBounce;
-  bool flIntakeSort;
-  int numStorage;
-  String txShooting;
-  bool flTargetLow;
-  bool flTargetUpper;
-  bool flTargetTerminal;
-  bool flClimb;
-  String idClimbType;
-  int numClimbHeight;
-  int numClimbWidth;
-  bool flClimbSecure;
-  String idClimbGrab;
-  String idClimbSpeed;
+  int? id;
+  String? txEvent;
+  String? idTeam;
+  String? txScoutName;
+  int? numWeight;
+  int? numHeight;
+  int? numWidth;
+  bool? flCargo;
+  bool? flIntakeGround;
+  bool? flIntakeHigh;
+  bool? flIntakeBounce;
+  bool? flIntakeSort;
+  int? numStorage;
+  String? txShooting;
+  bool? flTargetLow;
+  bool? flTargetUpper;
+  bool? flTargetTerminal;
+  bool? flClimb;
+  String? idClimbType;
+  int? numClimbHeight;
+  int? numClimbWidth;
+  bool? flClimbSecure;
+  String? idClimbGrab;
+  String? idClimbSpeed;
   //bool flClimbTilt;
-  String txClimb;
-  String idClimbPos;
-  bool flClimbMove;
+  String? txClimb;
+  String? idClimbPos;
+  bool? flClimbMove;
   //bool flClimbOther;
   //int numClimbOther;
-  bool flClimbTransition;
-  String idTransition;
-  String idTransitionSpeed;
-  bool flHuman;
-  int intHumanAccuracy;
+  bool? flClimbTransition;
+  String? idTransition;
+  String? idTransitionSpeed;
+  bool? flHuman;
+  int? intHumanAccuracy;
   //bool flPanel;
   //bool flPanelBrake;
   //bool flPanelRotation;
   //bool flPanelPos;
   //bool flPanelSensor;
   //String txPanelSensor;
-  bool flAuto;
-  bool flAutoLine;
-  bool flAutoShoot;
-  bool flAutoSort;
-  int numAutoShoot;
-  int numAutoLoad;
-  String txPitNotes;
-  String dtCreation;
-  String dtModified;
-  String txComputerName;
-  File imgTeamUniform;
-  File imgRobotFront;
-  File imgRobotSide;
+  bool? flAuto;
+  bool? flAutoLine;
+  bool? flAutoShoot;
+  bool? flAutoSort;
+  int? numAutoShoot;
+  int? numAutoLoad;
+  String? txPitNotes;
+  String? dtCreation;
+  String? dtModified;
+  String? txComputerName;
+  File? imgTeamUniform;
+  File? imgRobotFront;
+  File? imgRobotSide;
 
   PitData({
     this.id = 0,
     this.txEvent,
     this.idTeam,
-    this.txScoutName,
+    this.txScoutName = "",
     this.numWeight = 0,
     this.numHeight = 0,
     this.numWidth = 0,
@@ -78,6 +77,7 @@ class PitData {
     this.flClimb = false,
     this.idClimbType,
     this.numClimbHeight = 0,
+    this.numClimbWidth = 0,
     this.flClimbSecure = false,
     this.idClimbGrab,
     this.idClimbSpeed,
@@ -95,6 +95,7 @@ class PitData {
     this.numAutoShoot = 0,
     this.numAutoLoad = 0,
     this.flHuman = false,
+    this.intHumanAccuracy = 0,
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,
@@ -105,17 +106,17 @@ class PitData {
   });
 
   Map<String, dynamic> toLocalDB() {
-    String fileRobotFront;
+    String? fileRobotFront;
     if (imgRobotFront != null) {
-      fileRobotFront = imgRobotFront.path;
+      fileRobotFront = imgRobotFront?.path;
     }
-    String fileImgRobotSide;
+    String? fileImgRobotSide;
     if (imgRobotSide != null) {
-      fileImgRobotSide = imgRobotSide.path;
+      fileImgRobotSide = imgRobotSide?.path;
     }
-    String fileImgTeamUniform;
+    String? fileImgTeamUniform;
     if (imgTeamUniform != null) {
-      fileImgTeamUniform = imgTeamUniform.path;
+      fileImgTeamUniform = imgTeamUniform?.path;
     }
 
     return {
@@ -227,17 +228,17 @@ class PitData {
   }
 
   Map<String, dynamic> toMap() {
-    String fileImgRobotFront;
+    String? fileImgRobotFront;
     if (this.imgRobotFront != null) {
-      fileImgRobotFront = this.imgRobotFront.path;
+      fileImgRobotFront = this.imgRobotFront?.path;
     }
-    String fileImgRobotSide;
+    String? fileImgRobotSide;
     if (this.imgRobotSide != null) {
-      fileImgRobotSide = this.imgRobotSide.path;
+      fileImgRobotSide = this.imgRobotSide?.path;
     }
-    String fileImgTeamUniform;
+    String? fileImgTeamUniform;
     if (this.imgTeamUniform != null) {
-      fileImgTeamUniform = this.imgTeamUniform.path;
+      fileImgTeamUniform = this.imgTeamUniform?.path;
     }
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;

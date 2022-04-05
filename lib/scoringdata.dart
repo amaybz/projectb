@@ -152,13 +152,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     DialogBuilder(context).hideOpenDialog();
     DialogBuilder(context).showLoadingIndicator('Uploading Uniform Image');
     if (pitData.imgTeamUniform != null) {
-      fileExists = await File(pitData.imgTeamUniform.path).exists();
+      fileExists = await File(pitData.imgTeamUniform!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await googleInterface.uploadFile(
-          pitData.imgTeamUniform,
+          pitData.imgTeamUniform!,
           "PIT_TeamUniform" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
@@ -167,13 +167,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     DialogBuilder(context).hideOpenDialog();
     DialogBuilder(context).showLoadingIndicator('Uploading Robot Side Image');
     if (pitData.imgRobotSide != null) {
-      fileExists = await File(pitData.imgRobotSide.path).exists();
+      fileExists = await File(pitData.imgRobotSide!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await googleInterface.uploadFile(
-          pitData.imgRobotSide,
+          pitData.imgRobotSide!,
           "PIT_RobotSide" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
@@ -182,13 +182,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     DialogBuilder(context).hideOpenDialog();
     DialogBuilder(context).showLoadingIndicator('Uploading Robot Front Image');
     if (pitData.imgRobotFront != null) {
-      fileExists = await File(pitData.imgRobotFront.path).exists();
+      fileExists = await File(pitData.imgRobotFront!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await googleInterface.uploadFile(
-          pitData.imgRobotFront,
+          pitData.imgRobotFront!,
           "PIT_RobotFront" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
@@ -427,7 +427,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 Text(
                   item.id.toString() + ". PIT: " + item.idTeam.toString(),
                 ),
-                Text("Scout: " + item.txScoutName),
+                Text("Scout: " + item.txScoutName!),
               ],
             ),
             ElevatedButton(
@@ -456,7 +456,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 onPrimary: Colors.white, // foreground
               ),
               onPressed: () {
-                deletePitRecord(context, item.id);
+                deletePitRecord(context, item.id!);
 
                 setState(() {});
               },

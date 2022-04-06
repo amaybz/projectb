@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/pitscouting.dart';
 import 'dart:async';
@@ -7,10 +8,9 @@ import 'package:projectb/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
-import 'package:projectb/qrreaderscreen.dart';
-import 'package:package_info/package_info.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
+import 'barcodeScanner.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -443,10 +443,10 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Read QR Code'),
+              title: Text('Scan QR Code'),
               onTap: () {
                 Navigator.pop(context);
-                _navigateToQRReaderScreen(context);
+                _navigateToQRBarcodeScanner(context);
               },
             ),
             ListTile(
@@ -715,14 +715,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  _navigateToQRReaderScreen(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
-    //List<LocalTeam> teams = await localDB.listLocalTeams();
-    final result = await Navigator.push(
+  _navigateToQRBarcodeScanner(BuildContext context) async {
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => QRReaderScreen()),
+      MaterialPageRoute(builder: (context) => QRBarcodeScanner()),
     );
   }
 

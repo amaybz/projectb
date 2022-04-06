@@ -25,18 +25,17 @@ dependencies:
     sdk: flutter
   sqflite: ^2.0.2
   path_provider: ^2.0.1
-  barcode_scan: ^3.0.0
+  flutter_barcode_scanner: ^2.0.0
   qr_flutter: ^4.0.0
   path: ^1.8.0
   shared_preferences: ^2.0.5
   url_launcher:
   cupertino_icons: ^1.0.1
   http: ^0.13.1
-  loading_gifs: ^0.2.3
-  permission_handler: ^8.3.0
+  loading_gifs: ^0.3.0
   googleapis: ^8.1.0
   google_sign_in: ^5.0.1
-  package_info: ^2.0.2
+  package_info_plus:
   camera: ^0.9.4+16
   camera_platform_interface: ^2.1.5
 

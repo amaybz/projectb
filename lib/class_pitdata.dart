@@ -330,8 +330,14 @@ class PitData {
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
-    this.imgRobotFront = File(map['imgRobotFront']);
-    this.imgRobotSide = File(map['imgRobotSide']);
-    this.imgTeamUniform = File(map['imgTeamUniform']);
+    if (map['imgRobotFront'] != null) {
+      this.imgRobotFront = File(map['imgRobotFront']);
+    }
+    if (map['imgRobotSide'] != null) {
+      this.imgRobotSide = File(map['imgRobotSide']);
+    }
+    if (map['imgTeamUniform'] != null) {
+      this.imgTeamUniform = File(map['imgTeamUniform']);
+    }
   }
 }

@@ -106,6 +106,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
             child: Text(
               team.teamNumber! + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
+              overflow: TextOverflow.ellipsis,
             )));
       });
     }
@@ -338,12 +339,14 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
   double styleFontSizeHeadings = 18;
+  double styleFieldTeamMaxWidth = 300;
 
   @override
   Widget build(BuildContext context) {
     //style
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
+    styleFieldTeamMaxWidth = width - 100;
     if (width < 500) {
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 250;
@@ -438,22 +441,28 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                     style: TextStyle(
                                         fontSize: widget.styleFontSize),
                                   ),
-                                  DropdownButton(
-                                    value: selectedTeam == null
-                                        ? null
-                                        : selectedTeam?.key,
-                                    //title: "Team",
-                                    items: ddsEventTeams,
-                                    onChanged: (item) {
-                                      setState(() {
-                                        selectedTeam = widget.eventTeams
-                                            ?.firstWhere(
-                                                (team) => team.key == item,
-                                                orElse: () =>
-                                                    widget.eventTeams!.first);
-                                      });
-                                      print("Team Key: " + selectedTeam!.key!);
-                                    },
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                        maxWidth: styleFieldTeamMaxWidth),
+                                    child: DropdownButton(
+                                      isExpanded: true,
+                                      value: selectedTeam == null
+                                          ? null
+                                          : selectedTeam?.key,
+                                      //title: "Team",
+                                      items: ddsEventTeams,
+                                      onChanged: (item) {
+                                        setState(() {
+                                          selectedTeam = widget.eventTeams
+                                              ?.firstWhere(
+                                                  (team) => team.key == item,
+                                                  orElse: () =>
+                                                      widget.eventTeams!.first);
+                                        });
+                                        print(
+                                            "Team Key: " + selectedTeam!.key!);
+                                      },
+                                    ),
                                   ),
                                 ]),
                           ]),

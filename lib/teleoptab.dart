@@ -1,17 +1,16 @@
-// @dart = 2.7
 import 'package:flutter/material.dart';
-import 'package:projectb/localdb.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
 import 'package:projectb/sharedprefs.dart';
-import 'package:projectb/widget_counter.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
-    Key key,
-    this.matchScoutingData,
+    Key? key,
+    required this.matchScoutingData,
+    this.styleCounterButtonHeight = 25,
+    this.styleCounterButtonWidth = 30,
     //onchange
     this.onCellAttemptsChanged,
     this.onCellSuccessChanged,
@@ -31,20 +30,22 @@ class TeleOpScreen extends StatefulWidget {
 
   final MatchScoutingData matchScoutingData;
   //onchange
-  final ValueChanged<bool> onPowerPortLowerChanged;
-  final ValueChanged<bool> onPowerPortInnerChanged;
-  final ValueChanged<bool> onPowerPortOuterChanged;
-  final ValueChanged<int> onCellAttemptsChanged;
-  final ValueChanged<int> onCellSuccessChanged;
-  final ValueChanged<bool> onCPRotationControlChanged;
-  final ValueChanged<String> onCPRotationTimeTakenChange;
-  final ValueChanged<bool> onCPPositionControlChanged;
-  final ValueChanged<String> onCPPositionTimeTakenChange;
-  final ValueChanged<int> onCPPanelAttemptsChanged;
-  final ValueChanged<int> onCPPanelSuccessChanged;
-  final ValueChanged<MatchScoutingData> onEndgameClimbChanged;
-  final ValueChanged<bool> onEndgameFallChanged;
-  final ValueChanged<MatchScoutingData> onChange;
+  final ValueChanged<bool>? onPowerPortLowerChanged;
+  final ValueChanged<bool>? onPowerPortInnerChanged;
+  final ValueChanged<bool>? onPowerPortOuterChanged;
+  final ValueChanged<int>? onCellAttemptsChanged;
+  final ValueChanged<int>? onCellSuccessChanged;
+  final ValueChanged<bool>? onCPRotationControlChanged;
+  final ValueChanged<String>? onCPRotationTimeTakenChange;
+  final ValueChanged<bool>? onCPPositionControlChanged;
+  final ValueChanged<String>? onCPPositionTimeTakenChange;
+  final ValueChanged<int>? onCPPanelAttemptsChanged;
+  final ValueChanged<int>? onCPPanelSuccessChanged;
+  final ValueChanged<MatchScoutingData>? onEndgameClimbChanged;
+  final ValueChanged<bool>? onEndgameFallChanged;
+  final ValueChanged<MatchScoutingData>? onChange;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
 
   @override
   _TeleOpScreenState createState() => _TeleOpScreenState();
@@ -62,8 +63,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   updateValues() async {
     setState(() {
-      intCellAttempts = widget.matchScoutingData.teleNumCargoHighAttempt;
-      intCellSuccess = widget.matchScoutingData.teleNumCargoHighSuccess;
+      intCellAttempts = widget.matchScoutingData.teleNumCargoHighAttempt!;
+      intCellSuccess = widget.matchScoutingData.teleNumCargoHighSuccess!;
     });
   }
 
@@ -135,6 +136,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
     return Column(children: [
       PerformanceWidget(
+        styleCounterButtonHeight: widget.styleCounterButtonHeight,
+        styleCounterButtonWidth: widget.styleCounterButtonWidth,
         numCargoHighAttempt: widget.matchScoutingData.teleNumCargoHighAttempt,
         numCargoHighSuccess: widget.matchScoutingData.teleNumCargoHighSuccess,
         numCargoLowAttempt: widget.matchScoutingData.teleNumCargoLowAttempt,
@@ -145,7 +148,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                 newData.teleNumCargoHighAttempt;
             widget.matchScoutingData.teleNumCargoHighSuccess =
                 newData.teleNumCargoHighSuccess;
-            widget.onChange(widget.matchScoutingData);
+            widget.onChange!(widget.matchScoutingData);
           });
         },
         numCargoTerminalAttempt:
@@ -197,6 +200,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             widget.matchScoutingData.teleNumCargoTerminalSuccess = value;
           });
         },
+        matchScoutingData: widget.matchScoutingData,
       ),
       FractionallySizedBox(
         widthFactor: 0.99,
@@ -231,7 +235,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                       matchScoutingData: widget.matchScoutingData,
                       onChanged: (matchScoutingData) {
                         setState(() {
-                          widget.onEndgameClimbChanged(matchScoutingData);
+                          widget.onEndgameClimbChanged!(matchScoutingData);
                         });
                       },
                       onExpanded: (value) {},

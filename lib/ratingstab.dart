@@ -1,17 +1,14 @@
-// @dart = 2.7
 import 'package:flutter/material.dart';
-import 'package:projectb/widget_dropdown.dart';
-import 'package:projectb/localdb.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(
-      {Key key,
-      @required this.styleFontSize,
-      @required this.styleFontSizeHeadings,
-      this.matchScoutingData,
+      {Key? key,
+      required this.styleFontSize,
+      required this.styleFontSizeHeadings,
+      required this.matchScoutingData,
       this.onAssistOtherRobotChanged,
       this.onWorkedToStrategyChanged,
       this.onSelectedDriveRatingChanged,
@@ -34,23 +31,23 @@ class RatingsTab extends StatefulWidget {
   final double styleFontSize;
   final double styleFontSizeHeadings;
   final MatchScoutingData matchScoutingData;
-  final ValueChanged<bool> onAssistOtherRobotChanged;
-  final ValueChanged<bool> onWorkedToStrategyChanged;
-  final ValueChanged<bool> onRecoveredChanged;
-  final ValueChanged<bool> onNoTeamWorkChanged;
-  final ValueChanged<bool> onGroundIntakeChanged;
-  final ValueChanged<bool> onHighIntakeChanged;
-  final ValueChanged<bool> onOtherRobotChanged;
-  final ValueChanged<bool> onShootingWallZoneChanged;
-  final ValueChanged<bool> onShootingNearZoneChanged;
-  final ValueChanged<bool> onShootingMidZoneChanged;
-  final ValueChanged<bool> onShootingFarZoneChanged;
-  final ValueChanged<bool> onHighlightTeamChanged;
-  final ValueChanged<bool> onWarningChanged;
-  final ValueChanged<String> onSelectedDriveRatingChanged;
-  final ValueChanged<String> onSelectedDefenceRatingChanged;
-  final ValueChanged<String> onCommentsChanged;
-  final ValueChanged<MatchScoutingData> onChange;
+  final ValueChanged<bool>? onAssistOtherRobotChanged;
+  final ValueChanged<bool>? onWorkedToStrategyChanged;
+  final ValueChanged<bool>? onRecoveredChanged;
+  final ValueChanged<bool>? onNoTeamWorkChanged;
+  final ValueChanged<bool>? onGroundIntakeChanged;
+  final ValueChanged<bool>? onHighIntakeChanged;
+  final ValueChanged<bool>? onOtherRobotChanged;
+  final ValueChanged<bool>? onShootingWallZoneChanged;
+  final ValueChanged<bool>? onShootingNearZoneChanged;
+  final ValueChanged<bool>? onShootingMidZoneChanged;
+  final ValueChanged<bool>? onShootingFarZoneChanged;
+  final ValueChanged<bool>? onHighlightTeamChanged;
+  final ValueChanged<bool>? onWarningChanged;
+  final ValueChanged<String>? onSelectedDriveRatingChanged;
+  final ValueChanged<String>? onSelectedDefenceRatingChanged;
+  final ValueChanged<String>? onCommentsChanged;
+  final ValueChanged<MatchScoutingData>? onChange;
 
   @override
   _RatingsTabState createState() => _RatingsTabState();
@@ -72,7 +69,7 @@ class _RatingsTabState extends State<RatingsTab> {
     DropDownValue(id: "4", value: "Game Changing"),
   ];
 
-  final TextEditingController _txtComments = TextEditingController();
+  final TextEditingController? _txtComments = TextEditingController();
 
   @override
   void initState() {
@@ -83,9 +80,11 @@ class _RatingsTabState extends State<RatingsTab> {
   }
 
   updateValues() {
-    setState(() {
-      _txtComments.text = widget.matchScoutingData.commTxNotes;
-    });
+    if (widget.matchScoutingData.commTxNotes != null) {
+      setState(() {
+        _txtComments?.text = widget.matchScoutingData.commTxNotes!;
+      });
+    }
   }
 
   @override
@@ -125,7 +124,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       onStateChanged: (String value) {
                         setState(
                           () {
-                            widget.onSelectedDriveRatingChanged(value);
+                            widget.onSelectedDriveRatingChanged!(value);
                           },
                         );
                       },
@@ -146,7 +145,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       onStateChanged: (String value) {
                         setState(
                           () {
-                            widget.onSelectedDefenceRatingChanged(value);
+                            widget.onSelectedDefenceRatingChanged!(value);
                           },
                         );
                       },
@@ -161,10 +160,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlAssist,
+                      value: widget.matchScoutingData.commFlAssist!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onAssistOtherRobotChanged(value);
+                          widget.onAssistOtherRobotChanged!(value);
                         });
                       },
                     )
@@ -178,10 +177,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlStrategy,
+                      value: widget.matchScoutingData.commFlStrategy!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onWorkedToStrategyChanged(value);
+                          widget.onWorkedToStrategyChanged!(value);
                         });
                       },
                     )
@@ -195,10 +194,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlRecovery,
+                      value: widget.matchScoutingData.commFlRecovery!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onRecoveredChanged(value);
+                          widget.onRecoveredChanged!(value);
                         });
                       },
                     )
@@ -212,10 +211,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlOwnThing,
+                      value: widget.matchScoutingData.commFlOwnThing!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onNoTeamWorkChanged(value);
+                          widget.onNoTeamWorkChanged!(value);
                         });
                       },
                     )
@@ -252,10 +251,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlIntakeGround,
+                      value: widget.matchScoutingData.commFlIntakeGround!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onGroundIntakeChanged(value);
+                          widget.onGroundIntakeChanged!(value);
                         });
                       },
                     )
@@ -269,10 +268,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlIntakeHigh,
+                      value: widget.matchScoutingData.commFlIntakeHigh!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onHighIntakeChanged(value);
+                          widget.onHighIntakeChanged!(value);
                         });
                       },
                     )
@@ -286,10 +285,10 @@ class _RatingsTabState extends State<RatingsTab> {
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlIntakeRobot,
+                      value: widget.matchScoutingData.commFlIntakeRobot!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onOtherRobotChanged(value);
+                          widget.onOtherRobotChanged!(value);
                         });
                       },
                     )
@@ -326,11 +325,11 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotHub,
+                        value: widget.matchScoutingData.commFlShotHub!,
                         onChanged: (bool value) {
                           setState(() {
                             widget.matchScoutingData.commFlShotHub = value;
-                            widget.onChange(widget.matchScoutingData);
+                            widget.onChange!(widget.matchScoutingData);
                           });
                         },
                       )
@@ -344,10 +343,10 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotNear,
+                        value: widget.matchScoutingData.commFlShotNear!,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onShootingNearZoneChanged(value);
+                            widget.onShootingNearZoneChanged!(value);
                           });
                         },
                       )
@@ -361,10 +360,10 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotMid,
+                        value: widget.matchScoutingData.commFlShotMid!,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onShootingMidZoneChanged(value);
+                            widget.onShootingMidZoneChanged!(value);
                           });
                         },
                       )
@@ -378,10 +377,10 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotWall,
+                        value: widget.matchScoutingData.commFlShotWall!,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onShootingWallZoneChanged(value);
+                            widget.onShootingWallZoneChanged!(value);
                           });
                         },
                       )
@@ -395,10 +394,10 @@ class _RatingsTabState extends State<RatingsTab> {
                         style: TextStyle(fontSize: widget.styleFontSize),
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlShotFar,
+                        value: widget.matchScoutingData.commFlShotFar!,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onShootingFarZoneChanged(value);
+                            widget.onShootingFarZoneChanged!(value);
                           });
                         },
                       )
@@ -441,7 +440,7 @@ class _RatingsTabState extends State<RatingsTab> {
                                 TextStyle(fontSize: widget.styleFontSize),
                           ),
                           onChanged: (String value) {
-                            widget.onCommentsChanged(value);
+                            widget.onCommentsChanged!(value);
                           },
                         ),
                       ),
@@ -465,10 +464,10 @@ class _RatingsTabState extends State<RatingsTab> {
                         ],
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlHighlight,
+                        value: widget.matchScoutingData.commFlHighlight!,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onHighlightTeamChanged(value);
+                            widget.onHighlightTeamChanged!(value);
                           });
                         },
                       ),
@@ -492,10 +491,10 @@ class _RatingsTabState extends State<RatingsTab> {
                         ],
                       ),
                       Switch(
-                        value: widget.matchScoutingData.commFlWarning,
+                        value: widget.matchScoutingData.commFlWarning!,
                         onChanged: (bool value) {
                           setState(() {
-                            widget.onWarningChanged(value);
+                            widget.onWarningChanged!(value);
                           });
                         },
                       )

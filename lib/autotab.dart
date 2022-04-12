@@ -1,4 +1,3 @@
-// @dart = 2.7
 import 'package:flutter/material.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
 import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_human.dart';
@@ -7,9 +6,9 @@ import 'package:projectb/class_macthscoutingdata.dart';
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
-    Key key,
-    @required this.styleImgFieldMapWidth,
-    @required this.matchScoutingData,
+    Key? key,
+    required this.styleImgFieldMapWidth,
+    required this.matchScoutingData,
     this.styleImgFieldPerformanceWidth = 150,
     this.onLoseStartObjectChange,
     this.onContactWithRobotChange,
@@ -20,22 +19,26 @@ class AutoTab extends StatefulWidget {
     this.onAutoFlOuterChange,
     this.onAutoNumCellAttemptChange,
     this.onAutoNumCellSuccessChange,
+    this.styleCounterButtonHeight = 25,
+    this.styleCounterButtonWidth = 30,
     this.onChanged,
   }) : super(key: key);
 
   final matchScoutingData;
   final double styleImgFieldMapWidth;
   final double styleImgFieldPerformanceWidth;
-  final ValueChanged<int> onAutoNumCellAttemptChange;
-  final ValueChanged<int> onAutoNumCellSuccessChange;
-  final ValueChanged<bool> onLoseStartObjectChange;
-  final ValueChanged<bool> onContactWithRobotChange;
-  final ValueChanged<bool> onCrossSectorChange;
-  final ValueChanged<bool> onFoulChange;
-  final ValueChanged<bool> onAutoFlOuterChange;
-  final ValueChanged<bool> onAutoFlInnerChange;
-  final ValueChanged<bool> onAutoFlLowerChange;
-  final ValueChanged<MatchScoutingData> onChanged;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
+  final ValueChanged<int>? onAutoNumCellAttemptChange;
+  final ValueChanged<int>? onAutoNumCellSuccessChange;
+  final ValueChanged<bool>? onLoseStartObjectChange;
+  final ValueChanged<bool>? onContactWithRobotChange;
+  final ValueChanged<bool>? onCrossSectorChange;
+  final ValueChanged<bool>? onFoulChange;
+  final ValueChanged<bool>? onAutoFlOuterChange;
+  final ValueChanged<bool>? onAutoFlInnerChange;
+  final ValueChanged<bool>? onAutoFlLowerChange;
+  final ValueChanged<MatchScoutingData>? onChanged;
 
   @override
   _AutoTabState createState() => _AutoTabState();
@@ -214,7 +217,7 @@ class _AutoTabState extends State<AutoTab> {
                     value: widget.matchScoutingData.autoFlLoseStartObject,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.onLoseStartObjectChange(value);
+                        widget.onLoseStartObjectChange!(value);
                       });
                     },
                   ),
@@ -231,7 +234,7 @@ class _AutoTabState extends State<AutoTab> {
                       value: widget.matchScoutingData.autoFlRobotContact,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onContactWithRobotChange(value);
+                          widget.onContactWithRobotChange!(value);
                         });
                       }),
                 ],
@@ -247,7 +250,7 @@ class _AutoTabState extends State<AutoTab> {
                       value: widget.matchScoutingData.autoFlCrossOver,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onCrossSectorChange(value);
+                          widget.onCrossSectorChange!(value);
                         });
                       }),
                 ],
@@ -263,7 +266,7 @@ class _AutoTabState extends State<AutoTab> {
                     value: widget.matchScoutingData.autoFlFoul,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.onFoulChange(value);
+                        widget.onFoulChange!(value);
                       });
                     },
                   ),
@@ -274,19 +277,23 @@ class _AutoTabState extends State<AutoTab> {
         ),
         MatchAuto(
           matchScoutingData: widget.matchScoutingData,
+          styleCounterButtonHeight: widget.styleCounterButtonHeight,
+          styleCounterButtonWidth: widget.styleCounterButtonWidth,
           onChanged: (MatchScoutingData updates) {
             setState(() {
-              widget.onChanged(updates);
+              widget.onChanged!(updates);
             });
           },
           onExpanded: (value) {},
         ),
         PerformanceWidget(
+          styleCounterButtonHeight: widget.styleCounterButtonHeight,
+          styleCounterButtonWidth: widget.styleCounterButtonWidth,
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
           matchScoutingData: widget.matchScoutingData,
           onChange: (MatchScoutingData newData) {
             setState(() {
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           numCargoHighAttempt: widget.matchScoutingData.autoNumCargoHighAttempt,
@@ -303,7 +310,7 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumCargoHighAttempt = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onNumCargoHighSuccessChanged: (int value) {
@@ -312,7 +319,7 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumCargoHighSuccess = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onNumCargoLowAttemptChanged: (int value) {
@@ -321,7 +328,7 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumCargoLowAttempt = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onNumCargoLowSuccessChanged: (int value) {
@@ -330,7 +337,7 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumCargoLowSuccess = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onNumCargoTerminalAttemptChanged: (int value) {
@@ -339,7 +346,7 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumCargoTerminalAttempt = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onNumCargoTerminalSuccessChanged: (int value) {
@@ -348,11 +355,13 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumCargoTerminalSuccess = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
         ),
         HumanWidget(
+          styleCounterButtonHeight: widget.styleCounterButtonHeight,
+          styleCounterButtonWidth: widget.styleCounterButtonWidth,
           autoNumCargoHumanAttempt:
               widget.matchScoutingData.autoNumCargoHumanAttempt,
           autoNumCargoHumanHighSuccess:
@@ -365,32 +374,47 @@ class _AutoTabState extends State<AutoTab> {
               widget.matchScoutingData.autoNumCargoHumanRobot,
           onAutoNumCargoHumanAttemptChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHumanAttempt = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onAutoNumCargoHumanHighSuccessChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHumanHighSuccess = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onAutoNumCargoHumanLowSuccessChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHumanLowSuccess = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onAutoNumCargoHumanFieldChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHumanField = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
           onAutoNumCargoHumanRobotChanged: (int value) {
             setState(() {
+              if (value < 0) {
+                value = 0;
+              }
               widget.matchScoutingData.autoNumCargoHumanRobot = value;
-              widget.onChanged(widget.matchScoutingData);
+              widget.onChanged!(widget.matchScoutingData);
             });
           },
         ),

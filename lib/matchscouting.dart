@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:googleapis/shared.dart';
 import 'package:projectb/autotab.dart';
 import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
@@ -18,8 +19,8 @@ import 'googleinterface.dart';
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
     Key? key,
-    @required this.eventName,
-    @required this.eventKey,
+    required this.eventName,
+    required this.eventKey,
     this.eventTeams,
     this.styleFontSize = 14,
     this.deviceName,
@@ -46,7 +47,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   int? recordID;
   int googleUploadStatus = 0;
   GoogleInterface googleInterface = GoogleInterface.instance;
-
+  Color colorFilter = Colors.white;
+  bool filterTeams = false;
   int _selectedTab = 0;
 
   //define text controllers
@@ -92,7 +94,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleImgFieldMapWidth = 90;
   double styleImgFieldPerformanceWidth = 150;
   double styleFieldScoutName = 300;
-
+  double styleFieldTeamMaxWidth = 200;
+  double styleCounterButtonHeight = 25;
+  double styleCounterButtonWidth = 30;
   double styleFontSizeHeadings = 16;
   double styleRedBoxSize = 300;
 
@@ -116,12 +120,56 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             child: Text(
               "NO TEAMS for this EVENT",
               style: TextStyle(fontSize: styleFontSize),
+              overflow: TextOverflow.ellipsis,
             )));
       });
     }
 
     //update dropdown box with Teams
-    for (LocalTeam team in widget.eventTeams!) {
+    List<LocalTeam> listMatchTeams = [];
+    List<LocalTeam> listAllTeams = widget.eventTeams!;
+    List<LocalTeam> listDropDownTeams = [];
+    listMatchTeams.clear();
+
+    if (_txtMatchNumber.text != "") {
+      List<MatchTeam> matchTeams = await localDB.listMatchTeams();
+      print("LocalDB");
+      print(matchTeams);
+      List<MatchTeam> matchTeamsFiltered = matchTeams
+          .where((i) => i.matchNum.toString() == _txtMatchNumber.text)
+          .toList();
+      print("Filtered");
+      print(matchTeamsFiltered);
+      for (MatchTeam matchTeam in matchTeamsFiltered) {
+        List<LocalTeam> team = widget.eventTeams!
+            .where((i) => i.key == matchTeam.teamKey)
+            .toList();
+        if (team.length > 0) {
+          print(team[0].key);
+          listMatchTeams.add(LocalTeam(
+              key: team[0].key,
+              teamNumber: team[0].teamNumber,
+              name: team[0].name,
+              nickName: team[0].nickName));
+        }
+      }
+    }
+
+    if (filterTeams == true) {
+      if (listMatchTeams.length > 0) {
+        listDropDownTeams = listMatchTeams;
+        print(listMatchTeams);
+        colorFilter = Colors.black;
+      } else {
+        listDropDownTeams = listAllTeams;
+        colorFilter = Colors.white;
+      }
+    } else {
+      listDropDownTeams = listAllTeams;
+      colorFilter = Colors.white;
+    }
+
+    for (LocalTeam team in listDropDownTeams) {
       setState(() {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
@@ -325,7 +373,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
-
+    styleFieldTeamMaxWidth = width - 120;
     if (width < 500) {
       styleFieldWidth = 111.0;
       styleFieldMatchNumber = 80.0;
@@ -337,6 +385,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthTeam = 300;
       styleFontSizeHeadings = 15;
       styleRedBoxSize = 180;
+      styleCounterButtonHeight = 35;
+      styleCounterButtonWidth = 40;
     }
     if (width < 393) {
       setState(() {
@@ -351,6 +401,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
         styleFontSizeHeadings = 15;
         styleRedBoxSize = 180;
+        styleCounterButtonHeight = 25;
+        styleCounterButtonWidth = 30;
       });
     }
     if (width >= 600) {
@@ -365,6 +417,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthTeam = 400;
       styleImgFieldPerformanceWidth = 200;
       styleFieldWidthStartingCells = 150;
+      styleCounterButtonHeight = 35;
+      styleCounterButtonWidth = 40;
     }
 
     return WillPopScope(
@@ -478,6 +532,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
+                              onEditingComplete: () {
+                                if (filterTeams == true) {
+                                  setEventTeams(widget.styleFontSize);
+                                }
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
                               decoration: InputDecoration(
                                 labelText: "Match #",
                                 border: InputBorder.none,
@@ -527,24 +587,53 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             "Team ",
                             style: TextStyle(fontSize: widget.styleFontSize),
                           ),
-                          DropdownButton(
-                            isDense: true,
-                            value:
-                                selectedTeam == null ? null : selectedTeam!.key,
-                            //title: "Team",
-                            items: eventTeamsListDropDown,
-                            onChanged: (item) {
-                              setState(() {
-                                selectedTeam = widget.eventTeams!.firstWhere(
-                                    (team) => team.key == item,
-                                    orElse: () => widget.eventTeams!.first);
-                              });
-                              print("Key: " + selectedTeam!.key!);
-                            },
-                            //styleFontSize: styleFontSizeBody,
-                            //styleFieldWidth: styleFieldWidthTeam,
-                            //styleFieldPadding: styleFieldPadding,
-                            //styleFieldPaddingSides: styleFieldPaddingSides,
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxHeight: 200,
+                                maxWidth: styleFieldTeamMaxWidth),
+                            child: DropdownButton(
+                              isExpanded: true,
+                              isDense: true,
+                              value: selectedTeam == null
+                                  ? null
+                                  : selectedTeam!.key,
+                              //title: "Team",
+                              items: eventTeamsListDropDown,
+                              onChanged: (item) {
+                                setState(() {
+                                  selectedTeam = widget.eventTeams!.firstWhere(
+                                      (team) => team.key == item,
+                                      orElse: () => widget.eventTeams!.first);
+                                });
+                                print("Key: " + selectedTeam!.key!);
+                              },
+                            ),
+                          ),
+                          SizedBox.fromSize(
+                            size: Size(30, 30),
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.amberAccent,
+                                child: InkWell(
+                                  splashColor: Colors.green,
+                                  onTap: () {
+                                    filterTeams == true
+                                        ? filterTeams = false
+                                        : filterTeams = true;
+                                    setEventTeams(widget.styleFontSize);
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.filter_alt,
+                                        color: colorFilter,
+                                      ), // <-- Icon// <-- Text
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ]),
                     Row(
@@ -642,7 +731,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Switch(
-                                    value: matchScoutingData.flCrash,
+                                    value: matchScoutingData.flCrash!,
                                     onChanged: (bool value) {
                                       setState(() {
                                         matchScoutingData.flCrash = value;
@@ -661,7 +750,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: matchScoutingData.flYellow,
+                                  value: matchScoutingData.flYellow!,
                                   onChanged: (bool value) {
                                     setState(() {
                                       matchScoutingData.flYellow = value;
@@ -679,7 +768,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: matchScoutingData.flRed,
+                                  value: matchScoutingData.flRed!,
                                   onChanged: (bool value) {
                                     setState(() {
                                       matchScoutingData.flRed = value;
@@ -718,7 +807,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   ),
                                   Container(
                                     child: Switch(
-                                      value: matchScoutingData.flRanking1,
+                                      value: matchScoutingData.flRanking1!,
                                       onChanged: (bool value) {
                                         setState(() {
                                           matchScoutingData.flRanking1 = value;
@@ -740,7 +829,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   ),
                                   Container(
                                     child: Switch(
-                                      value: matchScoutingData.flRanking2,
+                                      value: matchScoutingData.flRanking2!,
                                       onChanged: (bool value) {
                                         setState(() {
                                           matchScoutingData.flRanking2 = value;
@@ -796,6 +885,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 0) {
       return AutoTab(
         styleImgFieldPerformanceWidth: styleImgFieldPerformanceWidth,
+        styleCounterButtonWidth: styleCounterButtonWidth,
+        styleCounterButtonHeight: styleCounterButtonHeight,
         matchScoutingData: matchScoutingData,
         styleImgFieldMapWidth: styleImgFieldMapWidth,
         onChanged: (MatchScoutingData updates) {
@@ -832,6 +923,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 1) {
       return TeleOpScreen(
         matchScoutingData: matchScoutingData,
+        styleCounterButtonWidth: styleCounterButtonWidth,
+        styleCounterButtonHeight: styleCounterButtonHeight,
         onCellAttemptsChanged: (int value) {
           setState(() {
             matchScoutingData.teleNumCargoHighAttempt = value;

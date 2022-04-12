@@ -15,6 +15,8 @@ class CounterWidget extends StatefulWidget {
     this.styleFieldCellsWidth = 40.0,
     this.styleFieldPadding = 2.0,
     this.styleFontSize = 12,
+    this.styleButtonHeight = 25,
+    this.styleButtonWidth = 30,
   }) : super(key: key);
 
   final int? value;
@@ -27,6 +29,8 @@ class CounterWidget extends StatefulWidget {
   final double styleFieldPadding;
   final double styleFieldPaddingSides;
   final double styleFontSize;
+  final double styleButtonHeight;
+  final double styleButtonWidth;
   final TextEditingController txtCounterValue = TextEditingController();
 
   @override
@@ -37,8 +41,8 @@ class _CounterWidgetState extends State<CounterWidget> {
   Widget _counter() {
     return Row(children: [
       SizedBox(
-        height: 25,
-        width: 30,
+        height: widget.styleButtonHeight,
+        width: widget.styleButtonWidth,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               primary: Colors.red,
@@ -77,8 +81,8 @@ class _CounterWidgetState extends State<CounterWidget> {
         ),
       ),
       SizedBox(
-        height: 25,
-        width: 30,
+        height: widget.styleButtonHeight,
+        width: widget.styleButtonWidth,
         child: ElevatedButton(
           //padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
           style: ElevatedButton.styleFrom(

@@ -8,13 +8,19 @@ import 'package:projectb/class_macthscoutingdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 32;
+  static final _databaseVersion = 36;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
   final String tblScoringData = "ScoringData";
   final String tblEventTeams = "EventTeams";
   final String tblPitData = "PitData";
+  final String tblMatchTeams = "MatchTeams";
+
+  final String createTblMatches = "CREATE TABLE IF NOT EXISTS MatchTeams("
+      "id INTEGER PRIMARY KEY, "
+      "matchNum INTEGER, "
+      "teamKey TEXT)";
 
   final String createTblEventTeams = "CREATE TABLE IF NOT EXISTS EventTeams("
       "key TEXT PRIMARY KEY, "
@@ -159,6 +165,7 @@ class LocalDB {
     await db.execute(createTblDevice);
     await db.execute(createTblEventTeams);
     await db.execute(createTblPitData);
+    await db.execute(createTblMatches);
   }
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -167,6 +174,7 @@ class LocalDB {
     await db.execute("DROP TABLE IF EXISTS $tblEvents");
     await db.execute("DROP TABLE IF EXISTS $tblDevice");
     await db.execute("DROP TABLE IF EXISTS $tblPitData");
+    await db.execute("DROP TABLE IF EXISTS $tblMatchTeams");
     _createTables(db, newVersion);
   }
 
@@ -245,6 +253,18 @@ class LocalDB {
     return rowCount;
   }
 
+  Future<int?> insertMatchTeam(MatchTeam matchTeam) async {
+    // Get a reference to the database.
+    final Database? db = await database;
+
+    int? insertedID = await db?.insert(
+      tblMatchTeams,
+      matchTeam.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return insertedID;
+  }
+
   Future<int?> insertLocalTeam(LocalTeam localTeam) async {
     // Get a reference to the database.
     final Database? db = await database;
@@ -262,6 +282,13 @@ class LocalDB {
     final Database? db = await database;
     //delete all teams in DB
     await db?.execute("delete from " + tblEventTeams);
+  }
+
+  Future<void> clearMatchTeams() async {
+    // Get a reference to the database.
+    final Database? db = await database;
+    //delete all teams in DB
+    await db?.execute("delete from " + tblMatchTeams);
   }
 
   Future<void> updateDeviceDetails(DeviceName deviceName) async {
@@ -324,6 +351,23 @@ class LocalDB {
         key: maps[i]['key'],
         name: maps[i]['name'],
         location: maps[i]['location'],
+      );
+    });
+  }
+
+  Future<List<MatchTeam>> listMatchTeams() async {
+    // Get a reference to the database.
+    final Database? db = await database;
+
+    // Query the table for all records.
+    final List<Map<dynamic, dynamic>>? maps = await db?.query(tblMatchTeams);
+
+    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    return List.generate(maps!.length, (i) {
+      return MatchTeam(
+        id: maps[i]['id'],
+        teamKey: maps[i]['teamKey'],
+        matchNum: maps[i]['matchNum'],
       );
     });
   }
@@ -418,6 +462,33 @@ class LocalTeam {
   @override
   String toString() {
     return 'LocalTeam{id: $key, name: $name, teamNumber: $teamNumber}';
+  }
+}
+
+class MatchTeam {
+  int? id;
+  int? matchNum;
+  String? teamKey;
+
+  MatchTeam({
+    this.id,
+    this.matchNum,
+    this.teamKey,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'matchNum': matchNum,
+      'teamKey': teamKey,
+    };
+  }
+
+  // Implement toString to make it easier to see information about
+  // each team when using the print statement.
+  @override
+  String toString() {
+    return 'LocalTeam{id: $id, matchNum : $matchNum, teamKey: $teamKey}';
   }
 }
 

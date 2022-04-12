@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:projectb/class/eventmatches.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/pitscouting.dart';
 import 'dart:async';
@@ -158,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<EventData>? eventsForLocation;
   //used to fill the dropdown box
   List<EventsList> eventsList = [];
+  List<EventMatches> eventMatches = [];
   List<DropdownMenuItem<String>> eventListDropDown = [];
   //used to store the current selected event
   EventData? selectedEvent;
@@ -249,7 +251,8 @@ class _MyHomePageState extends State<MyHomePage> {
     //update teams if event is selected
 
     if (selectedEvent!.key != null) {
-      await getEventTeamsFromAPI(selectedEvent!.key);
+      await getEventTeamsFromAPI(selectedEvent!.key!);
+      await getMatches(selectedEvent!.key!);
     }
     //set Downloading status to complete
     setState(() {
@@ -285,6 +288,61 @@ class _MyHomePageState extends State<MyHomePage> {
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(year);
     //setEventItems();
+  }
+
+  Future<List<MatchTeam>> getMatches(String eventKey) async {
+    //print(await localDB.listEvents());
+    //print(await localDB.listScoringData());
+    //gets all events from API
+    eventMatches = await webAPI.getEventMatches(eventKey);
+    localDB.clearMatchTeams();
+    bool recordExists = false;
+    List<MatchTeam> listMatchTeams = [];
+    for (EventMatches match in eventMatches) {
+      //print(match.matchNumber);
+      //print(match.eventKey);
+      //print(match.alliances?.blue?.teamKeys);
+      //print(match.alliances?.red?.teamKeys);
+      if (match.alliances?.blue?.teamKeys != null) {
+        MatchTeams listBlueTeams = match.alliances?.blue! as MatchTeams;
+        for (String? teamKey in listBlueTeams.teamKeys!) {
+          recordExists = false;
+          MatchTeam newMatchTeam =
+              MatchTeam(matchNum: match.matchNumber, teamKey: teamKey);
+          for (MatchTeam team in listMatchTeams) {
+            if (team.teamKey == newMatchTeam.teamKey) {
+              if (team.matchNum == newMatchTeam.matchNum) {
+                recordExists = true;
+              }
+            }
+          }
+          if (!recordExists) {
+            listMatchTeams.add(newMatchTeam);
+            localDB.insertMatchTeam(newMatchTeam);
+          }
+        }
+      }
+      if (match.alliances?.red?.teamKeys != null) {
+        MatchTeams listRedTeams = match.alliances?.red! as MatchTeams;
+        for (String? teamKey in listRedTeams.teamKeys!) {
+          recordExists = false;
+          MatchTeam newMatchTeam =
+              MatchTeam(matchNum: match.matchNumber, teamKey: teamKey);
+          for (MatchTeam team in listMatchTeams) {
+            if (team.teamKey == newMatchTeam.teamKey) {
+              if (team.matchNum == newMatchTeam.matchNum) {
+                recordExists = true;
+              }
+            }
+          }
+          if (!recordExists) {
+            listMatchTeams.add(newMatchTeam);
+            localDB.insertMatchTeam(newMatchTeam);
+          }
+        }
+      }
+    }
+    return listMatchTeams;
   }
 
   Future<void> getEventTeamsFromAPI(String eventKey) async {
@@ -324,6 +382,7 @@ class _MyHomePageState extends State<MyHomePage> {
         localDB.insertLocalTeam(insertTeam);
       }
     }
+    await getMatches(selectedEvent!.key!);
   }
 
   setEventItems() async {
@@ -604,7 +663,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     orElse: () => eventsForLocation!.first);
                               });
                               print("Key: " + selectedEvent!.key.toString());
-                              getEventTeamsFromAPI(selectedEvent!.key);
+                              getEventTeamsFromAPI(selectedEvent!.key!);
                             },
                             items: eventListDropDown,
                           ),
@@ -622,7 +681,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         updateDeviceName();
                         if (selectedEvent != null) {
                           mySharedPrefs.saveStr(
-                              "currentEvent", selectedEvent!.key);
+                              "currentEvent", selectedEvent!.key!);
                           setLocalEvent();
                         }
                       },

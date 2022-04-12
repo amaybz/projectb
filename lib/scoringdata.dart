@@ -34,6 +34,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   String googleEmail = "...";
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
+  double styleQRSize = 320;
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
@@ -338,7 +339,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 onPrimary: Colors.white, // foreground
               ),
               onPressed: () {
-                deleteMatchRecord(context, item.id);
+                deleteMatchRecord(context, item.id!);
 
                 setState(() {});
               },
@@ -534,17 +535,48 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   _showDialogMatchQRCode(BuildContext context, String matchID) async {
     // set up the buttons
 
+    double width = MediaQuery.of(context).size.width;
+    print("Screen Size: " + width.toString());
+
+    if (width < 600) {
+      setState(() {
+        styleQRSize = 380;
+      });
+    }
+    if (width < 500) {
+      setState(() {
+        styleQRSize = 360;
+      });
+    }
+    if (width < 450) {
+      setState(() {
+        styleQRSize = 325;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleQRSize = 320;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleQRSize = 400;
+      });
+    }
+
+    print("QR Size: " + styleQRSize.toString());
+
     MatchScoutingData match =
         await localDB.getScoringDataRecord(int.parse(matchID));
     var barcodeData = json.encode(match.toMap());
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
-        width: 320,
-        height: 320,
+        width: styleQRSize,
+        height: styleQRSize,
         child: DisplayQRCode(
           data: barcodeData.toString(),
-          styleQRSize: 305.0,
+          styleQRSize: styleQRSize - 15,
         ),
       ),
     );
@@ -559,18 +591,44 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   _showDialogPitQRCode(BuildContext context, String pitID) async {
-    // set up the buttons
-
+    double width = MediaQuery.of(context).size.width;
+    print("Screen Size: " + width.toString());
+    if (width < 600) {
+      setState(() {
+        styleQRSize = 380;
+      });
+    }
+    if (width < 500) {
+      setState(() {
+        styleQRSize = 350;
+      });
+    }
+    if (width < 450) {
+      setState(() {
+        styleQRSize = 325;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleQRSize = 320;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleQRSize = 400;
+      });
+    }
+    print("QR PIT Size: " + styleQRSize.toString());
     PitData pit = await localDB.getPitDataRecord(int.parse(pitID));
     var jsonString = json.encode(pit.toMap());
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
-        width: 315,
-        height: 315,
+        width: styleQRSize,
+        height: styleQRSize,
         child: DisplayQRCode(
           data: jsonString.toString(),
-          styleQRSize: 305.0,
+          styleQRSize: styleQRSize - 15,
         ),
       ),
     );

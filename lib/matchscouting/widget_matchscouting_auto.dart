@@ -1,4 +1,3 @@
-// @dart = 2.7
 import 'package:flutter/material.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 import 'package:projectb/widget_headingmain.dart';
@@ -7,10 +6,12 @@ import 'package:projectb/widget_counter.dart';
 
 class MatchAuto extends StatefulWidget {
   MatchAuto({
-    Key key,
-    @required this.matchScoutingData,
+    Key? key,
+    required this.matchScoutingData,
     this.styleFontSize = 16,
     this.styleFontSizeHeadings = 18,
+    this.styleCounterButtonHeight = 25,
+    this.styleCounterButtonWidth = 30,
     this.onChanged,
     this.onExpanded,
   }) : super(key: key);
@@ -18,8 +19,10 @@ class MatchAuto extends StatefulWidget {
   final MatchScoutingData matchScoutingData;
   final double styleFontSize;
   final double styleFontSizeHeadings;
-  final ValueChanged<MatchScoutingData> onChanged;
-  final ValueChanged<bool> onExpanded;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
+  final ValueChanged<MatchScoutingData>? onChanged;
+  final ValueChanged<bool>? onExpanded;
 
   @override
   _MatchAutoState createState() => _MatchAutoState();
@@ -56,7 +59,7 @@ class _MatchAutoState extends State<MatchAuto> {
               onChange: (bool value) {
                 setState(() {
                   widget.matchScoutingData.autoFlStart = value;
-                  widget.onChanged(widget.matchScoutingData);
+                  widget.onChanged!(widget.matchScoutingData);
                 });
               },
             ),
@@ -68,11 +71,11 @@ class _MatchAutoState extends State<MatchAuto> {
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
-                  value: widget.matchScoutingData.autoFlBaseLine,
+                  value: widget.matchScoutingData.autoFlBaseLine!,
                   onChanged: (bool value) {
                     setState(() {
                       widget.matchScoutingData.autoFlBaseLine = value;
-                      widget.onChanged(widget.matchScoutingData);
+                      widget.onChanged!(widget.matchScoutingData);
                     });
                   },
                 ),
@@ -81,24 +84,28 @@ class _MatchAutoState extends State<MatchAuto> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text("#Cargo Pickup?:"),
               CounterWidget(
+                styleButtonHeight: widget.styleCounterButtonHeight,
+                styleButtonWidth: widget.styleCounterButtonWidth,
                 title: "",
                 value: widget.matchScoutingData.autoNumCellLoad,
                 onIncreaseStateChanged: (int value) {
                   setState(() {
-                    widget.matchScoutingData.autoNumCellLoad++;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.matchScoutingData.autoNumCellLoad =
+                        widget.matchScoutingData.autoNumCellLoad! + 1;
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                 },
                 onDecreaseStateChanged: (int value) {
                   setState(() {
-                    widget.matchScoutingData.autoNumCellLoad--;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.matchScoutingData.autoNumCellLoad =
+                        widget.matchScoutingData.autoNumCellLoad! - 1;
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                 },
                 onSetValue: (int value) {
                   setState(() {
                     widget.matchScoutingData.autoNumCellLoad = value;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                 },
               ),

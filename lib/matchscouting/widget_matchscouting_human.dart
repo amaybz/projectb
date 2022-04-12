@@ -20,6 +20,8 @@ class HumanWidget extends StatefulWidget {
     this.styleFontSizeBody = 16,
     this.styleFontSizeHeadings = 18,
     this.styleImgFieldWidth = 150,
+    this.styleCounterButtonHeight = 25,
+    this.styleCounterButtonWidth = 30,
   }) : super(key: key);
 
   final int? autoNumCargoHumanAttempt;
@@ -35,6 +37,8 @@ class HumanWidget extends StatefulWidget {
   final double styleFontSizeBody;
   final double styleFontSizeHeadings;
   final double styleImgFieldWidth;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
 
   @override
   _HumanWidgetState createState() => _HumanWidgetState();
@@ -70,6 +74,8 @@ class _HumanWidgetState extends State<HumanWidget> {
                       children: [
                         Column(children: [
                           CounterWidget(
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            styleButtonWidth: widget.styleCounterButtonWidth,
                             value: widget.autoNumCargoHumanAttempt,
                             title: "Human",
                             title1: "Fired",
@@ -93,6 +99,8 @@ class _HumanWidgetState extends State<HumanWidget> {
                         ]),
                         Column(children: [
                           CounterWidget(
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            styleButtonWidth: widget.styleCounterButtonWidth,
                             value: widget.autoNumCargoHumanHighSuccess,
                             title: " ",
                             title1: "High Scored",
@@ -119,6 +127,8 @@ class _HumanWidgetState extends State<HumanWidget> {
                             },
                           ),
                           CounterWidget(
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            styleButtonWidth: widget.styleCounterButtonWidth,
                             value: widget.autoNumCargoHumanLowSuccess,
                             title: " ",
                             title1: "Low Scored",
@@ -147,6 +157,8 @@ class _HumanWidgetState extends State<HumanWidget> {
                         ]),
                         Column(children: [
                           CounterWidget(
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            styleButtonWidth: widget.styleCounterButtonWidth,
                             value: widget.autoNumCargoHumanField,
                             title: "Cargo Thrown",
                             title1: "  on field",
@@ -168,6 +180,8 @@ class _HumanWidgetState extends State<HumanWidget> {
                             },
                           ),
                           CounterWidget(
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            styleButtonWidth: widget.styleCounterButtonWidth,
                             value: widget.autoNumCargoHumanRobot,
                             title: "Cargo caught",
                             title1: " by robot",

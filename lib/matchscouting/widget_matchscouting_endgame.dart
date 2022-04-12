@@ -1,20 +1,12 @@
-// @dart = 2.7
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
-import 'package:projectb/class_pitdata.dart';
-import 'package:projectb/widget_counter.dart';
-import 'package:projectb/widget_headingmain.dart';
-import 'package:projectb/widget_row_heading.dart';
-import 'package:projectb/widget_row_heading_dropdown.dart';
 
 import '../widget_dropdown_indexed.dart';
 
 class EndGame extends StatefulWidget {
   EndGame(
-      {Key key,
-      @required this.matchScoutingData,
+      {Key? key,
+      required this.matchScoutingData,
       this.styleFontSize = 16,
       this.styleFontSizeHeadings = 18,
       this.styleFieldTxClimbMaxWidth = 300,
@@ -27,9 +19,9 @@ class EndGame extends StatefulWidget {
   final double styleFontSize;
   final double styleFontSizeHeadings;
   final double styleFieldTxClimbMaxWidth;
-  final ValueChanged<MatchScoutingData> onChanged;
-  final ValueChanged<bool> onExpanded;
-  final TextEditingController txClimb;
+  final ValueChanged<MatchScoutingData>? onChanged;
+  final ValueChanged<bool>? onExpanded;
+  final TextEditingController? txClimb;
 
   @override
   _EndGameState createState() => _EndGameState();
@@ -70,11 +62,11 @@ class _EndGameState extends State<EndGame> {
               style: TextStyle(fontSize: widget.styleFontSize),
             ),
             Switch(
-                value: widget.matchScoutingData.teleFlHanger,
+                value: widget.matchScoutingData.teleFlHanger!,
                 onChanged: (item) {
                   setState(() {
                     widget.matchScoutingData.teleFlHanger = item;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                 }),
           ]),
@@ -93,10 +85,11 @@ class _EndGameState extends State<EndGame> {
                 items: listSuccessFailNA,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdClimb = item;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.matchScoutingData.teleIdClimb = item as String?;
+                    widget.onChanged!(widget.matchScoutingData);
                   });
-                  print("teleIdClimb: " + widget.matchScoutingData.teleIdClimb);
+                  print(
+                      "teleIdClimb: " + widget.matchScoutingData.teleIdClimb!);
                 },
               ),
             ],
@@ -116,11 +109,12 @@ class _EndGameState extends State<EndGame> {
                 items: ddsSpeed,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdClimbGrabTime = item;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.matchScoutingData.teleIdClimbGrabTime =
+                        item as String?;
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                   print("idClimbType: " +
-                      widget.matchScoutingData.teleIdClimbGrabTime);
+                      widget.matchScoutingData.teleIdClimbGrabTime!);
                 },
               ),
             ],
@@ -140,11 +134,11 @@ class _EndGameState extends State<EndGame> {
                 items: ddsSpeed,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdClimbTime = item;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.matchScoutingData.teleIdClimbTime = item as String?;
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                   print("idClimbSpeed: " +
-                      widget.matchScoutingData.teleIdClimbTime);
+                      widget.matchScoutingData.teleIdClimbTime!);
                 },
               ),
             ],
@@ -153,11 +147,11 @@ class _EndGameState extends State<EndGame> {
             Text("Transition?:",
                 style: TextStyle(fontSize: widget.styleFontSize)),
             Switch(
-                value: widget.matchScoutingData.flClimbTransition,
+                value: widget.matchScoutingData.flClimbTransition!,
                 onChanged: (item) {
                   setState(() {
                     widget.matchScoutingData.flClimbTransition = item;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                 }),
           ]),
@@ -174,11 +168,12 @@ class _EndGameState extends State<EndGame> {
                 items: ddsSpeed,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.idTransitionSpeed = item;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.matchScoutingData.idTransitionSpeed =
+                        item as String?;
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                   print("idTransitionSpeed: " +
-                      widget.matchScoutingData.idTransitionSpeed);
+                      widget.matchScoutingData.idTransitionSpeed!);
                 },
               ),
             ],
@@ -198,11 +193,11 @@ class _EndGameState extends State<EndGame> {
                   items: ddsPosition,
                   onChanged: (item) {
                     setState(() {
-                      widget.matchScoutingData.teleIdClimbPos = item;
-                      widget.onChanged(widget.matchScoutingData);
+                      widget.matchScoutingData.teleIdClimbPos = item as String?;
+                      widget.onChanged!(widget.matchScoutingData);
                     });
                     print("teleIdClimbPos: " +
-                        widget.matchScoutingData.teleIdClimbPos);
+                        widget.matchScoutingData.teleIdClimbPos!);
                   }),
             ],
           ),
@@ -221,11 +216,12 @@ class _EndGameState extends State<EndGame> {
                   items: listSuccessFailNA,
                   onChanged: (item) {
                     setState(() {
-                      widget.matchScoutingData.teleIdClimbOutcome = item;
-                      widget.onChanged(widget.matchScoutingData);
+                      widget.matchScoutingData.teleIdClimbOutcome =
+                          item as String?;
+                      widget.onChanged!(widget.matchScoutingData);
                     });
                     print("teleIdClimbPos: " +
-                        widget.matchScoutingData.teleIdClimbOutcome);
+                        widget.matchScoutingData.teleIdClimbOutcome!);
                   }),
             ],
           ),
@@ -237,11 +233,11 @@ class _EndGameState extends State<EndGame> {
                 style: TextStyle(fontSize: widget.styleFontSize),
               ),
               Switch(
-                value: widget.matchScoutingData.teleFlClimbFall,
+                value: widget.matchScoutingData.teleFlClimbFall!,
                 onChanged: (bool value) {
                   setState(() {
                     widget.matchScoutingData.teleFlClimbFall = value;
-                    widget.onChanged(widget.matchScoutingData);
+                    widget.onChanged!(widget.matchScoutingData);
                   });
                 },
               ),

@@ -25,6 +25,8 @@ class PerformanceWidget extends StatefulWidget {
     this.styleFontSizeBody = 16,
     this.styleFontSizeHeadings = 18,
     this.styleImgFieldWidth = 150,
+    this.styleCounterButtonHeight = 25,
+    this.styleCounterButtonWidth = 30,
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
@@ -44,6 +46,8 @@ class PerformanceWidget extends StatefulWidget {
   final double styleFontSizeBody;
   final double styleFontSizeHeadings;
   final double styleImgFieldWidth;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
 
   @override
   _PerformanceWidgetState createState() => _PerformanceWidgetState();
@@ -79,6 +83,8 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       children: [
                         Column(children: [
                           CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
                             value: widget.numCargoHighAttempt,
                             title: "Hub (Upper)",
                             title1: " Attempt",
@@ -100,6 +106,8 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             },
                           ),
                           CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
                             value: widget.numCargoHighSuccess,
                             title: "Success",
                             styleFontSize: widget.styleFontSizeBody,
@@ -140,6 +148,8 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                         ]),
                         Column(children: [
                           CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
                             value: widget.numCargoTerminalAttempt,
                             title: "Terminal Deliver",
                             title1: " Attempt",
@@ -161,6 +171,8 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             },
                           ),
                           CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
                             value: widget.numCargoTerminalSuccess,
                             title: "Success",
                             styleFontSize: widget.styleFontSizeBody,
@@ -191,6 +203,8 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                       children: [
                         Column(children: [
                           CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
                             value: widget.numCargoLowAttempt,
                             title: "Hub (Lower)",
                             title1: " Attempt",
@@ -212,6 +226,8 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             },
                           ),
                           CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
                             value: widget.numCargoLowSuccess,
                             title: "Success",
                             styleFontSize: widget.styleFontSizeBody,
@@ -254,10 +270,7 @@ class _PerformanceWidgetState extends State<PerformanceWidget> {
                             width: 110,
                             height: 90,
                             child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
-                                color: Colors.white,
-                              ),
+                              decoration: BoxDecoration(),
                             ),
                           ),
                         ]),

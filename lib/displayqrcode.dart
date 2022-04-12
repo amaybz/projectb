@@ -7,7 +7,7 @@ class DisplayQRCode extends StatefulWidget {
 
   const DisplayQRCode({
     Key? key,
-    @required this.data,
+    required this.data,
     this.styleQRSize = 100,
   }) : super(key: key);
 
@@ -20,15 +20,20 @@ class _DisplayQRCodeState extends State<DisplayQRCode> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5.0),
-      child: Column(children: [
-        //Text("QR Code"),
-        QrImage(
-          data: widget.data!,
-          version: QrVersions.auto,
-          size: widget.styleQRSize,
-          gapless: false,
-        )
-      ]),
+      width: widget.styleQRSize,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //Text("QR Code"),
+            QrImage(
+              data: widget.data!,
+              version: QrVersions.auto,
+              size: widget.styleQRSize,
+              gapless: true,
+              backgroundColor: Colors.white,
+            )
+          ]),
     );
   }
 }

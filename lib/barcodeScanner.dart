@@ -68,13 +68,13 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
       var jsonString = json.decode(barcodeScanRes);
       matchScoutingData = MatchScoutingData.fromMap(jsonString);
       print("matchScoutingData ID: " + matchScoutingData.id.toString());
-      print("matchScoutingData Team: " + matchScoutingData.idTeam);
+      print("matchScoutingData Team: " + matchScoutingData.idTeam!);
       matchScoutingData.id = null;
       if (matchScoutingData.numMatch != null) {
         _status = ((await localDB.insertScoringData(matchScoutingData))! > 0)
             ? "Record Saved"
             : "Failed to Save Record";
-        barcodeScanRes = matchScoutingData.idTeam;
+        barcodeScanRes = matchScoutingData.idTeam!;
       } else {
         barcodeScanRes = "Invalid Data";
         _status = "Incorrect Format";

@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:projectb/class/eventmatches.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/pitscouting.dart';
 import 'dart:async';
@@ -9,32 +9,113 @@ import 'package:projectb/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
-//import 'package:permission_handler/permission_handler.dart';
-import 'package:projectb/qrreaderscreen.dart';
-import 'package:package_info/package_info.dart';
+import 'package:camera/camera.dart';
+import 'package:projectb/addteamscreen.dart';
+import 'barcodeScanner.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+// can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
+  final CameraDescription? camera;
+
+  const MyApp({
+    Key? key,
+    @required this.camera,
+  }) : super(key: key);
   // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        //if (!currentFocus.hasPrimaryFocus) {
+        //  currentFocus.unfocus();
+        //}
+
+        //if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) { currentFocus.focusedChild!.unfocus(); } },
+
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+      },
+      child: DarkLightTheme(camera: camera),
+    );
+  }
+}
+
+class DarkLightTheme extends StatefulWidget {
+  const DarkLightTheme({
+    Key? key,
+    required this.camera,
+  }) : super(key: key);
+  final CameraDescription? camera;
+
+  @override
+  State<DarkLightTheme> createState() => _DarkLightThemeState();
+}
+
+bool _light = false;
+
+class _DarkLightThemeState extends State<DarkLightTheme> {
+  MySharedPrefs mySharedPrefs = new MySharedPrefs();
+
+  ThemeData _darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: Colors.blue,
+  );
+
+  ThemeData _lightTheme = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Colors.blue,
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Project B',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: _light ? _darkTheme : _lightTheme,
+      home: MyHomePage(
+        title: 'Home - Set Event',
+        camera: widget.camera,
+        theme: _light,
+        onchangeTheme: (bool state) {
+          setState(() {
+            _light = state;
+            mySharedPrefs.saveBool("DarkMode", state);
+          });
+        },
       ),
-      home: MyHomePage(title: 'Robot Match Scouting'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage(
+      {Key? key,
+      this.title,
+      this.camera,
+      this.theme = true,
+      this.onchangeTheme})
+      : super(key: key);
 
-  final String title;
+  final CameraDescription? camera;
+  final String? title;
+  final bool theme;
+  final ValueChanged<bool>? onchangeTheme;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -45,17 +126,18 @@ class _MyHomePageState extends State<MyHomePage> {
   WebAPI webAPI = new WebAPI();
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   //style
-  double styleFontSize;
+  double styleFontSize = 14;
   String versionName = "";
   String versionCode = "";
+  String measurements = "kg";
 
   TextEditingController _txtDeviceName = TextEditingController();
   static int _downloadingData = 0;
   static int _countOfTeams = 0;
   String _downloadingText = "Please select Location and Event to download data";
   String txtEventHelpText = "Please choose a event";
-  String locationDropDown;
-  String selectedYear = "2021";
+  String? locationDropDown;
+  String selectedYear = "2022";
   final List<String> _locations = [
     'Australia',
     'Canada',
@@ -66,22 +148,24 @@ class _MyHomePageState extends State<MyHomePage> {
     'Taiwan',
     'Turkey',
     'USA',
+    'Local',
   ];
 
-  final List<String> _year = ['2020', '2021'];
+  final List<String> _year = ['2020', '2021', '2022'];
 
   //used to store all events from API
-  List<EventData> allEvents;
+  List<EventData>? allEvents;
   //used to store events for a location
-  List<EventData> eventsForLocation;
+  List<EventData>? eventsForLocation;
   //used to fill the dropdown box
   List<EventsList> eventsList = [];
+  List<EventMatches> eventMatches = [];
   List<DropdownMenuItem<String>> eventListDropDown = [];
   //used to store the current selected event
-  EventData selectedEvent;
-  LocalEvent selectedLocalEvent;
+  EventData? selectedEvent;
+  LocalEvent? selectedLocalEvent;
 
-  List<TeamsList> eventTeams;
+  List<TeamsList>? eventTeams;
 
   @override
   void initState() {
@@ -92,6 +176,14 @@ class _MyHomePageState extends State<MyHomePage> {
     getDeviceName();
     setLocalEvent();
     getVersionInfo();
+    getTheme();
+  }
+
+  void getTheme() async {
+    bool darkMode = await mySharedPrefs.readBool("DarkMode");
+    setState(() {
+      widget.onchangeTheme!(darkMode);
+    });
   }
 
   void getVersionInfo() async {
@@ -100,8 +192,14 @@ class _MyHomePageState extends State<MyHomePage> {
       versionName = packageInfo.version;
       versionCode = packageInfo.buildNumber;
     });
+  }
 
-
+  void refreshLocalTeamsCount() async {
+    List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
+    setState(() {
+      _countOfTeams =
+          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+    });
   }
 
   void setLocalEvent() async {
@@ -123,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print("No Teams");
     } else {
       localDB.clearLocalTeams();
-      for (TeamsList team in eventTeams) {
+      for (TeamsList team in eventTeams!) {
         LocalTeam insertTeam = LocalTeam(
             key: team.key,
             name: team.name,
@@ -151,8 +249,10 @@ class _MyHomePageState extends State<MyHomePage> {
     //update Events from API
     await updateEventsFromAPI(selectedYear);
     //update teams if event is selected
-    if (selectedEvent.key != null) {
-      await getEventTeamsFromAPI(selectedEvent.key);
+
+    if (selectedEvent!.key != null) {
+      await getEventTeamsFromAPI(selectedEvent!.key!);
+      await getMatches(selectedEvent!.key!);
     }
     //set Downloading status to complete
     setState(() {
@@ -177,7 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } else {
       setState(() {
-        _txtDeviceName.text = deviceName.name;
+        _txtDeviceName.text = deviceName.name!;
       });
     }
   }
@@ -187,8 +287,62 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(year);
-
     //setEventItems();
+  }
+
+  Future<List<MatchTeam>> getMatches(String eventKey) async {
+    //print(await localDB.listEvents());
+    //print(await localDB.listScoringData());
+    //gets all events from API
+    eventMatches = await webAPI.getEventMatches(eventKey);
+    localDB.clearMatchTeams();
+    bool recordExists = false;
+    List<MatchTeam> listMatchTeams = [];
+    for (EventMatches match in eventMatches) {
+      //print(match.matchNumber);
+      //print(match.eventKey);
+      //print(match.alliances?.blue?.teamKeys);
+      //print(match.alliances?.red?.teamKeys);
+      if (match.alliances?.blue?.teamKeys != null) {
+        MatchTeams listBlueTeams = match.alliances?.blue! as MatchTeams;
+        for (String? teamKey in listBlueTeams.teamKeys!) {
+          recordExists = false;
+          MatchTeam newMatchTeam =
+              MatchTeam(matchNum: match.matchNumber, teamKey: teamKey);
+          for (MatchTeam team in listMatchTeams) {
+            if (team.teamKey == newMatchTeam.teamKey) {
+              if (team.matchNum == newMatchTeam.matchNum) {
+                recordExists = true;
+              }
+            }
+          }
+          if (!recordExists) {
+            listMatchTeams.add(newMatchTeam);
+            localDB.insertMatchTeam(newMatchTeam);
+          }
+        }
+      }
+      if (match.alliances?.red?.teamKeys != null) {
+        MatchTeams listRedTeams = match.alliances?.red! as MatchTeams;
+        for (String? teamKey in listRedTeams.teamKeys!) {
+          recordExists = false;
+          MatchTeam newMatchTeam =
+              MatchTeam(matchNum: match.matchNumber, teamKey: teamKey);
+          for (MatchTeam team in listMatchTeams) {
+            if (team.teamKey == newMatchTeam.teamKey) {
+              if (team.matchNum == newMatchTeam.matchNum) {
+                recordExists = true;
+              }
+            }
+          }
+          if (!recordExists) {
+            listMatchTeams.add(newMatchTeam);
+            localDB.insertMatchTeam(newMatchTeam);
+          }
+        }
+      }
+    }
+    return listMatchTeams;
   }
 
   Future<void> getEventTeamsFromAPI(String eventKey) async {
@@ -198,15 +352,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //add event to local DB
     LocalEvent event = LocalEvent(
-      key: selectedEvent.key,
-      name: selectedEvent.name,
-      shortName: selectedEvent.shortName,
-      location: selectedEvent.country,
+      key: selectedEvent!.key,
+      name: selectedEvent!.name,
+      shortName: selectedEvent!.shortName,
+      location: selectedEvent!.country,
     );
     localDB.insertEvent(event);
 
     eventTeams = await webAPI.getTeamsByEvent(eventKey);
-    print(eventTeams.length);
+    print(eventTeams!.length);
     if (eventTeams == null) {
       setState(() {
         _downloadingData = 0;
@@ -218,7 +372,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _downloadingText = "Please select Location and Event to download data";
       });
       localDB.clearLocalTeams();
-      for (TeamsList team in eventTeams) {
+      for (TeamsList team in eventTeams!) {
         LocalTeam insertTeam = LocalTeam(
             key: team.key,
             name: team.name,
@@ -228,6 +382,7 @@ class _MyHomePageState extends State<MyHomePage> {
         localDB.insertLocalTeam(insertTeam);
       }
     }
+    await getMatches(selectedEvent!.key!);
   }
 
   setEventItems() async {
@@ -242,19 +397,20 @@ class _MyHomePageState extends State<MyHomePage> {
       updateEventsFromAPI(selectedYear);
     }
     eventsForLocation =
-        allEvents.where((i) => i.country == locationDropDown).toList();
+        allEvents!.where((i) => i.country == locationDropDown).toList();
     //clear event list and update it with new events
     eventsList.clear();
-    eventsForLocation.forEach((i) {
-      eventsList.add(EventsList(name: i.shortName, key: i.key));
+    eventsForLocation!.forEach((i) {
+      if (i.shortName != null && i.shortName != "") {
+        eventsList.add(EventsList(name: i.shortName, key: i.key));
+      } else {
+        eventsList.add(EventsList(name: i.name, key: i.key));
+      }
     });
 
-    if(eventsList.length == 0)
-    {
+    if (eventsList.length == 0) {
       txtEventHelpText = "No Events for this location!";
-    }
-    else
-    {
+    } else {
       txtEventHelpText = "Please choose a event";
     }
     //update dropdown box with the new events
@@ -263,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage> {
         eventListDropDown.add(new DropdownMenuItem(
             value: event.key,
             child: Text(
-              event.name,
+              event.name!,
               style: TextStyle(fontSize: 16),
             )));
       });
@@ -285,7 +441,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (width < 500) {
       setState(() {
-        styleFontSize = 14;
+        styleFontSize = 13;
       });
     }
     if (width < 393) {
@@ -295,7 +451,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (width >= 600) {
       setState(() {
-        styleFontSize = 16;
+        styleFontSize = 15;
       });
     }
 
@@ -303,24 +459,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child:
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text('Robot Scouting'),
-          Text('Version: ' + versionName),
-        ],),
-
-              decoration: BoxDecoration(
-                color: Colors.blue,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Robot Scouting'),
+                  Text('Version: ' + versionName),
+                ],
               ),
+              decoration:
+                  BoxDecoration(color: Theme.of(context).primaryColorDark),
             ),
             ListTile(
               title: Text('Pit Scouting'),
@@ -348,11 +502,33 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Read QR Code'),
+              title: Text('Scan QR Code'),
               onTap: () {
                 Navigator.pop(context);
-                _navigateToQRReaderScreen(context);
+                _navigateToQRBarcodeScanner(context);
               },
+            ),
+            ListTile(
+              title: Text('Add Local Team'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToAddTeamScreen(context);
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Row(
+                children: [
+                  Text('Dark Mode'),
+                  Switch(
+                      value: widget.theme,
+                      onChanged: (toggle) {
+                        setState(() {
+                          widget.onchangeTheme!(toggle);
+                        });
+                      })
+                ],
+              ),
             ),
           ],
         ),
@@ -368,6 +544,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  FractionallySizedBox(
+                    widthFactor: 0.99,
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints(maxWidth: 800.0, minWidth: 250.0),
+                        child: Container(
+                          margin: const EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.blueAccent),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10)),
+                          ),
+                          padding: EdgeInsets.all(4.0),
+                          child: Column(
+                            children: [
+                              Text("Selected Event:"),
+                              //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
+                              Text(selectedLocalEvent == null
+                                  ? "none"
+                                  : selectedLocalEvent!.name!),
+                              Text("Teams Loaded: " + _countOfTeams.toString()),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -392,9 +599,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: DropdownButton<String>(
                             hint: Text('Please select Year'),
                             value: selectedYear,
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               setState(() {
-                                selectedYear = newValue;
+                                selectedYear = newValue!;
                                 locationDropDown = null;
                                 selectedEvent = null;
                               });
@@ -420,7 +627,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: DropdownButton<String>(
                             hint: Text('Please choose a location'),
                             value: locationDropDown,
-                            onChanged: (String newValue) {
+                            onChanged: (String? newValue) {
                               setState(() {
                                 locationDropDown = newValue;
                               });
@@ -448,15 +655,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             hint: Text(txtEventHelpText),
                             value: selectedEvent == null
                                 ? null
-                                : selectedEvent.key,
+                                : selectedEvent!.key,
                             onChanged: (item) {
                               setState(() {
-                                selectedEvent = eventsForLocation.firstWhere(
+                                selectedEvent = eventsForLocation!.firstWhere(
                                     (loc) => loc.key == item,
-                                    orElse: () => eventsForLocation.first);
+                                    orElse: () => eventsForLocation!.first);
                               });
-                              print("Key: " + selectedEvent.key.toString());
-                              getEventTeamsFromAPI(selectedEvent.key);
+                              print("Key: " + selectedEvent!.key.toString());
+                              getEventTeamsFromAPI(selectedEvent!.key!);
                             },
                             items: eventListDropDown,
                           ),
@@ -466,45 +673,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     state: _downloadingData,
                     text: _downloadingText,
                   ),
-                  FractionallySizedBox(
-                    widthFactor: 0.99,
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 800.0),
-                        child: Container(
-                          margin: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                          ),
-                          padding: EdgeInsets.all(4.0),
-                          child: Column(
-                            children: [
-                              Text("Selected Event:"),
-                              //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
-                              Text(selectedLocalEvent == null
-                                  ? "none"
-                                  : selectedLocalEvent.name),
-                              Text("Teams Loaded: " + _countOfTeams.toString()),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
-                    child: FlatButton(
+                    child: ElevatedButton(
                       child: Text("Set Event"),
                       onPressed: () {
                         updateDeviceName();
                         if (selectedEvent != null) {
                           mySharedPrefs.saveStr(
-                              "currentEvent", selectedEvent.key);
+                              "currentEvent", selectedEvent!.key!);
                           setLocalEvent();
                         }
                       },
@@ -530,13 +707,18 @@ class _MyHomePageState extends State<MyHomePage> {
   _navigateToStoredData(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
+    var eventShortName = (selectedLocalEvent == null)
+        ? "None Selected"
+        : selectedLocalEvent!.shortName;
+    var eventKey =
+        (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
         builder: (context) => ScoringDataScreen(
-          eventName: selectedLocalEvent.shortName,
-          eventKey: selectedLocalEvent.key,
+          eventName: eventShortName,
+          eventKey: eventKey,
         ),
       ),
     );
@@ -546,14 +728,22 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     List<LocalTeam> teams = await localDB.listLocalTeams();
+    String eventName = "";
+    if (selectedLocalEvent!.shortName != null &&
+        selectedLocalEvent!.shortName != "") {
+      eventName = selectedLocalEvent!.shortName!;
+    } else {
+      eventName = selectedLocalEvent!.name!;
+    }
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
-                eventName: selectedLocalEvent.shortName,
-                eventKey: selectedLocalEvent.key,
+                eventName: eventName,
+                eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
+                deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
               )),
     );
@@ -563,34 +753,51 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     List<LocalTeam> teams = await localDB.listLocalTeams();
+    String eventName = "";
+    if (selectedLocalEvent!.shortName != null &&
+        selectedLocalEvent!.shortName != "") {
+      eventName = selectedLocalEvent!.shortName!;
+    } else {
+      eventName = selectedLocalEvent!.name!;
+    }
     final result = await Navigator.push(
       context,
-      // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => PitScoutingScreen(
-                eventName: selectedLocalEvent.shortName,
-                eventKey: selectedLocalEvent.key,
+                eventName: eventName,
+                eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
+                camera: widget.camera,
                 deviceName: _txtDeviceName.text,
+                styleFontSize: this.styleFontSize,
               )),
     );
   }
 
-  _navigateToQRReaderScreen(BuildContext context) async {
+  _navigateToQRBarcodeScanner(BuildContext context) async {
+    await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => QRBarcodeScanner()),
+    );
+  }
+
+  _navigateToAddTeamScreen(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     //List<LocalTeam> teams = await localDB.listLocalTeams();
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => QRReaderScreen()),
+      MaterialPageRoute(builder: (context) => AddTeam()),
     );
+    refreshLocalTeamsCount();
   }
 }
 
 class EventsList {
-  final String key;
-  final String name;
+  final String? key;
+  final String? name;
 
   EventsList({this.key, this.name});
 }

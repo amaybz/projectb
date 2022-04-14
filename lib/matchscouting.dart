@@ -1,28 +1,35 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:googleapis/shared.dart';
 import 'package:projectb/autotab.dart';
+import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/teleoptab.dart';
 import 'package:projectb/widget_dropdown.dart';
+import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
+import 'dart:io';
+import 'googleinterface.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
-    Key key,
-    @required this.eventName,
-    @required this.eventKey,
+    Key? key,
+    required this.eventName,
+    required this.eventKey,
     this.eventTeams,
-    this.styleFontSize = 16,
+    this.styleFontSize = 14,
+    this.deviceName,
   }) : super(key: key);
 
-  final String eventName;
-  final String eventKey;
-  final List<LocalTeam> eventTeams;
-
+  final String? eventName;
+  final String? eventKey;
+  final List<LocalTeam>? eventTeams;
+  final String? deviceName;
   //style
   final double styleFontSize;
 
@@ -33,50 +40,52 @@ class MatchScoutingScreen extends StatefulWidget {
 class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
-
+  String strWeight = "lbs";
+  String strDistance = "Inches";
   //manage save record
   bool recordSaved = false;
-  int recordID;
-
+  int? recordID;
+  int googleUploadStatus = 0;
+  GoogleInterface googleInterface = GoogleInterface.instance;
+  Color colorFilter = Colors.white;
+  bool filterTeams = false;
   int _selectedTab = 0;
 
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController _txtMatchNumber = TextEditingController();
-  final TextEditingController _txtStartingCells = TextEditingController();
 
-  final List<String> _listAlliance = ['Red', 'Blue'];
+  //final List<String> _listAlliance = ['Red', 'Blue'];
+  final List<DropDownValue> _listAlliance = [
+    DropDownValue(id: "1", value: "Red"),
+    DropDownValue(id: "2", value: "Blue")
+  ];
 
   MatchScoutingData matchScoutingData = MatchScoutingData();
 
-  List<String> _listDriveStation = [
-    'none',
-  ];
-  final List<String> _listRedDriveStations = [
-    'Red 1',
-    'Red 2',
-    'Red 3',
-  ];
-  final List<String> _listBlueDriveStations = [
-    'Blue 1',
-    'Blue 2',
-    'Blue 3',
+  final List<String> _listStartingCargo = [
+    '0',
+    '1',
   ];
 
   //String _selectedFacing;
-  final List<String> _listFacing = ['Own Station', 'Opponent Station'];
+  //final List<String> _listFacing = ['Own Station', 'Opponent Station'];
+  final List<DropDownValue> _listFacing = [
+    DropDownValue(id: "1", value: "Own Station"),
+    DropDownValue(id: "2", value: "Opponent Station"),
+    DropDownValue(id: "3", value: "Other")
+  ];
 
-  //String _selectedRobotPosition;
-  final List<String> _listRobotPosition = [
-    'Trench',
-    'Power Port',
-    'Loading',
-    'Other',
+  final List<DropDownValue> _listRobotPosition = [
+    DropDownValue(id: "1", value: "N/A"),
+    DropDownValue(id: "2", value: "Shared Tarmac"),
+    DropDownValue(id: "3", value: "Solo Tarmac"),
   ];
 
   //style
   double styleFieldWidth = 99.0;
   double styleFieldMatchNumber = 85.0;
+  double styleFieldWidthStartingCells = 99.0;
   double styleFieldAlliance = 75.0;
   double styleFieldPadding = 5.0;
   double styleFieldPaddingSides = 10.0;
@@ -84,12 +93,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleFieldWidthTeam = 90;
   double styleImgFieldMapWidth = 90;
   double styleImgFieldPerformanceWidth = 150;
-
-  double styleFontSizeHeadings = 18;
+  double styleFieldScoutName = 300;
+  double styleFieldTeamMaxWidth = 200;
+  double styleCounterButtonHeight = 25;
+  double styleCounterButtonWidth = 30;
+  double styleFontSizeHeadings = 16;
   double styleRedBoxSize = 300;
 
-  LocalTeam selectedTeam;
+  LocalTeam? selectedTeam;
   List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
+  List<DropDownValue> listDriveStations = [];
 
   setEventTeams(double styleFontSize) async {
     //clear current selected event and dropdown box
@@ -107,47 +120,115 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             child: Text(
               "NO TEAMS for this EVENT",
               style: TextStyle(fontSize: styleFontSize),
+              overflow: TextOverflow.ellipsis,
             )));
       });
     }
 
     //update dropdown box with Teams
-    for (LocalTeam team in widget.eventTeams) {
+    List<LocalTeam> listMatchTeams = [];
+    List<LocalTeam> listAllTeams = widget.eventTeams!;
+    List<LocalTeam> listDropDownTeams = [];
+    listMatchTeams.clear();
+
+    if (_txtMatchNumber.text != "") {
+      List<MatchTeam> matchTeams = await localDB.listMatchTeams();
+      print("LocalDB");
+      print(matchTeams);
+      List<MatchTeam> matchTeamsFiltered = matchTeams
+          .where((i) => i.matchNum.toString() == _txtMatchNumber.text)
+          .toList();
+      print("Filtered");
+      print(matchTeamsFiltered);
+      for (MatchTeam matchTeam in matchTeamsFiltered) {
+        List<LocalTeam> team = widget.eventTeams!
+            .where((i) => i.key == matchTeam.teamKey)
+            .toList();
+        if (team.length > 0) {
+          print(team[0].key);
+          listMatchTeams.add(LocalTeam(
+              key: team[0].key,
+              teamNumber: team[0].teamNumber,
+              name: team[0].name,
+              nickName: team[0].nickName));
+        }
+      }
+    }
+
+    if (filterTeams == true) {
+      if (listMatchTeams.length > 0) {
+        listDropDownTeams = listMatchTeams;
+        print(listMatchTeams);
+        colorFilter = Colors.black;
+      } else {
+        listDropDownTeams = listAllTeams;
+        colorFilter = Colors.white;
+      }
+    } else {
+      listDropDownTeams = listAllTeams;
+      colorFilter = Colors.white;
+    }
+
+    for (LocalTeam team in listDropDownTeams) {
       setState(() {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber + " - " + team.nickName,
+              team.teamNumber! + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
             )));
       });
     }
   }
 
-  getDriveStationsByTeam(team) {
-    if (team == "Blue") {
+  void getMetricSystemValue() async {
+    bool currentMetricSystem = await mySharedPrefs.readBool("metricSystem");
+    print("current Metric System: " + currentMetricSystem.toString());
+    if (currentMetricSystem == true) {
+      strWeight = "kgs";
+      strDistance = "cm";
+    } else {
+      strWeight = "lbs";
+      strDistance = "inches";
+    }
+    setState(() {
+      strWeight = strWeight;
+      strDistance = strDistance;
+    });
+    print("strWeight " + strWeight);
+    print("strDistance " + strDistance);
+  }
+
+  getDriveStationsByTeam(team, double styleFontSize) {
+    if (team == "1") {
       setState(() {
         matchScoutingData.idDriveStation = null;
-        _listDriveStation = _listBlueDriveStations;
+        listDriveStations.clear();
+        listDriveStations.add(DropDownValue(id: "1", value: "Red 1"));
+        listDriveStations.add(DropDownValue(id: "2", value: "Red 2"));
+        listDriveStations.add(DropDownValue(id: "3", value: "Red 3"));
       });
     }
-    if (team == "Red") {
+    if (team == "2") {
       setState(() {
         matchScoutingData.idDriveStation = null;
-        _listDriveStation = _listRedDriveStations;
+        listDriveStations.clear();
+        listDriveStations.add(DropDownValue(id: "1", value: "Blue 1"));
+        listDriveStations.add(DropDownValue(id: "2", value: "Blue 2"));
+        listDriveStations.add(DropDownValue(id: "3", value: "Blue 3"));
       });
     }
   }
 
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text("Clear Data"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -176,7 +257,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("ok"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -208,11 +289,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             title: new Text('EXIT?'),
             content: new Text('This will clear the current Match?'),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: new Text('No'),
               ),
-              new FlatButton(
+              new TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
                 child: new Text('Yes'),
               ),
@@ -223,49 +304,45 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   }
 
   void clearMatch() async {
-    mySharedPrefs.saveInt("CellAttempts", 0);
-    mySharedPrefs.saveInt("CellSuccess", 0);
-    mySharedPrefs.saveInt("PenalAttempts", 0);
-    mySharedPrefs.saveInt("PenalSuccess", 0);
-    mySharedPrefs.saveInt("intBuddies", 0);
-    mySharedPrefs.saveBool("selectedLower", false);
-    mySharedPrefs.saveBool("selectedOuter", false);
-    mySharedPrefs.saveBool("selectedInner", false);
-    mySharedPrefs.saveBool("selectedRotationControl", false);
-    mySharedPrefs.saveBool("selectedPositionControl", false);
-    mySharedPrefs.saveBool("selectedPark", false);
-    mySharedPrefs.saveBool("selectedBalance", false);
-    mySharedPrefs.saveBool("selectedBalanceCorrection", false);
-    mySharedPrefs.saveBool("selectedFall", false);
+    mySharedPrefs.saveStr("Weight", "lbs");
+    mySharedPrefs.readStr("Weight");
+
     recordSaved = false;
     setState(() {
-      matchScoutingData = null;
+      //matchScoutingData = MatchScoutingData();
       matchScoutingData = MatchScoutingData();
       _selectedTab = 0;
-      _txtStartingCells.text = '0';
+      //_txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
       selectedTeam = null;
     });
   }
 
-  void saveMatchScout({
+  Future<bool> saveMatchScout({
     int recordID = 0,
   }) async {
     print("saving record");
     if (recordID > 0) {
       matchScoutingData.id = recordID;
     }
+    if (selectedTeam == null) return false;
+    if (_txtMatchNumber.text == "") return false;
+    matchScoutingData.txDeviceName = widget.deviceName;
     matchScoutingData.txEvent = widget.eventKey;
-    matchScoutingData.idTeam = selectedTeam.teamNumber;
+    matchScoutingData.idTeam = selectedTeam!.teamNumber;
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
-    matchScoutingData.numStartCells = int.parse(_txtStartingCells.text);
     matchScoutingData.txScoutName = _txtScoutName.text;
     this.recordID = await localDB.insertScoringData(matchScoutingData);
-    if (this.recordID > 0) {
+    if (this.recordID! > 0) {
       recordSaved = true;
+      print("Record Saved: " + recordSaved.toString());
+      print("Record ID: " + this.recordID.toString());
+      return true;
+    } else {
+      recordSaved = false;
+      print("ERROR Saving Record: " + recordSaved.toString());
+      return false;
     }
-    print("Record Saved: " + recordSaved.toString());
-    print("Record ID: " + this.recordID.toString());
   }
 
   void handleMenuClick(String value) async {
@@ -276,15 +353,27 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         break;
       case 'Settings':
         print("Settings Selected");
+        _navigateToSettings(context);
         break;
     }
+  }
+
+  _navigateToSettings(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => SettingsScreen()),
+    );
+    getMetricSystemValue();
   }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
-
+    styleFieldTeamMaxWidth = width - 120;
     if (width < 500) {
       styleFieldWidth = 111.0;
       styleFieldMatchNumber = 80.0;
@@ -294,9 +383,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthFacing = 140;
       styleImgFieldMapWidth = 250;
       styleFieldWidthTeam = 300;
-
-      styleFontSizeHeadings = 16;
+      styleFontSizeHeadings = 15;
       styleRedBoxSize = 180;
+      styleCounterButtonHeight = 35;
+      styleCounterButtonWidth = 40;
     }
     if (width < 393) {
       setState(() {
@@ -309,20 +399,26 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         styleImgFieldMapWidth = 250;
         styleFieldWidthTeam = 210;
 
-        styleFontSizeHeadings = 16;
+        styleFontSizeHeadings = 15;
         styleRedBoxSize = 180;
+        styleCounterButtonHeight = 25;
+        styleCounterButtonWidth = 30;
       });
     }
     if (width >= 600) {
+      styleFontSizeHeadings = 15;
       styleFieldWidth = 150.0;
       styleFieldMatchNumber = 80.0;
       styleFieldAlliance = 100.0;
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 10.0;
-      styleFieldWidthFacing = 200;
+      styleFieldWidthFacing = 190;
       styleImgFieldMapWidth = 400;
       styleFieldWidthTeam = 400;
       styleImgFieldPerformanceWidth = 200;
+      styleFieldWidthStartingCells = 150;
+      styleCounterButtonHeight = 35;
+      styleCounterButtonWidth = 40;
     }
 
     return WillPopScope(
@@ -357,29 +453,48 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           bottomRight: Radius.circular(10)),
                     ),
                     padding: EdgeInsets.all(4.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Event Name: " + widget.eventName,
-                            style: TextStyle(fontSize: widget.styleFontSize),
-                          ),
-                          Text(
-                            " - Scout: ",
-                            style: TextStyle(fontSize: widget.styleFontSize),
-                          ),
-                          Expanded(
-                            child: TextField(
-                              controller: _txtScoutName,
-                              style: TextStyle(fontSize: widget.styleFontSize),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Scout Name',
+                    child: Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Event Name: " + widget.eventName!,
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
                               ),
-                            ),
-                          )
-                        ]),
+                            ]),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides),
+                          width: styleFieldScoutName,
+                          height: 50,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Scout Name: ",
+                                  style:
+                                      TextStyle(fontSize: widget.styleFontSize),
+                                ),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _txtScoutName,
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Scout Name',
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ],
+                    ),
                   )),
             ),
           ),
@@ -417,6 +532,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
+                              onEditingComplete: () {
+                                if (filterTeams == true) {
+                                  setEventTeams(widget.styleFontSize);
+                                }
+                                FocusManager.instance.primaryFocus?.unfocus();
+                              },
                               decoration: InputDecoration(
                                 labelText: "Match #",
                                 border: InputBorder.none,
@@ -426,10 +547,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           ),
                           //Expanded(
                           //child:
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idAlliance,
                               title: "Alliance",
-                              list: _listAlliance,
+                              dropDownValues: _listAlliance,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldAlliance,
                               styleFieldPadding: styleFieldPadding,
@@ -438,14 +559,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 setState(() {
                                   matchScoutingData.idAlliance = newValue;
                                 });
-                                getDriveStationsByTeam(newValue);
+                                getDriveStationsByTeam(
+                                    newValue, widget.styleFontSize);
                                 print(matchScoutingData.idAlliance);
                               }),
 
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idDriveStation,
                               title: "Drive Station",
-                              list: _listDriveStation,
+                              dropDownValues: listDriveStations,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
@@ -453,6 +575,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               onStateChanged: (String newValue) {
                                 setState(() {
                                   matchScoutingData.idDriveStation = newValue;
+                                  print(matchScoutingData.idDriveStation);
                                 });
                               }),
                         ]),
@@ -464,45 +587,75 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             "Team ",
                             style: TextStyle(fontSize: widget.styleFontSize),
                           ),
-                          DropdownButton(
-                            isDense: true,
-                            value:
-                                selectedTeam == null ? null : selectedTeam.key,
-                            //title: "Team",
-                            items: eventTeamsListDropDown,
-                            onChanged: (item) {
-                              setState(() {
-                                selectedTeam = widget.eventTeams.firstWhere(
-                                    (team) => team.key == item,
-                                    orElse: () => widget.eventTeams.first);
-                              });
-                              print("Key: " + selectedTeam.key);
-                            },
-                            //styleFontSize: styleFontSizeBody,
-                            //styleFieldWidth: styleFieldWidthTeam,
-                            //styleFieldPadding: styleFieldPadding,
-                            //styleFieldPaddingSides: styleFieldPaddingSides,
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxHeight: 200,
+                                maxWidth: styleFieldTeamMaxWidth),
+                            child: DropdownButton(
+                              isExpanded: true,
+                              isDense: true,
+                              value: selectedTeam == null
+                                  ? null
+                                  : selectedTeam!.key,
+                              //title: "Team",
+                              items: eventTeamsListDropDown,
+                              onChanged: (item) {
+                                setState(() {
+                                  selectedTeam = widget.eventTeams!.firstWhere(
+                                      (team) => team.key == item,
+                                      orElse: () => widget.eventTeams!.first);
+                                });
+                                print("Key: " + selectedTeam!.key!);
+                              },
+                            ),
+                          ),
+                          SizedBox.fromSize(
+                            size: Size(30, 30),
+                            child: ClipOval(
+                              child: Material(
+                                color: Colors.amberAccent,
+                                child: InkWell(
+                                  splashColor: Colors.green,
+                                  onTap: () {
+                                    filterTeams == true
+                                        ? filterTeams = false
+                                        : filterTeams = true;
+                                    setEventTeams(widget.styleFontSize);
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.filter_alt,
+                                        color: colorFilter,
+                                      ), // <-- Icon// <-- Text
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ]),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idStartFacing,
                               title: "Facing",
-                              list: _listFacing,
+                              dropDownValues: _listFacing,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidthFacing,
                               onStateChanged: (String newValue) {
+                                FocusScope.of(context).unfocus();
                                 setState(() {
                                   matchScoutingData.idStartFacing = newValue;
                                 });
                               }),
-                          DropDownWidget(
+                          DropDownIndexedWidget(
                               value: matchScoutingData.idStartPosition,
                               title: "Robot Position",
-                              list: _listRobotPosition,
+                              dropDownValues: _listRobotPosition,
                               styleFontSize: widget.styleFontSize,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
@@ -512,27 +665,19 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   matchScoutingData.idStartPosition = newValue;
                                 });
                               }),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: styleFieldPadding,
-                                horizontal: styleFieldPaddingSides),
-                            width: styleFieldWidth,
-                            child: TextField(
-                              style: TextStyle(fontSize: widget.styleFontSize),
-                              controller: _txtStartingCells,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                labelText: "Starting Cells",
-                                labelStyle:
-                                    TextStyle(fontSize: widget.styleFontSize),
-                                border: InputBorder.none,
-                                isDense: true,
-                              ),
-                            ),
-                          ),
+                          DropDownWidget(
+                              value: matchScoutingData.numStartCargo,
+                              title: "Starting Cargo",
+                              list: _listStartingCargo,
+                              styleFontSize: widget.styleFontSize,
+                              styleFieldWidth: styleFieldWidthStartingCells,
+                              styleFieldPadding: styleFieldPadding,
+                              styleFieldPaddingSides: styleFieldPaddingSides,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  matchScoutingData.numStartCargo = newValue;
+                                });
+                              }),
                         ]),
                   ]),
             ),
@@ -580,13 +725,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
-                                    "Total Robot Failure ",
+                                    "Total Failure ",
                                     style: TextStyle(
                                         fontSize: widget.styleFontSize,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Switch(
-                                    value: matchScoutingData.flCrash,
+                                    value: matchScoutingData.flCrash!,
                                     onChanged: (bool value) {
                                       setState(() {
                                         matchScoutingData.flCrash = value;
@@ -605,7 +750,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: matchScoutingData.flYellow,
+                                  value: matchScoutingData.flYellow!,
                                   onChanged: (bool value) {
                                     setState(() {
                                       matchScoutingData.flYellow = value;
@@ -623,7 +768,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Switch(
-                                  value: matchScoutingData.flRed,
+                                  value: matchScoutingData.flRed!,
                                   onChanged: (bool value) {
                                     setState(() {
                                       matchScoutingData.flRed = value;
@@ -662,7 +807,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   ),
                                   Container(
                                     child: Switch(
-                                      value: matchScoutingData.flRanking1,
+                                      value: matchScoutingData.flRanking1!,
                                       onChanged: (bool value) {
                                         setState(() {
                                           matchScoutingData.flRanking1 = value;
@@ -684,7 +829,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   ),
                                   Container(
                                     child: Switch(
-                                      value: matchScoutingData.flRanking2,
+                                      value: matchScoutingData.flRanking2!,
                                       onChanged: (bool value) {
                                         setState(() {
                                           matchScoutingData.flRanking2 = value;
@@ -740,6 +885,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 0) {
       return AutoTab(
         styleImgFieldPerformanceWidth: styleImgFieldPerformanceWidth,
+        styleCounterButtonWidth: styleCounterButtonWidth,
+        styleCounterButtonHeight: styleCounterButtonHeight,
         matchScoutingData: matchScoutingData,
         styleImgFieldMapWidth: styleImgFieldMapWidth,
         onChanged: (MatchScoutingData updates) {
@@ -776,108 +923,30 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (index == 1) {
       return TeleOpScreen(
         matchScoutingData: matchScoutingData,
+        styleCounterButtonWidth: styleCounterButtonWidth,
+        styleCounterButtonHeight: styleCounterButtonHeight,
         onCellAttemptsChanged: (int value) {
           setState(() {
-            matchScoutingData.teleNumCellAttempt = value;
+            matchScoutingData.teleNumCargoHighAttempt = value;
           });
         },
         onCellSuccessChanged: (int value) {
           setState(() {
-            matchScoutingData.teleNumCellSuccess = value;
+            matchScoutingData.teleNumCargoHighSuccess = value;
           });
-          print(matchScoutingData.teleNumCellSuccess);
+          print(matchScoutingData.teleNumCargoHighSuccess);
         },
-        onEndgameParkChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlPark = value;
-          });
-        },
-        onEndgameClimbChanged: (String value) {
-          matchScoutingData.teleIdClimb = value;
-        },
-        onPowerPortOuterChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlOuter = value;
-          });
-        },
-        onPowerPortInnerChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlInner = value;
-          });
-        },
-        onPowerPortLowerChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlLower = value;
-          });
-        },
-        onCPRotationControlChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlPanelRotation = value;
-          });
-        },
-        onCPRotationTimeTakenChange: (String value) {
-          setState(() {
-            matchScoutingData.teleIdPanelRotationTime = value;
-          });
-        },
-        onCPPositionControlChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlPanelPosition = value;
-          });
-        },
-        onCPPositionTimeTakenChange: (String value) {
-          setState(() {
-            matchScoutingData.teleIdPanelPositionTime = value;
-          });
-        },
-        onCPPanelAttemptsChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumPanelAttempt = value;
-          });
-        },
-        onCPPanelSuccessChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumPanelSuccess = value;
-          });
-        },
-        onEndgameTimeToGripChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbGrabTime = value;
-          });
-        },
-        onEndgameTimeFromGripToClimbChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbTime = value;
-          });
-        },
-        onEndgameOutcomeChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbOutcome = value;
-          });
-        },
-        onEndgamePreferredPositionChanged: (String value) {
-          setState(() {
-            matchScoutingData.teleIdClimbPos = value;
-          });
-        },
-        onEndgameBuddiesChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumClimbOthers = value;
-          });
-        },
-        onEndgameBalanceChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlClimbBalance = value;
-          });
-        },
-        onEndgameBalanceCorrectionChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlClimbCorrection = value;
-          });
+        onEndgameClimbChanged: (MatchScoutingData value) {
+          matchScoutingData = value;
         },
         onEndgameFallChanged: (bool value) {
           setState(() {
             matchScoutingData.teleFlClimbFall = value;
+          });
+        },
+        onChange: (MatchScoutingData updatedData) {
+          setState(() {
+            matchScoutingData = updatedData;
           });
         },
       );
@@ -888,6 +957,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           matchScoutingData: matchScoutingData,
           styleFontSize: widget.styleFontSize,
           styleFontSizeHeadings: styleFontSizeHeadings,
+          onChange: (updates) {
+            setState(() {
+              matchScoutingData = updates;
+            });
+          },
           onShootingWallZoneChanged: (bool value) {
             //Update Value
             setState(() {
@@ -966,12 +1040,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
               matchScoutingData.commFlStrategy = value;
             });
           },
-          onWorkedWithAllianceChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlAlliance = value;
-            });
-          },
           onWarningChanged: (bool value) {
             //Update Value
             setState(() {
@@ -995,14 +1063,26 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
     if (index == 3) {
       return FinishTab(
-        onSavePressed: (bool value) {
+        googleUploadStatus: googleUploadStatus,
+        onSavePressed: (bool value) async {
           if (recordSaved == true) {
-            saveMatchScout(recordID: recordID);
+            await saveMatchScout(recordID: recordID!);
+          } else {
+            await saveMatchScout();
+          }
+          String alertMsg;
+          alertMsg = (recordSaved == true)
+              ? "Match has been saved to Local Database"
+              : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
+          showAlertOKDialog(context, "Saved", alertMsg);
+        },
+        onUploadToGoogle: (bool value) {
+          if (recordSaved == true) {
+            saveMatchScout(recordID: recordID!);
           } else {
             saveMatchScout();
           }
-          showAlertOKDialog(
-              context, "Saved", "Match has been saved to Local Database");
+          _uploadDataToGoogleDrive(matchScoutingData);
         },
       );
     } else {
@@ -1015,11 +1095,24 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     }
   }
 
+  _uploadDataToGoogleDrive(MatchScoutingData matchScoutingData) async {
+    setState(() {
+      googleUploadStatus = 1;
+    });
+    File file =
+        await googleInterface.uploadMatchScoutingData(matchScoutingData);
+    await file.length();
+    setState(() {
+      googleUploadStatus = 2;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     // Call the getJSONData() method when the app initializes
     //_getScoringData();
     setEventTeams(widget.styleFontSize);
+    getMetricSystemValue();
   }
 }

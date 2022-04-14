@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:projectb/class_pitdata.dart';
-import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_row_heading.dart';
 
 class PitClimb extends StatefulWidget {
-  PitClimb({
-    Key key,
-    @required this.pitData,
-    this.styleFontSize = 16,
-    this.styleFontSizeHeadings = 18,
-    this.styleFieldTxClimbMaxWidth = 300,
-    this.onChanged,
-    this.txClimb,
-    this.onExpanded
-  }) : super(key: key);
+  PitClimb(
+      {Key? key,
+      required this.pitData,
+      this.styleFontSize = 16,
+      this.styleFontSizeHeadings = 18,
+      this.styleFieldTxClimbMaxWidth = 300,
+      required this.onChanged,
+      this.txClimb,
+      required this.numClimbHeight,
+      required this.numClimbWidth,
+      required this.onExpanded,
+      this.strWeight = "lbs",
+      this.strDistance = "inches"})
+      : super(key: key);
 
   final PitData pitData;
   final double styleFontSize;
@@ -22,7 +26,11 @@ class PitClimb extends StatefulWidget {
   final double styleFieldTxClimbMaxWidth;
   final ValueChanged<PitData> onChanged;
   final ValueChanged<bool> onExpanded;
-  final TextEditingController txClimb;
+  final TextEditingController? txClimb;
+  final TextEditingController numClimbHeight;
+  final TextEditingController numClimbWidth;
+  final String strWeight;
+  final String strDistance;
 
   @override
   _PitClimbState createState() => _PitClimbState();
@@ -31,17 +39,23 @@ class PitClimb extends StatefulWidget {
 class _PitClimbState extends State<PitClimb> {
   List<DropdownMenuItem<String>> ddsSpeed = [
     DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Slow")),
-    DropdownMenuItem(value: "3", child: Text("Med")),
-    DropdownMenuItem(value: "4", child: Text("Fast")),
+    DropdownMenuItem(value: "2", child: Text("Slow (> 7 Secs)")),
+    DropdownMenuItem(value: "3", child: Text("Medium (3-7 Secs)")),
+    DropdownMenuItem(value: "4", child: Text("Fast <3 Secs")),
+  ];
+
+  List<DropdownMenuItem<String>> ddsTransition = [
+    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "2", child: Text("Any")),
+    DropdownMenuItem(value: "3", child: Text("High")),
+    DropdownMenuItem(value: "4", child: Text("Traversal")),
   ];
 
   List<DropdownMenuItem<String>> ddsPosition = [
     DropdownMenuItem(value: "1", child: Text("NA")),
     DropdownMenuItem(value: "2", child: Text("Any")),
-    DropdownMenuItem(value: "3", child: Text("Inner")),
+    DropdownMenuItem(value: "3", child: Text("Low")),
     DropdownMenuItem(value: "4", child: Text("Middle")),
-    DropdownMenuItem(value: "5", child: Text("Outer")),
   ];
 
   List<DropdownMenuItem<String>> ddsIdClimbType = [
@@ -121,7 +135,6 @@ class _PitClimbState extends State<PitClimb> {
                   });
                 },
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,38 +150,60 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsIdClimbType,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idClimbType = item;
+                        widget.pitData.idClimbType = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbType: " + widget.pitData.idClimbType);
+                      print("idClimbType: " + widget.pitData.idClimbType!);
                     },
                   ),
                 ],
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Height:"),
-                CounterWidget(
-                  title: "",
-                  value: widget.pitData.numClimbHeight,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbHeight++;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    PitData newPitData = widget.pitData;
-                    setState(() {
-                      newPitData.numClimbHeight--;
-                      widget.onChanged(newPitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbHeight = value;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
+                Text("Height off ground (" + widget.strDistance + "):"),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 60),
+                  child: TextField(
+                    controller: widget.numClimbHeight,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(hintText: widget.strDistance),
+                    onChanged: (String text) {
+                      setState(() {
+                        try {
+                          widget.pitData.numClimbHeight = int.parse(text);
+                        } catch (e) {
+                          widget.pitData.numClimbHeight = 0;
+                          print("Error Converting numClimbHeight: " +
+                              e.toString());
+                        }
+                        widget.onChanged(widget.pitData);
+                      });
+                    },
+                  ),
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text("Width of Climber (" + widget.strDistance + "):"),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 60),
+                  child: TextField(
+                    controller: widget.numClimbWidth,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(hintText: widget.strDistance),
+                    onChanged: (String text) {
+                      setState(() {
+                        try {
+                          widget.pitData.numClimbWidth = int.parse(text);
+                        } catch (e) {
+                          widget.pitData.numClimbWidth = 0;
+                          print("Error Converting numClimbWidth: " +
+                              e.toString());
+                        }
+                        widget.onChanged(widget.pitData);
+                      });
+                    },
+                  ),
                 ),
               ]),
               Row(
@@ -179,7 +214,7 @@ class _PitClimbState extends State<PitClimb> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flClimbSecure,
+                    value: widget.pitData.flClimbSecure!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flClimbSecure = value;
@@ -204,10 +239,10 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsSpeed,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idClimbGrab = item;
+                        widget.pitData.idClimbGrab = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbGrab: " + widget.pitData.idClimbGrab);
+                      print("idClimbGrab: " + widget.pitData.idClimbGrab!);
                     },
                   ),
                 ],
@@ -227,26 +262,112 @@ class _PitClimbState extends State<PitClimb> {
                     items: ddsSpeed,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idClimbSpeed = item;
+                        widget.pitData.idClimbSpeed = item as String?;
                         widget.onChanged(widget.pitData);
                       });
-                      print("idClimbSpeed: " + widget.pitData.idClimbSpeed);
+                      print("idClimbSpeed: " + widget.pitData.idClimbSpeed!);
                     },
                   ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Preferred First Bar:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  DropdownButton(
+                      value: widget.pitData.idClimbPos == null
+                          ? null
+                          : widget.pitData.idClimbPos,
+                      items: ddsPosition,
+                      onChanged: (item) {
+                        setState(() {
+                          widget.pitData.idClimbPos = item as String?;
+                          widget.onChanged(widget.pitData);
+                        });
+                        print("idClimbSpeed: " + widget.pitData.idClimbPos!);
+                      }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Tilting?:",
+                    "Transition?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flClimbTilt,
+                    value: widget.pitData.flClimbTransition!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flClimbTilt = value;
+                        widget.pitData.flClimbTransition = value;
+                        widget.onChanged(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Transition Reach:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  DropdownButton(
+                    value: widget.pitData.idTransition == null
+                        ? null
+                        : widget.pitData.idTransition,
+                    items: ddsTransition,
+                    onChanged: (item) {
+                      setState(() {
+                        widget.pitData.idTransition = item as String?;
+                        widget.onChanged(widget.pitData);
+                      });
+                      print("idClimbSpeed: " + widget.pitData.idTransition!);
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Time (Transition):",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  DropdownButton(
+                      value: widget.pitData.idTransitionSpeed == null
+                          ? null
+                          : widget.pitData.idTransitionSpeed,
+                      items: ddsSpeed,
+                      onChanged: (item) {
+                        setState(() {
+                          widget.pitData.idTransitionSpeed = item as String?;
+                          widget.onChanged(widget.pitData);
+                        });
+                        print("idClimbSpeed: " +
+                            widget.pitData.idTransitionSpeed!);
+                      }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Reposition while hanging:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flClimbMove!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flClimbMove = value;
                         widget.onChanged(widget.pitData);
                       });
                     },
@@ -258,7 +379,7 @@ class _PitClimbState extends State<PitClimb> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Climb Mechanism: ",
+                      "Mechanism: ",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     ConstrainedBox(
@@ -277,143 +398,6 @@ class _PitClimbState extends State<PitClimb> {
                       ),
                     ),
                   ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Preferred Position:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  DropdownButton(
-                      value: widget.pitData.idClimbPos == null
-                          ? null
-                          : widget.pitData.idClimbPos,
-                      items: ddsPosition,
-                      onChanged: (item) {
-                        setState(() {
-                          widget.pitData.idClimbPos = item;
-                          widget.onChanged(widget.pitData);
-                        });
-                        print("idClimbSpeed: " + widget.pitData.idClimbPos);
-                      }),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Level Generator:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flClimbLevel,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flClimbLevel = value;
-                        widget.onChanged(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Level (Self):",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flClimbLevelSelf,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flClimbLevelSelf = value;
-                        widget.onChanged(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Level (Other):",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flClimbLevelOther,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flClimbLevelOther = value;
-                        widget.onChanged(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Reposition while hanging:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flClimbMove,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flClimbMove = value;
-                        widget.onChanged(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Buddy Climb:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flClimbOther,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flClimbOther = value;
-                        widget.onChanged(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("#Buddy:"),
-                CounterWidget(
-                  title: "",
-                  value: widget.pitData.numClimbOther,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbOther++;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbOther--;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numClimbOther = value;
-                      widget.onChanged(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
             ]),
           ),
         ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'class/eventmatches.dart';
 
 class WebAPI {
   final String strAPIKey =
@@ -8,7 +9,7 @@ class WebAPI {
   final String strAPILink = "https://www.thebluealliance.com/api/v3/";
 
   Future<List<EventData>> getEventsByYear(String year) async {
-    List<EventData> events;
+    List<EventData> events = [];
     var headers = {'X-TBA-Auth-Key': strAPIKey};
     var request = http.Request(
         'GET',
@@ -23,9 +24,9 @@ class WebAPI {
       String strEventsList = await response.stream.bytesToString();
       //print(strEventsList);
 
-      events =(json.decode(strEventsList) as List).map((i) =>
-          EventData.fromJson(i)).toList();
-
+      events = (json.decode(strEventsList) as List)
+          .map((i) => EventData.fromJson(i))
+          .toList();
     } else {
       print(response.reasonPhrase);
     }
@@ -34,80 +35,108 @@ class WebAPI {
   }
 
   Future<List<TeamsList>> getTeamsByEvent(String strEventKey) async {
-    List<TeamsList> teams;
+    List<TeamsList> teams = [];
     var headers = {'X-TBA-Auth-Key': strAPIKey};
     var request = http.Request(
         'GET',
         Uri.parse('https://www.thebluealliance.com/api/v3/event/' +
-            strEventKey + '/teams'));
+            strEventKey +
+            '/teams'));
     request.body = '''''';
     request.headers.addAll(headers);
-  try {
-    http.StreamedResponse response = await request.send();
-    if (response.statusCode == 200) {
-      String strTeamsList = await response.stream.bytesToString();
-      //print(strEventsList);
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        String strTeamsList = await response.stream.bytesToString();
+        //print(strEventsList);
 
-      teams =(json.decode(strTeamsList) as List).map((i) =>
-          TeamsList.fromJson(i)).toList();
-
-    } else {
-      print(response.reasonPhrase);
+        teams = (json.decode(strTeamsList) as List)
+            .map((i) => TeamsList.fromJson(i))
+            .toList();
+      } else {
+        print(response.reasonPhrase);
+      }
+      //print(teams.first.key);
+      return teams;
+    } on Exception catch (e) {
+      print("ERROR: unable to connect to remote API: " + e.toString());
     }
-    //print(teams.first.key);
+
     return teams;
-  } on Exception
-  catch (e) {
-    print("ERROR: unable to connect to remote API: " + e.toString());
   }
 
+  Future<List<EventMatches>> getEventMatches(String strEventKey) async {
+    List<EventMatches> eventMatches = [];
+    var headers = {'X-TBA-Auth-Key': strAPIKey};
+    var request = http.Request(
+        'GET',
+        Uri.parse('https://www.thebluealliance.com/api/v3/event/' +
+            strEventKey +
+            '/matches'));
+    request.body = '''''';
+    request.headers.addAll(headers);
+    try {
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        String strMatchesList = await response.stream.bytesToString();
+        //print(strEventsList);
 
-  return teams;
-
+        eventMatches = (json.decode(strMatchesList) as List)
+            .map((i) => EventMatches.fromJson(i))
+            .toList();
+      } else {
+        print(response.reasonPhrase);
+      }
+      //print(teams.first.key);
+      return eventMatches;
+    } on Exception catch (e) {
+      print("ERROR: unable to connect to remote API: " + e.toString());
+    }
+    return eventMatches;
   }
 }
 
 class TeamsList {
-  String address;
-  String city;
-  String country;
-  String gmapsPlaceId;
-  String gmapsUrl;
-  String homeChampionship;
-  String key;
-  String  lat;
-  String lng;
-  String locationName;
-  String motto;
-  String name;
-  String nickname;
-  String postalCode;
-  int rookieYear;
-  String schoolName;
-  String stateProv;
-  int teamNumber;
-  String website;
+  String? address;
+  String? city;
+  String? country;
+  String? gmapsPlaceId;
+  String? gmapsUrl;
+  String? homeChampionship;
+  String? key;
+  String? lat;
+  String? lng;
+  String? locationName;
+  String? motto;
+  String? name;
+  String? nickname;
+  String? postalCode;
+  int? rookieYear;
+  String? schoolName;
+  String? stateProv;
+  int? teamNumber;
+  String? website;
 
   TeamsList(
       {this.address,
-        this.city,
-        this.country,
-        this.gmapsPlaceId,
-        this.gmapsUrl,
-        this.homeChampionship,
-        this.key,
-        this.lat,
-        this.lng,
-        this.locationName,
-        this.motto,
-        this.name,
-        this.nickname,
-        this.postalCode,
-        this.rookieYear,
-        this.schoolName,
-        this.stateProv,
-        this.teamNumber,
-        this.website});
+      this.city,
+      this.country,
+      this.gmapsPlaceId,
+      this.gmapsUrl,
+      this.homeChampionship,
+      this.key,
+      this.lat,
+      this.lng,
+      this.locationName,
+      this.motto,
+      this.name,
+      this.nickname,
+      this.postalCode,
+      this.rookieYear,
+      this.schoolName,
+      this.stateProv,
+      this.teamNumber,
+      this.website});
 
   TeamsList.fromJson(Map<String, dynamic> json) {
     address = json['address'];
@@ -156,33 +185,32 @@ class TeamsList {
   }
 }
 
-
 class EventData {
-  String address;
-  String city;
-  String country;
-  String endDate;
-  String eventCode;
-  int eventType;
-  String eventTypeString;
-  String firstEventCode;
-  String firstEventId;
-  String gmapsPlaceId;
-  String gmapsUrl;
-  String key;
-  double lat;
-  double lng;
-  String locationName;
-  String name;
-  String postalCode;
-  String shortName;
-  String startDate;
-  String stateProv;
-  String timezone;
-  List<WebCasts> webcasts;
-  String website;
-  int week;
-  int year;
+  String? address;
+  String? city;
+  String? country;
+  String? endDate;
+  String? eventCode;
+  int? eventType;
+  String? eventTypeString;
+  String? firstEventCode;
+  String? firstEventId;
+  String? gmapsPlaceId;
+  String? gmapsUrl;
+  String? key;
+  double? lat;
+  double? lng;
+  String? locationName;
+  String? name;
+  String? postalCode;
+  String? shortName;
+  String? startDate;
+  String? stateProv;
+  String? timezone;
+  List<WebCasts>? webcasts;
+  String? website;
+  int? week;
+  int? year;
 
   EventData(
       {this.address,
@@ -246,7 +274,7 @@ class EventData {
     if (json['webcasts'] != null) {
       webcasts = <WebCasts>[];
       json['webcasts'].forEach((v) {
-        webcasts.add(new WebCasts.fromJson(v));
+        webcasts?.add(new WebCasts.fromJson(v));
       });
     }
     website = json['website'];
@@ -285,13 +313,14 @@ class EventData {
     data['state_prov'] = this.stateProv;
     data['timezone'] = this.timezone;
     if (this.webcasts != null) {
-      data['webcasts'] = this.webcasts.map((v) => v.toJson()).toList();
+      data['webcasts'] = this.webcasts?.map((v) => v.toJson()).toList();
     }
     data['website'] = this.website;
     data['week'] = this.week;
     data['year'] = this.year;
     return data;
   }
+
   @override
   String toString() {
     return 'event{id: $key, shortName: $shortName, location: $country}';
@@ -299,8 +328,8 @@ class EventData {
 }
 
 class WebCasts {
-  String channel;
-  String type;
+  String? channel;
+  String? type;
 
   WebCasts({this.channel, this.type});
 
@@ -315,6 +344,4 @@ class WebCasts {
     data['type'] = this.type;
     return data;
   }
-
-
 }

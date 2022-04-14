@@ -6,8 +6,8 @@ import 'package:projectb/widget_row_heading.dart';
 
 class PitPowerCells extends StatefulWidget {
   PitPowerCells({
-    Key key,
-    @required this.pitData,
+    Key? key,
+    required this.pitData,
     this.styleFontSize = 16,
     this.styleFontSizeHeadings = 18,
     this.styleFieldTxShootingMaxWidth = 300,
@@ -20,9 +20,9 @@ class PitPowerCells extends StatefulWidget {
   final double styleFontSize;
   final double styleFontSizeHeadings;
   final double styleFieldTxShootingMaxWidth;
-  final ValueChanged<PitData> onChanged;
-  final TextEditingController txShooting;
-  final ValueChanged<bool> onExpanded;
+  final ValueChanged<PitData>? onChanged;
+  final TextEditingController? txShooting;
+  final ValueChanged<bool>? onExpanded;
 
   @override
   _PitPowerCellsState createState() => _PitPowerCellsState();
@@ -31,7 +31,7 @@ class PitPowerCells extends StatefulWidget {
 class _PitPowerCellsState extends State<PitPowerCells> {
   @override
   Widget build(BuildContext context) {
-    if (widget.pitData.flCells == false) {
+    if (widget.pitData.flCargo == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -49,18 +49,18 @@ class _PitPowerCellsState extends State<PitPowerCells> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Power Cells",
+                headingText: "Cargo",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Manipulate:",
-                value: widget.pitData.flCells,
+                text: "Manipulate Cargo:",
+                value: widget.pitData.flCargo,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flCells = value;
-                    widget.onChanged(widget.pitData);
-                    widget.onExpanded(true);
+                    widget.pitData.flCargo = value;
+                    widget.onChanged!(widget.pitData);
+                    widget.onExpanded!(true);
                   });
                 },
               ),
@@ -86,21 +86,26 @@ class _PitPowerCellsState extends State<PitPowerCells> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Power Cells",
+                headingText: "Cargo",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Manipulate:",
-                value: widget.pitData.flCells,
+                text: "Manipulate Cargo:",
+                value: widget.pitData.flCargo,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flCells = value;
-                    widget.onChanged(widget.pitData);
-                    widget.onExpanded(true);
+                    widget.pitData.flCargo = value;
+                    widget.onChanged!(widget.pitData);
+                    widget.onExpanded!(true);
                   });
                 },
+              ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSize,
+                headingText: "Intake",
+                //backGroundColor: Colors.green,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,7 +115,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flIntakeGround,
+                    value: widget.pitData.flIntakeGround!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flIntakeGround = value;
@@ -123,11 +128,11 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Loading Station Intake:",
+                    "Terminal Intake:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flIntakeHigh,
+                    value: widget.pitData.flIntakeHigh!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flIntakeHigh = value;
@@ -140,11 +145,50 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Lower):",
+                    "Bounce Intake:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetLow,
+                    value: widget.pitData.flIntakeBounce!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flIntakeBounce = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSize,
+                headingText: "Scoring",
+                //backGroundColor: Colors.green,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Reject Wrong Cargo:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flIntakeSort!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flIntakeSort = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Hub (Lower):",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flTargetLow!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.pitData.flTargetLow = value;
@@ -157,14 +201,14 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Outer):",
+                    "Hub (Upper):",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetOuter,
+                    value: widget.pitData.flTargetUpper!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flTargetOuter = value;
+                        widget.pitData.flTargetUpper = value;
                       });
                     },
                   ),
@@ -174,18 +218,23 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Target (Inner):",
+                    "Terminal:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flTargetInner,
+                    value: widget.pitData.flTargetTerminal!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flTargetInner = value;
+                        widget.pitData.flTargetTerminal = value;
                       });
                     },
                   ),
                 ],
+              ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSize,
+                headingText: "General",
+                //backGroundColor: Colors.green,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text("Storage Capacity:"),
@@ -194,12 +243,14 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                   value: widget.pitData.numStorage,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numStorage++;
+                      widget.pitData.numStorage =
+                          widget.pitData.numStorage! + 1;
                     });
                   },
                   onDecreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numStorage--;
+                      widget.pitData.numStorage =
+                          widget.pitData.numStorage! - 1;
                     });
                   },
                   onSetValue: (int value) {
@@ -214,7 +265,7 @@ class _PitPowerCellsState extends State<PitPowerCells> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Shooting Mechanism: ",
+                    "Delivery Mechanism: ",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   ConstrainedBox(

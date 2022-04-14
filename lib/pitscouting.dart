@@ -1,33 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:projectb/widget_counter.dart';
+import 'package:flutter/services.dart';
+import 'package:projectb/pit/widget_pit_human.dart';
+import 'package:projectb/settings.dart';
 import 'package:projectb/widget_headingmain.dart';
-import 'package:projectb/pit/widget_pit_controlpenal.dart';
-
+import 'package:camera/camera.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/pit/widget_pit_climb.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/pit/widget_pit_powercells.dart';
+import 'package:projectb/pit/widget_pit_cargo.dart';
 import 'package:projectb/pit/widget_pit_auto.dart';
+import 'package:projectb/pit/widget_pit_images.dart';
+import 'dart:io';
+import 'googleinterface.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({
-    Key key,
+    Key? key,
     @required this.eventName,
     @required this.eventKey,
     this.eventTeams,
     this.deviceName,
-
+    this.camera,
+    this.styleFontSize = 14,
   }) : super(key: key);
 
-  final String eventName;
-  final String eventKey;
-  final String deviceName;
-  final List<LocalTeam> eventTeams;
+  final String? eventName;
+  final String? eventKey;
+  final String? deviceName;
+  final List<LocalTeam>? eventTeams;
+  final double? styleFontSize;
+  final CameraDescription? camera;
 
   @override
   _PitScoutingScreenState createState() => _PitScoutingScreenState();
@@ -38,6 +43,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   PitData pitData = PitData();
+
   //manage save record
   bool recordSaved = false;
   //define text controllers
@@ -46,9 +52,21 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txClimb = TextEditingController();
   final TextEditingController txPanelSensor = TextEditingController();
   final TextEditingController txPitNotes = TextEditingController();
-
-  LocalTeam selectedTeam;
+  final TextEditingController txWeight = TextEditingController();
+  final TextEditingController txHeight = TextEditingController();
+  final TextEditingController txWidth = TextEditingController();
+  final TextEditingController numClimbHeight = TextEditingController();
+  final TextEditingController numClimbWidth = TextEditingController();
+  final TextEditingController numHumanAccuracy = TextEditingController();
+  File? imgPitTeamShirt;
+  File? imgPitRobotFront;
+  File? imgPitRobotSide;
+  LocalTeam? selectedTeam;
   List<DropdownMenuItem<String>> ddsEventTeams = [];
+  String strWeight = "lbs";
+  String strDistance = "Inches";
+  int googleUploadStatus = 0;
+  GoogleInterface googleInterface = GoogleInterface.instance;
 
   @override
   void initState() {
@@ -56,6 +74,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     // Call the getJSONData() method when the app initializes
     //_getScoringData();
     setEventTeams(14);
+    numClimbHeight.text = "0";
+    getMetricSystemValue();
   }
 
   setEventTeams(double styleFontSize) async {
@@ -79,13 +99,14 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     }
 
     //update dropdown box with Teams
-    for (LocalTeam team in widget.eventTeams) {
+    for (LocalTeam team in widget.eventTeams!) {
       setState(() {
         ddsEventTeams.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber + " - " + team.nickName,
+              team.teamNumber! + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
+              overflow: TextOverflow.ellipsis,
             )));
       });
     }
@@ -93,13 +114,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
 
   showAlertDialogClearMatch(BuildContext context) {
     // set up the buttons
-    Widget cancelButton = FlatButton(
+    Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
-    Widget continueButton = FlatButton(
+    Widget continueButton = TextButton(
       child: Text("Clear Data"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -139,20 +160,44 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     print(_scrollController.position);
   }
 
+  void getMetricSystemValue() async {
+    bool currentMetricSystem = await mySharedPrefs.readBool("metricSystem");
+    print("current Metric System: " + currentMetricSystem.toString());
+    if (currentMetricSystem == true) {
+      strWeight = "kgs";
+      strDistance = "cm";
+    } else {
+      strWeight = "lbs";
+      strDistance = "inches";
+    }
+    setState(() {
+      strWeight = strWeight;
+      strDistance = strDistance;
+    });
+    print("strWeight " + strWeight);
+    print("strDistance " + strDistance);
+  }
+
   void clearPit() async {
     setState(() {
-      pitData = null;
       pitData = PitData();
       selectedTeam = null;
+      _txtScoutName.text = "";
       txShooting.text = "";
       txClimb.text = "";
+      txHeight.text = "0";
+      txWeight.text = "0";
+      txWidth.text = "0";
+      txPitNotes.text = "";
+      numClimbHeight.text = "0";
+      numClimbWidth.text = "0";
     });
     print("Pit Cleared");
   }
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("ok"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -184,11 +229,11 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
             title: new Text('EXIT?'),
             content: new Text('This will clear the current Pit?'),
             actions: <Widget>[
-              new FlatButton(
+              new TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
                 child: new Text('No'),
               ),
-              new FlatButton(
+              new TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
                 child: new Text('Yes'),
               ),
@@ -198,7 +243,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         false;
   }
 
-  Future<bool> savePitData ({
+  Future<bool> savePitData({
     int recordID = 0,
   }) async {
     print("saving record");
@@ -208,31 +253,53 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     if (recordID > 0) {
       pitData.id = recordID;
       pitData.dtModified = now.toString();
-    }
-    else{
+    } else {
       pitData.dtCreation = now.toString();
       pitData.dtModified = now.toString();
     }
-    if(selectedTeam == null) return false;
-    pitData.idTeam = selectedTeam.teamNumber;
+    if (selectedTeam == null) return false;
+    pitData.idTeam = selectedTeam?.teamNumber;
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
+    pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
+    pitData.txShooting = txShooting.text;
+    //if (pitData.imgTeamUniform == null) return false;
+    //if (pitData.imgRobotSide == null) return false;
+    //if (pitData.imgRobotFront == null) return false;
+
+    try {
+      pitData.numWeight = int.parse(txWeight.text);
+    } catch (e) {
+      pitData.numWeight = 0;
+      print("Error Converting txWeight: " + e.toString());
+    }
+
+    try {
+      pitData.numHeight = int.parse(txHeight.text);
+    } catch (e) {
+      pitData.numHeight = 0;
+      print("Error Converting txHeight: " + e.toString());
+    }
+
+    try {
+      pitData.numWidth = int.parse(txWidth.text);
+    } catch (e) {
+      pitData.numWidth = 0;
+      print("Error Converting txWidth: " + e.toString());
+    }
+
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
-    if (pitData.id > 0) {
+    if (pitData.id! > 0) {
       recordSaved = true;
       print("Record Saved: " + recordSaved.toString());
       print("Record ID: " + pitData.id.toString());
       return true;
+    } else {
+      print("ERROR Saving Record: " + recordSaved.toString());
+      return false;
     }
-    else
-      {
-        print("ERROR Saving Record: " + recordSaved.toString());
-        return false;
-      }
-
-
   }
 
   void handleMenuClick(String value) async {
@@ -243,8 +310,20 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         break;
       case 'Settings':
         print("Settings Selected");
+        _navigateToSettings(context);
         break;
     }
+  }
+
+  _navigateToSettings(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(builder: (context) => SettingsScreen()),
+    );
+    getMetricSystemValue();
   }
 
   //style
@@ -259,29 +338,29 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   double styleFieldTxPitNotesMaxWidth = 350;
   double styleFieldWidthTeam = 90;
   double styleImgFieldWidth = 90;
-  double styleFontSizeBody = 15;
   double styleFontSizeHeadings = 18;
+  double styleFieldTeamMaxWidth = 300;
 
   @override
   Widget build(BuildContext context) {
     //style
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
+    styleFieldTeamMaxWidth = width - 100;
     if (width < 500) {
-      styleFontSizeBody = 12;
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 250;
       styleFieldTxShootingMaxWidth = 250;
       styleFieldTxClimbMaxWidth = 240;
+      styleFieldTxPitNotesMaxWidth = 300;
     }
     if (width < 395) {
-      styleFontSizeBody = 11;
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 200;
       styleFieldTxShootingMaxWidth = 198;
+      styleFieldTxPitNotesMaxWidth = 250;
     }
     if (width >= 600) {
-      styleFontSizeBody = 15;
       styleFieldTxShootingMaxWidth = 400;
       styleFieldScoutNameMaxWidth = 400;
       styleFieldTxPitNotesMaxWidth = 500;
@@ -329,8 +408,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "Event Name: " + widget.eventName,
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                              "Event Name: " + widget.eventName!,
+                              style: TextStyle(fontSize: styleFontSizeHeadings),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -338,7 +417,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               children: [
                                 Text(
                                   "Scout: ",
-                                  style: TextStyle(fontSize: styleFontSizeBody),
+                                  style:
+                                      TextStyle(fontSize: widget.styleFontSize),
                                 ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
@@ -358,25 +438,31 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 children: <Widget>[
                                   Text(
                                     "Team ",
-                                    style:
-                                        TextStyle(fontSize: styleFontSizeBody),
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize),
                                   ),
-                                  DropdownButton(
-                                    value: selectedTeam == null
-                                        ? null
-                                        : selectedTeam.key,
-                                    //title: "Team",
-                                    items: ddsEventTeams,
-                                    onChanged: (item) {
-                                      setState(() {
-                                        selectedTeam = widget.eventTeams
-                                            .firstWhere(
-                                                (team) => team.key == item,
-                                                orElse: () =>
-                                                    widget.eventTeams.first);
-                                      });
-                                      print("Team Key: " + selectedTeam.key);
-                                    },
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                        maxWidth: styleFieldTeamMaxWidth),
+                                    child: DropdownButton(
+                                      isExpanded: true,
+                                      value: selectedTeam == null
+                                          ? null
+                                          : selectedTeam?.key,
+                                      //title: "Team",
+                                      items: ddsEventTeams,
+                                      onChanged: (item) {
+                                        setState(() {
+                                          selectedTeam = widget.eventTeams
+                                              ?.firstWhere(
+                                                  (team) => team.key == item,
+                                                  orElse: () =>
+                                                      widget.eventTeams!.first);
+                                        });
+                                        print(
+                                            "Team Key: " + selectedTeam!.key!);
+                                      },
+                                    ),
                                   ),
                                 ]),
                           ]),
@@ -407,43 +493,68 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CounterWidget(
-                              value: pitData.numWeight,
-                              title: "Weight",
-                              onIncreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numWeight++;
-                                });
-                              },
-                              onDecreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numWeight--;
-                                });
-                              },
-                              onSetValue: (int value) {
-                                setState(() {
-                                  pitData.numWeight = value;
-                                });
-                              },
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 100,
+                              height: 58,
+                              child: TextField(
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
+                                controller: txWeight,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Weight (" + strWeight + ")",
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
                             ),
-                            CounterWidget(
-                              value: pitData.numHeight,
-                              title: "Height",
-                              onIncreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numHeight++;
-                                });
-                              },
-                              onDecreaseStateChanged: (int value) {
-                                setState(() {
-                                  pitData.numHeight--;
-                                });
-                              },
-                              onSetValue: (int value) {
-                                setState(() {
-                                  pitData.numHeight = value;
-                                });
-                              },
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 100,
+                              height: 58,
+                              child: TextField(
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
+                                controller: txHeight,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Height(" + strDistance + ")",
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 100,
+                              height: 58,
+                              child: TextField(
+                                style:
+                                    TextStyle(fontSize: widget.styleFontSize),
+                                controller: txWidth,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Width (" + strDistance + ")",
+                                  border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
                             ),
                           ]),
                     ]),
@@ -462,11 +573,14 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 onExpanded: (value) {
                   (value == true) ? scrollDown(180) : scrollDown(0);
                 },
-
               ),
               PitClimb(
                 pitData: pitData,
                 txClimb: txClimb,
+                numClimbHeight: numClimbHeight,
+                numClimbWidth: numClimbWidth,
+                strWeight: strWeight,
+                strDistance: strDistance,
                 styleFieldTxClimbMaxWidth: styleFieldTxClimbMaxWidth,
                 onChanged: (PitData updates) {
                   setState(() {
@@ -477,21 +591,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   (value == true) ? scrollDown(180) : scrollDown(0);
                 },
               ),
-              PitControlPanel(
-                pitData: pitData,
-                txPanelSensor: txPanelSensor,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                    print("Pit_Climb: Updated to Parent");
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(180) : scrollDown(0);
-                },
-              ),
               PitAuto(
                 pitData: pitData,
+                strDistance: strDistance,
+                strWeight: strWeight,
                 onChanged: (PitData updates) {
                   setState(() {
                     pitData = updates;
@@ -499,6 +602,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 },
                 onExpanded: (value) {
                   (value == true) ? scrollDown(100) : scrollDown(0);
+                },
+              ),
+              PitHuman(
+                pitData: pitData,
+                numHumanAccuracy: numHumanAccuracy,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(50) : scrollDown(0);
                 },
               ),
               FractionallySizedBox(
@@ -527,20 +642,15 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           children: [
                             Text(
                               "Notes: ",
-                              style: TextStyle(fontSize: styleFontSizeBody),
+                              style: TextStyle(fontSize: widget.styleFontSize),
                             ),
                             ConstrainedBox(
                               constraints: BoxConstraints(
                                   maxWidth: styleFieldTxPitNotesMaxWidth),
                               child: TextField(
                                 controller: txPitNotes,
-                                decoration: InputDecoration(
-                                    hintText: 'General Notes'),
-                                onChanged: (String text) {
-                                  setState(() {
-                                    txPitNotes.text = text;
-                                  });
-                                },
+                                decoration:
+                                    InputDecoration(hintText: 'General Notes'),
                               ),
                             ),
                           ]),
@@ -548,24 +658,83 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   ),
                 ),
               ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    PitImages(
+                      title: "Team Shirt",
+                      camera: widget.camera!,
+                      onCapture: (newImage) {
+                        setState(() {
+                          pitData.imgTeamUniform = newImage;
+                        });
+                      },
+                      image: pitData.imgTeamUniform,
+                    ),
+                    PitImages(
+                      title: "Robot Side",
+                      camera: widget.camera!,
+                      onCapture: (newImage) {
+                        setState(() {
+                          pitData.imgRobotSide = newImage;
+                        });
+                      },
+                      image: pitData.imgRobotSide,
+                    ),
+                    PitImages(
+                      title: "Robot Front",
+                      camera: widget.camera!,
+                      onCapture: (newImage) {
+                        setState(() {
+                          pitData.imgRobotFront = newImage;
+                        });
+                      },
+                      image: pitData.imgRobotFront,
+                    ),
+                  ]),
               FinishTab(
                 onSavePressed: (bool value) async {
                   if (recordSaved == true) {
-                    await savePitData(recordID: pitData.id);
+                    await savePitData(recordID: pitData.id!);
                   } else {
                     await savePitData();
                   }
                   String alertMsg;
-                  alertMsg = (recordSaved == true) ? "Pit has been saved to Local Database" : "FAILED to Save Record";
-                  showAlertOKDialog(
-                      context, "Saved", alertMsg);
-
+                  alertMsg = (recordSaved == true)
+                      ? "Pit has been saved to Local Database"
+                      : "FAILED to Save Record: The following fields must be filled in: Team";
+                  showAlertOKDialog(context, "Saved", alertMsg);
+                },
+                googleUploadStatus: googleUploadStatus,
+                onUploadToGoogle: (bool value) async {
+                  if (recordSaved == true) {
+                    await savePitData(recordID: pitData.id!);
+                  } else {
+                    await savePitData();
+                  }
+                  if (recordSaved == true) {
+                    _uploadDataToGoogleDrive(pitData);
+                  }
+                  String alertMsg = (recordSaved == true)
+                      ? "Pit has been saved to Local Database."
+                      : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
+                  showAlertOKDialog(context, "Saved", alertMsg);
                 },
               ),
-
             ]),
-
       ),
     );
+  }
+
+  _uploadDataToGoogleDrive(PitData pitData) async {
+    setState(() {
+      googleUploadStatus = 1;
+    });
+    File file = await googleInterface.uploadPitData(pitData);
+    await file.length();
+    setState(() {
+      googleUploadStatus = 2;
+    });
   }
 }

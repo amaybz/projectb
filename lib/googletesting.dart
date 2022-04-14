@@ -1,3 +1,5 @@
+// @dart = 2.7
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
@@ -6,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleauthclient.dart';
 import 'dart:io';
 import 'package:projectb/localdb.dart';
-
+import 'package:projectb/class_macthscoutingdata.dart';
 
 class GoogleLoginRequest extends StatefulWidget {
   @override
@@ -14,9 +16,8 @@ class GoogleLoginRequest extends StatefulWidget {
 }
 
 class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
-
   final googleSignIn =
-  signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.DriveFileScope]);
+      signIn.GoogleSignIn.standard(scopes: [drive.DriveApi.driveFileScope]);
   signIn.GoogleSignInAccount account;
 
   Future<String> get _localPath async {
@@ -29,15 +30,17 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     return File('$path/temp.json');
   }
 
-  Future<File> writeFileAndUploadToGoogle(MatchScoutingData matchScoutingData) async {
+  Future<File> writeFileAndUploadToGoogle(
+      MatchScoutingData matchScoutingData) async {
     print("get file Path");
     final file = await _localFile;
     // Write the file.
     print("write file");
-    File newFile = await file.writeAsString(matchScoutingData.toMap().toString());
-    print ("sync to google...");
+    File newFile =
+        await file.writeAsString(matchScoutingData.toMap().toString());
+    print("sync to google...");
     await _googleUploadFile(newFile);
-    print ("Write Complete");
+    print("Write Complete");
     return newFile;
   }
 
@@ -47,7 +50,8 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
       // Read the file.
       String contents = await file.readAsString();
       print(contents);
-      MatchScoutingData matchScoutingData = MatchScoutingData.fromMap(jsonDecode(contents));
+      MatchScoutingData matchScoutingData =
+          MatchScoutingData.fromMap(jsonDecode(contents));
 
       print(matchScoutingData.txScoutName);
 
@@ -59,14 +63,10 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     }
   }
 
-
-
   Future<void> _googleSignOut() async {
-
     account = await googleSignIn.signOut();
     print("User account $account");
-    setState(() {
-    });
+    setState(() {});
   }
 
   Future<void> _googleSignIn() async {
@@ -74,8 +74,7 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     print("User account $account");
     //var authHeaders = await googleSignIn.currentUser.authHeaders;
     //print(authHeaders.toString());
-    setState(() {
-    });
+    setState(() {});
   }
 
   Future<void> _googleUploadFile(File file) async {
@@ -83,14 +82,14 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     final authHeaders = await account.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
-    googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
+    googleSignIn.requestScopes([drive.DriveApi.driveFileScope]);
     //print("auth Headers: " + authHeaders.toString());
     //create file
     Stream<List<int>> mediaStream = file.openRead().asBroadcastStream();
     int mediaStreamLength = await file.length();
     //int mediaStreamLength = await mediaStream.length;
     print("get file length to be sent: " + mediaStreamLength.toString());
-   var media = new drive.Media(mediaStream,mediaStreamLength);
+    var media = new drive.Media(mediaStream, mediaStreamLength);
     var driveFile = new drive.File();
     driveFile.name = "FRC_Results.txt";
     final result = await driveApi.files.create(driveFile, uploadMedia: media);
@@ -98,42 +97,38 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
     return true;
   }
 
-
   Future<void> _googleDriveFolders() async {
+    final authHeaders = await account.authHeaders;
+    final authenticateClient = GoogleAuthClient(authHeaders);
+    final driveApi = drive.DriveApi(authenticateClient);
+    googleSignIn.requestScopes([drive.DriveApi.driveFileScope]);
+    //print(authenticateClient);
 
-  final authHeaders = await account.authHeaders;
-  final authenticateClient = GoogleAuthClient(authHeaders);
-  final driveApi = drive.DriveApi(authenticateClient);
-  googleSignIn.requestScopes([drive.DriveApi.DriveFileScope]);
-  //print(authenticateClient);
+    //create folder
+    var driveFolder = new drive.File();
+    driveFolder.name = "FRC-APP";
+    driveFolder.mimeType = "application/vnd.google-apps.folder";
+    //final createFolder = await driveApi.files.create(driveFolder);
+    //print("Upload result: $createFolder");
 
-
-
-  //create folder
-  var driveFolder = new drive.File();
-  driveFolder.name = "FRC-APP";
-  driveFolder.mimeType = "application/vnd.google-apps.folder";
-  //final createFolder = await driveApi.files.create(driveFolder);
-  //print("Upload result: $createFolder");
-
-  //check folders to see if it has already been created.
-  var f = await driveApi.files
-      .list(q: "mimeType = 'application/vnd.google-apps.folder'");
-  f.files.forEach((f) {
-  print(f.name + ": " + f.id);
-  });
-  //print("Result ${f.toJson()}");
-}
+    //check folders to see if it has already been created.
+    var f = await driveApi.files
+        .list(q: "mimeType = 'application/vnd.google-apps.folder'");
+    f.files.forEach((f) {
+      print(f.name + ": " + f.id);
+    });
+    //print("Result ${f.toJson()}");
+  }
 
   @override
   Widget build(BuildContext context) {
-    if(account == null) {
+    if (account == null) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Google Drive Testing'),
         ),
         body: Column(children: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               _googleSignIn();
             },
@@ -141,33 +136,37 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
           ),
         ]),
       );
-    }
-    else {
+    } else {
       return Scaffold(
         appBar: AppBar(
           title: Text('Google Drive Testing'),
         ),
         body: Column(children: [
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               _googleSignOut();
             },
             child: Text("Sign Out of Google"),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               _googleDriveFolders();
             },
             child: Text("Print Folders to Console"),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
-              writeFileAndUploadToGoogle(MatchScoutingData(id: 1, txScoutName: "Aiden", idTeam: "1234 - test", numMatch: 123, numStartCells: 3, idDriveStation: "red 3"));
-
+              writeFileAndUploadToGoogle(MatchScoutingData(
+                  id: 1,
+                  txScoutName: "Aiden",
+                  idTeam: "1234 - test",
+                  numMatch: 123,
+                  numStartCargo: "3",
+                  idDriveStation: "red 3"));
             },
             child: Text("write test File to google"),
           ),
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               readFile();
             },
@@ -176,6 +175,5 @@ class _GoogleLoginRequestState extends State<GoogleLoginRequest> {
         ]),
       );
     }
-
   }
 }

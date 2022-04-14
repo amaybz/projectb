@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class DropDownWidget extends StatefulWidget {
   DropDownWidget({
-    Key key,
+    Key? key,
     @required this.value,
     @required this.title,
     @required this.list,
@@ -17,10 +17,10 @@ class DropDownWidget extends StatefulWidget {
   }) : super(key: key);
 
 
-  final String value;
-  final String title;
-  final ValueChanged<String> onStateChanged;
-  final List<String> list;
+  final String? value;
+  final String? title;
+  final ValueChanged<String>? onStateChanged;
+  final List<String>? list;
   final double styleFieldWidth;
   final double styleFieldPadding;
   final double styleFieldPaddingSides;
@@ -50,13 +50,13 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           isDense: true,
         ),
         value: widget.value,
-        onChanged: (String newValue) {
+        onChanged: (String? newValue) {
           setState(() {
-            widget.onStateChanged(newValue);
+            widget.onStateChanged!(newValue!);
           });
 
         },
-        items: widget.list.map((value) {
+        items: widget.list!.map((value) {
           return DropdownMenuItem(
             child: new Text(
               value,

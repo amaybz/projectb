@@ -8,16 +8,18 @@ import 'package:projectb/googleinterface.dart';
 import 'dart:io';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_headingmain.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/widget_loading_popup.dart';
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
-    Key key,
+    Key? key,
     @required this.eventName,
     @required this.eventKey,
   }) : super(key: key);
 
-  final String eventName;
-  final String eventKey;
+  final String? eventName;
+  final String? eventKey;
 
   @override
   _ScoringDataScreenState createState() => _ScoringDataScreenState();
@@ -26,16 +28,17 @@ class ScoringDataScreen extends StatefulWidget {
 class _ScoringDataScreenState extends State<ScoringDataScreen> {
   GoogleInterface googleInterface = GoogleInterface.instance;
   LocalDB localDB = LocalDB.instance;
-  List unitMemberList;
-  List<MatchScoutingData> dataList;
-  List<PitData> listPitData;
-  String googleEmail = "Not Signed In";
+  List? unitMemberList;
+  List<MatchScoutingData>? dataList;
+  List<PitData>? listPitData;
+  String googleEmail = "...";
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
+  double styleQRSize = 320;
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("ok"),
       onPressed: () {
         Navigator.of(context).pop();
@@ -105,8 +108,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     return File('$path/temp.json');
   }
 
-  Future<File> writeFileAndUploadToGoogle(
+  Future<File> writeMatchFileAndUploadToGoogle(
       MatchScoutingData matchScoutingData) async {
+    DialogBuilder(context).showLoadingIndicator('Uploading Match JSON');
     print("get file Path");
     final file = await _localFile;
     // Write the file.
@@ -116,10 +120,82 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
         newFile,
-        matchScoutingData.numMatch.toString() +
+        "MATCH_" +
+            matchScoutingData.numMatch.toString() +
             " " +
-            matchScoutingData.idTeam.toString());
+            matchScoutingData.idTeam.toString() +
+            " - " +
+            DateTime.now().toString(),
+        "json");
     print("Upload Complete");
+    DialogBuilder(context).hideOpenDialog();
+    checkIsSignedInToGoogle();
+    showAlertOKDialog(context, "Upload", "Result uploaded to Google");
+
+    return newFile;
+  }
+
+  Future<File> writePitFileAndUploadToGoogle(PitData pitData) async {
+    bool fileExists;
+    DialogBuilder(context).showLoadingIndicator('Uploading PIT JSON');
+    print("getting file Path");
+    final file = await _localFile;
+    // Write the file.
+    print("write file");
+    var dataToWrite = json.encode(pitData.toMap());
+    File newFile = await file.writeAsString(dataToWrite.toString());
+    print("JSON: " + dataToWrite);
+    await googleInterface.uploadFile(
+        newFile,
+        "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
+        "json");
+    print("Upload Complete: JSON");
+    DialogBuilder(context).hideOpenDialog();
+    DialogBuilder(context).showLoadingIndicator('Uploading Uniform Image');
+    if (pitData.imgTeamUniform != null) {
+      fileExists = await File(pitData.imgTeamUniform!.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await googleInterface.uploadFile(
+          pitData.imgTeamUniform!,
+          "PIT_TeamUniform" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
+    DialogBuilder(context).hideOpenDialog();
+    DialogBuilder(context).showLoadingIndicator('Uploading Robot Side Image');
+    if (pitData.imgRobotSide != null) {
+      fileExists = await File(pitData.imgRobotSide!.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await googleInterface.uploadFile(
+          pitData.imgRobotSide!,
+          "PIT_RobotSide" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
+    DialogBuilder(context).hideOpenDialog();
+    DialogBuilder(context).showLoadingIndicator('Uploading Robot Front Image');
+    if (pitData.imgRobotFront != null) {
+      fileExists = await File(pitData.imgRobotFront!.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      await googleInterface.uploadFile(
+          pitData.imgRobotFront!,
+          "PIT_RobotFront" +
+              pitData.idTeam.toString() +
+              DateTime.now().toString(),
+          "jpg");
+    }
+    DialogBuilder(context).hideOpenDialog();
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
     return newFile;
@@ -128,7 +204,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   checkIsSignedInToGoogle() async {
     isSignedInToGoogle = await googleInterface.isSignedIn();
     googleEmail = await googleInterface.getEmail();
-    setState(() {});
+    setState(() {
+      googleEmail = googleEmail;
+    });
   }
 
   //style
@@ -145,21 +223,14 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
           widthFactor: 0.9,
           child: Container(
             margin: const EdgeInsets.all(15.0),
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-            padding: EdgeInsets.all(4.0),
-            child: Text(
-              "Event Name: " + widget.eventName,
-              style: TextStyle(fontSize: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blueAccent),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)),
             ),
-          ),
-        ),
-        FractionallySizedBox(
-          widthFactor: 0.9,
-          child: Container(
-            margin: const EdgeInsets.all(15.0),
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.blueAccent)),
             padding: EdgeInsets.all(4.0),
             child: Column(
               children: [
@@ -167,27 +238,24 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   "Google Account: " + googleEmail,
                   style: TextStyle(fontSize: 14),
                 ),
-                Text(
-                  "Press and hold a result to upload to google",
-                  style: TextStyle(fontSize: 12),
+                GoogleLoginButton(
+                  googleLoginState: isSignedInToGoogle,
+                  onLoginPressed: (bool value) {
+                    if (value == true) {
+                      _signInToGoogle();
+                    } else {
+                      _signOutOfGoogle();
+                    }
+                  },
                 ),
               ],
             ),
           ),
         ),
-        GoogleLoginButton(
-          googleLoginState: isSignedInToGoogle,
-          onLoginPressed: (bool value) {
-            if (value == true) {
-              _signInToGoogle();
-            } else {
-              _signOutOfGoogle();
-            }
-          },
-        ),
+
         HeadingMain(
           styleFontSize: styleFontSizeHeadings,
-          headingText: "Saved Data",
+          headingText: "Saved Records",
           //backGroundColor: Colors.green,
         ),
         _showTab(_selectedTab)
@@ -225,25 +293,117 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget _buildListViewMatchData() {
     return ListView.builder(
         padding: const EdgeInsets.all(10.0),
-        itemCount: dataList == null ? 0 : dataList.length,
+        itemCount: dataList == null ? 0 : dataList!.length,
         itemBuilder: (context, index) {
-          return _buildRowMatchData(dataList[index]);
+          return _buildRowMatchData(dataList![index]);
         });
   }
 
   Widget _buildRowMatchData(MatchScoutingData item) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: [
+                Text(
+                  item.id.toString() + ". Match: " + item.numMatch.toString(),
+                ),
+                Text("Team: " + item.idTeam!)
+              ],
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                _showDialogMatchQRCode(context, item.id.toString());
+              },
+              child: Text('QR'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                writeMatchFileAndUploadToGoogle(item);
+              },
+              child: Text('Upload'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                deleteMatchRecord(context, item.id!);
+
+                setState(() {});
+              },
+              child: Text('Delete'),
+            ),
+          ]),
+    );
+
     //print(item.defenceRating);
-    return ListTile(
-      title: Text(
-        item.id.toString() + ". Match: " + item.numMatch.toString(),
+    //return ListTile(
+    //  title: Text(
+    //    item.id.toString() + ". Match: " + item.numMatch.toString(),
+    //   ),
+    //   subtitle: Text("Team: " + item.idTeam!),
+    //   trailing: Icon(Icons.share),
+    //   onTap: () {
+    //     _showDialogMatchQRCode(context, item.id.toString());
+    //   },
+    //   onLongPress: () {
+    //     writeMatchFileAndUploadToGoogle(item);
+    //   },
+    //);
+  }
+
+  deleteMatchRecord(BuildContext context, int id) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green, // background
+        onPrimary: Colors.white, // foreground
       ),
-      subtitle: Text("Team: " + item.idTeam),
-      trailing: Icon(Icons.share),
-      onTap: () {
-        _showDialogMatchQRCode(context, item.id.toString());
+      onPressed: () {
+        Navigator.of(context).pop();
       },
-      onLongPress: () {
-        writeFileAndUploadToGoogle(item);
+      child: Text('Cancel'),
+    );
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.red, // background
+        onPrimary: Colors.white, // foreground
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        localDB.deleteMatchData(id);
+        _getScoringData();
+      },
+      child: Text('Delete'),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("WARNING"),
+      content: Text("Are you sure you want to delete this record?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
@@ -251,25 +411,102 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget _buildListViewPitData() {
     return ListView.builder(
         padding: const EdgeInsets.all(10.0),
-        itemCount: listPitData == null ? 0 : listPitData.length,
+        itemCount: listPitData == null ? 0 : listPitData!.length,
         itemBuilder: (context, index) {
-          return _buildRowPitData(listPitData[index]);
+          return _buildRowPitData(listPitData![index]);
         });
   }
 
   Widget _buildRowPitData(PitData item) {
-    //print(item.defenceRating);
-    return ListTile(
-      title: Text(
-        item.id.toString() + ". PIT: " + item.idTeam.toString(),
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: [
+                Text(
+                  item.id.toString() + ". PIT: " + item.idTeam.toString(),
+                ),
+                Text("Scout: " + item.txScoutName!),
+              ],
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                _showDialogPitQRCode(context, item.id.toString());
+              },
+              child: Text('QR'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                writePitFileAndUploadToGoogle(item);
+              },
+              child: Text('Upload'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+                onPrimary: Colors.white, // foreground
+              ),
+              onPressed: () {
+                deletePitRecord(context, item.id!);
+
+                setState(() {});
+              },
+              child: Text('Delete'),
+            ),
+          ]),
+    );
+  }
+
+  deletePitRecord(BuildContext context, int id) {
+    // set up the buttons
+    Widget cancelButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.green, // background
+        onPrimary: Colors.white, // foreground
       ),
-      subtitle: Text("Scout: " + item.txScoutName),
-      trailing: Icon(Icons.share),
-      onTap: () {
-        _showDialogPitQRCode(context, item.id.toString());
+      onPressed: () {
+        Navigator.of(context).pop();
       },
-      onLongPress: () {
-        //writeFileAndUploadToGoogle(item);
+      child: Text('Cancel'),
+    );
+    Widget continueButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Colors.red, // background
+        onPrimary: Colors.white, // foreground
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+        localDB.deletePitData(id);
+        _getPitData();
+      },
+      child: Text('Delete'),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("WARNING"),
+      content: Text("Are you sure you want to delete this record?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
@@ -298,17 +535,48 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   _showDialogMatchQRCode(BuildContext context, String matchID) async {
     // set up the buttons
 
+    double width = MediaQuery.of(context).size.width;
+    print("Screen Size: " + width.toString());
+
+    if (width < 600) {
+      setState(() {
+        styleQRSize = 380;
+      });
+    }
+    if (width < 500) {
+      setState(() {
+        styleQRSize = 360;
+      });
+    }
+    if (width < 450) {
+      setState(() {
+        styleQRSize = 325;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleQRSize = 320;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleQRSize = 400;
+      });
+    }
+
+    print("QR Size: " + styleQRSize.toString());
+
     MatchScoutingData match =
         await localDB.getScoringDataRecord(int.parse(matchID));
     var barcodeData = json.encode(match.toMap());
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
-        width: 320,
-        height: 320,
+        width: styleQRSize,
+        height: styleQRSize,
         child: DisplayQRCode(
           data: barcodeData.toString(),
-          styleQRSize: 305.0,
+          styleQRSize: styleQRSize - 15,
         ),
       ),
     );
@@ -323,18 +591,44 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   _showDialogPitQRCode(BuildContext context, String pitID) async {
-    // set up the buttons
-
+    double width = MediaQuery.of(context).size.width;
+    print("Screen Size: " + width.toString());
+    if (width < 600) {
+      setState(() {
+        styleQRSize = 380;
+      });
+    }
+    if (width < 500) {
+      setState(() {
+        styleQRSize = 350;
+      });
+    }
+    if (width < 450) {
+      setState(() {
+        styleQRSize = 325;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleQRSize = 320;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleQRSize = 400;
+      });
+    }
+    print("QR PIT Size: " + styleQRSize.toString());
     PitData pit = await localDB.getPitDataRecord(int.parse(pitID));
     var jsonString = json.encode(pit.toMap());
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(
       child: Container(
-        width: 315,
-        height: 315,
+        width: styleQRSize,
+        height: styleQRSize,
         child: DisplayQRCode(
           data: jsonString.toString(),
-          styleQRSize: 305.0,
+          styleQRSize: styleQRSize - 15,
         ),
       ),
     );
@@ -354,7 +648,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // Call the getJSONData() method when the app initializes
     _getScoringData();
     _getPitData();
-    _updateGoogleEmail();
     checkIsSignedInToGoogle();
+    _updateGoogleEmail();
   }
 }

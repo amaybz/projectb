@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 
 class RowHeading extends StatefulWidget {
-
   const RowHeading(
-      {Key key,
-        @required this.styleFontSize,
-        this.styleBackGroundColor = Colors.yellow,
-        this.value,
-        this.text,
-        this.onChange
-      })
+      {Key? key,
+      required this.styleFontSize,
+      this.styleBackGroundColor = Colors.yellow,
+      this.value,
+      this.text,
+      this.onChange})
       : super(key: key);
 
   final double styleFontSize;
   final Color styleBackGroundColor;
-  final String text;
-  final bool value;
-  final ValueChanged<bool> onChange;
-
+  final String? text;
+  final bool? value;
+  final ValueChanged<bool>? onChange;
 
   @override
   _RowHeadingState createState() => _RowHeadingState();
@@ -42,20 +39,20 @@ class _RowHeadingState extends State<RowHeading> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            widget.text,
-            style: TextStyle(fontSize: widget.styleFontSize),
+            widget.text!,
+            style:
+                TextStyle(fontSize: widget.styleFontSize, color: Colors.black),
           ),
           Switch(
-            value: widget.value,
+            value: widget.value!,
             onChanged: (bool value) {
               setState(() {
-                widget.onChange(value);
+                widget.onChange!(value);
               });
             },
           ),
         ],
       ),
-
     );
   }
 }

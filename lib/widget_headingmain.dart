@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class HeadingMain extends StatelessWidget {
   const HeadingMain(
-      {Key key,
-        @required this.styleFontSize,
-        @required this.headingText,
+      {Key? key,
+        required this.styleFontSize,
+        required this.headingText,
         this.backGroundColor = Colors.grey
       })
       : super(key: key);

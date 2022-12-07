@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:projectb/class_pitdata.dart';
-import 'class_macthscoutingdata.dart';
-import 'localdb.dart';
+import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/localdb.dart';
 
 class QRBarcodeScanner extends StatefulWidget {
   const QRBarcodeScanner({Key? key}) : super(key: key);

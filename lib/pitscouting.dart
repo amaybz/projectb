@@ -14,7 +14,7 @@ import 'package:projectb/pit/widget_pit_cargo.dart';
 import 'package:projectb/pit/widget_pit_auto.dart';
 import 'package:projectb/pit/widget_pit_images.dart';
 import 'dart:io';
-import 'googleinterface.dart';
+import 'package:projectb/googleinterface.dart';
 
 class PitScoutingScreen extends StatefulWidget {
   PitScoutingScreen({

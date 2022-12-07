@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:projectb/class/eventmatches.dart';
 import 'package:projectb/localdb.dart';
@@ -11,19 +13,21 @@ import 'package:projectb/webapi.dart';
 import 'package:projectb/widget_loading.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
-import 'barcodeScanner.dart';
+import 'package:projectb/barcodeScanner.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
 // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
 
+  List<CameraDescription>? cameras;
   // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-
+  try {
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    print("no cameras");
+  }
+  final firstCamera = cameras?.first;
   runApp(MyApp(camera: firstCamera));
 }
 
@@ -69,11 +73,21 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
   ThemeData _darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.blue,
+    splashColor: Colors.white,
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+    ),
   );
 
   ThemeData _lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.blue,
+    splashColor: Colors.green,
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+    ),
   );
 
   @override
@@ -82,7 +96,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
       title: 'Project B',
       theme: _light ? _darkTheme : _lightTheme,
       home: MyHomePage(
-        title: 'Home - Set Event',
+        title: 'Home',
         camera: widget.camera,
         theme: _light,
         onchangeTheme: (bool state) {
@@ -130,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _downloadingText = "Please select Location and Event to download data";
   String txtEventHelpText = "Please choose a event";
   String? locationDropDown;
-  String selectedYear = "2022";
+  String selectedYear = "2018";
   final List<String> _locations = [
     'Australia',
     'Canada',
@@ -144,7 +158,29 @@ class _MyHomePageState extends State<MyHomePage> {
     'Local',
   ];
 
-  final List<String> _year = ['2020', '2021', '2022'];
+  List<DropdownMenuItem<String>> _years = [
+    DropdownMenuItem(child: new Text("2018"), value: "2018")
+  ];
+
+  List<DropdownMenuItem<String>> updateYears() {
+    DateTime now = DateTime.now();
+    int year = now.year;
+    List<DropdownMenuItem<String>> years = [];
+    years.clear();
+    years.add(DropdownMenuItem(
+        child: new Text((year - 2).toString()), value: (year - 2).toString()));
+    years.add(DropdownMenuItem(
+        child: new Text((year - 1).toString()), value: (year - 1).toString()));
+    years.add(DropdownMenuItem(
+        child: new Text(year.toString()), value: year.toString()));
+    years.add(DropdownMenuItem(
+        child: new Text((year + 1).toString()), value: (year + 1).toString()));
+    setState(() {
+      _years = years;
+      selectedYear = year.toString();
+    });
+    return years;
+  }
 
   //used to store all events from API
   List<EventData>? allEvents;
@@ -164,6 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     //get events from API
+    updateYears();
     updateEventsFromAPI(selectedYear);
     //update device name from local db
     getDeviceName();
@@ -207,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
           : null;
       _countOfTeams =
           listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      //locationDropDown = selectedLocalEvent?.location;
     });
     //print("LocalEvent: " + selectedLocalEvent.key);
 
@@ -288,7 +326,9 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     eventMatches = await webAPI.getEventMatches(eventKey);
-    localDB.clearMatchTeams();
+    if (!kIsWeb) {
+      localDB.clearMatchTeams();
+    }
     bool recordExists = false;
     List<MatchTeam> listMatchTeams = [];
     for (EventMatches match in eventMatches) {
@@ -311,7 +351,9 @@ class _MyHomePageState extends State<MyHomePage> {
           }
           if (!recordExists) {
             listMatchTeams.add(newMatchTeam);
-            localDB.insertMatchTeam(newMatchTeam);
+            if (!kIsWeb) {
+              localDB.insertMatchTeam(newMatchTeam);
+            }
           }
         }
       }
@@ -390,7 +432,7 @@ class _MyHomePageState extends State<MyHomePage> {
       updateEventsFromAPI(selectedYear);
     }
     eventsForLocation =
-        allEvents!.where((i) => i.country == locationDropDown).toList();
+        allEvents?.where((i) => i.country == locationDropDown).toList();
     //clear event list and update it with new events
     eventsList.clear();
     eventsForLocation!.forEach((i) {
@@ -542,32 +584,51 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: ConstrainedBox(
                         constraints:
-                            BoxConstraints(maxWidth: 800.0, minWidth: 250.0),
+                            BoxConstraints(maxWidth: 900.0, minWidth: 250.0),
                         child: Container(
                           margin: const EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueAccent),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
-                          ),
                           padding: EdgeInsets.all(4.0),
                           child: Column(
                             children: [
-                              Text("Selected Event:"),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 0.0),
+                                child: Text(
+                                  "Current Event",
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                              ),
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
                               Text(selectedLocalEvent == null
                                   ? "none"
                                   : selectedLocalEvent!.name!),
-                              Text("Teams Loaded: " + _countOfTeams.toString()),
+                              Text(selectedLocalEvent == null
+                                  ? ""
+                                  : selectedLocalEvent!.location!),
+                              Text(selectedLocalEvent == null
+                                  ? ""
+                                  : selectedYear!),
+
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 0.0),
+                                child: Text("Teams Loaded: " +
+                                    _countOfTeams.toString()),
+                              ),
                             ],
                           ),
                         ),
                       ),
                     ),
                   ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          child: Text("Set Event",
+                              style: Theme.of(context).textTheme.headline6),
+                        ),
+                      ]),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -600,12 +661,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               });
                               updateEventsFromAPI(selectedYear);
                             },
-                            items: _year.map((location) {
-                              return DropdownMenuItem(
-                                child: new Text(location),
-                                value: location,
-                              );
-                            }).toList(),
+                            items: _years,
                           ),
                         ),
                       ]),
@@ -669,7 +725,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: ElevatedButton(
-                      child: Text("Set Event"),
+                      child: Text("Update Event"),
                       onPressed: () {
                         updateDeviceName();
                         if (selectedEvent != null) {

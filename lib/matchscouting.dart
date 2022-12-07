@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:googleapis/shared.dart';
 import 'package:projectb/autotab.dart';
 import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
@@ -14,7 +12,7 @@ import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 import 'dart:io';
-import 'googleinterface.dart';
+import 'package:projectb/googleinterface.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({

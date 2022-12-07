@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class MatchScoutingData {
   int? id;
   String? txEvent;

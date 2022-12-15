@@ -2,6 +2,7 @@ import 'dart:io';
 
 class PitData {
   int? id;
+  bool? uploaded;
   String? txEvent;
   String? idTeam;
   String? txScoutName;
@@ -58,6 +59,7 @@ class PitData {
 
   PitData({
     this.id = 0,
+    this.uploaded = false,
     this.txEvent,
     this.idTeam,
     this.txScoutName = "",
@@ -121,6 +123,7 @@ class PitData {
 
     return {
       'id': id,
+      'uploaded': uploaded.toString(),
       'txEvent': txEvent,
       'idTeam': idTeam,
       'txScoutName': txScoutName,
@@ -169,6 +172,7 @@ class PitData {
 
   PitData.fromLocalDB(Map<dynamic, dynamic> map) {
     this.id = map['id'];
+    this.uploaded = map['uploaded'].toString().toLowerCase() == 'true';
     this.txEvent = map['txEvent'];
     this.idTeam = map['idTeam'].toString();
     this.txScoutName = map['txScoutName'];
@@ -242,6 +246,7 @@ class PitData {
     }
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['uploaded'] = this.uploaded;
     data['txEvent'] = this.txEvent;
     data['idTeam'] = this.idTeam;
     data['txScoutName'] = this.txScoutName;
@@ -290,6 +295,7 @@ class PitData {
 
   PitData.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
+    this.uploaded = map['uploaded'];
     this.txEvent = map['txEvent'];
     this.idTeam = map['idTeam'];
     this.txScoutName = map['txScoutName'];

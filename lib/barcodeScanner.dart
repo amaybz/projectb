@@ -6,6 +6,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 import 'package:projectb/localdb.dart';
+import 'package:projectb/widget_ShowAlertDialog.dart';
 
 class QRBarcodeScanner extends StatefulWidget {
   const QRBarcodeScanner({Key? key}) : super(key: key);
@@ -109,15 +110,19 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
     print("PitData event: " + pitData.txEvent.toString());
     print("PitData Notes: " + pitData.txPitNotes.toString());
     pitData.id = null;
+    pitData.uploaded = false;
     if (pitData.txPitNotes != null) {
       _status = ((await localDB.insertPitData(pitData))! > 0)
           ? "Record Saved"
           : "Failed to Save Record";
       barcodeScanRes = pitData.idTeam.toString();
+      ShowAlertDialog(context).oKDialog("Scan Data", _status);
     } else {
       barcodeScanRes = "Invalid Data";
       _status = "Incorrect Format";
+      ShowAlertDialog(context).oKDialog("Scan Data", _status);
     }
+
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.

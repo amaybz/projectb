@@ -340,8 +340,8 @@ class _MyHomePageState extends State<MyHomePage> {
         MatchTeams listBlueTeams = match.alliances?.blue! as MatchTeams;
         for (String? teamKey in listBlueTeams.teamKeys!) {
           recordExists = false;
-          MatchTeam newMatchTeam =
-              MatchTeam(matchNum: match.matchNumber, teamKey: teamKey);
+          MatchTeam newMatchTeam = MatchTeam(
+              matchNum: match.matchNumber, teamKey: teamKey, alliance: 2);
           for (MatchTeam team in listMatchTeams) {
             if (team.teamKey == newMatchTeam.teamKey) {
               if (team.matchNum == newMatchTeam.matchNum) {
@@ -361,8 +361,8 @@ class _MyHomePageState extends State<MyHomePage> {
         MatchTeams listRedTeams = match.alliances?.red! as MatchTeams;
         for (String? teamKey in listRedTeams.teamKeys!) {
           recordExists = false;
-          MatchTeam newMatchTeam =
-              MatchTeam(matchNum: match.matchNumber, teamKey: teamKey);
+          MatchTeam newMatchTeam = MatchTeam(
+              matchNum: match.matchNumber, teamKey: teamKey, alliance: 1);
           for (MatchTeam team in listMatchTeams) {
             if (team.teamKey == newMatchTeam.teamKey) {
               if (team.matchNum == newMatchTeam.matchNum) {

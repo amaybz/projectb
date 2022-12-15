@@ -46,6 +46,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   int googleUploadStatus = 0;
   GoogleInterface googleInterface = GoogleInterface.instance;
   Color colorFilter = Colors.white;
+  Color colorFilterActive = Colors.amberAccent;
   bool filterTeams = false;
   int _selectedTab = 0;
 
@@ -134,7 +135,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       print("LocalDB");
       print(matchTeams);
       List<MatchTeam> matchTeamsFiltered = matchTeams
-          .where((i) => i.matchNum.toString() == _txtMatchNumber.text)
+          .where((i) =>
+              i.matchNum.toString() == _txtMatchNumber.text &&
+              i.alliance.toString() == matchScoutingData.idAlliance)
           .toList();
       print("Filtered");
       print(matchTeamsFiltered);
@@ -143,7 +146,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             .where((i) => i.key == matchTeam.teamKey)
             .toList();
         if (team.length > 0) {
-          print(team[0].key);
+          //print(team[0].key);
           listMatchTeams.add(LocalTeam(
               key: team[0].key,
               teamNumber: team[0].teamNumber,
@@ -158,13 +161,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         listDropDownTeams = listMatchTeams;
         print(listMatchTeams);
         colorFilter = Colors.black;
+        colorFilterActive = Colors.green;
       } else {
         listDropDownTeams = listAllTeams;
         colorFilter = Colors.white;
+        colorFilterActive = Colors.amberAccent;
       }
     } else {
       listDropDownTeams = listAllTeams;
       colorFilter = Colors.white;
+      colorFilterActive = Colors.amberAccent;
     }
 
     for (LocalTeam team in listDropDownTeams) {
@@ -556,10 +562,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               onStateChanged: (String newValue) {
                                 setState(() {
                                   matchScoutingData.idAlliance = newValue;
+                                  filterTeams = true;
                                 });
                                 getDriveStationsByTeam(
                                     newValue, widget.styleFontSize);
                                 print(matchScoutingData.idAlliance);
+                                if (filterTeams == true) {
+                                  setEventTeams(widget.styleFontSize);
+                                }
+                                FocusManager.instance.primaryFocus?.unfocus();
                               }),
 
                           DropDownIndexedWidget(
@@ -611,7 +622,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             size: Size(30, 30),
                             child: ClipOval(
                               child: Material(
-                                color: Colors.amberAccent,
+                                color: colorFilterActive,
                                 child: InkWell(
                                   splashColor: Colors.green,
                                   onTap: () {

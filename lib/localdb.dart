@@ -8,7 +8,7 @@ import 'package:projectb/class_macthscoutingdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 36;
+  static final _databaseVersion = 39;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -20,7 +20,8 @@ class LocalDB {
   final String createTblMatches = "CREATE TABLE IF NOT EXISTS MatchTeams("
       "id INTEGER PRIMARY KEY, "
       "matchNum INTEGER, "
-      "teamKey TEXT)";
+      "teamKey TEXT,"
+      "alliance INTEGER)";
 
   final String createTblEventTeams = "CREATE TABLE IF NOT EXISTS EventTeams("
       "key TEXT PRIMARY KEY, "
@@ -109,6 +110,7 @@ class LocalDB {
       ")";
   final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
       'id INTEGER PRIMARY KEY, '
+      'uploaded TEXT,'
       'txEvent TEXT,'
       'idTeam TEXT,'
       'txScoutName TEXT,'
@@ -363,12 +365,13 @@ class LocalDB {
     final List<Map<dynamic, dynamic>>? maps = await db?.query(tblMatchTeams);
 
     // Convert the List<Map<String, dynamic> into a List<Dog>.
+
     return List.generate(maps!.length, (i) {
       return MatchTeam(
-        id: maps[i]['id'],
-        teamKey: maps[i]['teamKey'],
-        matchNum: maps[i]['matchNum'],
-      );
+          id: maps[i]['id'],
+          teamKey: maps[i]['teamKey'],
+          matchNum: maps[i]['matchNum'],
+          alliance: maps[i]['alliance']);
     });
   }
 
@@ -415,7 +418,7 @@ class LocalDB {
     // Query the table for all The Dogs.
     final List<Map<String, dynamic>>? maps = await db?.query(tblScoringData);
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    // Convert the List<Map<String, dynamic> into a List.
     return List.generate(maps!.length, (i) {
       return MatchScoutingData.fromLocalDB(maps[i]);
     });
@@ -469,11 +472,13 @@ class MatchTeam {
   int? id;
   int? matchNum;
   String? teamKey;
+  int? alliance;
 
   MatchTeam({
     this.id,
     this.matchNum,
     this.teamKey,
+    this.alliance,
   });
 
   Map<String, dynamic> toMap() {
@@ -481,6 +486,7 @@ class MatchTeam {
       'id': id,
       'matchNum': matchNum,
       'teamKey': teamKey,
+      'alliance': alliance,
     };
   }
 
@@ -488,7 +494,7 @@ class MatchTeam {
   // each team when using the print statement.
   @override
   String toString() {
-    return 'LocalTeam{id: $id, matchNum : $matchNum, teamKey: $teamKey}';
+    return 'MatchTeam{id: $id, matchNum : $matchNum, teamKey: $teamKey, alliance: $alliance}';
   }
 }
 

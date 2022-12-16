@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_performace.dart';
-import 'file:///D:/SDK/projectb/projectb/lib/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_performace.dart';
 
 class AutoTab extends StatefulWidget {
   const AutoTab({

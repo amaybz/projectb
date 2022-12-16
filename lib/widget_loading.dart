@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loading_gifs/loading_gifs.dart';
 
 class LoadingImage extends StatefulWidget {
   LoadingImage({Key? key, required this.state, this.text}) : super(key: key);

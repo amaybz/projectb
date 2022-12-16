@@ -10,6 +10,7 @@ import 'package:projectb/class_pitdata.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 import 'package:projectb/widget_loading_popup.dart';
+import 'package:projectb/widget_uploadedimg.dart';
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
@@ -150,54 +151,57 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
         "json");
     print("Upload Complete: JSON");
+    setState(() {
+      pitData.uploaded = true;
+    });
+    localDB.insertPitData(pitData);
     DialogBuilder(context).hideOpenDialog();
-    DialogBuilder(context).showLoadingIndicator('Uploading Uniform Image');
+    showAlertOKDialog(context, "Upload",
+        "Result uploaded to Google, images are still uploading");
+    checkIsSignedInToGoogle();
+
     if (pitData.imgTeamUniform != null) {
       fileExists = await File(pitData.imgTeamUniform!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
-      await googleInterface.uploadFile(
+      googleInterface.uploadFile(
           pitData.imgTeamUniform!,
           "PIT_TeamUniform" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
     }
-    DialogBuilder(context).hideOpenDialog();
-    DialogBuilder(context).showLoadingIndicator('Uploading Robot Side Image');
+
     if (pitData.imgRobotSide != null) {
       fileExists = await File(pitData.imgRobotSide!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
-      await googleInterface.uploadFile(
+      googleInterface.uploadFile(
           pitData.imgRobotSide!,
           "PIT_RobotSide" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
     }
-    DialogBuilder(context).hideOpenDialog();
-    DialogBuilder(context).showLoadingIndicator('Uploading Robot Front Image');
+
     if (pitData.imgRobotFront != null) {
       fileExists = await File(pitData.imgRobotFront!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
-      await googleInterface.uploadFile(
+      googleInterface.uploadFile(
           pitData.imgRobotFront!,
           "PIT_RobotFront" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
     }
-    DialogBuilder(context).hideOpenDialog();
-    checkIsSignedInToGoogle();
-    showAlertOKDialog(context, "Upload", "Result uploaded to Google");
+
     return newFile;
   }
 
@@ -431,37 +435,48 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 Text("Scout: " + item.txScoutName!),
               ],
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () {
-                _showDialogPitQRCode(context, item.id.toString());
-              },
-              child: Text('QR'),
+            Column(
+              children: [UploadedImg(state: item.uploaded!)],
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () {
-                writePitFileAndUploadToGoogle(item);
-              },
-              child: Text('Upload'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () {
-                deletePitRecord(context, item.id!);
+            Column(
+              children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        onPressed: () {
+                          _showDialogPitQRCode(context, item.id.toString());
+                        },
+                        child: Text('QR'),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        onPressed: () {
+                          writePitFileAndUploadToGoogle(item);
+                        },
+                        child: Text('Upload'),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red, // background
+                          onPrimary: Colors.white, // foreground
+                        ),
+                        onPressed: () {
+                          deletePitRecord(context, item.id!);
 
-                setState(() {});
-              },
-              child: Text('Delete'),
+                          setState(() {});
+                        },
+                        child: Text('Delete'),
+                      ),
+                    ]),
+              ],
             ),
           ]),
     );

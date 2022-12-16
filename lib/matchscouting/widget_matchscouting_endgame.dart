@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class_macthscoutingdata.dart';
 
-import '../widget_dropdown_indexed.dart';
-
 class EndGame extends StatefulWidget {
   EndGame(
       {Key? key,

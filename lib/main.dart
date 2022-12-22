@@ -21,14 +21,18 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   List<CameraDescription>? cameras;
+  CameraDescription? mainCamera;
   // Obtain a list of the available cameras on the device.
   try {
     cameras = await availableCameras();
+    if(cameras.length > 0) {
+      mainCamera = cameras.first;
+    }
   } on CameraException catch (e) {
     print("no cameras");
   }
-  final firstCamera = cameras?.first;
-  runApp(MyApp(camera: firstCamera));
+  //final firstCamera = cameras?.first;
+  runApp(MyApp(camera: mainCamera));
 }
 
 class MyApp extends StatelessWidget {

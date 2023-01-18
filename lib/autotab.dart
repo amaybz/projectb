@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_performace.dart';
 

@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart' as signIn;
 import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleauthclient.dart';
 import 'dart:io';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 
 class GoogleLoginRequest extends StatefulWidget {
   @override

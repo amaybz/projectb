@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:projectb/class_pitdata.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_pitdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/localdb.dart';
 import 'package:projectb/widget_ShowAlertDialog.dart';
 

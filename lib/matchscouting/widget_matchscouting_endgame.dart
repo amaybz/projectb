@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 
 class EndGame extends StatefulWidget {
   EndGame(

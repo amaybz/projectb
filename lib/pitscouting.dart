@@ -7,7 +7,7 @@ import 'package:camera/camera.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
-import 'package:projectb/class_pitdata.dart';
+import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/pit/widget_pit_climb.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/pit/widget_pit_cargo.dart';

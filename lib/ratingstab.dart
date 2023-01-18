@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(

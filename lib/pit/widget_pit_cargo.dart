@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/class_pitdata.dart';
+import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/widget_counter.dart';
 import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/widget_row_heading.dart';

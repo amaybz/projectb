@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:projectb/class_pitdata.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_pitdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 
 class LocalDB {
   static final _databaseName = "local_database.db";

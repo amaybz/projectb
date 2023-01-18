@@ -3,7 +3,7 @@ import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_performace.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({

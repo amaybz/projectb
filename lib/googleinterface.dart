@@ -7,8 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleauthclient.dart';
 import 'dart:io';
 
-import 'package:projectb/class_macthscoutingdata.dart';
-import 'package:projectb/class_pitdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_pitdata.dart';
 
 class GoogleInterface {
   final googleSignIn =

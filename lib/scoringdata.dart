@@ -6,9 +6,9 @@ import 'dart:async';
 import 'package:projectb/displayqrcode.dart';
 import 'package:projectb/googleinterface.dart';
 import 'dart:io';
-import 'package:projectb/class_pitdata.dart';
+import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/widget_headingmain.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/widget_loading_popup.dart';
 import 'package:projectb/widget_uploadedimg.dart';
 

@@ -10,7 +10,7 @@ import 'package:projectb/widget_dropdown.dart';
 import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/class_macthscoutingdata.dart';
+import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'dart:io';
 import 'package:projectb/googleinterface.dart';
 

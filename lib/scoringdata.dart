@@ -7,10 +7,11 @@ import 'package:projectb/displayqrcode.dart';
 import 'package:projectb/googleinterface.dart';
 import 'dart:io';
 import 'package:projectb/class/class_pitdata.dart';
-import 'package:projectb/widget_headingmain.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
-import 'package:projectb/widget_loading_popup.dart';
-import 'package:projectb/widget_uploadedimg.dart';
+import 'package:projectb/widgets/widget_headingmain.dart';
+import 'package:projectb/widgets/widget_loading_popup.dart';
+import 'package:projectb/widgets/widget_uploadedimg.dart';
+
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
@@ -314,7 +315,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 Text(
                   item.id.toString() + ". Match: " + item.numMatch.toString(),
                 ),
-                Text("Team: " + item.idTeam!)
+                Text("Team: " + item.idTeam.toString())
               ],
             ),
             ElevatedButton(

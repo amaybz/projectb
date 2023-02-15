@@ -27,7 +27,7 @@ dependencies:
   path_provider: ^2.0.1
   flutter_barcode_scanner: ^2.0.0
   qr_flutter: ^4.0.0
-  path: ^1.8.0
+  path:
   shared_preferences: ^2.0.5
   url_launcher:
   cupertino_icons: ^1.0.1

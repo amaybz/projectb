@@ -4,107 +4,95 @@ class PitData {
   int? id;
   bool? uploaded;
   String? txEvent;
-  String? idTeam;
+  int? idTeam;
   String? txScoutName;
   int? numWeight;
   int? numHeight;
   int? numWidth;
-  bool? flCargo;
-  bool? flIntakeGround;
-  bool? flIntakeHigh;
-  bool? flIntakeBounce;
-  bool? flIntakeSort;
-  int? numStorage;
-  String? txShooting;
-  bool? flTargetLow;
-  bool? flTargetUpper;
-  bool? flTargetTerminal;
-  bool? flClimb;
-  String? idClimbType;
-  int? numClimbHeight;
-  int? numClimbWidth;
-  bool? flClimbSecure;
-  String? idClimbGrab;
-  String? idClimbSpeed;
-  //bool flClimbTilt;
-  String? txClimb;
-  String? idClimbPos;
-  bool? flClimbMove;
-  //bool flClimbOther;
-  //int numClimbOther;
-  bool? flClimbTransition;
-  String? idTransition;
-  String? idTransitionSpeed;
-  bool? flHuman;
-  int? intHumanAccuracy;
-  //bool flPanel;
-  //bool flPanelBrake;
-  //bool flPanelRotation;
-  //bool flPanelPos;
-  //bool flPanelSensor;
-  //String txPanelSensor;
+  File? imgTeamUniform;
+  File? imgRobotFront;
+  File? imgRobotSide;
+  String? idDriveType;
+  int? intWheels;
+  String? txDriveNotes;
+  bool? flCone;
+  bool? flCube;
+  String? idObjectPreference;
+  bool? flObjectCatch;
+  bool? flObjectShelf;
+  bool? flObjectFloor;
+  bool? flObjectSide;
+  String? txObjectNotes;
+  bool? flNodeBottom;
+  bool? flNodeMid;
+  bool? flNodeHigh;
+  String? flNodeType;
+  String? txScoringNotes;
+  bool? flCharge;
+  bool? flChargeBalance;
+  String? idChargeBalanceType;
+  bool? flChargeAssist;
+  String? txChargeNotes;
   bool? flAuto;
   bool? flAutoLine;
-  bool? flAutoShoot;
-  bool? flAutoSort;
-  int? numAutoShoot;
-  int? numAutoLoad;
+  bool? flAutoScore;
+  int? numAutoScore;
+  bool? flAutoNodeBottom;
+  bool? flAutoNodeMid;
+  bool? flAutoNodeHigh;
+  bool? flAutoCharge;
+  bool? flAutoChargeBalance;
   String? txPitNotes;
   String? dtCreation;
   String? dtModified;
   String? txComputerName;
-  File? imgTeamUniform;
-  File? imgRobotFront;
-  File? imgRobotSide;
 
   PitData({
     this.id = 0,
     this.uploaded = false,
     this.txEvent,
-    this.idTeam,
-    this.txScoutName = "",
+    this.idTeam = 0,
+    this.txScoutName,
     this.numWeight = 0,
     this.numHeight = 0,
     this.numWidth = 0,
-    this.flCargo = false,
-    this.flIntakeGround = false,
-    this.flIntakeHigh = false,
-    this.flIntakeBounce = false,
-    this.flIntakeSort = false,
-    this.numStorage = 0,
-    this.txShooting,
-    this.flTargetLow = false,
-    this.flTargetUpper = false,
-    this.flTargetTerminal = false,
-    this.flClimb = false,
-    this.idClimbType,
-    this.numClimbHeight = 0,
-    this.numClimbWidth = 0,
-    this.flClimbSecure = false,
-    this.idClimbGrab,
-    this.idClimbSpeed,
-    //this.flClimbTilt = false,
-    this.txClimb,
-    this.idClimbPos,
-    this.flClimbMove = false,
-    this.flClimbTransition = false,
-    this.idTransition,
-    this.idTransitionSpeed,
+    this.imgTeamUniform,
+    this.imgRobotFront,
+    this.imgRobotSide,
+    this.idDriveType,
+    this.intWheels = 0,
+    this.txDriveNotes,
+    this.flCone = false,
+    this.flCube = false,
+    this.idObjectPreference,
+    this.flObjectCatch = false,
+    this.flObjectShelf = false,
+    this.flObjectFloor = false,
+    this.flObjectSide = false,
+    this.txObjectNotes,
+    this.flNodeBottom = false,
+    this.flNodeMid = false,
+    this.flNodeHigh = false,
+    this.flNodeType,
+    this.txScoringNotes,
+    this.flCharge = false,
+    this.flChargeBalance = false,
+    this.idChargeBalanceType,
+    this.flChargeAssist = false,
+    this.txChargeNotes,
     this.flAuto = false,
     this.flAutoLine = false,
-    this.flAutoShoot = false,
-    this.flAutoSort = false,
-    this.numAutoShoot = 0,
-    this.numAutoLoad = 0,
-    this.flHuman = false,
-    this.intHumanAccuracy = 0,
+    this.flAutoScore = false,
+    this.numAutoScore = 0,
+    this.flAutoNodeBottom = false,
+    this.flAutoNodeMid = false,
+    this.flAutoNodeHigh = false,
+    this.flAutoCharge = false,
+    this.flAutoChargeBalance = false,
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,
     this.txComputerName,
-    this.imgRobotFront,
-    this.imgRobotSide,
-    this.imgTeamUniform,
   });
 
   Map<String, dynamic> toLocalDB() {
@@ -130,43 +118,43 @@ class PitData {
       'numWeight': numWeight,
       'numHeight': numHeight,
       'numWidth': numWidth,
-      'flCargo': flCargo.toString(),
-      'flIntakeGround': flIntakeGround.toString(),
-      'flIntakeHigh': flIntakeHigh.toString(),
-      'flIntakeBounce': flIntakeBounce.toString(),
-      'flIntakeSort': flIntakeSort.toString(),
-      'numStorage': numStorage,
-      'txShooting': txShooting,
-      'flTargetLow': flTargetLow.toString(),
-      'flTargetUpper': flTargetUpper.toString(),
-      'flTargetTerminal': flTargetTerminal.toString(),
-      'flClimb': flClimb.toString(),
-      'idClimbType': idClimbType,
-      'numClimbHeight': numClimbHeight,
-      'flClimbSecure': flClimbSecure.toString(),
-      'idClimbGrab': idClimbGrab,
-      'idClimbSpeed': idClimbSpeed,
-      'txClimb': txClimb,
-      'idClimbPos': idClimbPos,
-      'flClimbMove': flClimbMove.toString(),
-      'flClimbTransition': flClimbTransition,
-      'idTransition': idTransition,
-      'idTransitionSpeed': idTransitionSpeed,
-      'flAuto': flAuto.toString(),
-      'flAutoLine': flAutoLine.toString(),
-      'flAutoShoot': flAutoShoot.toString(),
-      'numAutoShoot': numAutoShoot,
-      'numAutoLoad': numAutoLoad,
-      'flAutoSort': flAutoSort.toString(),
-      'flHuman': flHuman.toString(),
-      'intHumanAccuracy': intHumanAccuracy,
-      'txPitNotes': txPitNotes,
-      'dtCreation': dtCreation.toString(),
-      'dtModified': dtModified.toString(),
-      'txComputerName': txComputerName,
+      'imgTeamUniform': fileImgTeamUniform,
       'imgRobotFront': fileRobotFront,
       'imgRobotSide': fileImgRobotSide,
-      'imgTeamUniform': fileImgTeamUniform,
+      'idDriveType': idDriveType,
+      'intWheels': intWheels,
+      'txDriveNotes': txDriveNotes,
+      'flCone': flCone.toString(),
+      'flCube': flCube.toString(),
+      'idObjectPreference': idObjectPreference,
+      'flObjectCatch': flObjectCatch.toString(),
+      'flObjectShelf': flObjectShelf.toString(),
+      'flObjectFloor': flObjectFloor.toString(),
+      'flObjectSide': flObjectSide.toString(),
+      'txObjectNotes': txObjectNotes,
+      'flNodeBottom': flNodeBottom.toString(),
+      'flNodeMid': flNodeMid.toString(),
+      'flNodeHigh': flNodeHigh.toString(),
+      'flNodeType': flNodeType,
+      'txScoringNotes': txScoringNotes,
+      'flCharge': flCharge.toString(),
+      'flChargeBalance': flChargeBalance.toString(),
+      'idChargeBalanceType': idChargeBalanceType,
+      'flChargeAssist': flChargeAssist.toString(),
+      'txChargeNotes': txChargeNotes,
+      'flAuto': flAuto.toString(),
+      'flAutoLine': flAutoLine.toString(),
+      'flAutoScore': flAutoScore.toString(),
+      'numAutoScore': numAutoScore,
+      'flAutoNodeBottom': flAutoNodeBottom.toString(),
+      'flAutoNodeMid': flAutoNodeMid.toString(),
+      'flAutoNodeHigh': flAutoNodeHigh.toString(),
+      'flAutoCharge': flAutoCharge.toString(),
+      'flAutoChargeBalance': flAutoChargeBalance.toString(),
+      'txPitNotes': txPitNotes,
+      'dtCreation': dtCreation,
+      'dtModified': dtModified,
+      'txComputerName': txComputerName,
     };
   }
 
@@ -174,48 +162,41 @@ class PitData {
     this.id = map['id'];
     this.uploaded = map['uploaded'].toString().toLowerCase() == 'true';
     this.txEvent = map['txEvent'];
-    this.idTeam = map['idTeam'].toString();
+    this.idTeam = map['idTeam'];
     this.txScoutName = map['txScoutName'];
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
     this.numWidth = map['numWidth'];
-    this.flCargo = map['flCargo'].toString().toLowerCase() == 'true';
-    this.flIntakeGround =
-        map['flIntakeGround'].toString().toLowerCase() == 'true';
-    this.flIntakeHigh = map['flIntakeHigh'].toString().toLowerCase() == 'true';
-    this.flIntakeBounce =
-        map['flIntakeBounce'].toString().toLowerCase() == 'true';
-    this.flIntakeSort = map['flIntakeSort'].toString().toLowerCase() == 'true';
-    this.numStorage = map['numStorage'];
-    this.txShooting = map['txShooting'];
-    this.flTargetLow = map['flTargetLow'].toString().toLowerCase() == 'true';
-    this.flTargetUpper =
-        map['flTargetUpper'].toString().toLowerCase() == 'true';
-    this.flTargetTerminal =
-        map['flTargetTerminal'].toString().toLowerCase() == 'true';
-    this.flClimb = map['flClimb'].toString().toLowerCase() == 'true';
-    this.idClimbType = map['idClimbType'];
-    this.numClimbHeight = map['numClimbHeight'];
-    this.flClimbSecure =
-        map['flClimbSecure'].toString().toLowerCase() == 'true';
-    this.idClimbGrab = map['idClimbGrab'];
-    this.idClimbSpeed = map['idClimbSpeed'];
-    this.txClimb = map['txClimb'];
-    this.idClimbPos = map['idClimbPos'];
-
-    this.flClimbMove = map['flClimbMove'].toString().toLowerCase() == 'true';
-    this.flClimbTransition =
-        map['flClimbTransition'].toString().toLowerCase() == 'true';
-    this.idTransition = map['idTransition'];
-    this.idTransitionSpeed = map['idTransitionSpeed'];
+    this.idDriveType = map['idDriveType'];
+    this.intWheels = map['intWheels'];
+    this.txDriveNotes = map['txDriveNotes'];
+    this.flCone = map['flCone'].toString().toLowerCase() == 'true';
+    this.flCube = map['flCube'].toString().toLowerCase() == 'true';
+    this.idObjectPreference = map['idObjectPreference'];
+    this.flObjectCatch = map['flObjectCatch'].toString().toLowerCase() == 'true';
+    this.flObjectShelf = map['flObjectShelf'].toString().toLowerCase() == 'true';
+    this.flObjectFloor = map['flObjectFloor'].toString().toLowerCase() == 'true';
+    this.flObjectSide = map['flObjectSide'].toString().toLowerCase() == 'true';
+    this.txObjectNotes = map['txObjectNotes'];
+    this.flNodeBottom = map['flNodeBottom'].toString().toLowerCase() == 'true';
+    this.flNodeMid = map['flNodeMid'].toString().toLowerCase() == 'true';
+    this.flNodeHigh = map['flNodeHigh'].toString().toLowerCase() == 'true';
+    this.flNodeType = map['flNodeType'];
+    this.txScoringNotes = map['txScoringNotes'];
+    this.flCharge = map['flCharge'].toString().toLowerCase() == 'true';
+    this.flChargeBalance = map['flChargeBalance'].toString().toLowerCase() == 'true';
+    this.idChargeBalanceType = map['idChargeBalanceType'];
+    this.flChargeAssist = map['flChargeAssist'].toString().toLowerCase() == 'true';
+    this.txChargeNotes = map['txChargeNotes'];
     this.flAuto = map['flAuto'].toString().toLowerCase() == 'true';
     this.flAutoLine = map['flAutoLine'].toString().toLowerCase() == 'true';
-    this.flAutoShoot = map['flAutoShoot'].toString().toLowerCase() == 'true';
-    this.flAutoSort = map['flAutoSort'].toString().toLowerCase() == 'true';
-    this.numAutoShoot = map['numAutoShoot'];
-    this.numAutoLoad = map['numAutoLoad'];
-    this.flHuman = map['flHuman'].toString().toLowerCase() == 'true';
-    this.intHumanAccuracy = map['intHumanAccuracy'];
+    this.flAutoScore = map['flAutoScore'].toString().toLowerCase() == 'true';
+    this.numAutoScore = map['numAutoScore'];
+    this.flAutoNodeBottom = map['flAutoNodeBottom'].toString().toLowerCase() == 'true';
+    this.flAutoNodeMid = map['flAutoNodeMid'].toString().toLowerCase() == 'true';
+    this.flAutoNodeHigh = map['flAutoNodeHigh'].toString().toLowerCase() == 'true';
+    this.flAutoCharge = map['flAutoCharge'].toString().toLowerCase() == 'true';
+    this.flAutoChargeBalance = map['flAutoChargeBalance'].toString().toLowerCase() == 'true';
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
@@ -253,36 +234,36 @@ class PitData {
     data['numWeight'] = this.numWeight;
     data['numHeight'] = this.numHeight;
     data['numWidth'] = this.numWidth;
-    data['flCargo'] = this.flCargo;
-    data['flIntakeGround'] = this.flIntakeGround;
-    data['flIntakeHigh'] = this.flIntakeHigh;
-    data['flIntakeBounce'] = this.flIntakeBounce;
-    data['flIntakeSort'] = this.flIntakeSort;
-    data['numStorage'] = this.numStorage;
-    data['txShooting'] = this.txShooting;
-    data['flTargetLow'] = this.flTargetLow;
-    data['flTargetUpper'] = this.flTargetUpper;
-    data['flTargetTerminal'] = this.flTargetTerminal;
-    data['flClimb'] = this.flClimb;
-    data['idClimbType'] = this.idClimbType;
-    data['numClimbHeight'] = this.numClimbHeight;
-    data['flClimbSecure'] = this.flClimbSecure;
-    data['idClimbGrab'] = this.idClimbGrab;
-    data['idClimbSpeed'] = this.idClimbSpeed;
-    data['txClimb'] = this.txClimb;
-    data['idClimbPos'] = this.idClimbPos;
-    data['flClimbMove'] = this.flClimbMove;
-    data['flClimbTransition'] = this.flClimbTransition;
-    data['idTransition'] = this.idTransition;
-    data['idTransitionSpeed'] = this.idTransitionSpeed;
+    data['idDriveType'] = this.idDriveType;
+    data['intWheels'] = this.intWheels;
+    data['txDriveNotes'] = this.txDriveNotes;
+    data['flCone'] = this.flCone;
+    data['flCube'] = this.flCube;
+    data['idObjectPreference'] = this.idObjectPreference;
+    data['flObjectCatch'] = this.flObjectCatch;
+    data['flObjectShelf'] = this.flObjectShelf;
+    data['flObjectFloor'] = this.flObjectFloor;
+    data['flObjectSide'] = this.flObjectSide;
+    data['txObjectNotes'] = this.txObjectNotes;
+    data['flNodeBottom'] = this.flNodeBottom;
+    data['flNodeMid'] = this.flNodeMid;
+    data['flNodeHigh'] = this.flNodeHigh;
+    data['flNodeType'] = this.flNodeType;
+    data['txScoringNotes'] = this.txScoringNotes;
+    data['flCharge'] = this.flCharge;
+    data['flChargeBalance'] = this.flChargeBalance;
+    data['idChargeBalanceType'] = this.idChargeBalanceType;
+    data['flChargeAssist'] = this.flChargeAssist;
+    data['txChargeNotes'] = this.txChargeNotes;
     data['flAuto'] = this.flAuto;
     data['flAutoLine'] = this.flAutoLine;
-    data['flAutoShoot'] = this.flAutoShoot;
-    data['numAutoShoot'] = this.numAutoShoot;
-    data['numAutoLoad'] = this.numAutoLoad;
-    data['flAutoSort'] = this.flAutoSort;
-    data['flHuman'] = this.flHuman;
-    data['intHumanAccuracy'] = this.intHumanAccuracy;
+    data['flAutoScore'] = this.flAutoScore;
+    data['numAutoScore'] = this.numAutoScore;
+    data['flAutoNodeBottom'] = this.flAutoNodeBottom;
+    data['flAutoNodeMid'] = this.flAutoNodeMid;
+    data['flAutoNodeHigh'] = this.flAutoNodeHigh;
+    data['flAutoCharge'] = this.flAutoCharge;
+    data['flAutoChargeBalance'] = this.flAutoChargeBalance;
     data['txPitNotes'] = this.txPitNotes;
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
@@ -302,36 +283,36 @@ class PitData {
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
     this.numWidth = map['numWidth'];
-    this.flCargo = map['flCargo'];
-    this.flIntakeGround = map['flIntakeGround'];
-    this.flIntakeHigh = map['flIntakeHigh'];
-    this.flIntakeBounce = map['flIntakeBounce'];
-    this.flIntakeSort = map['flIntakeSort'];
-    this.numStorage = map['numStorage'];
-    this.txShooting = map['txShooting'];
-    this.flTargetLow = map['flTargetLow'];
-    this.flTargetUpper = map['flTargetUpper'];
-    this.flTargetTerminal = map['flTargetTerminal'];
-    this.flClimb = map['flClimb'];
-    this.idClimbType = map['idClimbType'];
-    this.numClimbHeight = map['numClimbHeight'];
-    this.flClimbSecure = map['flClimbSecure'];
-    this.idClimbGrab = map['idClimbGrab'];
-    this.idClimbSpeed = map['idClimbSpeed'];
-    this.txClimb = map['txClimb'];
-    this.idClimbPos = map['idClimbPos'];
-    this.flClimbMove = map['flClimbMove'];
-    this.flClimbTransition = map['flClimbTransition'];
-    this.idTransition = map['idTransition'];
-    this.idTransitionSpeed = map['idTransitionSpeed'];
+    this.idDriveType = map['idDriveType'];
+    this.intWheels = map['intWheels'];
+    this.txDriveNotes = map['txDriveNotes'];
+    this.flCone = map['flCone'];
+    this.flCube = map['flCube'];
+    this.idObjectPreference = map['idObjectPreference'];
+    this.flObjectCatch = map['flObjectCatch'];
+    this.flObjectShelf = map['flObjectShelf'];
+    this.flObjectFloor = map['flObjectFloor'];
+    this.flObjectSide = map['flObjectSide'];
+    this.txObjectNotes = map['txObjectNotes'];
+    this.flNodeBottom = map['flNodeBottom'];
+    this.flNodeMid = map['flNodeMid'];
+    this.flNodeHigh = map['flNodeHigh'];
+    this.flNodeType = map['flNodeType'];
+    this.txScoringNotes = map['txScoringNotes'];
+    this.flCharge = map['flCharge'];
+    this.flChargeBalance = map['flChargeBalance'];
+    this.idChargeBalanceType = map['idChargeBalanceType'];
+    this.flChargeAssist = map['flChargeAssist'];
+    this.txChargeNotes = map['txChargeNotes'];
     this.flAuto = map['flAuto'];
     this.flAutoLine = map['flAutoLine'];
-    this.flAutoShoot = map['flAutoShoot'];
-    this.numAutoShoot = map['numAutoShoot'];
-    this.flAutoSort = map['flAutoSort'];
-    this.numAutoLoad = map['numAutoLoad'];
-    this.flHuman = map['flHuman'];
-    this.intHumanAccuracy = map['intHumanAccuracy'];
+    this.flAutoScore = map['flAutoScore'];
+    this.numAutoScore = map['numAutoScore'];
+    this.flAutoNodeBottom = map['flAutoNodeBottom'];
+    this.flAutoNodeMid = map['flAutoNodeMid'];
+    this.flAutoNodeHigh = map['flAutoNodeHigh'];
+    this.flAutoCharge = map['flAutoCharge'];
+    this.flAutoChargeBalance = map['flAutoChargeBalance'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];

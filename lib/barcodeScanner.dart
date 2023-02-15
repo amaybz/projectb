@@ -6,7 +6,8 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/localdb.dart';
-import 'package:projectb/widget_ShowAlertDialog.dart';
+import 'package:projectb/widgets/widget_ShowAlertDialog.dart';
+
 
 class QRBarcodeScanner extends StatefulWidget {
   const QRBarcodeScanner({Key? key}) : super(key: key);
@@ -69,13 +70,13 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
       var jsonString = json.decode(barcodeScanRes);
       matchScoutingData = MatchScoutingData.fromMap(jsonString);
       print("matchScoutingData ID: " + matchScoutingData.id.toString());
-      print("matchScoutingData Team: " + matchScoutingData.idTeam!);
+      print("matchScoutingData Team: " + matchScoutingData.idTeam.toString());
       matchScoutingData.id = null;
       if (matchScoutingData.numMatch != null) {
         _status = ((await localDB.insertScoringData(matchScoutingData))! > 0)
             ? "Record Saved"
             : "Failed to Save Record";
-        barcodeScanRes = matchScoutingData.idTeam!;
+        barcodeScanRes = matchScoutingData.idTeam.toString();
       } else {
         barcodeScanRes = "Invalid Data";
         _status = "Incorrect Format";

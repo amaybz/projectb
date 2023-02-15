@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
 import 'package:projectb/sharedprefs.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_performace.dart';
-import 'package:projectb/widget_dropdown_indexed.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_grids.dart';
+
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 
 class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
@@ -63,8 +64,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
 
   updateValues() async {
     setState(() {
-      intCellAttempts = widget.matchScoutingData.teleNumCargoHighAttempt!;
-      intCellSuccess = widget.matchScoutingData.teleNumCargoHighSuccess!;
+
     });
   }
 
@@ -135,73 +135,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
     }
 
     return Column(children: [
-      PerformanceWidget(
-        styleCounterButtonHeight: widget.styleCounterButtonHeight,
-        styleCounterButtonWidth: widget.styleCounterButtonWidth,
-        numCargoHighAttempt: widget.matchScoutingData.teleNumCargoHighAttempt,
-        numCargoHighSuccess: widget.matchScoutingData.teleNumCargoHighSuccess,
-        numCargoLowAttempt: widget.matchScoutingData.teleNumCargoLowAttempt,
-        numCargoLowSuccess: widget.matchScoutingData.teleNumCargoLowSuccess,
-        onChange: (MatchScoutingData newData) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoHighAttempt =
-                newData.teleNumCargoHighAttempt;
-            widget.matchScoutingData.teleNumCargoHighSuccess =
-                newData.teleNumCargoHighSuccess;
-            widget.onChange!(widget.matchScoutingData);
-          });
-        },
-        numCargoTerminalAttempt:
-            widget.matchScoutingData.teleNumCargoTerminalAttempt,
-        numCargoTerminalSuccess:
-            widget.matchScoutingData.teleNumCargoTerminalSuccess,
-        onNumCargoHighAttemptChanged: (int value) {
-          setState(() {
-            if (value < 0) {
-              value = 0;
-            }
-            widget.matchScoutingData.teleNumCargoHighAttempt = value;
-          });
-        },
-        onNumCargoHighSuccessChanged: (int value) {
-          setState(() {
-            if (value < 0) {
-              value = 0;
-            }
-            widget.matchScoutingData.teleNumCargoHighSuccess = value;
-          });
-        },
-        onNumCargoLowAttemptChanged: (int value) {
-          setState(() {
-            if (value < 0) {
-              value = 0;
-            }
-            widget.matchScoutingData.teleNumCargoLowAttempt = value;
-          });
-        },
-        onNumCargoLowSuccessChanged: (int value) {
-          setState(() {
-            widget.matchScoutingData.teleNumCargoLowSuccess = value;
-          });
-        },
-        onNumCargoTerminalAttemptChanged: (int value) {
-          setState(() {
-            if (value < 0) {
-              value = 0;
-            }
-            widget.matchScoutingData.teleNumCargoTerminalAttempt = value;
-          });
-        },
-        onNumCargoTerminalSuccessChanged: (int value) {
-          setState(() {
-            if (value < 0) {
-              value = 0;
-            }
-            widget.matchScoutingData.teleNumCargoTerminalSuccess = value;
-          });
-        },
-        matchScoutingData: widget.matchScoutingData,
-      ),
       FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(

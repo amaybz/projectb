@@ -8,7 +8,7 @@ import 'package:projectb/class/class_macthscoutingdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 39;
+  static final _databaseVersion = 41;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -41,6 +41,7 @@ class LocalDB {
       ")";
   final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
       "id INTEGER PRIMARY KEY, "
+      'flUploaded TEXT,'
       'txEvent TEXT,'
       'txDeviceName TEXT,'
       'numMatch INTEGER,'
@@ -48,12 +49,12 @@ class LocalDB {
       'idDriveStation TEXT,'
       'idTeam TEXT,'
       'txScoutName TEXT,'
-      'idStartFacing TEXT,'
       'idStartPosition TEXT,'
-      'numStartCargo TEXT,'
       'flRed TEXT,'
       'flYellow TEXT,'
       'flCrash TEXT,'
+      'flCoop TEXT,'
+      'flCoopAll TEXT,'
       'flRanking1 TEXT,'
       'flRanking2 TEXT,'
       'autoFlStart TEXT,'
@@ -63,56 +64,50 @@ class LocalDB {
       'autoFlRobotContact TEXT,'
       'autoFlLoseStartObject TEXT,'
       'autoFlCrossOver TEXT,'
-      'autoNumCargoHighAttempt INTEGER,'
-      'autoNumCargoHighSuccess INTEGER,'
-      'autoNumCargoLowAttempt INTEGER,'
-      'autoNumCargoLowSuccess INTEGER,'
-      'autoNumCargoTerminalAttempt INTEGER,'
-      'autoNumCargoTerminalSuccess INTEGER,'
-      'autoNumCargoHumanAttempt INTEGER,'
-      'autoNumCargoHumanHighSuccess INTEGER,'
-      'autoNumCargoHumanLowSuccess INTEGER,'
-      'autoNumCargoHumanField INTEGER,'
-      'autoNumCargoHumanRobot INTEGER,'
-      'teleFlHanger TEXT,'
-      'teleNumClimbTime TEXT,'
-      'teleIdClimb TEXT,'
-      'teleIdClimbGrabTime TEXT,'
-      'teleIdClimbTime TEXT,'
-      'teleIdClimbOutcome TEXT,'
-      'teleIdClimbPos TEXT,'
+      'autoNumHighConeSuccess INTEGER,'
+      'autoNumMidConeSuccess INTEGER,'
+      'autoNumLowConeSuccess INTEGER,'
+      'autoNumHighCubeSuccess INTEGER,'
+      'autoNumMidCubeSuccess INTEGER,'
+      'autoNumLowCubeSuccess INTEGER,'
+      'autoNumCubeAttempt INTEGER,'
+      'autoNumConeAttempt INTEGER,'
+      'autoIdChargeAttempt TEXT,'
+      'autoIdChargeOutcome TEXT,'
+      'teleFlPark TEXT,'
+      'teleIdChargeAttempt TEXT,'
+      'teleIdChargeOutcome TEXT,'
       'teleFlClimbFall TEXT,'
-      'flClimbTransition TEXT,'
-      'idTransitionSpeed TEXT,'
-      'teleNumCargoHighAttempt INTEGER,'
-      'teleNumCargoHighSuccess INTEGER,'
-      'teleNumCargoLowAttempt INTEGER,'
-      'teleNumCargoLowSuccess INTEGER,'
-      'teleNumCargoTerminalAttempt INTEGER,'
-      'teleNumCargoTerminalSuccess INTEGER,'
-      'commFlAssist TEXT,'
+      'teleIdChargeBalanceSpeed TEXT,'
+      'teleFlChargeAssist TEXT,'
+      'teleNumChargeAssist INTEGER,'
+      'teleNumHighConeSuccess INTEGER,'
+      'teleNumMidConeSuccess INTEGER,'
+      'teleNumLowConeSuccess INTEGER,'
+      'teleNumHighCubeSuccess INTEGER,'
+      'teleNumMidCubeSuccess INTEGER,'
+      'teleNumLowCubeSuccess INTEGER,'
+      'teleNumCubeAttempt INTEGER,'
+      'teleNumConeAttempt INTEGER,'
       'commIdDriveRating TEXT,'
       'commIdDefenceRating TEXT,'
+      'commIdDriveTraction TEXT,'
       'commFlStrategy TEXT,'
-      'commFlOwnThing TEXT,'
+      'commFlAssist TEXT,'
       'commFlRecovery TEXT,'
+      'commFlFailure TEXT,'
       'commFlWarning TEXT,'
       'commFlHighlight TEXT,'
-      'commFlShotFar TEXT,'
-      'commFlShotMid TEXT,'
-      'commFlShotNear TEXT,'
-      'commFlShotWall TEXT,'
-      'commFlShotHub TEXT,'
       'commFlIntakeGround TEXT,'
       'commFlIntakeHigh TEXT,'
-      'commFlIntakeRobot TEXT,'
+      'commFlIntakeStation TEXT,'
       'commTxNotes TEXT'
       ")";
   final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
       'id INTEGER PRIMARY KEY, '
       'uploaded TEXT,'
       'txEvent TEXT,'
-      'idTeam TEXT,'
+      'idTeam INTEGER,'
       'txScoutName TEXT,'
       'numWeight INTEGER,'
       'numHeight INTEGER,'
@@ -120,37 +115,36 @@ class LocalDB {
       'imgTeamUniform TEXT,'
       'imgRobotFront TEXT,'
       'imgRobotSide TEXT,'
-      'flCargo TEXT,'
-      'flIntakeGround TEXT,'
-      'flIntakeHigh TEXT,'
-      'flIntakeBounce TEXT,'
-      'flIntakeSort TEXT,'
-      'numStorage INTEGER,'
-      'txShooting TEXT,'
-      'flTargetLow TEXT,'
-      'flTargetUpper TEXT,'
-      'flTargetTerminal TEXT,'
-      'flClimb TEXT,'
-      'idClimbType TEXT,'
-      'numClimbHeight INTEGER,'
-      'numClimbWidth INTEGER,'
-      'flClimbSecure TEXT,'
-      'idClimbGrab TEXT,'
-      'idClimbSpeed TEXT,'
-      'idClimbPos TEXT,'
-      'flClimbMove TEXT,'
-      'txClimb TEXT,'
-      'flClimbTransition TEXT,'
-      'idTransition TEXT,'
-      'idTransitionSpeed TEXT,'
-      'flHuman TEXT,'
-      'intHumanAccuracy INTEGER,'
+      'idDriveType TEXT,'
+      'intWheels INTEGER,'
+      'txDriveNotes TEXT,'
+      'flCone TEXT,'
+      'flCube TEXT,'
+      'idObjectPreference TEXT,'
+      'flObjectCatch TEXT,'
+      'flObjectShelf TEXT,'
+      'flObjectFloor TEXT,'
+      'flObjectSide TEXT,'
+      'txObjectNotes TEXT,'
+      'flNodeBottom TEXT,'
+      'flNodeMid TEXT,'
+      'flNodeHigh TEXT,'
+      'flNodeType TEXT,'
+      'txScoringNotes TEXT,'
+      'flCharge TEXT,'
+      'flChargeBalance TEXT,'
+      'idChargeBalanceType TEXT,'
+      'flChargeAssist TEXT,'
+      'txChargeNotes TEXT,'
       'flAuto TEXT,'
       'flAutoLine TEXT,'
-      'flAutoShoot TEXT,'
-      'numAutoShoot INTEGER,'
-      'numAutoLoad INTEGER,'
-      'flAutoSort TEXT,'
+      'flAutoScore TEXT,'
+      'numAutoScore INTEGER,'
+      'flAutoNodeBottom TEXT,'
+      'flAutoNodeMid TEXT,'
+      'flAutoNodeHigh TEXT,'
+      'flAutoCharge TEXT,'
+      'flAutoChargeBalance TEXT,'
       'txPitNotes TEXT,'
       'dtCreation TEXT,'
       'dtModified TEXT,'
@@ -324,7 +318,7 @@ class LocalDB {
       return MatchScoutingData.fromLocalDB(maps.first);
     }
     MatchScoutingData matchScoutingData = MatchScoutingData();
-    matchScoutingData.idTeam = "0";
+    matchScoutingData.idTeam = 0;
     return matchScoutingData;
   }
 
@@ -336,7 +330,7 @@ class LocalDB {
       return PitData.fromLocalDB(maps.first);
     }
     PitData pitData = PitData();
-    pitData.idTeam = "0";
+    pitData.idTeam = 0;
     return pitData;
   }
 
@@ -388,7 +382,7 @@ class LocalDB {
         key: maps[i]['key'],
         name: maps[i]['name'],
         nickName: maps[i]['nickName'],
-        teamNumber: maps[i]['teamNumber'],
+        teamNumber: int.parse(maps[i]['teamNumber']),
       );
     });
   }
@@ -441,7 +435,7 @@ class LocalDB {
 class LocalTeam {
   String? key;
   String? name;
-  String? teamNumber;
+  int? teamNumber;
   String? nickName;
 
   LocalTeam({

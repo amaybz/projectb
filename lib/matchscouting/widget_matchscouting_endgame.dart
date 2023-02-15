@@ -35,10 +35,9 @@ class _EndGameState extends State<EndGame> {
 
   List<DropdownMenuItem<String>> ddsPosition = [
     DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Low")),
-    DropdownMenuItem(value: "3", child: Text("Middle")),
-    DropdownMenuItem(value: "4", child: Text("High")),
-    DropdownMenuItem(value: "5", child: Text("Traversal")),
+    DropdownMenuItem(value: "2", child: Text("Failed")),
+    DropdownMenuItem(value: "3", child: Text("Docked")),
+    DropdownMenuItem(value: "4", child: Text("Engaged")),
   ];
 
   List<DropdownMenuItem<String>> listSuccessFailNA = [
@@ -56,14 +55,14 @@ class _EndGameState extends State<EndGame> {
         child: Column(children: <Widget>[
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              "Hangar:",
+              "Park:",
               style: TextStyle(fontSize: widget.styleFontSize),
             ),
             Switch(
-                value: widget.matchScoutingData.teleFlHanger!,
+                value: widget.matchScoutingData.teleFlPark!,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleFlHanger = item;
+                    widget.matchScoutingData.teleFlPark = item;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                 }),
@@ -73,130 +72,23 @@ class _EndGameState extends State<EndGame> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Start Climb Attempt?:",
+                "Attempt to Climb Charge?:",
                 style: TextStyle(fontSize: widget.styleFontSize),
               ),
               DropdownButton(
-                value: widget.matchScoutingData.teleIdClimb == null
+                value: widget.matchScoutingData.teleIdChargeAttempt == null
                     ? null
-                    : widget.matchScoutingData.teleIdClimb,
+                    : widget.matchScoutingData.teleIdChargeAttempt,
                 items: listSuccessFailNA,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdClimb = item as String?;
+                    widget.matchScoutingData.teleIdChargeAttempt = item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                   print(
-                      "teleIdClimb: " + widget.matchScoutingData.teleIdClimb!);
+                      "teleIdClimb: " + widget.matchScoutingData.teleIdChargeAttempt!);
                 },
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Time To Grip:",
-                style: TextStyle(fontSize: widget.styleFontSize),
-              ),
-              DropdownButton(
-                value: widget.matchScoutingData.teleIdClimbGrabTime == null
-                    ? null
-                    : widget.matchScoutingData.teleIdClimbGrabTime,
-                items: ddsSpeed,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.teleIdClimbGrabTime =
-                        item as String?;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                  print("idClimbType: " +
-                      widget.matchScoutingData.teleIdClimbGrabTime!);
-                },
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Time (Grip to Climb):",
-                style: TextStyle(fontSize: widget.styleFontSize),
-              ),
-              DropdownButton(
-                value: widget.matchScoutingData.teleIdClimbTime == null
-                    ? null
-                    : widget.matchScoutingData.teleIdClimbTime,
-                items: ddsSpeed,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.teleIdClimbTime = item as String?;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                  print("idClimbSpeed: " +
-                      widget.matchScoutingData.teleIdClimbTime!);
-                },
-              ),
-            ],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Transition?:",
-                style: TextStyle(fontSize: widget.styleFontSize)),
-            Switch(
-                value: widget.matchScoutingData.flClimbTransition!,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.flClimbTransition = item;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                }),
-          ]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("Time (Transition):",
-                  style: TextStyle(fontSize: widget.styleFontSize)),
-              DropdownButton(
-                value: widget.matchScoutingData.idTransitionSpeed == null
-                    ? null
-                    : widget.matchScoutingData.idTransitionSpeed,
-                items: ddsSpeed,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.idTransitionSpeed =
-                        item as String?;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                  print("idTransitionSpeed: " +
-                      widget.matchScoutingData.idTransitionSpeed!);
-                },
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Final Position:",
-                style: TextStyle(fontSize: widget.styleFontSize),
-              ),
-              DropdownButton(
-                  value: widget.matchScoutingData.teleIdClimbPos == null
-                      ? null
-                      : widget.matchScoutingData.teleIdClimbPos,
-                  items: ddsPosition,
-                  onChanged: (item) {
-                    setState(() {
-                      widget.matchScoutingData.teleIdClimbPos = item as String?;
-                      widget.onChanged!(widget.matchScoutingData);
-                    });
-                    print("teleIdClimbPos: " +
-                        widget.matchScoutingData.teleIdClimbPos!);
-                  }),
             ],
           ),
           Row(
@@ -208,39 +100,70 @@ class _EndGameState extends State<EndGame> {
                 style: TextStyle(fontSize: widget.styleFontSize),
               ),
               DropdownButton(
-                  value: widget.matchScoutingData.teleIdClimbOutcome == null
-                      ? null
-                      : widget.matchScoutingData.teleIdClimbOutcome,
-                  items: listSuccessFailNA,
-                  onChanged: (item) {
-                    setState(() {
-                      widget.matchScoutingData.teleIdClimbOutcome =
-                          item as String?;
-                      widget.onChanged!(widget.matchScoutingData);
-                    });
-                    print("teleIdClimbPos: " +
-                        widget.matchScoutingData.teleIdClimbOutcome!);
-                  }),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Crash/Fall?:",
-                style: TextStyle(fontSize: widget.styleFontSize),
-              ),
-              Switch(
-                value: widget.matchScoutingData.teleFlClimbFall!,
-                onChanged: (bool value) {
+                value: widget.matchScoutingData.teleIdChargeOutcome == null
+                    ? null
+                    : widget.matchScoutingData.teleIdChargeOutcome,
+                items: ddsPosition,
+                onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleFlClimbFall = value;
+                    widget.matchScoutingData.teleIdChargeOutcome =
+                        item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
+                  print("idClimbType: " +
+                      widget.matchScoutingData.teleIdChargeOutcome!);
                 },
               ),
             ],
           ),
+
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("Fall?:",
+                style: TextStyle(fontSize: widget.styleFontSize)),
+            Switch(
+                value: widget.matchScoutingData.teleFlClimbFall!,
+                onChanged: (item) {
+                  setState(() {
+                    widget.matchScoutingData.teleFlClimbFall = item;
+                    widget.onChanged!(widget.matchScoutingData);
+                  });
+                }),
+          ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("Time (Balance):",
+                  style: TextStyle(fontSize: widget.styleFontSize)),
+              DropdownButton(
+                value: widget.matchScoutingData.teleIdChargeBalanceSpeed == null
+                    ? null
+                    : widget.matchScoutingData.teleIdChargeBalanceSpeed,
+                items: ddsSpeed,
+                onChanged: (item) {
+                  setState(() {
+                    widget.matchScoutingData.teleIdChargeBalanceSpeed =
+                        item as String?;
+                    widget.onChanged!(widget.matchScoutingData);
+                  });
+                  print("teleIdChargeBalanceSpeed: " +
+                      widget.matchScoutingData.teleIdChargeBalanceSpeed!);
+                },
+              ),
+            ],
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("Charge Assist?:",
+                style: TextStyle(fontSize: widget.styleFontSize)),
+            Switch(
+                value: widget.matchScoutingData.teleFlChargeAssist!,
+                onChanged: (item) {
+                  setState(() {
+                    widget.matchScoutingData.teleFlChargeAssist = item;
+                    widget.onChanged!(widget.matchScoutingData);
+                  });
+                }),
+          ]),
         ]),
       ),
     );

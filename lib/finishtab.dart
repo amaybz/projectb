@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/widget_loading.dart';
+import 'package:projectb/widgets/widget_loading.dart';
 
 class FinishTab extends StatefulWidget {
   const FinishTab({

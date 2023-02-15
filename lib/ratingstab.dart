@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/widget_headingmain.dart';
-import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/widgets/widget_dropdown_indexed.dart';
+import 'package:projectb/widgets/widget_headingmain.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(
@@ -25,7 +25,7 @@ class RatingsTab extends StatefulWidget {
       this.onHighlightTeamChanged,
       this.onWarningChanged,
       this.onCommentsChanged,
-      this.onChange})
+        required this.onChange})
       : super(key: key);
 
   final double styleFontSize;
@@ -82,7 +82,7 @@ class _RatingsTabState extends State<RatingsTab> {
   updateValues() {
     if (widget.matchScoutingData.commTxNotes != null) {
       setState(() {
-        _txtComments?.text = widget.matchScoutingData.commTxNotes!;
+        _txtComments?.text = widget.matchScoutingData.commTxNotes!.toString();
       });
     }
   }
@@ -203,23 +203,6 @@ class _RatingsTabState extends State<RatingsTab> {
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "No Teamwork:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
-                    ),
-                    Switch(
-                      value: widget.matchScoutingData.commFlOwnThing!,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.onNoTeamWorkChanged!(value);
-                        });
-                      },
-                    )
-                  ],
-                ),
               ]),
             ),
           ),
@@ -281,14 +264,15 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Intake from other Robot:",
+                      "Intake from Chute:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlIntakeRobot!,
+                      value: widget.matchScoutingData.commFlIntakeStation!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.onOtherRobotChanged!(value);
+                          widget.matchScoutingData.commFlIntakeStation = value;
+                          widget.onChange!(widget.matchScoutingData);
                         });
                       },
                     )
@@ -298,114 +282,6 @@ class _RatingsTabState extends State<RatingsTab> {
             ),
           ),
         ),
-        FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                child: Column(children: <Widget>[
-                  HeadingMain(
-                    styleFontSize: widget.styleFontSizeHeadings,
-                    headingText: "Shot Type",
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Hub Wall:",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
-                      Switch(
-                        value: widget.matchScoutingData.commFlShotHub!,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.matchScoutingData.commFlShotHub = value;
-                            widget.onChange!(widget.matchScoutingData);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Tarmac:",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
-                      Switch(
-                        value: widget.matchScoutingData.commFlShotNear!,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onShootingNearZoneChanged!(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Field Shot:",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
-                      Switch(
-                        value: widget.matchScoutingData.commFlShotMid!,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onShootingMidZoneChanged!(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Launchpad:",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
-                      Switch(
-                        value: widget.matchScoutingData.commFlShotWall!,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onShootingWallZoneChanged!(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Terminal:",
-                        style: TextStyle(fontSize: widget.styleFontSize),
-                      ),
-                      Switch(
-                        value: widget.matchScoutingData.commFlShotFar!,
-                        onChanged: (bool value) {
-                          setState(() {
-                            widget.onShootingFarZoneChanged!(value);
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ]),
-              ),
-            )),
         FractionallySizedBox(
             widthFactor: 0.99,
             child: Container(

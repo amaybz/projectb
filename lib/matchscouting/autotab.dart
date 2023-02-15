@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_performace.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_grids.dart';
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
@@ -14,30 +14,30 @@ class AutoTab extends StatefulWidget {
     this.onContactWithRobotChange,
     this.onCrossSectorChange,
     this.onFoulChange,
-    this.onAutoFlInnerChange,
-    this.onAutoFlLowerChange,
-    this.onAutoFlOuterChange,
-    this.onAutoNumCellAttemptChange,
+    this.onAutoNumMidConeSuccessChange,
+    this.onAutoNumLowConeSuccessChange,
+    this.onAutoNumHighConeSuccessChange,
+    this.onAutoNumCubeAttemptChange,
     this.onAutoNumCellSuccessChange,
     this.styleCounterButtonHeight = 25,
     this.styleCounterButtonWidth = 30,
     this.onChanged,
   }) : super(key: key);
 
-  final matchScoutingData;
+  final MatchScoutingData matchScoutingData;
   final double styleImgFieldMapWidth;
   final double styleImgFieldPerformanceWidth;
   final double styleCounterButtonHeight;
   final double styleCounterButtonWidth;
-  final ValueChanged<int>? onAutoNumCellAttemptChange;
+  final ValueChanged<int>? onAutoNumCubeAttemptChange;
   final ValueChanged<int>? onAutoNumCellSuccessChange;
   final ValueChanged<bool>? onLoseStartObjectChange;
   final ValueChanged<bool>? onContactWithRobotChange;
   final ValueChanged<bool>? onCrossSectorChange;
   final ValueChanged<bool>? onFoulChange;
-  final ValueChanged<bool>? onAutoFlOuterChange;
-  final ValueChanged<bool>? onAutoFlInnerChange;
-  final ValueChanged<bool>? onAutoFlLowerChange;
+  final ValueChanged<bool>? onAutoNumHighConeSuccessChange;
+  final ValueChanged<bool>? onAutoNumMidConeSuccessChange;
+  final ValueChanged<bool>? onAutoNumLowConeSuccessChange;
   final ValueChanged<MatchScoutingData>? onChanged;
 
   @override
@@ -214,7 +214,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Lose Cargo"),
                   ),
                   Switch(
-                    value: widget.matchScoutingData.autoFlLoseStartObject,
+                    value: widget.matchScoutingData.autoFlLoseStartObject!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.onLoseStartObjectChange!(value);
@@ -231,7 +231,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Hit Robot"),
                   ),
                   Switch(
-                      value: widget.matchScoutingData.autoFlRobotContact,
+                      value: widget.matchScoutingData.autoFlRobotContact!,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onContactWithRobotChange!(value);
@@ -247,7 +247,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Cross Sector"),
                   ),
                   Switch(
-                      value: widget.matchScoutingData.autoFlCrossOver,
+                      value: widget.matchScoutingData.autoFlCrossOver!,
                       onChanged: (bool value) {
                         setState(() {
                           widget.onCrossSectorChange!(value);
@@ -263,7 +263,7 @@ class _AutoTabState extends State<AutoTab> {
                     child: Text("Foul"),
                   ),
                   Switch(
-                    value: widget.matchScoutingData.autoFlFoul,
+                    value: widget.matchScoutingData.autoFlFoul!,
                     onChanged: (bool value) {
                       setState(() {
                         widget.onFoulChange!(value);
@@ -286,7 +286,7 @@ class _AutoTabState extends State<AutoTab> {
           },
           onExpanded: (value) {},
         ),
-        PerformanceWidget(
+        GridsWidget(
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
@@ -296,128 +296,90 @@ class _AutoTabState extends State<AutoTab> {
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          numCargoHighAttempt: widget.matchScoutingData.autoNumCargoHighAttempt,
-          numCargoHighSuccess: widget.matchScoutingData.autoNumCargoHighSuccess,
-          numCargoLowAttempt: widget.matchScoutingData.autoNumCargoLowAttempt,
-          numCargoLowSuccess: widget.matchScoutingData.autoNumCargoLowSuccess,
-          numCargoTerminalAttempt:
-              widget.matchScoutingData.autoNumCargoTerminalAttempt,
-          numCargoTerminalSuccess:
-              widget.matchScoutingData.autoNumCargoTerminalSuccess,
-          onNumCargoHighAttemptChanged: (int value) {
+          numConeAttempt: widget.matchScoutingData.autoNumConeAttempt,
+          numHighConeSuccess: widget.matchScoutingData.autoNumHighConeSuccess,
+          numCubeAttempt: widget.matchScoutingData.autoNumCubeAttempt,
+          numLowConeSuccess: widget.matchScoutingData.autoNumLowConeSuccess,
+          numMidConeSuccess:
+              widget.matchScoutingData.autoNumMidConeSuccess,
+          numHighCubeSuccess:
+              widget.matchScoutingData.autoNumHighCubeSuccess,
+          numMidCubeSuccess: widget.matchScoutingData.autoNumMidCubeSuccess,
+          numLowCubeSuccess: widget.matchScoutingData.autoNumLowCubeSuccess,
+          onNumHighCubeSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoHighAttempt = value;
+              widget.matchScoutingData.autoNumHighCubeSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumCargoHighSuccessChanged: (int value) {
+          onNumHighConeSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoHighSuccess = value;
+              widget.matchScoutingData.autoNumHighConeSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumCargoLowAttemptChanged: (int value) {
+          onNumCubeAttemptChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoLowAttempt = value;
+              widget.matchScoutingData.autoNumCubeAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumCargoLowSuccessChanged: (int value) {
+          onNumLowConeSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoLowSuccess = value;
+              widget.matchScoutingData.autoNumLowConeSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumCargoTerminalAttemptChanged: (int value) {
+          onNumConeAttemptChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoTerminalAttempt = value;
+              widget.matchScoutingData.autoNumConeAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumCargoTerminalSuccessChanged: (int value) {
+          onNumMidConeSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoTerminalSuccess = value;
+              widget.matchScoutingData.autoNumMidConeSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-        ),
-        HumanWidget(
-          styleCounterButtonHeight: widget.styleCounterButtonHeight,
-          styleCounterButtonWidth: widget.styleCounterButtonWidth,
-          autoNumCargoHumanAttempt:
-              widget.matchScoutingData.autoNumCargoHumanAttempt,
-          autoNumCargoHumanHighSuccess:
-              widget.matchScoutingData.autoNumCargoHumanHighSuccess,
-          autoNumCargoHumanLowSuccess:
-              widget.matchScoutingData.autoNumCargoHumanLowSuccess,
-          autoNumCargoHumanField:
-              widget.matchScoutingData.autoNumCargoHumanField,
-          autoNumCargoHumanRobot:
-              widget.matchScoutingData.autoNumCargoHumanRobot,
-          onAutoNumCargoHumanAttemptChanged: (int value) {
+          onNumMidCubeSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoHumanAttempt = value;
+              widget.matchScoutingData.autoNumMidCubeSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onAutoNumCargoHumanHighSuccessChanged: (int value) {
+          onNumLowCubeSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCargoHumanHighSuccess = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onAutoNumCargoHumanLowSuccessChanged: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCargoHumanLowSuccess = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onAutoNumCargoHumanFieldChanged: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCargoHumanField = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onAutoNumCargoHumanRobotChanged: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCargoHumanRobot = value;
+              widget.matchScoutingData.autoNumLowCubeSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
         ),
+
       ],
     );
   }

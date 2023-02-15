@@ -4,13 +4,13 @@ import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:projectb/class/eventmatches.dart';
 import 'package:projectb/localdb.dart';
-import 'package:projectb/pitscouting.dart';
+import 'package:projectb/pit/pitscouting.dart';
 import 'dart:async';
 import 'package:projectb/scoringdata.dart';
-import 'package:projectb/matchscouting.dart';
+import 'package:projectb/matchscouting/matchscouting.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
-import 'package:projectb/widget_loading.dart';
+import 'package:projectb/widgets/widget_loading.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
 import 'package:projectb/barcodeScanner.dart';
@@ -257,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
             key: team.key,
             name: team.name,
             nickName: team.nickname,
-            teamNumber: team.teamNumber.toString());
+            teamNumber: team.teamNumber);
         //print(insertTeam.teamNumber);
         localDB.insertLocalTeam(insertTeam);
       }
@@ -412,7 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
             key: team.key,
             name: team.name,
             nickName: team.nickname,
-            teamNumber: team.teamNumber.toString());
+            teamNumber: team.teamNumber);
         //print(insertTeam.teamNumber);
         localDB.insertLocalTeam(insertTeam);
       }

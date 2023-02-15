@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_pitdata.dart';
-import 'package:projectb/widget_headingmain.dart';
-import 'package:projectb/widget_row_heading.dart';
-import 'package:projectb/widget_counter.dart';
+import 'package:projectb/widgets/widget_headingmain.dart';
+import 'package:projectb/widgets/widget_counter.dart';
+
+import '../widgets/widget_row_heading.dart';
 
 class PitAuto extends StatefulWidget {
   PitAuto(
@@ -36,14 +37,7 @@ class _PitAutoState extends State<PitAuto> {
         widthFactor: 0.99,
         child: Container(
           margin: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
+
           child: Container(
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
@@ -73,14 +67,7 @@ class _PitAutoState extends State<PitAuto> {
         widthFactor: 0.99,
         child: Container(
           margin: const EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
+
           child: Container(
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
@@ -105,7 +92,7 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Leave Tarmac:",
+                    "Mobility:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -123,14 +110,59 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Colour Sort Cargo?:",
+                    "Score:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flAutoSort!,
+                    value: widget.pitData.flAutoScore!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flAutoSort = value;
+                        widget.pitData.flAutoScore = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text("#Objects Scored:"),
+                CounterWidget(
+                  title: "",
+                  value: widget.pitData.numAutoScore,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScore =
+                          widget.pitData.numAutoScore! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScore =
+                          widget.pitData.numAutoScore! - 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScore = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Score on Hybrid Node:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flAutoNodeBottom!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flAutoNodeBottom = value;
                         widget.onChanged!(widget.pitData);
                       });
                     },
@@ -141,74 +173,76 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Shoot:",
+                    "Score on Middle Node:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flAutoShoot!,
+                    value: widget.pitData.flAutoNodeMid!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flAutoShoot = value;
+                        widget.pitData.flAutoNodeMid = value;
                         widget.onChanged!(widget.pitData);
                       });
                     },
                   ),
                 ],
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("#Cargo Shot:"),
-                CounterWidget(
-                  title: "",
-                  value: widget.pitData.numAutoShoot,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoShoot =
-                          widget.pitData.numAutoShoot! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoShoot =
-                          widget.pitData.numAutoShoot! - 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoShoot = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("#Cargo Pickup:"),
-                CounterWidget(
-                  title: "",
-                  value: widget.pitData.numAutoLoad,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoLoad =
-                          widget.pitData.numAutoLoad! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoLoad =
-                          widget.pitData.numAutoLoad! - 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoLoad = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Score on High Node:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flAutoNodeHigh!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flAutoNodeHigh = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Reach Charge Station:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flAutoCharge!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flAutoCharge = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Balance Charge Station:",
+                    style: TextStyle(fontSize: widget.styleFontSize),
+                  ),
+                  Switch(
+                    value: widget.pitData.flAutoChargeBalance!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flAutoChargeBalance = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+
+
             ]),
           ),
         ),

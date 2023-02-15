@@ -91,7 +91,7 @@ class _AddTeamState extends State<AddTeam> {
                       key: txTeamID.text,
                       name: txTeamName.text,
                       nickName: txTeamName.text,
-                      teamNumber: txTeamID.text);
+                      teamNumber: int.parse(txTeamID.text) );
                   var insertID = localDB.insertLocalTeam(localTeam);
                   print(insertID);
                 }),

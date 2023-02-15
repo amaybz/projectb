@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projectb/autotab.dart';
+import 'package:projectb/matchscouting/autotab.dart';
 import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/teleoptab.dart';
-import 'package:projectb/widget_dropdown.dart';
-import 'package:projectb/widget_dropdown_indexed.dart';
 import 'package:projectb/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'dart:io';
 import 'package:projectb/googleinterface.dart';
+import 'package:projectb/widgets/widget_dropdown.dart';
+import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -62,23 +62,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
   MatchScoutingData matchScoutingData = MatchScoutingData();
 
-  final List<String> _listStartingCargo = [
-    '0',
-    '1',
-  ];
-
-  //String _selectedFacing;
-  //final List<String> _listFacing = ['Own Station', 'Opponent Station'];
-  final List<DropDownValue> _listFacing = [
-    DropDownValue(id: "1", value: "Own Station"),
-    DropDownValue(id: "2", value: "Opponent Station"),
-    DropDownValue(id: "3", value: "Other")
-  ];
-
   final List<DropDownValue> _listRobotPosition = [
-    DropDownValue(id: "1", value: "N/A"),
-    DropDownValue(id: "2", value: "Shared Tarmac"),
-    DropDownValue(id: "3", value: "Solo Tarmac"),
+    DropDownValue(id: "1", value: "Station 1"),
+    DropDownValue(id: "2", value: "Station 2"),
+    DropDownValue(id: "3", value: "Station 3"),
   ];
 
   //style
@@ -178,7 +165,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         eventTeamsListDropDown.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber! + " - " + team.nickName!,
+              team.teamNumber.toString() + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
             )));
       });
@@ -650,18 +637,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           DropDownIndexedWidget(
-                              value: matchScoutingData.idStartFacing,
-                              title: "Facing",
-                              dropDownValues: _listFacing,
-                              styleFontSize: widget.styleFontSize,
-                              styleFieldWidth: styleFieldWidthFacing,
-                              onStateChanged: (String newValue) {
-                                FocusScope.of(context).unfocus();
-                                setState(() {
-                                  matchScoutingData.idStartFacing = newValue;
-                                });
-                              }),
-                          DropDownIndexedWidget(
                               value: matchScoutingData.idStartPosition,
                               title: "Robot Position",
                               dropDownValues: _listRobotPosition,
@@ -672,19 +647,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               onStateChanged: (String newValue) {
                                 setState(() {
                                   matchScoutingData.idStartPosition = newValue;
-                                });
-                              }),
-                          DropDownWidget(
-                              value: matchScoutingData.numStartCargo,
-                              title: "Starting Cargo",
-                              list: _listStartingCargo,
-                              styleFontSize: widget.styleFontSize,
-                              styleFieldWidth: styleFieldWidthStartingCells,
-                              styleFieldPadding: styleFieldPadding,
-                              styleFieldPaddingSides: styleFieldPaddingSides,
-                              onStateChanged: (String newValue) {
-                                setState(() {
-                                  matchScoutingData.numStartCargo = newValue;
                                 });
                               }),
                         ]),
@@ -722,7 +684,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           bottomRight: Radius.circular(0)),
                     ),
                     constraints: BoxConstraints.expand(
-                        width: styleRedBoxSize, height: 160.0),
+                        width: styleRedBoxSize, height: 205.0),
                     padding: EdgeInsets.all(4.0),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -799,7 +761,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             bottomLeft: Radius.circular(0),
                             bottomRight: Radius.circular(10)),
                       ),
-                      constraints: BoxConstraints.expand(height: 160.0),
+                      constraints: BoxConstraints.expand(height: 205.0),
                       padding: EdgeInsets.all(4.0),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -842,6 +804,50 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                       onChanged: (bool value) {
                                         setState(() {
                                           matchScoutingData.flRanking2 = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                //crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    "Coop Attempt",
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    child: Switch(
+                                      value: matchScoutingData.flCoop!,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          matchScoutingData.flCoop = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                //crossAxisAlignment: CrossAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    "Coop Success",
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Container(
+                                    child: Switch(
+                                      value: matchScoutingData.flCoopAll!,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          matchScoutingData.flCoopAll = value;
                                         });
                                       },
                                     ),
@@ -934,17 +940,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         matchScoutingData: matchScoutingData,
         styleCounterButtonWidth: styleCounterButtonWidth,
         styleCounterButtonHeight: styleCounterButtonHeight,
-        onCellAttemptsChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumCargoHighAttempt = value;
-          });
-        },
-        onCellSuccessChanged: (int value) {
-          setState(() {
-            matchScoutingData.teleNumCargoHighSuccess = value;
-          });
-          print(matchScoutingData.teleNumCargoHighSuccess);
-        },
+
         onEndgameClimbChanged: (MatchScoutingData value) {
           matchScoutingData = value;
         },
@@ -969,102 +965,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           onChange: (updates) {
             setState(() {
               matchScoutingData = updates;
-            });
-          },
-          onShootingWallZoneChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlShotWall = value;
-            });
-          },
-          onShootingNearZoneChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlShotNear = value;
-            });
-          },
-          onShootingMidZoneChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlShotMid = value;
-            });
-          },
-          onShootingFarZoneChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlShotFar = value;
-            });
-          },
-          onOtherRobotChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlIntakeRobot = value;
-            });
-          },
-          onHighIntakeChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlIntakeHigh = value;
-            });
-          },
-          onGroundIntakeChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlIntakeGround = value;
-            });
-          },
-          onAssistOtherRobotChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlAssist = value;
-            });
-          },
-          onSelectedDriveRatingChanged: (String value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commIdDriveRating = value;
-            });
-          },
-          onSelectedDefenceRatingChanged: (String value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commIdDefenceRating = value;
-            });
-          },
-          onRecoveredChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlRecovery = value;
-            });
-          },
-          onNoTeamWorkChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlOwnThing = value;
-            });
-          },
-          onWorkedToStrategyChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlStrategy = value;
-            });
-          },
-          onWarningChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlWarning = value;
-            });
-          },
-          onHighlightTeamChanged: (bool value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commFlHighlight = value;
-            });
-          },
-          onCommentsChanged: (String value) {
-            //Update Value
-            setState(() {
-              matchScoutingData.commTxNotes = value;
             });
           },
         ),

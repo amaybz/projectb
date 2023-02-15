@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projectb/pit/widget_pit_human.dart';
+import 'package:projectb/pit/widget_pit_drivebase.dart';
+import 'package:projectb/pit/widget_pit_game_pieces.dart';
+import 'package:projectb/pit/widget_pit_scoring.dart';
 import 'package:projectb/settings.dart';
-import 'package:projectb/widget_headingmain.dart';
+import 'package:projectb/widgets/widget_headingmain.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/class/class_pitdata.dart';
-import 'package:projectb/pit/widget_pit_climb.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/pit/widget_pit_cargo.dart';
+import 'package:projectb/pit/widget_pit_charge.dart';
 import 'package:projectb/pit/widget_pit_auto.dart';
 import 'package:projectb/pit/widget_pit_images.dart';
 import 'dart:io';
@@ -48,7 +49,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   bool recordSaved = false;
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
-  final TextEditingController txShooting = TextEditingController();
+  final TextEditingController txChargeNotes = TextEditingController();
   final TextEditingController txClimb = TextEditingController();
   final TextEditingController txPanelSensor = TextEditingController();
   final TextEditingController txPitNotes = TextEditingController();
@@ -57,7 +58,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txWidth = TextEditingController();
   final TextEditingController numClimbHeight = TextEditingController();
   final TextEditingController numClimbWidth = TextEditingController();
-  final TextEditingController numHumanAccuracy = TextEditingController();
+  final TextEditingController txDriveNotes = TextEditingController();
+  final TextEditingController txObjectNotes = TextEditingController();
+  final TextEditingController txScoringNotes = TextEditingController();
+
   File? imgPitTeamShirt;
   File? imgPitRobotFront;
   File? imgPitRobotSide;
@@ -104,7 +108,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         ddsEventTeams.add(new DropdownMenuItem(
             value: team.key,
             child: Text(
-              team.teamNumber! + " - " + team.nickName!,
+              team.teamNumber.toString() + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
               overflow: TextOverflow.ellipsis,
             )));
@@ -183,12 +187,14 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       pitData = PitData();
       selectedTeam = null;
       _txtScoutName.text = "";
-      txShooting.text = "";
+      txChargeNotes.text = "";
       txClimb.text = "";
       txHeight.text = "0";
       txWeight.text = "0";
       txWidth.text = "0";
       txPitNotes.text = "";
+      txObjectNotes.text = "";
+      txScoringNotes.text = "";
       numClimbHeight.text = "0";
       numClimbWidth.text = "0";
     });
@@ -263,7 +269,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txScoutName = _txtScoutName.text;
     pitData.txPitNotes = txPitNotes.text;
     pitData.txComputerName = widget.deviceName;
-    pitData.txShooting = txShooting.text;
+    pitData.txObjectNotes = txObjectNotes.text;
     //if (pitData.imgTeamUniform == null) return false;
     //if (pitData.imgRobotSide == null) return false;
     //if (pitData.imgRobotFront == null) return false;
@@ -474,14 +480,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 widthFactor: 0.99,
                 child: Container(
                   margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                  ),
+
                   child: Container(
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
@@ -561,103 +560,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   ),
                 ),
               ),
-              PitPowerCells(
-                pitData: pitData,
-                txShooting: txShooting,
-                styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(180) : scrollDown(0);
-                },
-              ),
-              PitClimb(
-                pitData: pitData,
-                txClimb: txClimb,
-                numClimbHeight: numClimbHeight,
-                numClimbWidth: numClimbWidth,
-                strWeight: strWeight,
-                strDistance: strDistance,
-                styleFieldTxClimbMaxWidth: styleFieldTxClimbMaxWidth,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(180) : scrollDown(0);
-                },
-              ),
-              PitAuto(
-                pitData: pitData,
-                strDistance: strDistance,
-                strWeight: strWeight,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(100) : scrollDown(0);
-                },
-              ),
-              PitHuman(
-                pitData: pitData,
-                numHumanAccuracy: numHumanAccuracy,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(50) : scrollDown(0);
-                },
-              ),
-              FractionallySizedBox(
-                widthFactor: 0.99,
-                child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(children: <Widget>[
-                      HeadingMain(
-                        styleFontSize: styleFontSizeHeadings,
-                        headingText: "Comments",
-                        //backGroundColor: Colors.green,
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Notes: ",
-                              style: TextStyle(fontSize: widget.styleFontSize),
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  maxWidth: styleFieldTxPitNotesMaxWidth),
-                              child: TextField(
-                                controller: txPitNotes,
-                                decoration:
-                                    InputDecoration(hintText: 'General Notes'),
-                              ),
-                            ),
-                          ]),
-                    ]),
-                  ),
-                ),
-              ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -693,6 +595,92 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                       image: pitData.imgRobotFront,
                     ),
                   ]),
+              PitDriveBase(
+                pitData: pitData,
+                txDriveNotes: txDriveNotes,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(50) : scrollDown(0);
+                },
+              ),
+              PitGamePieces(pitData: pitData,txNotes: txObjectNotes,onChanged: (PitData updates) {
+                setState(() {
+                  pitData = updates;
+                });
+              },),
+              PitScoring(pitData: pitData, txScoringNotes: txScoringNotes, onChanged: (PitData updates) {
+                setState(() {
+                  pitData = updates;
+                });
+              },),
+              PitCharge(
+                pitData: pitData,
+                txChargeNotes: txChargeNotes,
+                styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(180) : scrollDown(0);
+                },
+              ),
+              PitAuto(
+                pitData: pitData,
+                strDistance: strDistance,
+                strWeight: strWeight,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+                onExpanded: (value) {
+                  (value == true) ? scrollDown(100) : scrollDown(0);
+                },
+              ),
+
+
+              FractionallySizedBox(
+                widthFactor: 0.99,
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(children: <Widget>[
+                      HeadingMain(
+                        styleFontSize: styleFontSizeHeadings,
+                        headingText: "Comments",
+                        //backGroundColor: Colors.green,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Notes: ",
+                              style: TextStyle(fontSize: widget.styleFontSize),
+                            ),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxWidth: styleFieldTxPitNotesMaxWidth),
+                              child: TextField(
+                                controller: txPitNotes,
+                                decoration:
+                                    InputDecoration(hintText: 'General Notes'),
+                              ),
+                            ),
+                          ]),
+                    ]),
+                  ),
+                ),
+              ),
+
               FinishTab(
                 onSavePressed: (bool value) async {
                   if (recordSaved == true) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/widget_counter.dart';
-import 'package:projectb/widget_headingmain.dart';
+import 'package:projectb/widgets/widget_counter.dart';
+
+import '../widgets/widget_headingmain.dart';
 
 class HumanWidget extends StatefulWidget {
   const HumanWidget({

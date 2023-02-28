@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 
+import '../widgets/widget_counter.dart';
+import '../widgets/widget_headingmain.dart';
+
 class EndGame extends StatefulWidget {
-  EndGame(
-      {Key? key,
-      required this.matchScoutingData,
-      this.styleFontSize = 16,
-      this.styleFontSizeHeadings = 18,
-      this.styleFieldTxClimbMaxWidth = 300,
-      this.onChanged,
-      this.txClimb,
-      this.onExpanded})
+  EndGame({Key? key,
+    required this.matchScoutingData,
+    this.styleFontSize = 16,
+    this.styleFontSizeHeadings = 18,
+    this.styleFieldTxClimbMaxWidth = 300,
+    this.styleCounterButtonHeight = 25,
+    this.styleCounterButtonWidth = 30,
+    this.onChanged,
+    this.txClimb,
+    this.onExpanded})
       : super(key: key);
 
   final MatchScoutingData matchScoutingData;
   final double styleFontSize;
   final double styleFontSizeHeadings;
   final double styleFieldTxClimbMaxWidth;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
   final ValueChanged<MatchScoutingData>? onChanged;
   final ValueChanged<bool>? onExpanded;
   final TextEditingController? txClimb;
@@ -53,6 +59,11 @@ class _EndGameState extends State<EndGame> {
       child: Container(
         padding: EdgeInsets.all(1.0),
         child: Column(children: <Widget>[
+          HeadingMain(
+            styleFontSize: widget.styleFontSizeHeadings,
+            headingText: "End Game",
+            //backGroundColor: Colors.green,
+          ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               "Park:",
@@ -72,31 +83,7 @@ class _EndGameState extends State<EndGame> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Attempt to Climb Charge?:",
-                style: TextStyle(fontSize: widget.styleFontSize),
-              ),
-              DropdownButton(
-                value: widget.matchScoutingData.teleIdChargeAttempt == null
-                    ? null
-                    : widget.matchScoutingData.teleIdChargeAttempt,
-                items: listSuccessFailNA,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.teleIdChargeAttempt = item as String?;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                  print(
-                      "teleIdClimb: " + widget.matchScoutingData.teleIdChargeAttempt!);
-                },
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "Outcome:",
+                "Charge Station Outcome:",
                 style: TextStyle(fontSize: widget.styleFontSize),
               ),
               DropdownButton(
@@ -107,18 +94,17 @@ class _EndGameState extends State<EndGame> {
                 onChanged: (item) {
                   setState(() {
                     widget.matchScoutingData.teleIdChargeOutcome =
-                        item as String?;
+                    item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
-                  print("idClimbType: " +
+                  print("teleIdChargeOutcome: " +
                       widget.matchScoutingData.teleIdChargeOutcome!);
                 },
               ),
             ],
           ),
-
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Fall?:",
+            Text("Fall after T=0?:",
                 style: TextStyle(fontSize: widget.styleFontSize)),
             Switch(
                 value: widget.matchScoutingData.teleFlClimbFall!,
@@ -143,7 +129,7 @@ class _EndGameState extends State<EndGame> {
                 onChanged: (item) {
                   setState(() {
                     widget.matchScoutingData.teleIdChargeBalanceSpeed =
-                        item as String?;
+                    item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                   print("teleIdChargeBalanceSpeed: " +
@@ -153,7 +139,7 @@ class _EndGameState extends State<EndGame> {
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Charge Assist?:",
+            Text("Charge Station Assist?:",
                 style: TextStyle(fontSize: widget.styleFontSize)),
             Switch(
                 value: widget.matchScoutingData.teleFlChargeAssist!,
@@ -163,6 +149,43 @@ class _EndGameState extends State<EndGame> {
                     widget.onChanged!(widget.matchScoutingData);
                   });
                 }),
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text("# Robots Assisted:"),
+            CounterWidget(
+              styleButtonHeight: widget.styleCounterButtonHeight,
+              styleButtonWidth: widget.styleCounterButtonWidth,
+              title: "",
+              value: widget.matchScoutingData.teleNumChargeAssist,
+              onIncreaseStateChanged: (int value) {
+                setState(() {
+                  widget.matchScoutingData.teleNumChargeAssist =
+                      widget.matchScoutingData.teleNumChargeAssist! + 1;
+                  if (widget.matchScoutingData.teleNumChargeAssist! > 2) {
+                    widget.matchScoutingData.teleNumChargeAssist = 2;
+                  }
+
+
+                  widget.onChanged!(widget.matchScoutingData);
+                });
+              },
+              onDecreaseStateChanged: (int value) {
+                setState(() {
+                  widget.matchScoutingData.teleNumChargeAssist =
+                      widget.matchScoutingData.teleNumChargeAssist! - 1;
+                  if (widget.matchScoutingData.teleNumChargeAssist! < 0) {
+                    widget.matchScoutingData.teleNumChargeAssist = 0;
+                  }
+                  widget.onChanged!(widget.matchScoutingData);
+                });
+              },
+              onSetValue: (int value) {
+                setState(() {
+                  widget.matchScoutingData.teleNumChargeAssist = value;
+                  widget.onChanged!(widget.matchScoutingData);
+                });
+              },
+            ),
           ]),
         ]),
       ),

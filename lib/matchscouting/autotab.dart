@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_charge_station.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_grids.dart';
+
+import '../widgets/widget_headingmain.dart';
 
 class AutoTab extends StatefulWidget {
   const AutoTab({
@@ -21,6 +24,7 @@ class AutoTab extends StatefulWidget {
     this.onAutoNumCellSuccessChange,
     this.styleCounterButtonHeight = 25,
     this.styleCounterButtonWidth = 30,
+    this.styleFontSizeHeadings = 18,
     this.onChanged,
   }) : super(key: key);
 
@@ -29,6 +33,7 @@ class AutoTab extends StatefulWidget {
   final double styleImgFieldPerformanceWidth;
   final double styleCounterButtonHeight;
   final double styleCounterButtonWidth;
+  final double styleFontSizeHeadings;
   final ValueChanged<int>? onAutoNumCubeAttemptChange;
   final ValueChanged<int>? onAutoNumCellSuccessChange;
   final ValueChanged<bool>? onLoseStartObjectChange;
@@ -53,24 +58,12 @@ class _AutoTabState extends State<AutoTab> {
           widthFactor: 0.99,
           child: Container(
             margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-            ),
             child: Column(children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  color: Colors.grey,
-                ),
-                child: Text(
-                  "Driver Position",
-                  style: TextStyle(fontSize: 18),
-                ),
+
+              HeadingMain(
+                styleFontSize: widget.styleFontSizeHeadings,
+                headingText: "Driver Position",
+                //backGroundColor: Colors.green,
               ),
               //Image.asset('assets/imgs/field.png'),
               Container(
@@ -182,29 +175,30 @@ class _AutoTabState extends State<AutoTab> {
             ]),
           ),
         ),
+        MatchAuto(
+          matchScoutingData: widget.matchScoutingData,
+          styleCounterButtonHeight: widget.styleCounterButtonHeight,
+          styleCounterButtonWidth: widget.styleCounterButtonWidth,
+          onChanged: (MatchScoutingData updates) {
+            setState(() {
+              widget.onChanged!(updates);
+            });
+          },
+          onExpanded: (value) {},
+        ),
         FractionallySizedBox(
           widthFactor: 0.99,
           child: Container(
             padding: EdgeInsets.all(4.0),
             margin: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
+
             ),
             child: Column(children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  color: Colors.grey,
-                ),
-                child: Text(
-                  "Errors",
-                  style: TextStyle(fontSize: 18),
-                ),
+              HeadingMain(
+                styleFontSize: widget.styleFontSizeHeadings,
+                headingText: "Errors",
+                //backGroundColor: Colors.green,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -275,17 +269,7 @@ class _AutoTabState extends State<AutoTab> {
             ]),
           ),
         ),
-        MatchAuto(
-          matchScoutingData: widget.matchScoutingData,
-          styleCounterButtonHeight: widget.styleCounterButtonHeight,
-          styleCounterButtonWidth: widget.styleCounterButtonWidth,
-          onChanged: (MatchScoutingData updates) {
-            setState(() {
-              widget.onChanged!(updates);
-            });
-          },
-          onExpanded: (value) {},
-        ),
+
         GridsWidget(
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
@@ -379,7 +363,11 @@ class _AutoTabState extends State<AutoTab> {
             });
           },
         ),
-
+        ChargeStation(matchScoutingData: widget.matchScoutingData,
+        onChanged: (matchScoutingData) {
+          widget.onChanged!(matchScoutingData);
+        }
+        )
       ],
     );
   }

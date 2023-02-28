@@ -6,7 +6,7 @@ class MatchScoutingData {
   int? numMatch;
   String? idAlliance;
   String? idDriveStation;
-  int? idTeam;
+  String? idTeam;
   String? txScoutName;
   String? idStartPosition;
   bool? flRed;
@@ -103,7 +103,7 @@ class MatchScoutingData {
     this.teleFlClimbFall = false,
     this.teleIdChargeBalanceSpeed,
     this.teleFlChargeAssist = false,
-    this.teleNumChargeAssist,
+    this.teleNumChargeAssist = 0,
     this.teleNumHighConeSuccess = 0,
     this.teleNumMidConeSuccess = 0,
     this.teleNumLowConeSuccess = 0,

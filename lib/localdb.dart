@@ -8,7 +8,7 @@ import 'package:projectb/class/class_macthscoutingdata.dart';
 class LocalDB {
   static final _databaseName = "local_database.db";
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 41;
+  static final _databaseVersion = 42;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -318,7 +318,7 @@ class LocalDB {
       return MatchScoutingData.fromLocalDB(maps.first);
     }
     MatchScoutingData matchScoutingData = MatchScoutingData();
-    matchScoutingData.idTeam = 0;
+    matchScoutingData.idTeam = "0";
     return matchScoutingData;
   }
 

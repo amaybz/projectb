@@ -58,6 +58,9 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
   Future<void> scanMatchScouting() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
+    setState(() {
+      _status = "none";
+    });
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
@@ -83,13 +86,14 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
       }
     } on Exception {
       barcodeScanRes = "Invalid Data";
+      _status = "Incorrect Format";
     }
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-
+    ShowAlertDialog(context).oKDialog("Scan Data", _status);
     setState(() {
       _scanBarcode = barcodeScanRes;
     });
@@ -97,6 +101,9 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
 
   Future<void> scanPitData() async {
     String barcodeScanRes;
+    setState(() {
+      _status = "none";
+    });
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -170,14 +177,14 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
                       children: <Widget>[
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                       child: ElevatedButton(
                           onPressed: () => scanMatchScouting(),
                           child: Text('Scan Match Data')),
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                       child: ElevatedButton(
                           onPressed: () => scanPitData(),
                           child: Text('Scan Pit Data')),
@@ -192,7 +199,7 @@ class _QRBarcodeScannerState extends State<QRBarcodeScanner> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                       child:
-                          Text(' $_status\n', style: TextStyle(fontSize: 20)),
+                          Text('Last Status: $_status\n', style: TextStyle(fontSize: 20)),
                     ),
                   ])));
         }));

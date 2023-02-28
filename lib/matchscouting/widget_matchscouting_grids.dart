@@ -74,15 +74,9 @@ class _GridsWidgetState extends State<GridsWidget> {
       child: Container(
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
           //color: Colors.red,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
         ),
-        padding: EdgeInsets.all(4.0),
+        padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 4.0),
         child: Column(children: [
           HeadingMain(
               headingText: "Grids",
@@ -110,7 +104,19 @@ class _GridsWidgetState extends State<GridsWidget> {
                             ]),
                           Row(children: <Widget>[
                             Column(children: [
-                              CounterWidget(
+                              Container(
+                                  margin: const EdgeInsets.only(right: 5.0, bottom: 15.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.yellow),
+                                    color: Colors.yellow,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10)),
+                                  ),
+                              child:                               CounterWidget(
                                 styleButtonWidth: widget.styleCounterButtonWidth,
                                 styleButtonHeight: widget.styleCounterButtonHeight,
                                 value: widget.numConeAttempt,
@@ -132,6 +138,7 @@ class _GridsWidgetState extends State<GridsWidget> {
                                 onSetValue: (int value) {
                                   widget.onNumConeAttemptChanged!(value);
                                 },
+                              ),
                               ),
                               CounterWidget(
                                 styleButtonWidth: widget.styleCounterButtonWidth,
@@ -220,19 +227,33 @@ class _GridsWidgetState extends State<GridsWidget> {
                           ]),
                         ]),
 
-                        Column(children: [
-                          Column(children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Container(
+                                    margin: const EdgeInsets.only(top: 110.0),
+                            child:
                             SizedBox(
                               width: 110,
-                              height: 90,
+                              height: 130,
+
                               child: Container(
+
                                 decoration: BoxDecoration(
+
                                   border: Border.all(color: Colors.white),
                                   color: Colors.grey,
                                 ),
                                 child: Image.asset("assets/imgs/terminal.png"),
                               ),
                             ),
+                                ),
                           ]),
 
                         ]),
@@ -255,28 +276,41 @@ class _GridsWidgetState extends State<GridsWidget> {
                                 ]),
                                 Row(children: <Widget>[
                                   Column(children: [
-                                    CounterWidget(
-                                      styleButtonWidth: widget.styleCounterButtonWidth,
-                                      styleButtonHeight: widget.styleCounterButtonHeight,
-                                      value: widget.numCubeAttempt,
-                                      title: "Cube ",
-                                      title1: " Attempt",
-                                      styleFontSize: widget.styleFontSizeBody,
-                                      onIncreaseStateChanged: (int increase) {
-                                        setState(() {
-                                          widget.onNumCubeAttemptChanged!(
-                                              widget.numCubeAttempt! + 1);
-                                        });
-                                      },
-                                      onDecreaseStateChanged: (int decrease) {
-                                        setState(() {
-                                          widget.onNumCubeAttemptChanged!(
-                                              widget.numCubeAttempt! - 1);
-                                        });
-                                      },
-                                      onSetValue: (int value) {
-                                        widget.onNumCubeAttemptChanged!(value);
-                                      },
+                                    Container(
+                                        margin: const EdgeInsets.only(right: 5.0, bottom: 15.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.yellow),
+                                          color: Colors.yellow,
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10),
+                                              topRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)),
+                                        ),
+                                      child: CounterWidget(
+                                        styleButtonWidth: widget.styleCounterButtonWidth,
+                                        styleButtonHeight: widget.styleCounterButtonHeight,
+                                        value: widget.numCubeAttempt,
+                                        title: "Cube ",
+                                        title1: " Attempt",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumCubeAttemptChanged!(
+                                                widget.numCubeAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumCubeAttemptChanged!(
+                                                widget.numCubeAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumCubeAttemptChanged!(value);
+                                        },
+                                      ),
                                     ),
                                     CounterWidget(
                                       styleButtonWidth: widget.styleCounterButtonWidth,

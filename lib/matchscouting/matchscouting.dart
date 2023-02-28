@@ -5,8 +5,8 @@ import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/localdb.dart';
 import 'dart:async';
-import 'package:projectb/teleoptab.dart';
-import 'package:projectb/ratingstab.dart';
+import 'package:projectb/matchscouting/teleoptab.dart';
+import 'package:projectb/matchscouting/ratingstab.dart';
 import 'package:projectb/finishtab.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'dart:io';
@@ -28,6 +28,7 @@ class MatchScoutingScreen extends StatefulWidget {
   final String? eventKey;
   final List<LocalTeam>? eventTeams;
   final String? deviceName;
+
   //style
   final double styleFontSize;
 
@@ -40,6 +41,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   String strWeight = "lbs";
   String strDistance = "Inches";
+
   //manage save record
   bool recordSaved = false;
   int? recordID;
@@ -320,7 +322,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (_txtMatchNumber.text == "") return false;
     matchScoutingData.txDeviceName = widget.deviceName;
     matchScoutingData.txEvent = widget.eventKey;
-    matchScoutingData.idTeam = selectedTeam!.teamNumber;
+    matchScoutingData.idTeam = selectedTeam!.teamNumber.toString();
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
     matchScoutingData.txScoutName = _txtScoutName.text;
     this.recordID = await localDB.insertScoringData(matchScoutingData);
@@ -811,7 +813,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 ]),
                             Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 //crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
@@ -833,7 +835,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 ]),
                             Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 //crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
@@ -869,10 +871,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.blue,
           selectedItemColor: Colors.white,
-          currentIndex: _selectedTab, // th
+          currentIndex: _selectedTab,
+          // th
           onTap: (value) {
             setState(() => _selectedTab = value);
-          }, // is will be set when a new tab is tapped
+          },
+          // is will be set when a new tab is tapped
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.car_repair),
@@ -940,15 +944,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         matchScoutingData: matchScoutingData,
         styleCounterButtonWidth: styleCounterButtonWidth,
         styleCounterButtonHeight: styleCounterButtonHeight,
-
-        onEndgameClimbChanged: (MatchScoutingData value) {
-          matchScoutingData = value;
-        },
-        onEndgameFallChanged: (bool value) {
-          setState(() {
-            matchScoutingData.teleFlClimbFall = value;
-          });
-        },
         onChange: (MatchScoutingData updatedData) {
           setState(() {
             matchScoutingData = updatedData;

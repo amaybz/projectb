@@ -12,7 +12,6 @@ import 'package:projectb/widgets/widget_headingmain.dart';
 import 'package:projectb/widgets/widget_loading_popup.dart';
 import 'package:projectb/widgets/widget_uploadedimg.dart';
 
-
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
     Key? key,
@@ -130,6 +129,11 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             DateTime.now().toString(),
         "json");
     print("Upload Complete");
+    setState(() {
+      matchScoutingData.flUploaded = true;
+    });
+    localDB.insertScoringData(matchScoutingData);
+
     DialogBuilder(context).hideOpenDialog();
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
@@ -318,38 +322,54 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 Text("Team: " + item.idTeam.toString())
               ],
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () {
-                _showDialogMatchQRCode(context, item.id.toString());
-              },
-              child: Text('QR'),
+            Column(
+              children: [UploadedImg(state: item.flUploaded!)],
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () {
-                writeMatchFileAndUploadToGoogle(item);
-              },
-              child: Text('Upload'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red, // background
-                onPrimary: Colors.white, // foreground
-              ),
-              onPressed: () {
-                deleteMatchRecord(context, item.id!);
+            Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 2.5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue, // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                    onPressed: () {
+                      _showDialogMatchQRCode(context, item.id.toString());
+                    },
+                    child: Text('QR'),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 2.5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue, // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                    onPressed: () {
+                      writeMatchFileAndUploadToGoogle(item);
+                    },
+                    child: Text('Upload'),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 2.5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red, // background
+                      onPrimary: Colors.white, // foreground
+                    ),
+                    onPressed: () {
+                      deleteMatchRecord(context, item.id!);
 
-                setState(() {});
-              },
-              child: Text('Delete'),
-            ),
+                      setState(() {});
+                    },
+                    child: Text('Delete'),
+                  ),
+                ),
+              ]),
+            ]),
           ]),
     );
 
@@ -444,37 +464,46 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue, // background
-                          onPrimary: Colors.white, // foreground
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2.5),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () {
+                            _showDialogPitQRCode(context, item.id.toString());
+                          },
+                          child: Text('QR'),
                         ),
-                        onPressed: () {
-                          _showDialogPitQRCode(context, item.id.toString());
-                        },
-                        child: Text('QR'),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blue, // background
-                          onPrimary: Colors.white, // foreground
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2.5),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () {
+                            writePitFileAndUploadToGoogle(item);
+                          },
+                          child: Text('Upload'),
                         ),
-                        onPressed: () {
-                          writePitFileAndUploadToGoogle(item);
-                        },
-                        child: Text('Upload'),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red, // background
-                          onPrimary: Colors.white, // foreground
-                        ),
-                        onPressed: () {
-                          deletePitRecord(context, item.id!);
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2.5),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () {
+                            deletePitRecord(context, item.id!);
 
-                          setState(() {});
-                        },
-                        child: Text('Delete'),
+                            setState(() {});
+                          },
+                          child: Text('Delete'),
+                        ),
                       ),
                     ]),
               ],

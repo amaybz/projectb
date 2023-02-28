@@ -37,12 +37,6 @@ class _MatchAutoState extends State<MatchAuto> {
       child: Container(
         margin: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
         ),
         child: Container(
           padding: EdgeInsets.all(5.0),
@@ -68,7 +62,7 @@ class _MatchAutoState extends State<MatchAuto> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Leave Tarmac:",
+                  "Leave Community?",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(

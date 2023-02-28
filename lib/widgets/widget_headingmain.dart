@@ -17,7 +17,7 @@ class HeadingMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       Container(
-      padding: EdgeInsets.all(3.0),
+      padding: EdgeInsets.symmetric( vertical: 3.0, horizontal: 25.0),
       decoration: BoxDecoration(
         border: Border.all(color: backGroundColor),
         color: backGroundColor,
@@ -29,7 +29,7 @@ class HeadingMain extends StatelessWidget {
       ),
       child: Text(
         headingText,
-        style: TextStyle(fontSize: styleFontSize),
+        style: TextStyle(fontSize: styleFontSize, fontWeight: FontWeight.bold),
       ),
     );
   }

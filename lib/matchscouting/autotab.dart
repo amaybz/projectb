@@ -59,7 +59,6 @@ class _AutoTabState extends State<AutoTab> {
           child: Container(
             margin: const EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
-
               HeadingMain(
                 styleFontSize: widget.styleFontSizeHeadings,
                 headingText: "Driver Position",
@@ -125,7 +124,7 @@ class _AutoTabState extends State<AutoTab> {
                               border: Border.all(color: Colors.white),
                               color: Colors.grey,
                             ),
-                            child: Image.asset("assets/imgs/field.png"),
+                            child: Image.asset("assets/imgs/field1.png"),
                           ),
                         ),
                       ]),
@@ -191,9 +190,7 @@ class _AutoTabState extends State<AutoTab> {
           child: Container(
             padding: EdgeInsets.all(4.0),
             margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-
-            ),
+            decoration: BoxDecoration(),
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSizeHeadings,
@@ -269,7 +266,6 @@ class _AutoTabState extends State<AutoTab> {
             ]),
           ),
         ),
-
         GridsWidget(
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
@@ -284,10 +280,8 @@ class _AutoTabState extends State<AutoTab> {
           numHighConeSuccess: widget.matchScoutingData.autoNumHighConeSuccess,
           numCubeAttempt: widget.matchScoutingData.autoNumCubeAttempt,
           numLowConeSuccess: widget.matchScoutingData.autoNumLowConeSuccess,
-          numMidConeSuccess:
-              widget.matchScoutingData.autoNumMidConeSuccess,
-          numHighCubeSuccess:
-              widget.matchScoutingData.autoNumHighCubeSuccess,
+          numMidConeSuccess: widget.matchScoutingData.autoNumMidConeSuccess,
+          numHighCubeSuccess: widget.matchScoutingData.autoNumHighCubeSuccess,
           numMidCubeSuccess: widget.matchScoutingData.autoNumMidCubeSuccess,
           numLowCubeSuccess: widget.matchScoutingData.autoNumLowCubeSuccess,
           onNumHighCubeSuccessChanged: (int value) {
@@ -363,11 +357,11 @@ class _AutoTabState extends State<AutoTab> {
             });
           },
         ),
-        ChargeStation(matchScoutingData: widget.matchScoutingData,
-        onChanged: (matchScoutingData) {
-          widget.onChanged!(matchScoutingData);
-        }
-        )
+        ChargeStation(
+            matchScoutingData: widget.matchScoutingData,
+            onChanged: (matchScoutingData) {
+              widget.onChanged!(matchScoutingData);
+            })
       ],
     );
   }

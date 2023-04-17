@@ -67,12 +67,12 @@ class _AutoTabState extends State<AutoTab> {
               //Image.asset('assets/imgs/field.png'),
               Container(
                 decoration: BoxDecoration(
-                    //border: Border.all(color: Colors.black),
-                    //image: DecorationImage(
-                    // image: AssetImage("assets/imgs/field.png"),
-                    // fit: BoxFit.cover,
-                    //),
-                    ),
+                  //border: Border.all(color: Colors.black),
+                  //image: DecorationImage(
+                  // image: AssetImage("assets/imgs/field.png"),
+                  // fit: BoxFit.cover,
+                  //),
+                ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -266,6 +266,11 @@ class _AutoTabState extends State<AutoTab> {
             ]),
           ),
         ),
+        ChargeStation(
+            matchScoutingData: widget.matchScoutingData,
+            onChanged: (matchScoutingData) {
+              widget.onChanged!(matchScoutingData);
+            }),
         GridsWidget(
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
@@ -357,11 +362,7 @@ class _AutoTabState extends State<AutoTab> {
             });
           },
         ),
-        ChargeStation(
-            matchScoutingData: widget.matchScoutingData,
-            onChanged: (matchScoutingData) {
-              widget.onChanged!(matchScoutingData);
-            })
+
       ],
     );
   }

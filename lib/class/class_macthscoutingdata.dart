@@ -60,7 +60,7 @@ class MatchScoutingData {
   bool? commFlIntakeGround;
   bool? commFlIntakeHigh;
   bool? commFlIntakeStation;
-  bool? commTxNotes;
+  String? commTxNotes;
 
   MatchScoutingData({
     this.id,
@@ -129,135 +129,135 @@ class MatchScoutingData {
 
   Map<String, dynamic> toMap() {
     return {
-      'id' : id,
-      'flUploaded' : flUploaded,
-      'txEvent' : txEvent,
-      'txDeviceName' : txDeviceName,
-      'numMatch' : numMatch,
-      'idAlliance' : idAlliance,
-      'idDriveStation' : idDriveStation,
-      'idTeam' : idTeam,
-      'txScoutName' : txScoutName,
-      'idStartPosition' : idStartPosition,
-      'flRed' : flRed,
-      'flYellow' : flYellow,
-      'flCrash' : flCrash,
-      'flCoop' : flCoop,
-      'flCoopAll' : flCoopAll,
-      'flRanking1' : flRanking1,
-      'flRanking2' : flRanking2,
-      'autoFlStart' : autoFlStart,
-      'autoFlBaseLine' : autoFlBaseLine,
-      'autoNumCellLoad' : autoNumCellLoad,
-      'autoFlFoul' : autoFlFoul,
-      'autoFlRobotContact' : autoFlRobotContact,
-      'autoFlLoseStartObject' : autoFlLoseStartObject,
-      'autoFlCrossOver' : autoFlCrossOver,
-      'autoNumHighConeSuccess' : autoNumHighConeSuccess,
-      'autoNumMidConeSuccess' : autoNumMidConeSuccess,
-      'autoNumLowConeSuccess' : autoNumLowConeSuccess,
-      'autoNumHighCubeSuccess' : autoNumHighCubeSuccess,
-      'autoNumMidCubeSuccess' : autoNumMidCubeSuccess,
-      'autoNumLowCubeSuccess' : autoNumLowCubeSuccess,
-      'autoNumCubeAttempt' : autoNumCubeAttempt,
-      'autoNumConeAttempt' : autoNumConeAttempt,
-      'autoIdChargeAttempt' : autoIdChargeAttempt,
-      'autoIdChargeOutcome' : autoIdChargeOutcome,
-      'teleFlPark' : teleFlPark,
-      'teleIdChargeAttempt' : teleIdChargeAttempt,
-      'teleIdChargeOutcome' : teleIdChargeOutcome,
-      'teleFlClimbFall' : teleFlClimbFall,
-      'teleIdChargeBalanceSpeed' : teleIdChargeBalanceSpeed,
-      'teleFlChargeAssist' : teleFlChargeAssist,
-      'teleNumChargeAssist' : teleNumChargeAssist,
-      'teleNumHighConeSuccess' : teleNumHighConeSuccess,
-      'teleNumMidConeSuccess' : teleNumMidConeSuccess,
-      'teleNumLowConeSuccess' : teleNumLowConeSuccess,
-      'teleNumHighCubeSuccess' : teleNumHighCubeSuccess,
-      'teleNumMidCubeSuccess' : teleNumMidCubeSuccess,
-      'teleNumLowCubeSuccess' : teleNumLowCubeSuccess,
-      'teleNumCubeAttempt' : teleNumCubeAttempt,
-      'teleNumConeAttempt' : teleNumConeAttempt,
-      'commIdDriveRating' : commIdDriveRating,
-      'commIdDefenceRating' : commIdDefenceRating,
-      'commIdDriveTraction' : commIdDriveTraction,
-      'commFlStrategy' : commFlStrategy,
-      'commFlAssist' : commFlAssist,
-      'commFlRecovery' : commFlRecovery,
-      'commFlFailure' : commFlFailure,
-      'commFlWarning' : commFlWarning,
-      'commFlHighlight' : commFlHighlight,
-      'commFlIntakeGround' : commFlIntakeGround,
-      'commFlIntakeHigh' : commFlIntakeHigh,
-      'commFlIntakeStation' : commFlIntakeStation,
-      'commTxNotes' : commTxNotes,
+      'id': id,
+      'flUploaded': flUploaded,
+      'txEvent': txEvent,
+      'txDeviceName': txDeviceName,
+      'numMatch': numMatch,
+      'idAlliance': idAlliance,
+      'idDriveStation': idDriveStation,
+      'idTeam': idTeam,
+      'txScoutName': txScoutName,
+      'idStartPosition': idStartPosition,
+      'flRed': flRed,
+      'flYellow': flYellow,
+      'flCrash': flCrash,
+      'flCoop': flCoop,
+      'flCoopAll': flCoopAll,
+      'flRanking1': flRanking1,
+      'flRanking2': flRanking2,
+      'autoFlStart': autoFlStart,
+      'autoFlBaseLine': autoFlBaseLine,
+      'autoNumCellLoad': autoNumCellLoad,
+      'autoFlFoul': autoFlFoul,
+      'autoFlRobotContact': autoFlRobotContact,
+      'autoFlLoseStartObject': autoFlLoseStartObject,
+      'autoFlCrossOver': autoFlCrossOver,
+      'autoNumHighConeSuccess': autoNumHighConeSuccess,
+      'autoNumMidConeSuccess': autoNumMidConeSuccess,
+      'autoNumLowConeSuccess': autoNumLowConeSuccess,
+      'autoNumHighCubeSuccess': autoNumHighCubeSuccess,
+      'autoNumMidCubeSuccess': autoNumMidCubeSuccess,
+      'autoNumLowCubeSuccess': autoNumLowCubeSuccess,
+      'autoNumCubeAttempt': autoNumCubeAttempt,
+      'autoNumConeAttempt': autoNumConeAttempt,
+      'autoIdChargeAttempt': autoIdChargeAttempt,
+      'autoIdChargeOutcome': autoIdChargeOutcome,
+      'teleFlPark': teleFlPark,
+      'teleIdChargeAttempt': teleIdChargeAttempt,
+      'teleIdChargeOutcome': teleIdChargeOutcome,
+      'teleFlClimbFall': teleFlClimbFall,
+      'teleIdChargeBalanceSpeed': teleIdChargeBalanceSpeed,
+      'teleFlChargeAssist': teleFlChargeAssist,
+      'teleNumChargeAssist': teleNumChargeAssist,
+      'teleNumHighConeSuccess': teleNumHighConeSuccess,
+      'teleNumMidConeSuccess': teleNumMidConeSuccess,
+      'teleNumLowConeSuccess': teleNumLowConeSuccess,
+      'teleNumHighCubeSuccess': teleNumHighCubeSuccess,
+      'teleNumMidCubeSuccess': teleNumMidCubeSuccess,
+      'teleNumLowCubeSuccess': teleNumLowCubeSuccess,
+      'teleNumCubeAttempt': teleNumCubeAttempt,
+      'teleNumConeAttempt': teleNumConeAttempt,
+      'commIdDriveRating': commIdDriveRating,
+      'commIdDefenceRating': commIdDefenceRating,
+      'commIdDriveTraction': commIdDriveTraction,
+      'commFlStrategy': commFlStrategy,
+      'commFlAssist': commFlAssist,
+      'commFlRecovery': commFlRecovery,
+      'commFlFailure': commFlFailure,
+      'commFlWarning': commFlWarning,
+      'commFlHighlight': commFlHighlight,
+      'commFlIntakeGround': commFlIntakeGround,
+      'commFlIntakeHigh': commFlIntakeHigh,
+      'commFlIntakeStation': commFlIntakeStation,
+      'commTxNotes': commTxNotes,
     };
   }
 
   Map<String, dynamic> toLocalDB() {
     return {
-      'id' : id,
-      'flUploaded' : flUploaded,
-      'txEvent' : txEvent,
-      'txDeviceName' : txDeviceName,
-      'numMatch' : numMatch,
-      'idAlliance' : idAlliance,
-      'idDriveStation' : idDriveStation,
-      'idTeam' : idTeam,
-      'txScoutName' : txScoutName,
-      'idStartPosition' : idStartPosition,
-      'flRed' : flRed,
-      'flYellow' : flYellow,
-      'flCrash' : flCrash,
-      'flCoop' : flCoop,
-      'flCoopAll' : flCoopAll,
-      'flRanking1' : flRanking1,
-      'flRanking2' : flRanking2,
-      'autoFlStart' : autoFlStart,
-      'autoFlBaseLine' : autoFlBaseLine,
-      'autoNumCellLoad' : autoNumCellLoad,
-      'autoFlFoul' : autoFlFoul,
-      'autoFlRobotContact' : autoFlRobotContact,
-      'autoFlLoseStartObject' : autoFlLoseStartObject,
-      'autoFlCrossOver' : autoFlCrossOver,
-      'autoNumHighConeSuccess' : autoNumHighConeSuccess,
-      'autoNumMidConeSuccess' : autoNumMidConeSuccess,
-      'autoNumLowConeSuccess' : autoNumLowConeSuccess,
-      'autoNumHighCubeSuccess' : autoNumHighCubeSuccess,
-      'autoNumMidCubeSuccess' : autoNumMidCubeSuccess,
-      'autoNumLowCubeSuccess' : autoNumLowCubeSuccess,
-      'autoNumCubeAttempt' : autoNumCubeAttempt,
-      'autoNumConeAttempt' : autoNumConeAttempt,
-      'autoIdChargeAttempt' : autoIdChargeAttempt,
-      'autoIdChargeOutcome' : autoIdChargeOutcome,
-      'teleFlPark' : teleFlPark,
-      'teleIdChargeAttempt' : teleIdChargeAttempt,
-      'teleIdChargeOutcome' : teleIdChargeOutcome,
-      'teleFlClimbFall' : teleFlClimbFall,
-      'teleIdChargeBalanceSpeed' : teleIdChargeBalanceSpeed,
-      'teleFlChargeAssist' : teleFlChargeAssist,
-      'teleNumChargeAssist' : teleNumChargeAssist,
-      'teleNumHighConeSuccess' : teleNumHighConeSuccess,
-      'teleNumMidConeSuccess' : teleNumMidConeSuccess,
-      'teleNumLowConeSuccess' : teleNumLowConeSuccess,
-      'teleNumHighCubeSuccess' : teleNumHighCubeSuccess,
-      'teleNumMidCubeSuccess' : teleNumMidCubeSuccess,
-      'teleNumLowCubeSuccess' : teleNumLowCubeSuccess,
-      'teleNumCubeAttempt' : teleNumCubeAttempt,
-      'teleNumConeAttempt' : teleNumConeAttempt,
-      'commIdDriveRating' : commIdDriveRating,
-      'commIdDefenceRating' : commIdDefenceRating,
-      'commIdDriveTraction' : commIdDriveTraction,
-      'commFlStrategy' : commFlStrategy,
-      'commFlAssist' : commFlAssist,
-      'commFlRecovery' : commFlRecovery,
-      'commFlFailure' : commFlFailure,
-      'commFlWarning' : commFlWarning,
-      'commFlHighlight' : commFlHighlight,
-      'commFlIntakeGround' : commFlIntakeGround,
-      'commFlIntakeHigh' : commFlIntakeHigh,
-      'commFlIntakeStation' : commFlIntakeStation,
-      'commTxNotes' : commTxNotes,
+      'id': id,
+      'flUploaded': flUploaded,
+      'txEvent': txEvent,
+      'txDeviceName': txDeviceName,
+      'numMatch': numMatch,
+      'idAlliance': idAlliance,
+      'idDriveStation': idDriveStation,
+      'idTeam': idTeam,
+      'txScoutName': txScoutName,
+      'idStartPosition': idStartPosition,
+      'flRed': flRed,
+      'flYellow': flYellow,
+      'flCrash': flCrash,
+      'flCoop': flCoop,
+      'flCoopAll': flCoopAll,
+      'flRanking1': flRanking1,
+      'flRanking2': flRanking2,
+      'autoFlStart': autoFlStart,
+      'autoFlBaseLine': autoFlBaseLine,
+      'autoNumCellLoad': autoNumCellLoad,
+      'autoFlFoul': autoFlFoul,
+      'autoFlRobotContact': autoFlRobotContact,
+      'autoFlLoseStartObject': autoFlLoseStartObject,
+      'autoFlCrossOver': autoFlCrossOver,
+      'autoNumHighConeSuccess': autoNumHighConeSuccess,
+      'autoNumMidConeSuccess': autoNumMidConeSuccess,
+      'autoNumLowConeSuccess': autoNumLowConeSuccess,
+      'autoNumHighCubeSuccess': autoNumHighCubeSuccess,
+      'autoNumMidCubeSuccess': autoNumMidCubeSuccess,
+      'autoNumLowCubeSuccess': autoNumLowCubeSuccess,
+      'autoNumCubeAttempt': autoNumCubeAttempt,
+      'autoNumConeAttempt': autoNumConeAttempt,
+      'autoIdChargeAttempt': autoIdChargeAttempt,
+      'autoIdChargeOutcome': autoIdChargeOutcome,
+      'teleFlPark': teleFlPark,
+      'teleIdChargeAttempt': teleIdChargeAttempt,
+      'teleIdChargeOutcome': teleIdChargeOutcome,
+      'teleFlClimbFall': teleFlClimbFall,
+      'teleIdChargeBalanceSpeed': teleIdChargeBalanceSpeed,
+      'teleFlChargeAssist': teleFlChargeAssist,
+      'teleNumChargeAssist': teleNumChargeAssist,
+      'teleNumHighConeSuccess': teleNumHighConeSuccess,
+      'teleNumMidConeSuccess': teleNumMidConeSuccess,
+      'teleNumLowConeSuccess': teleNumLowConeSuccess,
+      'teleNumHighCubeSuccess': teleNumHighCubeSuccess,
+      'teleNumMidCubeSuccess': teleNumMidCubeSuccess,
+      'teleNumLowCubeSuccess': teleNumLowCubeSuccess,
+      'teleNumCubeAttempt': teleNumCubeAttempt,
+      'teleNumConeAttempt': teleNumConeAttempt,
+      'commIdDriveRating': commIdDriveRating,
+      'commIdDefenceRating': commIdDefenceRating,
+      'commIdDriveTraction': commIdDriveTraction,
+      'commFlStrategy': commFlStrategy,
+      'commFlAssist': commFlAssist,
+      'commFlRecovery': commFlRecovery,
+      'commFlFailure': commFlFailure,
+      'commFlWarning': commFlWarning,
+      'commFlHighlight': commFlHighlight,
+      'commFlIntakeGround': commFlIntakeGround,
+      'commFlIntakeHigh': commFlIntakeHigh,
+      'commFlIntakeStation': commFlIntakeStation,
+      'commTxNotes': commTxNotes,
     };
   }
 
@@ -280,12 +280,16 @@ class MatchScoutingData {
     this.flRanking1 = map['flRanking1'].toString().toLowerCase() == 'true';
     this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';
     this.autoFlStart = map['autoFlStart'].toString().toLowerCase() == 'true';
-    this.autoFlBaseLine = map['autoFlBaseLine'].toString().toLowerCase() == 'true';
+    this.autoFlBaseLine =
+        map['autoFlBaseLine'].toString().toLowerCase() == 'true';
     this.autoNumCellLoad = map['autoNumCellLoad'];
     this.autoFlFoul = map['autoFlFoul'].toString().toLowerCase() == 'true';
-    this.autoFlRobotContact = map['autoFlRobotContact'].toString().toLowerCase() == 'true';
-    this.autoFlLoseStartObject = map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
-    this.autoFlCrossOver = map['autoFlCrossOver'].toString().toLowerCase() == 'true';
+    this.autoFlRobotContact =
+        map['autoFlRobotContact'].toString().toLowerCase() == 'true';
+    this.autoFlLoseStartObject =
+        map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
+    this.autoFlCrossOver =
+        map['autoFlCrossOver'].toString().toLowerCase() == 'true';
     this.autoNumHighConeSuccess = map['autoNumHighConeSuccess'];
     this.autoNumMidConeSuccess = map['autoNumMidConeSuccess'];
     this.autoNumLowConeSuccess = map['autoNumLowConeSuccess'];
@@ -299,9 +303,11 @@ class MatchScoutingData {
     this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
     this.teleIdChargeAttempt = map['teleIdChargeAttempt'];
     this.teleIdChargeOutcome = map['teleIdChargeOutcome'];
-    this.teleFlClimbFall = map['teleFlClimbFall'].toString().toLowerCase() == 'true';
+    this.teleFlClimbFall =
+        map['teleFlClimbFall'].toString().toLowerCase() == 'true';
     this.teleIdChargeBalanceSpeed = map['teleIdChargeBalanceSpeed'];
-    this.teleFlChargeAssist = map['teleFlChargeAssist'].toString().toLowerCase() == 'true';
+    this.teleFlChargeAssist =
+        map['teleFlChargeAssist'].toString().toLowerCase() == 'true';
     this.teleNumChargeAssist = map['teleNumChargeAssist'];
     this.teleNumHighConeSuccess = map['teleNumHighConeSuccess'];
     this.teleNumMidConeSuccess = map['teleNumMidConeSuccess'];
@@ -314,15 +320,23 @@ class MatchScoutingData {
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
     this.commIdDriveTraction = map['commIdDriveTraction'];
-    this.commFlStrategy = map['commFlStrategy'].toString().toLowerCase() == 'true';
+    this.commFlStrategy =
+        map['commFlStrategy'].toString().toLowerCase() == 'true';
     this.commFlAssist = map['commFlAssist'].toString().toLowerCase() == 'true';
-    this.commFlRecovery = map['commFlRecovery'].toString().toLowerCase() == 'true';
-    this.commFlFailure = map['commFlFailure'].toString().toLowerCase() == 'true';
-    this.commFlWarning = map['commFlWarning'].toString().toLowerCase() == 'true';
-    this.commFlHighlight = map['commFlHighlight'].toString().toLowerCase() == 'true';
-    this.commFlIntakeGround = map['commFlIntakeGround'].toString().toLowerCase() == 'true';
-    this.commFlIntakeHigh = map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
-    this.commFlIntakeStation = map['commFlIntakeStation'].toString().toLowerCase() == 'true';
+    this.commFlRecovery =
+        map['commFlRecovery'].toString().toLowerCase() == 'true';
+    this.commFlFailure =
+        map['commFlFailure'].toString().toLowerCase() == 'true';
+    this.commFlWarning =
+        map['commFlWarning'].toString().toLowerCase() == 'true';
+    this.commFlHighlight =
+        map['commFlHighlight'].toString().toLowerCase() == 'true';
+    this.commFlIntakeGround =
+        map['commFlIntakeGround'].toString().toLowerCase() == 'true';
+    this.commFlIntakeHigh =
+        map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
+    this.commFlIntakeStation =
+        map['commFlIntakeStation'].toString().toLowerCase() == 'true';
     this.commTxNotes = map['commTxNotes'];
   }
 
@@ -345,12 +359,16 @@ class MatchScoutingData {
     this.flRanking1 = map['flRanking1'].toString().toLowerCase() == 'true';
     this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';
     this.autoFlStart = map['autoFlStart'].toString().toLowerCase() == 'true';
-    this.autoFlBaseLine = map['autoFlBaseLine'].toString().toLowerCase() == 'true';
+    this.autoFlBaseLine =
+        map['autoFlBaseLine'].toString().toLowerCase() == 'true';
     this.autoNumCellLoad = map['autoNumCellLoad'];
     this.autoFlFoul = map['autoFlFoul'].toString().toLowerCase() == 'true';
-    this.autoFlRobotContact = map['autoFlRobotContact'].toString().toLowerCase() == 'true';
-    this.autoFlLoseStartObject = map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
-    this.autoFlCrossOver = map['autoFlCrossOver'].toString().toLowerCase() == 'true';
+    this.autoFlRobotContact =
+        map['autoFlRobotContact'].toString().toLowerCase() == 'true';
+    this.autoFlLoseStartObject =
+        map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
+    this.autoFlCrossOver =
+        map['autoFlCrossOver'].toString().toLowerCase() == 'true';
     this.autoNumHighConeSuccess = map['autoNumHighConeSuccess'];
     this.autoNumMidConeSuccess = map['autoNumMidConeSuccess'];
     this.autoNumLowConeSuccess = map['autoNumLowConeSuccess'];
@@ -364,9 +382,11 @@ class MatchScoutingData {
     this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
     this.teleIdChargeAttempt = map['teleIdChargeAttempt'];
     this.teleIdChargeOutcome = map['teleIdChargeOutcome'];
-    this.teleFlClimbFall = map['teleFlClimbFall'].toString().toLowerCase() == 'true';
+    this.teleFlClimbFall =
+        map['teleFlClimbFall'].toString().toLowerCase() == 'true';
     this.teleIdChargeBalanceSpeed = map['teleIdChargeBalanceSpeed'];
-    this.teleFlChargeAssist = map['teleFlChargeAssist'].toString().toLowerCase() == 'true';
+    this.teleFlChargeAssist =
+        map['teleFlChargeAssist'].toString().toLowerCase() == 'true';
     this.teleNumChargeAssist = map['teleNumChargeAssist'];
     this.teleNumHighConeSuccess = map['teleNumHighConeSuccess'];
     this.teleNumMidConeSuccess = map['teleNumMidConeSuccess'];
@@ -379,15 +399,23 @@ class MatchScoutingData {
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
     this.commIdDriveTraction = map['commIdDriveTraction'];
-    this.commFlStrategy = map['commFlStrategy'].toString().toLowerCase() == 'true';
+    this.commFlStrategy =
+        map['commFlStrategy'].toString().toLowerCase() == 'true';
     this.commFlAssist = map['commFlAssist'].toString().toLowerCase() == 'true';
-    this.commFlRecovery = map['commFlRecovery'].toString().toLowerCase() == 'true';
-    this.commFlFailure = map['commFlFailure'].toString().toLowerCase() == 'true';
-    this.commFlWarning = map['commFlWarning'].toString().toLowerCase() == 'true';
-    this.commFlHighlight = map['commFlHighlight'].toString().toLowerCase() == 'true';
-    this.commFlIntakeGround = map['commFlIntakeGround'].toString().toLowerCase() == 'true';
-    this.commFlIntakeHigh = map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
-    this.commFlIntakeStation = map['commFlIntakeStation'].toString().toLowerCase() == 'true';
+    this.commFlRecovery =
+        map['commFlRecovery'].toString().toLowerCase() == 'true';
+    this.commFlFailure =
+        map['commFlFailure'].toString().toLowerCase() == 'true';
+    this.commFlWarning =
+        map['commFlWarning'].toString().toLowerCase() == 'true';
+    this.commFlHighlight =
+        map['commFlHighlight'].toString().toLowerCase() == 'true';
+    this.commFlIntakeGround =
+        map['commFlIntakeGround'].toString().toLowerCase() == 'true';
+    this.commFlIntakeHigh =
+        map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
+    this.commFlIntakeStation =
+        map['commFlIntakeStation'].toString().toLowerCase() == 'true';
     this.commTxNotes = map['commTxNotes'];
   }
 

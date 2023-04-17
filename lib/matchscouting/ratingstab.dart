@@ -4,13 +4,12 @@ import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
 class RatingsTab extends StatefulWidget {
-  const RatingsTab(
-      {Key? key,
-      required this.styleFontSize,
-      required this.styleFontSizeHeadings,
-      required this.matchScoutingData,
-      this.onCommentsChanged,
-      required this.onChange})
+  const RatingsTab({Key? key,
+    required this.styleFontSize,
+    required this.styleFontSizeHeadings,
+    required this.matchScoutingData,
+    this.onCommentsChanged,
+    required this.onChange})
       : super(key: key);
 
   final double styleFontSize;
@@ -92,7 +91,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       dropDownValues: listRatings,
                       onStateChanged: (String value) {
                         setState(
-                          () {
+                              () {
                             widget.matchScoutingData.commIdDriveRating = value;
                             widget.onChange!(widget.matchScoutingData);
                           },
@@ -114,7 +113,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       dropDownValues: listRatingsDefence,
                       onStateChanged: (String value) {
                         setState(
-                          () {
+                              () {
                             widget.matchScoutingData.commIdDefenceRating =
                                 value;
                             widget.onChange!(widget.matchScoutingData);
@@ -137,7 +136,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       dropDownValues: listTraction,
                       onStateChanged: (String value) {
                         setState(
-                          () {
+                              () {
                             widget.matchScoutingData.commIdDriveTraction =
                                 value;
                             widget.onChange!(widget.matchScoutingData);
@@ -379,10 +378,11 @@ class _RatingsTabState extends State<RatingsTab> {
                             border: InputBorder.none,
                             isDense: true,
                             labelStyle:
-                                TextStyle(fontSize: widget.styleFontSize),
+                            TextStyle(fontSize: widget.styleFontSize),
                           ),
                           onChanged: (String value) {
-                            widget.onCommentsChanged!(value);
+                            widget.matchScoutingData.commTxNotes = value;
+                            widget.onChange!(widget.matchScoutingData);
                           },
                         ),
                       ),

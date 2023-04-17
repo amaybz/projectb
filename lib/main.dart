@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
     Key? key,
     @required this.camera,
   }) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -111,12 +112,11 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage(
-      {Key? key,
-      this.title,
-      this.camera,
-      this.theme = true,
-      this.onchangeTheme})
+  MyHomePage({Key? key,
+    this.title,
+    this.camera,
+    this.theme = true,
+    this.onchangeTheme})
       : super(key: key);
 
   final CameraDescription? camera;
@@ -132,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
   LocalDB localDB = LocalDB.instance;
   WebAPI webAPI = new WebAPI();
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
+
   //style
   double styleFontSize = 14;
   String versionName = "";
@@ -184,12 +185,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //used to store all events from API
   List<EventData>? allEvents;
+
   //used to store events for a location
   List<EventData>? eventsForLocation;
+
   //used to fill the dropdown box
   List<EventsList> eventsList = [];
   List<EventMatches> eventMatches = [];
   List<DropdownMenuItem<String>> eventListDropDown = [];
+
   //used to store the current selected event
   EventData? selectedEvent;
   LocalEvent? selectedLocalEvent;
@@ -228,14 +232,14 @@ class _MyHomePageState extends State<MyHomePage> {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
     setState(() {
       _countOfTeams =
-          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
   }
 
   void setLocalEvent() async {
     String savedEventKey = await mySharedPrefs.readStr("currentEvent");
     List<LocalEvent> listSelectedLocalEvents =
-        await localDB.getEvent(savedEventKey);
+    await localDB.getEvent(savedEventKey);
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
 
     setState(() {
@@ -243,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ? listSelectedLocalEvents.first
           : null;
       _countOfTeams =
-          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
       //locationDropDown = selectedLocalEvent?.location;
     });
     //print("LocalEvent: " + selectedLocalEvent.key);
@@ -318,6 +322,9 @@ class _MyHomePageState extends State<MyHomePage> {
     //print(await localDB.listScoringData());
     //gets all events from API
     allEvents = await webAPI.getEventsByYear(year);
+    allEvents?.sort((a, b) {
+      return a.shortName.toString().compareTo(b.locationName.toString());
+    });
     //setEventItems();
   }
 
@@ -447,6 +454,9 @@ class _MyHomePageState extends State<MyHomePage> {
       txtEventHelpText = "No Events for this location!";
     } else {
       txtEventHelpText = "Please choose a event";
+      eventsList.sort((a, b) {
+        return a.name.toString().compareTo(b.name.toString());
+      });
     }
     //update dropdown box with the new events
     for (EventsList event in eventsList) {
@@ -471,7 +481,10 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     //style
 
-    double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     print("Screen Size: " + width.toString());
 
     if (width < 500) {
@@ -509,7 +522,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               decoration:
-                  BoxDecoration(color: Theme.of(context).primaryColorDark),
+              BoxDecoration(color: Theme
+                  .of(context)
+                  .primaryColorDark),
             ),
             ListTile(
               title: Text('Pit Scouting'),
@@ -584,7 +599,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: ConstrainedBox(
                         constraints:
-                            BoxConstraints(maxWidth: 900.0, minWidth: 250.0),
+                        BoxConstraints(maxWidth: 900.0, minWidth: 250.0),
                         child: Container(
                           margin: const EdgeInsets.all(10.0),
                           padding: EdgeInsets.all(4.0),
@@ -595,7 +610,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                     vertical: 10.0, horizontal: 0.0),
                                 child: Text(
                                   "Current Event",
-                                  style: Theme.of(context).textTheme.headline6,
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headline6,
                                 ),
                               ),
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
@@ -626,7 +644,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         Container(
                           child: Text("Set Event",
-                              style: Theme.of(context).textTheme.headline6),
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .headline6),
                         ),
                       ]),
                   Row(
@@ -708,7 +729,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onChanged: (item) {
                               setState(() {
                                 selectedEvent = eventsForLocation!.firstWhere(
-                                    (loc) => loc.key == item,
+                                        (loc) => loc.key == item,
                                     orElse: () => eventsForLocation!.first);
                               });
                               print("Key: " + selectedEvent!.key.toString());
@@ -760,15 +781,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ? "None Selected"
         : selectedLocalEvent!.shortName;
     var eventKey =
-        (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
+    (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
-        builder: (context) => ScoringDataScreen(
-          eventName: eventShortName,
-          eventKey: eventKey,
-        ),
+        builder: (context) =>
+            ScoringDataScreen(
+              eventName: eventShortName,
+              eventKey: eventKey,
+            ),
       ),
     );
   }
@@ -788,7 +810,8 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
-          builder: (context) => MatchScoutingScreen(
+          builder: (context) =>
+              MatchScoutingScreen(
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
@@ -812,7 +835,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => PitScoutingScreen(
+          builder: (context) =>
+              PitScoutingScreen(
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,

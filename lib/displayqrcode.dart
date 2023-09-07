@@ -26,7 +26,7 @@ class _DisplayQRCodeState extends State<DisplayQRCode> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //Text("QR Code"),
-            QrImage(
+            QrImageView(
               data: widget.data!,
               version: QrVersions.auto,
               size: widget.styleQRSize,

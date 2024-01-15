@@ -30,6 +30,13 @@ class PitAuto extends StatefulWidget {
 }
 
 class _PitAutoState extends State<PitAuto> {
+  List<DropdownMenuItem<String>> listAutoScore = [
+    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "2", child: Text("Amp")),
+    DropdownMenuItem(value: "3", child: Text("Speaker")),
+    DropdownMenuItem(value: "4", child: Text("All")),
+  ];
+
   @override
   Widget build(BuildContext context) {
     if (widget.pitData.flAuto == false) {
@@ -37,7 +44,6 @@ class _PitAutoState extends State<PitAuto> {
         widthFactor: 0.99,
         child: Container(
           margin: const EdgeInsets.all(5.0),
-
           child: Container(
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
@@ -67,7 +73,6 @@ class _PitAutoState extends State<PitAuto> {
         widthFactor: 0.99,
         child: Container(
           margin: const EdgeInsets.all(5.0),
-
           child: Container(
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
@@ -92,7 +97,7 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Mobility:",
+                    "Leaves Line:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -125,9 +130,13 @@ class _PitAutoState extends State<PitAuto> {
                 ],
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("#Objects Scored:"),
+                Text(
+                  "#Rings Scored:",
+                  style: TextStyle(fontSize: widget.styleFontSize),
+                ),
                 CounterWidget(
                   title: "",
+                  styleFontSize: widget.styleFontSize,
                   value: widget.pitData.numAutoScore,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
@@ -153,96 +162,58 @@ class _PitAutoState extends State<PitAuto> {
               ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
                   Text(
-                    "Score on Hybrid Node:",
+                    "Score Locations:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
-                  Switch(
-                    value: widget.pitData.flAutoNodeBottom!,
-                    onChanged: (bool value) {
+                  DropdownButton(
+                    value: widget.pitData.idAutoScore == null
+                        ? null
+                        : widget.pitData.idAutoScore,
+                    items: listAutoScore,
+                    onChanged: (item) {
                       setState(() {
-                        widget.pitData.flAutoNodeBottom = value;
+                        widget.pitData.idAutoScore = item as String?;
                         widget.onChanged!(widget.pitData);
                       });
+                      print("idAutoScore: " + widget.pitData.idAutoScore!);
                     },
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Score on Middle Node:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoNodeMid!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoNodeMid = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Score on High Node:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoNodeHigh!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoNodeHigh = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Reach Charge Station:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoCharge!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoCharge = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Balance Charge Station:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoChargeBalance!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoChargeBalance = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-
-
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Extra Rings:",
+                  style: TextStyle(fontSize: widget.styleFontSize),
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoRings,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoRings =
+                          widget.pitData.numAutoRings! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoRings =
+                          widget.pitData.numAutoRings! - 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoRings = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
             ]),
           ),
         ),

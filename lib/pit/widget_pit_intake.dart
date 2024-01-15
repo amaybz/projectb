@@ -5,8 +5,8 @@ import 'package:projectb/widgets/widget_headingmain.dart';
 
 import '../widgets/widget_row_heading.dart';
 
-class PitGamePieces extends StatefulWidget {
-  PitGamePieces({
+class PitIntake extends StatefulWidget {
+  PitIntake({
     Key? key,
     required this.pitData,
     this.styleFontSize = 16,
@@ -26,10 +26,10 @@ class PitGamePieces extends StatefulWidget {
   final ValueChanged<bool>? onExpanded;
 
   @override
-  _PitGamePiecesState createState() => _PitGamePiecesState();
+  _PitIntakeState createState() => _PitIntakeState();
 }
 
-class _PitGamePiecesState extends State<PitGamePieces> {
+class _PitIntakeState extends State<PitIntake> {
   List<DropdownMenuItem<String>> listObjectTypes = [
     DropdownMenuItem(value: "1", child: Text("Both")),
     DropdownMenuItem(value: "2", child: Text("Cone")),
@@ -48,65 +48,23 @@ class _PitGamePiecesState extends State<PitGamePieces> {
           child: Column(children: <Widget>[
             HeadingMain(
               styleFontSize: widget.styleFontSize,
-              headingText: "Game Pieces",
+              headingText: "Intake",
               //backGroundColor: Colors.green,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Manipulate Cones:",
+                  "Manipulate Rings:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
-                  value: widget.pitData.flCone!,
+                  value: widget.pitData.flRing!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flCone = value;
+                      widget.pitData.flRing = value;
                       widget.onChanged!(widget.pitData);
                     });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Manipulate Cubes:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
-                ),
-                Switch(
-                  value: widget.pitData.flCube!,
-                  onChanged: (bool value) {
-                    setState(() {
-                      widget.pitData.flCube = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Best Game Piece:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
-                ),
-                DropdownButton(
-                  value: widget.pitData.idObjectPreference == null
-                      ? null
-                      : widget.pitData.idObjectPreference,
-                  items: listObjectTypes,
-                  onChanged: (item) {
-                    setState(() {
-                      widget.pitData.idObjectPreference = item as String?;
-                      widget.onChanged!(widget.pitData);
-                    });
-                    print("idObjectPreference: " +
-                        widget.pitData.idObjectPreference!);
                   },
                 ),
               ],
@@ -123,23 +81,6 @@ class _PitGamePiecesState extends State<PitGamePieces> {
                   onChanged: (bool value) {
                     setState(() {
                       widget.pitData.flObjectCatch = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Get Object from Shelf:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
-                ),
-                Switch(
-                  value: widget.pitData.flObjectShelf!,
-                  onChanged: (bool value) {
-                    setState(() {
-                      widget.pitData.flObjectShelf = value;
                     });
                   },
                 ),
@@ -166,14 +107,14 @@ class _PitGamePiecesState extends State<PitGamePieces> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Get Cone on Side:",
+                  "Get Ring on Angle:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
-                  value: widget.pitData.flObjectSide!,
+                  value: widget.pitData.flObjectAngle!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flObjectSide = value;
+                      widget.pitData.flObjectAngle = value;
                     });
                   },
                 ),

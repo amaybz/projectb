@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projectb/pit/widget_pit_drivebase.dart';
-import 'package:projectb/pit/widget_pit_game_pieces.dart';
+import 'package:projectb/pit/widget_pit_intake.dart';
 import 'package:projectb/pit/widget_pit_scoring.dart';
 import 'package:projectb/settings.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
@@ -11,7 +11,7 @@ import 'package:projectb/localdb.dart';
 import 'dart:async';
 import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/finishtab.dart';
-import 'package:projectb/pit/widget_pit_charge.dart';
+import 'package:projectb/pit/widget_pit_climb.dart';
 import 'package:projectb/pit/widget_pit_auto.dart';
 import 'package:projectb/pit/widget_pit_images.dart';
 import 'dart:io';
@@ -47,6 +47,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
 
   //manage save record
   bool recordSaved = false;
+
   //define text controllers
   final TextEditingController _txtScoutName = TextEditingController();
   final TextEditingController txChargeNotes = TextEditingController();
@@ -480,7 +481,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 widthFactor: 0.99,
                 child: Container(
                   margin: const EdgeInsets.all(5.0),
-
                   child: Container(
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
@@ -607,17 +607,25 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   (value == true) ? scrollDown(50) : scrollDown(0);
                 },
               ),
-              PitGamePieces(pitData: pitData,txNotes: txObjectNotes,onChanged: (PitData updates) {
-                setState(() {
-                  pitData = updates;
-                });
-              },),
-              PitScoring(pitData: pitData, txScoringNotes: txScoringNotes, onChanged: (PitData updates) {
-                setState(() {
-                  pitData = updates;
-                });
-              },),
-              PitCharge(
+              PitIntake(
+                pitData: pitData,
+                txNotes: txObjectNotes,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+              ),
+              PitScoring(
+                pitData: pitData,
+                txScoringNotes: txScoringNotes,
+                onChanged: (PitData updates) {
+                  setState(() {
+                    pitData = updates;
+                  });
+                },
+              ),
+              PitClimb(
                 pitData: pitData,
                 txChargeNotes: txChargeNotes,
                 styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
@@ -643,13 +651,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   (value == true) ? scrollDown(100) : scrollDown(0);
                 },
               ),
-
-
               FractionallySizedBox(
                 widthFactor: 0.99,
                 child: Container(
                   margin: const EdgeInsets.all(5.0),
-
                   child: Container(
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
@@ -680,7 +685,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   ),
                 ),
               ),
-
               FinishTab(
                 onSavePressed: (bool value) async {
                   if (recordSaved == true) {

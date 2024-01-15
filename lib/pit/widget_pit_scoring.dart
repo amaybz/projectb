@@ -26,10 +26,11 @@ class PitScoring extends StatefulWidget {
 
 class _PitScoringState extends State<PitScoring> {
   List<DropdownMenuItem<String>> listNodeType = [
-    DropdownMenuItem(value: "1", child: Text("Pole")),
-    DropdownMenuItem(value: "2", child: Text("Shelf")),
-    DropdownMenuItem(value: "3", child: Text("Both")),
-    DropdownMenuItem(value: "4", child: Text("NA")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("Subwoofer")),
+    DropdownMenuItem(value: "3", child: Text("Podium")),
+    DropdownMenuItem(value: "4", child: Text("Long")),
+    DropdownMenuItem(value: "5", child: Text("All")),
   ];
 
   @override
@@ -50,48 +51,14 @@ class _PitScoringState extends State<PitScoring> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Score on Hybrid Node:",
+                  "Score in Amp:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
-                  value: widget.pitData.flNodeBottom!,
+                  value: widget.pitData.flScoreAmp!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flNodeBottom = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Score on Middle Node:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
-                ),
-                Switch(
-                  value: widget.pitData.flNodeMid!,
-                  onChanged: (bool value) {
-                    setState(() {
-                      widget.pitData.flNodeMid = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Score on High Node:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
-                ),
-                Switch(
-                  value: widget.pitData.flNodeHigh!,
-                  onChanged: (bool value) {
-                    setState(() {
-                      widget.pitData.flNodeHigh = value;
+                      widget.pitData.flScoreAmp = value;
                     });
                   },
                 ),
@@ -102,20 +69,37 @@ class _PitScoringState extends State<PitScoring> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Node Types:",
+                  "Score in Speaker:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 DropdownButton(
-                  value: widget.pitData.flNodeType == null
+                  value: widget.pitData.idScoreSpeaker == null
                       ? null
-                      : widget.pitData.flNodeType,
+                      : widget.pitData.idScoreSpeaker,
                   items: listNodeType,
                   onChanged: (item) {
                     setState(() {
-                      widget.pitData.flNodeType = item as String?;
+                      widget.pitData.idScoreSpeaker = item as String?;
                       widget.onChanged!(widget.pitData);
                     });
-                    print("flNodeType: " + widget.pitData.flNodeType!);
+                    print("flNodeType: " + widget.pitData.idScoreSpeaker!);
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Score in Trap:",
+                  style: TextStyle(fontSize: widget.styleFontSize),
+                ),
+                Switch(
+                  value: widget.pitData.flScoreTrap!,
+                  onChanged: (bool value) {
+                    setState(() {
+                      widget.pitData.flScoreTrap = value;
+                    });
                   },
                 ),
               ],

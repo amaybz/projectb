@@ -5,8 +5,8 @@ import 'package:projectb/widgets/widget_headingmain.dart';
 
 import '../widgets/widget_row_heading.dart';
 
-class PitCharge extends StatefulWidget {
-  PitCharge({
+class PitClimb extends StatefulWidget {
+  PitClimb({
     Key? key,
     required this.pitData,
     this.styleFontSize = 16,
@@ -26,40 +26,45 @@ class PitCharge extends StatefulWidget {
   final ValueChanged<bool>? onExpanded;
 
   @override
-  _PitChargeState createState() => _PitChargeState();
+  _PitClimbState createState() => _PitClimbState();
 }
 
-class _PitChargeState extends State<PitCharge> {
+class _PitClimbState extends State<PitClimb> {
+  List<DropdownMenuItem<String>> listClimbType = [
+    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "2", child: Text("Passive")),
+    DropdownMenuItem(value: "3", child: Text("Active")),
+  ];
 
-  List<DropdownMenuItem<String>> listChargeBalanceType = [
-    DropdownMenuItem(value: "1", child: Text("Auto")),
-    DropdownMenuItem(value: "2", child: Text("Manual")),
-    DropdownMenuItem(value: "3", child: Text("N/A")),
+  List<DropdownMenuItem<String>> listClimbPos = [
+    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "2", child: Text("Middle")),
+    DropdownMenuItem(value: "3", child: Text("High")),
+    DropdownMenuItem(value: "4", child: Text("Any")),
   ];
 
   @override
   Widget build(BuildContext context) {
-    if (widget.pitData.flCharge == false) {
+    if (widget.pitData.flStage == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
           margin: const EdgeInsets.all(5.0),
-
           child: Container(
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Charge Station",
+                headingText: "Climb",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Climb Charge Station:",
-                value: widget.pitData.flCharge,
+                text: "Climb Stage:",
+                value: widget.pitData.flStage,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flCharge = value;
+                    widget.pitData.flStage = value;
                     widget.onChanged!(widget.pitData);
                     widget.onExpanded!(true);
                   });
@@ -79,17 +84,17 @@ class _PitChargeState extends State<PitCharge> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Charge Station",
+                headingText: "Climb",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Climb Charge Station:",
-                value: widget.pitData.flCharge,
+                text: "Climb Stage:",
+                value: widget.pitData.flStage,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flCharge = value;
+                    widget.pitData.flStage = value;
                     widget.onChanged!(widget.pitData);
                     widget.onExpanded!(true);
                   });
@@ -97,17 +102,24 @@ class _PitChargeState extends State<PitCharge> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
                   Text(
-                    "Balance Charge Station:",
+                    "Climb Position:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
-                  Switch(
-                    value: widget.pitData.flChargeBalance!,
-                    onChanged: (bool value) {
+                  DropdownButton(
+                    value: widget.pitData.idStageClimbPos == null
+                        ? null
+                        : widget.pitData.idStageClimbPos,
+                    items: listClimbPos,
+                    onChanged: (item) {
                       setState(() {
-                        widget.pitData.flChargeBalance = value;
+                        widget.pitData.idStageClimbPos = item as String?;
+                        widget.onChanged!(widget.pitData);
                       });
+                      print("idStageClimbPos: " +
+                          widget.pitData.idStageClimbPos!);
                     },
                   ),
                 ],
@@ -117,20 +129,21 @@ class _PitChargeState extends State<PitCharge> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Type of Balance:",
+                    "Type of Climb:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   DropdownButton(
-                    value: widget.pitData.idChargeBalanceType == null
+                    value: widget.pitData.idStageClimbType == null
                         ? null
-                        : widget.pitData.idChargeBalanceType,
-                    items: listChargeBalanceType,
+                        : widget.pitData.idStageClimbType,
+                    items: listClimbType,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idChargeBalanceType = item as String?;
+                        widget.pitData.idStageClimbType = item as String?;
                         widget.onChanged!(widget.pitData);
                       });
-                      print("idChargeBalanceType: " + widget.pitData.idChargeBalanceType!);
+                      print("idChargeBalanceType: " +
+                          widget.pitData.idStageClimbType!);
                     },
                   ),
                 ],
@@ -143,10 +156,10 @@ class _PitChargeState extends State<PitCharge> {
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
-                    value: widget.pitData.flChargeAssist!,
+                    value: widget.pitData.flStageAssist!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flChargeAssist = value;
+                        widget.pitData.flStageAssist = value;
                       });
                     },
                   ),
@@ -165,9 +178,7 @@ class _PitChargeState extends State<PitCharge> {
                         maxWidth: widget.styleFieldTxShootingMaxWidth),
                     child: TextField(
                       controller: widget.txChargeNotes,
-                      decoration: InputDecoration(
-                          hintText:
-                              'Charge Station Notes'),
+                      decoration: InputDecoration(hintText: 'Stage Notes'),
                     ),
                   ),
                 ],

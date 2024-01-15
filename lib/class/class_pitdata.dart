@@ -13,35 +13,28 @@ class PitData {
   File? imgRobotFront;
   File? imgRobotSide;
   String? idDriveType;
-  int? intWheels;
   String? txDriveNotes;
-  bool? flCone;
-  bool? flCube;
+  bool? flRing;
   String? idObjectPreference;
   bool? flObjectCatch;
-  bool? flObjectShelf;
+  bool? flObjectAngle;
   bool? flObjectFloor;
-  bool? flObjectSide;
   String? txObjectNotes;
-  bool? flNodeBottom;
-  bool? flNodeMid;
-  bool? flNodeHigh;
-  String? flNodeType;
+  bool? flScoreAmp;
+  bool? flScoreTrap;
+  String? idScoreSpeaker;
   String? txScoringNotes;
-  bool? flCharge;
-  bool? flChargeBalance;
-  String? idChargeBalanceType;
-  bool? flChargeAssist;
-  String? txChargeNotes;
+  bool? flStage;
+  String? idStageClimbPos;
+  String? idStageClimbType;
+  bool? flStageAssist;
+  String? txStageNotes;
   bool? flAuto;
   bool? flAutoLine;
   bool? flAutoScore;
   int? numAutoScore;
-  bool? flAutoNodeBottom;
-  bool? flAutoNodeMid;
-  bool? flAutoNodeHigh;
-  bool? flAutoCharge;
-  bool? flAutoChargeBalance;
+  int? numAutoRings;
+  String? idAutoScore;
   String? txPitNotes;
   String? dtCreation;
   String? dtModified;
@@ -60,35 +53,28 @@ class PitData {
     this.imgRobotFront,
     this.imgRobotSide,
     this.idDriveType,
-    this.intWheels = 0,
     this.txDriveNotes,
-    this.flCone = false,
-    this.flCube = false,
+    this.flRing = false,
     this.idObjectPreference,
     this.flObjectCatch = false,
-    this.flObjectShelf = false,
+    this.flObjectAngle = false,
     this.flObjectFloor = false,
-    this.flObjectSide = false,
     this.txObjectNotes,
-    this.flNodeBottom = false,
-    this.flNodeMid = false,
-    this.flNodeHigh = false,
-    this.flNodeType,
+    this.flScoreAmp = false,
+    this.flScoreTrap = false,
+    this.idScoreSpeaker,
     this.txScoringNotes,
-    this.flCharge = false,
-    this.flChargeBalance = false,
-    this.idChargeBalanceType,
-    this.flChargeAssist = false,
-    this.txChargeNotes,
+    this.flStage = false,
+    this.idStageClimbPos,
+    this.idStageClimbType,
+    this.flStageAssist = false,
+    this.txStageNotes,
     this.flAuto = false,
     this.flAutoLine = false,
     this.flAutoScore = false,
     this.numAutoScore = 0,
-    this.flAutoNodeBottom = false,
-    this.flAutoNodeMid = false,
-    this.flAutoNodeHigh = false,
-    this.flAutoCharge = false,
-    this.flAutoChargeBalance = false,
+    this.numAutoRings = 0,
+    this.idAutoScore,
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,
@@ -122,35 +108,28 @@ class PitData {
       'imgRobotFront': fileRobotFront,
       'imgRobotSide': fileImgRobotSide,
       'idDriveType': idDriveType,
-      'intWheels': intWheels,
       'txDriveNotes': txDriveNotes,
-      'flCone': flCone.toString(),
-      'flCube': flCube.toString(),
+      'flRing': flRing.toString(),
       'idObjectPreference': idObjectPreference,
       'flObjectCatch': flObjectCatch.toString(),
-      'flObjectShelf': flObjectShelf.toString(),
+      'flObjectAngle': flObjectAngle.toString(),
       'flObjectFloor': flObjectFloor.toString(),
-      'flObjectSide': flObjectSide.toString(),
       'txObjectNotes': txObjectNotes,
-      'flNodeBottom': flNodeBottom.toString(),
-      'flNodeMid': flNodeMid.toString(),
-      'flNodeHigh': flNodeHigh.toString(),
-      'flNodeType': flNodeType,
+      'flScoreAmp': flScoreAmp.toString(),
+      'flScoreTrap': flScoreTrap.toString(),
+      'idScoreSpeaker': idScoreSpeaker,
       'txScoringNotes': txScoringNotes,
-      'flCharge': flCharge.toString(),
-      'flChargeBalance': flChargeBalance.toString(),
-      'idChargeBalanceType': idChargeBalanceType,
-      'flChargeAssist': flChargeAssist.toString(),
-      'txChargeNotes': txChargeNotes,
+      'flStage': flStage.toString(),
+      'idStageClimbPos': idStageClimbPos,
+      'idStageClimbType': idStageClimbType,
+      'flStageAssist': flStageAssist.toString(),
+      'txStageNotes': txStageNotes,
       'flAuto': flAuto.toString(),
       'flAutoLine': flAutoLine.toString(),
       'flAutoScore': flAutoScore.toString(),
       'numAutoScore': numAutoScore,
-      'flAutoNodeBottom': flAutoNodeBottom.toString(),
-      'flAutoNodeMid': flAutoNodeMid.toString(),
-      'flAutoNodeHigh': flAutoNodeHigh.toString(),
-      'flAutoCharge': flAutoCharge.toString(),
-      'flAutoChargeBalance': flAutoChargeBalance.toString(),
+      'numAutoRings': numAutoRings,
+      'idAutoScore': idAutoScore,
       'txPitNotes': txPitNotes,
       'dtCreation': dtCreation,
       'dtModified': dtModified,
@@ -168,35 +147,32 @@ class PitData {
     this.numHeight = map['numHeight'];
     this.numWidth = map['numWidth'];
     this.idDriveType = map['idDriveType'];
-    this.intWheels = map['intWheels'];
     this.txDriveNotes = map['txDriveNotes'];
-    this.flCone = map['flCone'].toString().toLowerCase() == 'true';
-    this.flCube = map['flCube'].toString().toLowerCase() == 'true';
+    this.flRing = map['flRing'].toString().toLowerCase() == 'true';
     this.idObjectPreference = map['idObjectPreference'];
-    this.flObjectCatch = map['flObjectCatch'].toString().toLowerCase() == 'true';
-    this.flObjectShelf = map['flObjectShelf'].toString().toLowerCase() == 'true';
-    this.flObjectFloor = map['flObjectFloor'].toString().toLowerCase() == 'true';
-    this.flObjectSide = map['flObjectSide'].toString().toLowerCase() == 'true';
+    this.flObjectCatch =
+        map['flObjectCatch'].toString().toLowerCase() == 'true';
+    this.flObjectAngle =
+        map['flObjectAngle'].toString().toLowerCase() == 'true';
+    this.flObjectFloor =
+        map['flObjectFloor'].toString().toLowerCase() == 'true';
     this.txObjectNotes = map['txObjectNotes'];
-    this.flNodeBottom = map['flNodeBottom'].toString().toLowerCase() == 'true';
-    this.flNodeMid = map['flNodeMid'].toString().toLowerCase() == 'true';
-    this.flNodeHigh = map['flNodeHigh'].toString().toLowerCase() == 'true';
-    this.flNodeType = map['flNodeType'];
+    this.flScoreAmp = map['flScoreAmp'].toString().toLowerCase() == 'true';
+    this.flScoreTrap = map['flScoreTrap'].toString().toLowerCase() == 'true';
+    this.idScoreSpeaker = map['idScoreSpeaker'];
     this.txScoringNotes = map['txScoringNotes'];
-    this.flCharge = map['flCharge'].toString().toLowerCase() == 'true';
-    this.flChargeBalance = map['flChargeBalance'].toString().toLowerCase() == 'true';
-    this.idChargeBalanceType = map['idChargeBalanceType'];
-    this.flChargeAssist = map['flChargeAssist'].toString().toLowerCase() == 'true';
-    this.txChargeNotes = map['txChargeNotes'];
+    this.flStage = map['flStage'].toString().toLowerCase() == 'true';
+    this.idStageClimbPos = map['idStageClimbPos'];
+    this.idStageClimbType = map['idStageClimbType'];
+    this.flStageAssist =
+        map['flStageAssist'].toString().toLowerCase() == 'true';
+    this.txStageNotes = map['txStageNotes'];
     this.flAuto = map['flAuto'].toString().toLowerCase() == 'true';
     this.flAutoLine = map['flAutoLine'].toString().toLowerCase() == 'true';
     this.flAutoScore = map['flAutoScore'].toString().toLowerCase() == 'true';
     this.numAutoScore = map['numAutoScore'];
-    this.flAutoNodeBottom = map['flAutoNodeBottom'].toString().toLowerCase() == 'true';
-    this.flAutoNodeMid = map['flAutoNodeMid'].toString().toLowerCase() == 'true';
-    this.flAutoNodeHigh = map['flAutoNodeHigh'].toString().toLowerCase() == 'true';
-    this.flAutoCharge = map['flAutoCharge'].toString().toLowerCase() == 'true';
-    this.flAutoChargeBalance = map['flAutoChargeBalance'].toString().toLowerCase() == 'true';
+    this.numAutoRings = map['numAutoRings'];
+    this.idAutoScore = map['idAutoScore'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
@@ -235,35 +211,29 @@ class PitData {
     data['numHeight'] = this.numHeight;
     data['numWidth'] = this.numWidth;
     data['idDriveType'] = this.idDriveType;
-    data['intWheels'] = this.intWheels;
+
     data['txDriveNotes'] = this.txDriveNotes;
-    data['flCone'] = this.flCone;
-    data['flCube'] = this.flCube;
+    data['flRing'] = this.flRing;
     data['idObjectPreference'] = this.idObjectPreference;
     data['flObjectCatch'] = this.flObjectCatch;
-    data['flObjectShelf'] = this.flObjectShelf;
+    data['flObjectAngle'] = this.flObjectAngle;
     data['flObjectFloor'] = this.flObjectFloor;
-    data['flObjectSide'] = this.flObjectSide;
     data['txObjectNotes'] = this.txObjectNotes;
-    data['flNodeBottom'] = this.flNodeBottom;
-    data['flNodeMid'] = this.flNodeMid;
-    data['flNodeHigh'] = this.flNodeHigh;
-    data['flNodeType'] = this.flNodeType;
+    data['flScoreAmp'] = this.flScoreAmp;
+    data['flScoreTrap'] = this.flScoreTrap;
+    data['idScoreSpeaker'] = this.idScoreSpeaker;
     data['txScoringNotes'] = this.txScoringNotes;
-    data['flCharge'] = this.flCharge;
-    data['flChargeBalance'] = this.flChargeBalance;
-    data['idChargeBalanceType'] = this.idChargeBalanceType;
-    data['flChargeAssist'] = this.flChargeAssist;
-    data['txChargeNotes'] = this.txChargeNotes;
+    data['flStage'] = this.flStage;
+    data['idStageClimbPos'] = this.idStageClimbPos;
+    data['idChargeBalanceType'] = this.idStageClimbType;
+    data['flStageAssist'] = this.flStageAssist;
+    data['txStageNotes'] = this.txStageNotes;
     data['flAuto'] = this.flAuto;
     data['flAutoLine'] = this.flAutoLine;
     data['flAutoScore'] = this.flAutoScore;
     data['numAutoScore'] = this.numAutoScore;
-    data['flAutoNodeBottom'] = this.flAutoNodeBottom;
-    data['flAutoNodeMid'] = this.flAutoNodeMid;
-    data['flAutoNodeHigh'] = this.flAutoNodeHigh;
-    data['flAutoCharge'] = this.flAutoCharge;
-    data['flAutoChargeBalance'] = this.flAutoChargeBalance;
+    data['numAutoRings'] = this.numAutoRings;
+    data['idAutoScore'] = this.idAutoScore;
     data['txPitNotes'] = this.txPitNotes;
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
@@ -284,35 +254,28 @@ class PitData {
     this.numHeight = map['numHeight'];
     this.numWidth = map['numWidth'];
     this.idDriveType = map['idDriveType'];
-    this.intWheels = map['intWheels'];
     this.txDriveNotes = map['txDriveNotes'];
-    this.flCone = map['flCone'];
-    this.flCube = map['flCube'];
+    this.flRing = map['flRing'];
     this.idObjectPreference = map['idObjectPreference'];
     this.flObjectCatch = map['flObjectCatch'];
-    this.flObjectShelf = map['flObjectShelf'];
+    this.flObjectAngle = map['flObjectAngle'];
     this.flObjectFloor = map['flObjectFloor'];
-    this.flObjectSide = map['flObjectSide'];
     this.txObjectNotes = map['txObjectNotes'];
-    this.flNodeBottom = map['flNodeBottom'];
-    this.flNodeMid = map['flNodeMid'];
-    this.flNodeHigh = map['flNodeHigh'];
-    this.flNodeType = map['flNodeType'];
+    this.flScoreAmp = map['flScoreAmp'];
+    this.flScoreTrap = map['flScoreTrap'];
+    this.idScoreSpeaker = map['idScoreSpeaker'];
     this.txScoringNotes = map['txScoringNotes'];
-    this.flCharge = map['flCharge'];
-    this.flChargeBalance = map['flChargeBalance'];
-    this.idChargeBalanceType = map['idChargeBalanceType'];
-    this.flChargeAssist = map['flChargeAssist'];
-    this.txChargeNotes = map['txChargeNotes'];
+    this.flStage = map['flStage'];
+    this.idStageClimbPos = map['idStageClimbPos'];
+    this.idStageClimbType = map['idStageClimbType'];
+    this.flStageAssist = map['flStageAssist'];
+    this.txStageNotes = map['txStageNotes'];
     this.flAuto = map['flAuto'];
     this.flAutoLine = map['flAutoLine'];
     this.flAutoScore = map['flAutoScore'];
     this.numAutoScore = map['numAutoScore'];
-    this.flAutoNodeBottom = map['flAutoNodeBottom'];
-    this.flAutoNodeMid = map['flAutoNodeMid'];
-    this.flAutoNodeHigh = map['flAutoNodeHigh'];
-    this.flAutoCharge = map['flAutoCharge'];
-    this.flAutoChargeBalance = map['flAutoChargeBalance'];
+    this.numAutoRings = map['numAutoRings'];
+    this.idAutoScore = map['idAutoScore'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];

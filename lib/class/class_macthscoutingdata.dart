@@ -16,12 +16,14 @@ class MatchScoutingData {
   bool? flCoopAll;
   bool? flRanking1;
   bool? flRanking2;
+  bool? flAutoStop;
   bool? autoFlStart;
   bool? autoFlBaseLine;
   int? autoNumCellLoad;
   bool? autoFlFoul;
   bool? autoFlRobotContact;
   bool? autoFlLoseStartObject;
+  bool? autoFlFail;
   bool? autoFlCrossOver;
   int? autoNumHighConeSuccess;
   int? autoNumMidConeSuccess;
@@ -80,12 +82,14 @@ class MatchScoutingData {
     this.flCoopAll = false,
     this.flRanking1 = false,
     this.flRanking2 = false,
+    this.flAutoStop = false,
     this.autoFlStart = false,
     this.autoFlBaseLine = false,
     this.autoNumCellLoad = 0,
     this.autoFlFoul = false,
     this.autoFlRobotContact = false,
     this.autoFlLoseStartObject = false,
+    this.autoFlFail = false,
     this.autoFlCrossOver = false,
     this.autoNumHighConeSuccess = 0,
     this.autoNumMidConeSuccess = 0,
@@ -146,12 +150,14 @@ class MatchScoutingData {
       'flCoopAll': flCoopAll,
       'flRanking1': flRanking1,
       'flRanking2': flRanking2,
+      'flAutoStop': flAutoStop,
       'autoFlStart': autoFlStart,
       'autoFlBaseLine': autoFlBaseLine,
       'autoNumCellLoad': autoNumCellLoad,
       'autoFlFoul': autoFlFoul,
       'autoFlRobotContact': autoFlRobotContact,
       'autoFlLoseStartObject': autoFlLoseStartObject,
+      'autoFlFail': autoFlFail,
       'autoFlCrossOver': autoFlCrossOver,
       'autoNumHighConeSuccess': autoNumHighConeSuccess,
       'autoNumMidConeSuccess': autoNumMidConeSuccess,
@@ -213,12 +219,14 @@ class MatchScoutingData {
       'flCoopAll': flCoopAll,
       'flRanking1': flRanking1,
       'flRanking2': flRanking2,
+      'flAutoStop': flAutoStop,
       'autoFlStart': autoFlStart,
       'autoFlBaseLine': autoFlBaseLine,
       'autoNumCellLoad': autoNumCellLoad,
       'autoFlFoul': autoFlFoul,
       'autoFlRobotContact': autoFlRobotContact,
       'autoFlLoseStartObject': autoFlLoseStartObject,
+      'autoFlFail': autoFlFail,
       'autoFlCrossOver': autoFlCrossOver,
       'autoNumHighConeSuccess': autoNumHighConeSuccess,
       'autoNumMidConeSuccess': autoNumMidConeSuccess,
@@ -279,6 +287,7 @@ class MatchScoutingData {
     this.flCoopAll = map['flCoopAll'].toString().toLowerCase() == 'true';
     this.flRanking1 = map['flRanking1'].toString().toLowerCase() == 'true';
     this.flRanking2 = map['flRanking2'].toString().toLowerCase() == 'true';
+    this.flAutoStop = map['flAutoStop'].toString().toLowerCase() == 'true';
     this.autoFlStart = map['autoFlStart'].toString().toLowerCase() == 'true';
     this.autoFlBaseLine =
         map['autoFlBaseLine'].toString().toLowerCase() == 'true';
@@ -288,6 +297,7 @@ class MatchScoutingData {
         map['autoFlRobotContact'].toString().toLowerCase() == 'true';
     this.autoFlLoseStartObject =
         map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
+    this.autoFlFail = map['autoFlFail'].toString().toLowerCase() == 'true';
     this.autoFlCrossOver =
         map['autoFlCrossOver'].toString().toLowerCase() == 'true';
     this.autoNumHighConeSuccess = map['autoNumHighConeSuccess'];
@@ -440,12 +450,14 @@ class MatchScoutingData {
         'flCoopAll: $flCoopAll,'
         'flRanking1: $flRanking1,'
         'flRanking2: $flRanking2,'
+        'flAutoStop: $flAutoStop,'
         'autoFlStart: $autoFlStart,'
         'autoFlBaseLine: $autoFlBaseLine,'
         'autoNumCellLoad: $autoNumCellLoad,'
         'autoFlFoul: $autoFlFoul,'
         'autoFlRobotContact: $autoFlRobotContact,'
         'autoFlLoseStartObject: $autoFlLoseStartObject,'
+        'autoFlFail: $autoFlFail,'
         'autoFlCrossOver: $autoFlCrossOver,'
         'autoNumHighConeSuccess: $autoNumHighConeSuccess,'
         'autoNumMidConeSuccess: $autoNumMidConeSuccess,'

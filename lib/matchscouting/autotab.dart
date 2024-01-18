@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_auto_errors.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_charge_station.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_grids.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
 
 import '../widgets/widget_headingmain.dart';
 
@@ -15,7 +16,6 @@ class AutoTab extends StatefulWidget {
     this.styleImgFieldPerformanceWidth = 150,
     this.onLoseStartObjectChange,
     this.onContactWithRobotChange,
-    this.onCrossSectorChange,
     this.onFoulChange,
     this.onAutoNumMidConeSuccessChange,
     this.onAutoNumLowConeSuccessChange,
@@ -38,7 +38,6 @@ class AutoTab extends StatefulWidget {
   final ValueChanged<int>? onAutoNumCellSuccessChange;
   final ValueChanged<bool>? onLoseStartObjectChange;
   final ValueChanged<bool>? onContactWithRobotChange;
-  final ValueChanged<bool>? onCrossSectorChange;
   final ValueChanged<bool>? onFoulChange;
   final ValueChanged<bool>? onAutoNumHighConeSuccessChange;
   final ValueChanged<bool>? onAutoNumMidConeSuccessChange;
@@ -67,12 +66,12 @@ class _AutoTabState extends State<AutoTab> {
               //Image.asset('assets/imgs/field.png'),
               Container(
                 decoration: BoxDecoration(
-                  //border: Border.all(color: Colors.black),
-                  //image: DecorationImage(
-                  // image: AssetImage("assets/imgs/field.png"),
-                  // fit: BoxFit.cover,
-                  //),
-                ),
+                    //border: Border.all(color: Colors.black),
+                    //image: DecorationImage(
+                    // image: AssetImage("assets/imgs/field.png"),
+                    // fit: BoxFit.cover,
+                    //),
+                    ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,13 +117,13 @@ class _AutoTabState extends State<AutoTab> {
                       Column(children: <Widget>[
                         SizedBox(
                           width: widget.styleImgFieldMapWidth,
-                          height: (widget.styleImgFieldMapWidth * 0.45),
+                          height: (widget.styleImgFieldMapWidth + 23),
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white),
                               color: Colors.grey,
                             ),
-                            child: Image.asset("assets/imgs/field1.png"),
+                            child: Image.asset("assets/imgs/field.png"),
                           ),
                         ),
                       ]),
@@ -185,93 +184,18 @@ class _AutoTabState extends State<AutoTab> {
           },
           onExpanded: (value) {},
         ),
-        FractionallySizedBox(
-          widthFactor: 0.99,
-          child: Container(
-            padding: EdgeInsets.all(4.0),
-            margin: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(),
-            child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
-                headingText: "Errors",
-                //backGroundColor: Colors.green,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(5.0),
-                    child: Text("Lose Cargo"),
-                  ),
-                  Switch(
-                    value: widget.matchScoutingData.autoFlLoseStartObject!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.onLoseStartObjectChange!(value);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(5.0),
-                    child: Text("Hit Robot"),
-                  ),
-                  Switch(
-                      value: widget.matchScoutingData.autoFlRobotContact!,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.onContactWithRobotChange!(value);
-                        });
-                      }),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(5.0),
-                    child: Text("Cross Sector"),
-                  ),
-                  Switch(
-                      value: widget.matchScoutingData.autoFlCrossOver!,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.onCrossSectorChange!(value);
-                        });
-                      }),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(5.0),
-                    child: Text("Foul"),
-                  ),
-                  Switch(
-                    value: widget.matchScoutingData.autoFlFoul!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.onFoulChange!(value);
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ]),
-          ),
+        MatchAutoErrors(
+          matchScoutingData: widget.matchScoutingData,
+          styleCounterButtonHeight: widget.styleCounterButtonHeight,
+          styleCounterButtonWidth: widget.styleCounterButtonWidth,
+          onChanged: (MatchScoutingData updates) {
+            setState(() {
+              widget.onChanged!(updates);
+            });
+          },
+          onExpanded: (value) {},
         ),
-        ChargeStation(
-            matchScoutingData: widget.matchScoutingData,
-            onChanged: (matchScoutingData) {
-              widget.onChanged!(matchScoutingData);
-            }),
-        GridsWidget(
+        ScoreWidget(
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
@@ -362,7 +286,6 @@ class _AutoTabState extends State<AutoTab> {
             });
           },
         ),
-
       ],
     );
   }

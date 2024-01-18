@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
 import 'package:projectb/sharedprefs.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_grids.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
 
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/widgets/widget_dropdown_indexed.dart';
@@ -134,7 +134,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
         widthFactor: 0.99,
         child: Container(
           padding: const EdgeInsets.all(5.0),
-          child: GridsWidget(
+          child: ScoreWidget(
             styleCounterButtonHeight: widget.styleCounterButtonHeight,
             styleCounterButtonWidth: widget.styleCounterButtonWidth,
             matchScoutingData: widget.matchScoutingData,

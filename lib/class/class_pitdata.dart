@@ -14,7 +14,7 @@ class PitData {
   File? imgRobotSide;
   String? idDriveType;
   String? txDriveNotes;
-  bool? flRing;
+  bool? flObject;
   String? idObjectPreference;
   bool? flObjectCatch;
   bool? flObjectAngle;
@@ -54,7 +54,7 @@ class PitData {
     this.imgRobotSide,
     this.idDriveType,
     this.txDriveNotes,
-    this.flRing = false,
+    this.flObject = false,
     this.idObjectPreference,
     this.flObjectCatch = false,
     this.flObjectAngle = false,
@@ -109,7 +109,7 @@ class PitData {
       'imgRobotSide': fileImgRobotSide,
       'idDriveType': idDriveType,
       'txDriveNotes': txDriveNotes,
-      'flRing': flRing.toString(),
+      'flObject': flObject.toString(),
       'idObjectPreference': idObjectPreference,
       'flObjectCatch': flObjectCatch.toString(),
       'flObjectAngle': flObjectAngle.toString(),
@@ -148,7 +148,7 @@ class PitData {
     this.numWidth = map['numWidth'];
     this.idDriveType = map['idDriveType'];
     this.txDriveNotes = map['txDriveNotes'];
-    this.flRing = map['flRing'].toString().toLowerCase() == 'true';
+    this.flObject = map['flObject'].toString().toLowerCase() == 'true';
     this.idObjectPreference = map['idObjectPreference'];
     this.flObjectCatch =
         map['flObjectCatch'].toString().toLowerCase() == 'true';
@@ -213,7 +213,7 @@ class PitData {
     data['idDriveType'] = this.idDriveType;
 
     data['txDriveNotes'] = this.txDriveNotes;
-    data['flRing'] = this.flRing;
+    data['flObject'] = this.flObject;
     data['idObjectPreference'] = this.idObjectPreference;
     data['flObjectCatch'] = this.flObjectCatch;
     data['flObjectAngle'] = this.flObjectAngle;
@@ -255,7 +255,7 @@ class PitData {
     this.numWidth = map['numWidth'];
     this.idDriveType = map['idDriveType'];
     this.txDriveNotes = map['txDriveNotes'];
-    this.flRing = map['flRing'];
+    this.flObject = map['flObject'];
     this.idObjectPreference = map['idObjectPreference'];
     this.flObjectCatch = map['flObjectCatch'];
     this.flObjectAngle = map['flObjectAngle'];

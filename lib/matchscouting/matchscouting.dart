@@ -660,7 +660,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             child: Container(
               margin: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
-                //border: Border.all(color: Colors.black),
+                border: Border.all(color: Colors.red),
+                color: Colors.red,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
@@ -669,50 +670,29 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
               ),
               padding: EdgeInsets.all(0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(
                       left: 0.0,
                     ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red),
-                      color: Colors.red,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(0)),
-                    ),
+                    //decoration: BoxDecoration(
+                    // border: Border.all(color: Colors.red),
+                    //color: Colors.red,
+                    //borderRadius: BorderRadius.only(
+                    //    topLeft: Radius.circular(10),
+                    //   topRight: Radius.circular(10),
+                    //   bottomLeft: Radius.circular(10),
+                    //  bottomRight: Radius.circular(10)),
+                    //),
                     constraints: BoxConstraints.expand(
-                        width: styleRedBoxSize, height: 205.0),
+                        width: styleRedBoxSize, height: 140.0),
                     padding: EdgeInsets.all(4.0),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Container(
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    "Total Failure ",
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Switch(
-                                    value: matchScoutingData.flCrash!,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        matchScoutingData.flCrash = value;
-                                      });
-                                    },
-                                  ),
-                                ]),
-                          ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
@@ -751,112 +731,68 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               ]),
                         ]),
                   ),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 5.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.green),
-                        color: Colors.green,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(0),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(0),
-                            bottomRight: Radius.circular(10)),
-                      ),
-                      constraints: BoxConstraints.expand(height: 205.0),
-                      padding: EdgeInsets.all(4.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    "RP #1",
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    child: Switch(
-                                      value: matchScoutingData.flRanking1!,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          matchScoutingData.flRanking1 = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                //crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "RP #2",
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    child: Switch(
-                                      value: matchScoutingData.flRanking2!,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          matchScoutingData.flRanking2 = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                //crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Coop Attempt",
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    child: Switch(
-                                      value: matchScoutingData.flCoop!,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          matchScoutingData.flCoop = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                //crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Text(
-                                    "Coop Success",
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Container(
-                                    child: Switch(
-                                      value: matchScoutingData.flCoopAll!,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          matchScoutingData.flCoopAll = value;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                          ]),
+                  Container(
+                    margin: const EdgeInsets.only(
+                      left: 0.0,
                     ),
+                    //decoration: BoxDecoration(
+                    // border: Border.all(color: Colors.red),
+                    //color: Colors.red,
+                    //borderRadius: BorderRadius.only(
+                    //    topLeft: Radius.circular(10),
+                    //   topRight: Radius.circular(10),
+                    //   bottomLeft: Radius.circular(10),
+                    //  bottomRight: Radius.circular(10)),
+                    //),
+                    constraints: BoxConstraints.expand(
+                        width: styleRedBoxSize, height: 140.0),
+                    padding: EdgeInsets.all(4.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    "Total Failure ",
+                                    style: TextStyle(
+                                        fontSize: widget.styleFontSize,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Switch(
+                                    value: matchScoutingData.flCrash!,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        matchScoutingData.flCrash = value;
+                                      });
+                                    },
+                                  ),
+                                ]),
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "A-Stop",
+                                  style: TextStyle(
+                                      fontSize: widget.styleFontSize,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  child: Switch(
+                                    value: matchScoutingData.flAutoStop!,
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        matchScoutingData.flAutoStop = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ]),
+                        ]),
                   ),
                 ],
               ),
@@ -923,12 +859,6 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           //save values
           setState(() {
             matchScoutingData.autoFlRobotContact = value;
-          });
-        },
-        onCrossSectorChange: (bool value) {
-          //save values
-          setState(() {
-            matchScoutingData.autoFlCrossOver = value;
           });
         },
         onFoulChange: (bool value) {

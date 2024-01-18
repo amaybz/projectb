@@ -55,7 +55,7 @@ class _PitClimbState extends State<PitClimb> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Climb",
+                headingText: "Stage",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
@@ -84,7 +84,7 @@ class _PitClimbState extends State<PitClimb> {
             child: Column(children: <Widget>[
               HeadingMain(
                 styleFontSize: widget.styleFontSize,
-                headingText: "Climb",
+                headingText: "Stage",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(

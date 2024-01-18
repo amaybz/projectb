@@ -32,11 +32,12 @@ class PitDriveBase extends StatefulWidget {
 
 class _PitDriveBaseState extends State<PitDriveBase> {
   List<DropdownMenuItem<String>> listIdDriveType = [
-    DropdownMenuItem(value: "1", child: Text("KOP")),
-    DropdownMenuItem(value: "2", child: Text("Custom Tank")),
-    DropdownMenuItem(value: "3", child: Text("Meccanum")),
-    DropdownMenuItem(value: "4", child: Text("Swerve")),
-    DropdownMenuItem(value: "5", child: Text("Other")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("KOP")),
+    DropdownMenuItem(value: "3", child: Text("Custom Tank")),
+    DropdownMenuItem(value: "4", child: Text("Meccanum")),
+    DropdownMenuItem(value: "5", child: Text("Swerve")),
+    DropdownMenuItem(value: "6", child: Text("Other")),
   ];
 
   @override
@@ -71,7 +72,7 @@ class _PitDriveBaseState extends State<PitDriveBase> {
                       widget.pitData.idDriveType = item as String?;
                       widget.onChanged(widget.pitData);
                     });
-                    print("idClimbType: " + widget.pitData.idDriveType!);
+                    print("idDriveType: " + widget.pitData.idDriveType!);
                   },
                 ),
               ],

@@ -36,8 +36,7 @@ class _MatchAutoState extends State<MatchAuto> {
       widthFactor: 0.99,
       child: Container(
         margin: const EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-        ),
+        decoration: BoxDecoration(),
         child: Container(
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
@@ -62,7 +61,7 @@ class _MatchAutoState extends State<MatchAuto> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Leave Community?",
+                  "Leave?",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
@@ -77,7 +76,7 @@ class _MatchAutoState extends State<MatchAuto> {
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text("#Cargo Pickup?:"),
+              Text("#Pickup new Objects?:"),
               CounterWidget(
                 styleButtonHeight: widget.styleCounterButtonHeight,
                 styleButtonWidth: widget.styleCounterButtonWidth,
@@ -94,6 +93,9 @@ class _MatchAutoState extends State<MatchAuto> {
                   setState(() {
                     widget.matchScoutingData.autoNumCellLoad =
                         widget.matchScoutingData.autoNumCellLoad! - 1;
+                    if (widget.matchScoutingData.autoNumCellLoad! < 0) {
+                      widget.matchScoutingData.autoNumCellLoad = 0;
+                    }
                     widget.onChanged!(widget.matchScoutingData);
                   });
                 },

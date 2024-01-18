@@ -55,14 +55,14 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Manipulate Rings:",
+                  "Use Note?:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
-                  value: widget.pitData.flRing!,
+                  value: widget.pitData.flObject!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flRing = value;
+                      widget.pitData.flObject = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },
@@ -73,7 +73,7 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Catch Game Piece:",
+                  "Catch:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
@@ -90,7 +90,7 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Get Object from Floor:",
+                  "Floor Pickup:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
@@ -107,7 +107,7 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Get Ring on Angle:",
+                  "Angled Pickup:",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 Switch(
@@ -125,7 +125,7 @@ class _PitIntakeState extends State<PitIntake> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Notes on Intake: ",
+                  "Intake Notes: ",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 ConstrainedBox(

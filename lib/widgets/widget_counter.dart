@@ -43,15 +43,19 @@ class _CounterWidgetState extends State<CounterWidget> {
         height: widget.styleButtonHeight,
         width: widget.styleButtonWidth,
         child: ElevatedButton(
+          //padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
           style: ElevatedButton.styleFrom(
-              primary: Colors.red,
+              primary: Colors.green,
               padding: EdgeInsets.symmetric(vertical: 0.0)),
           child: Text(
-            "-",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            "+",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
           onPressed: () {
-            widget.onDecreaseStateChanged!(-1);
+            widget.onIncreaseStateChanged!(1);
           },
         ),
       ),
@@ -83,19 +87,15 @@ class _CounterWidgetState extends State<CounterWidget> {
         height: widget.styleButtonHeight,
         width: widget.styleButtonWidth,
         child: ElevatedButton(
-          //padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
           style: ElevatedButton.styleFrom(
-              primary: Colors.green,
+              backgroundColor: Colors.red,
               padding: EdgeInsets.symmetric(vertical: 0.0)),
           child: Text(
-            "+",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
+            "-",
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           onPressed: () {
-            widget.onIncreaseStateChanged!(1);
+            widget.onDecreaseStateChanged!(-1);
           },
         ),
       ),

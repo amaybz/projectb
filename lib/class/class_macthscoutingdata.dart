@@ -43,6 +43,7 @@ class MatchScoutingData {
   int? teleNumLowCubeSuccess;
   int? teleNumCubeAttempt;
   int? teleNumConeAttempt;
+  bool? teleFlSpotlight;
   String? commIdDriveRating;
   String? commIdDefenceRating;
   String? commIdDriveTraction;
@@ -102,6 +103,7 @@ class MatchScoutingData {
     this.teleNumLowCubeSuccess = 0,
     this.teleNumCubeAttempt = 0,
     this.teleNumConeAttempt = 0,
+    this.teleFlSpotlight = false,
     this.commIdDriveRating,
     this.commIdDefenceRating,
     this.commIdDriveTraction,
@@ -163,6 +165,7 @@ class MatchScoutingData {
       'teleNumLowCubeSuccess': teleNumLowCubeSuccess,
       'teleNumCubeAttempt': teleNumCubeAttempt,
       'teleNumConeAttempt': teleNumConeAttempt,
+      'teleFlSpotlight': teleFlSpotlight,
       'commIdDriveRating': commIdDriveRating,
       'commIdDefenceRating': commIdDefenceRating,
       'commIdDriveTraction': commIdDriveTraction,
@@ -223,6 +226,7 @@ class MatchScoutingData {
       'teleNumHighCubeSuccess': teleNumHighCubeSuccess,
       'teleNumMidCubeSuccess': teleNumMidCubeSuccess,
       'teleNumLowCubeSuccess': teleNumLowCubeSuccess,
+      'teleFlSpotlight': teleFlSpotlight,
       'teleNumCubeAttempt': teleNumCubeAttempt,
       'teleNumConeAttempt': teleNumConeAttempt,
       'commIdDriveRating': commIdDriveRating,
@@ -290,6 +294,8 @@ class MatchScoutingData {
     this.teleNumLowCubeSuccess = map['teleNumLowCubeSuccess'];
     this.teleNumCubeAttempt = map['teleNumCubeAttempt'];
     this.teleNumConeAttempt = map['teleNumConeAttempt'];
+    this.teleFlSpotlight =
+        map['teleFlSpotlight'].toString().toLowerCase() == 'true';
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
     this.commIdDriveTraction = map['commIdDriveTraction'];
@@ -360,6 +366,8 @@ class MatchScoutingData {
     this.teleNumLowCubeSuccess = map['teleNumLowCubeSuccess'];
     this.teleNumCubeAttempt = map['teleNumCubeAttempt'];
     this.teleNumConeAttempt = map['teleNumConeAttempt'];
+    this.teleFlSpotlight =
+        map['teleFlSpotlight'].toString().toLowerCase() == 'true';
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
     this.commIdDriveTraction = map['commIdDriveTraction'];
@@ -431,6 +439,7 @@ class MatchScoutingData {
         'teleNumLowCubeSuccess: $teleNumLowCubeSuccess,'
         'teleNumCubeAttempt: $teleNumCubeAttempt,'
         'teleNumConeAttempt: $teleNumConeAttempt,'
+        'teleFlSpotlight: $teleFlSpotlight,'
         'commIdDriveRating: $commIdDriveRating,'
         'commIdDefenceRating: $commIdDefenceRating,'
         'commIdDriveTraction: $commIdDriveTraction,'

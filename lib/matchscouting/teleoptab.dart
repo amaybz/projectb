@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
 
@@ -248,6 +249,14 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   },
                   onExpanded: (value) {},
                 ),
+                HumanWidget(
+                  matchScoutingData: widget.matchScoutingData,
+                  onChange: (matchScoutingData) {
+                    setState(() {
+                      widget.onChange!(matchScoutingData);
+                    });
+                  },
+                )
               ]),
         ),
       ),

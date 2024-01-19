@@ -105,7 +105,7 @@ class _PitClimbState extends State<PitClimb> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Climb Position:",
+                    "Climb Location:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   DropdownButton(
@@ -129,7 +129,7 @@ class _PitClimbState extends State<PitClimb> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Type of Climb:",
+                    "Climb Type:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   DropdownButton(
@@ -152,7 +152,7 @@ class _PitClimbState extends State<PitClimb> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Assists another Robot:",
+                    "Climb Assist?:",
                     style: TextStyle(fontSize: widget.styleFontSize),
                   ),
                   Switch(
@@ -178,7 +178,7 @@ class _PitClimbState extends State<PitClimb> {
                         maxWidth: widget.styleFieldTxShootingMaxWidth),
                     child: TextField(
                       controller: widget.txChargeNotes,
-                      decoration: InputDecoration(hintText: 'Stage Notes'),
+                      decoration: InputDecoration(hintText: 'Climb Notes'),
                     ),
                   ),
                 ],

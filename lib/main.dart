@@ -75,9 +75,12 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     brightness: Brightness.dark,
     primaryColor: Colors.blue,
     splashColor: Colors.white,
-    textTheme: const TextTheme(
-      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+    textTheme: TextTheme(
+      displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      //bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+      bodyMedium: Typography.whiteCupertino.bodyMedium,
+      bodySmall: Typography.blackCupertino.bodySmall,
+      displaySmall: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
     ),
   );
 
@@ -86,8 +89,8 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     primaryColor: Colors.blue,
     splashColor: Colors.green,
     textTheme: const TextTheme(
-      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+      displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
     ),
   );
 
@@ -112,11 +115,12 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key,
-    this.title,
-    this.camera,
-    this.theme = true,
-    this.onchangeTheme})
+  MyHomePage(
+      {Key? key,
+      this.title,
+      this.camera,
+      this.theme = true,
+      this.onchangeTheme})
       : super(key: key);
 
   final CameraDescription? camera;
@@ -135,6 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //style
   double styleFontSize = 14;
+  TextStyle? styleTitleText = ThemeData().textTheme.titleLarge;
+  TextStyle? styleMenuText = ThemeData().textTheme.bodyLarge;
+
   String versionName = "";
   String versionCode = "";
   String measurements = "kg";
@@ -232,14 +239,14 @@ class _MyHomePageState extends State<MyHomePage> {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
     setState(() {
       _countOfTeams =
-      listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
     });
   }
 
   void setLocalEvent() async {
     String savedEventKey = await mySharedPrefs.readStr("currentEvent");
     List<LocalEvent> listSelectedLocalEvents =
-    await localDB.getEvent(savedEventKey);
+        await localDB.getEvent(savedEventKey);
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
 
     setState(() {
@@ -247,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ? listSelectedLocalEvents.first
           : null;
       _countOfTeams =
-      listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
       //locationDropDown = selectedLocalEvent?.location;
     });
     //print("LocalEvent: " + selectedLocalEvent.key);
@@ -481,25 +488,28 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     //style
 
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
 
     if (width < 500) {
       setState(() {
         styleFontSize = 13;
+        styleTitleText = Theme.of(context).textTheme.titleMedium;
+        styleMenuText = Theme.of(context).textTheme.bodyMedium;
       });
     }
     if (width < 393) {
       setState(() {
         styleFontSize = 11;
+        styleTitleText = Theme.of(context).textTheme.titleSmall;
+        styleMenuText = Theme.of(context).textTheme.bodySmall;
       });
     }
     if (width >= 600) {
       setState(() {
         styleFontSize = 15;
+        styleTitleText = Theme.of(context).textTheme.titleLarge;
+        styleMenuText = Theme.of(context).textTheme.bodyLarge;
       });
     }
 
@@ -507,7 +517,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title!),
+        title: Text(
+          widget.title!,
+          style: styleTitleText,
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -522,12 +535,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               decoration:
-              BoxDecoration(color: Theme
-                  .of(context)
-                  .primaryColorDark),
+                  BoxDecoration(color: Theme.of(context).primaryColorDark),
             ),
             ListTile(
-              title: Text('Pit Scouting'),
+              title: Text(
+                'Pit Scouting',
+                style: styleMenuText,
+              ),
               onTap: () {
                 Navigator.pop(context);
                 if (selectedLocalEvent != null) {
@@ -536,7 +550,10 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Match Scouting'),
+              title: Text(
+                'Match Scouting',
+                style: styleMenuText,
+              ),
               onTap: () {
                 Navigator.pop(context);
                 if (selectedLocalEvent != null) {
@@ -545,21 +562,30 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
-              title: Text('Saved Records'),
+              title: Text(
+                'Saved Records',
+                style: styleMenuText,
+              ),
               onTap: () {
                 Navigator.pop(context);
                 _navigateToStoredData(context);
               },
             ),
             ListTile(
-              title: Text('Scan QR Code'),
+              title: Text(
+                'Scan QR Code',
+                style: styleMenuText,
+              ),
               onTap: () {
                 Navigator.pop(context);
                 _navigateToQRBarcodeScanner(context);
               },
             ),
             ListTile(
-              title: Text('Add Local Team'),
+              title: Text(
+                'Add Local Team',
+                style: styleMenuText,
+              ),
               onTap: () {
                 Navigator.pop(context);
                 _navigateToAddTeamScreen(context);
@@ -569,7 +595,10 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.only(left: 15.0),
               child: Row(
                 children: [
-                  Text('Dark Mode'),
+                  Text(
+                    'Dark Mode',
+                    style: styleMenuText,
+                  ),
                   Switch(
                       value: widget.theme,
                       onChanged: (toggle) {
@@ -599,7 +628,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: ConstrainedBox(
                         constraints:
-                        BoxConstraints(maxWidth: 900.0, minWidth: 250.0),
+                            BoxConstraints(maxWidth: 900.0, minWidth: 250.0),
                         child: Container(
                           margin: const EdgeInsets.all(10.0),
                           padding: EdgeInsets.all(4.0),
@@ -608,13 +637,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 0.0),
-                                child: Text(
-                                  "Current Event",
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline6,
-                                ),
+                                child: Text("Current Event",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
                               ),
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
                               Text(selectedLocalEvent == null
@@ -630,8 +656,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 0.0),
-                                child: Text("Teams Loaded: " +
-                                    _countOfTeams.toString()),
+                                child: Text(
+                                  "Teams Loaded: " + _countOfTeams.toString(),
+                                ),
                               ),
                             ],
                           ),
@@ -643,11 +670,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          child: Text("Set Event",
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline6),
+                          margin: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: Text("Set New Event",
+                              style: Theme.of(context).textTheme.headlineSmall),
                         ),
                       ]),
                   Row(
@@ -729,7 +754,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             onChanged: (item) {
                               setState(() {
                                 selectedEvent = eventsForLocation!.firstWhere(
-                                        (loc) => loc.key == item,
+                                    (loc) => loc.key == item,
                                     orElse: () => eventsForLocation!.first);
                               });
                               print("Key: " + selectedEvent!.key.toString());
@@ -781,16 +806,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ? "None Selected"
         : selectedLocalEvent!.shortName;
     var eventKey =
-    (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
+        (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
-        builder: (context) =>
-            ScoringDataScreen(
-              eventName: eventShortName,
-              eventKey: eventKey,
-            ),
+        builder: (context) => ScoringDataScreen(
+          eventName: eventShortName,
+          eventKey: eventKey,
+        ),
       ),
     );
   }
@@ -810,8 +834,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
-          builder: (context) =>
-              MatchScoutingScreen(
+          builder: (context) => MatchScoutingScreen(
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
@@ -835,8 +858,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              PitScoutingScreen(
+          builder: (context) => PitScoutingScreen(
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,

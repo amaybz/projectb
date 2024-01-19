@@ -22,23 +22,19 @@ class MatchScoutingData {
   bool? autoFlRobotContact;
   bool? autoFlLoseStartObject;
   bool? autoFlFail;
-  int? autoNumHighConeSuccess;
-  int? autoNumMidConeSuccess;
-  int? autoNumLowConeSuccess;
-  int? autoNumHighCubeSuccess;
-  int? autoNumMidCubeSuccess;
-  int? autoNumLowCubeSuccess;
-  int? autoNumCubeAttempt;
-  int? autoNumConeAttempt;
+  int? autoNumAmpSuccess;
+  int? autoNumTrapSuccess;
+  int? autoNumSpeakerSuccess;
+  int? autoNumSpeakerAttempt;
+  int? autoNumAmpAttempt;
+  int? autoNumTrapAttempt;
   String? autoIdChargeAttempt;
   String? autoIdChargeOutcome;
   bool? teleFlPark;
   String? teleIdChargeAttempt;
-  String? teleIdChargeOutcome;
-  bool? teleFlClimbFall;
-  String? teleIdChargeBalanceSpeed;
-  bool? teleFlChargeAssist;
-  int? teleNumChargeAssist;
+  String? teleIdStageOutcome;
+  String? teleIdStageClimbSpeed;
+  bool? teleFlStageAssist;
   int? teleNumHighConeSuccess;
   int? teleNumMidConeSuccess;
   int? teleNumLowConeSuccess;
@@ -52,12 +48,12 @@ class MatchScoutingData {
   String? commIdDriveTraction;
   bool? commFlStrategy;
   bool? commFlAssist;
+  bool? commFlShuttle;
   bool? commFlRecovery;
   bool? commFlFailure;
   bool? commFlWarning;
   bool? commFlHighlight;
   bool? commFlIntakeGround;
-  bool? commFlIntakeHigh;
   bool? commFlIntakeStation;
   String? commTxNotes;
 
@@ -85,23 +81,19 @@ class MatchScoutingData {
     this.autoFlRobotContact = false,
     this.autoFlLoseStartObject = false,
     this.autoFlFail = false,
-    this.autoNumHighConeSuccess = 0,
-    this.autoNumMidConeSuccess = 0,
-    this.autoNumLowConeSuccess = 0,
-    this.autoNumHighCubeSuccess = 0,
-    this.autoNumMidCubeSuccess = 0,
-    this.autoNumLowCubeSuccess = 0,
-    this.autoNumCubeAttempt = 0,
-    this.autoNumConeAttempt = 0,
+    this.autoNumAmpSuccess = 0,
+    this.autoNumTrapSuccess = 0,
+    this.autoNumSpeakerSuccess = 0,
+    this.autoNumSpeakerAttempt = 0,
+    this.autoNumAmpAttempt = 0,
+    this.autoNumTrapAttempt = 0,
     this.autoIdChargeAttempt,
     this.autoIdChargeOutcome,
     this.teleFlPark = false,
     this.teleIdChargeAttempt,
-    this.teleIdChargeOutcome,
-    this.teleFlClimbFall = false,
-    this.teleIdChargeBalanceSpeed,
-    this.teleFlChargeAssist = false,
-    this.teleNumChargeAssist = 0,
+    this.teleIdStageOutcome,
+    this.teleIdStageClimbSpeed,
+    this.teleFlStageAssist = false,
     this.teleNumHighConeSuccess = 0,
     this.teleNumMidConeSuccess = 0,
     this.teleNumLowConeSuccess = 0,
@@ -120,7 +112,7 @@ class MatchScoutingData {
     this.commFlWarning = false,
     this.commFlHighlight = false,
     this.commFlIntakeGround = false,
-    this.commFlIntakeHigh = false,
+    this.commFlShuttle = false,
     this.commFlIntakeStation = false,
     this.commTxNotes,
   });
@@ -150,23 +142,19 @@ class MatchScoutingData {
       'autoFlRobotContact': autoFlRobotContact,
       'autoFlLoseStartObject': autoFlLoseStartObject,
       'autoFlFail': autoFlFail,
-      'autoNumHighConeSuccess': autoNumHighConeSuccess,
-      'autoNumMidConeSuccess': autoNumMidConeSuccess,
-      'autoNumLowConeSuccess': autoNumLowConeSuccess,
-      'autoNumHighCubeSuccess': autoNumHighCubeSuccess,
-      'autoNumMidCubeSuccess': autoNumMidCubeSuccess,
-      'autoNumLowCubeSuccess': autoNumLowCubeSuccess,
-      'autoNumCubeAttempt': autoNumCubeAttempt,
-      'autoNumConeAttempt': autoNumConeAttempt,
+      'autoNumAmpSuccess': autoNumAmpSuccess,
+      'autoNumTrapSuccess': autoNumTrapSuccess,
+      'autoNumSpeakerSuccess': autoNumSpeakerSuccess,
+      'autoNumTrapAttempt': autoNumTrapAttempt,
+      'autoNumSpeakerAttempt': autoNumSpeakerAttempt,
+      'autoNumAmpAttempt': autoNumAmpAttempt,
       'autoIdChargeAttempt': autoIdChargeAttempt,
       'autoIdChargeOutcome': autoIdChargeOutcome,
       'teleFlPark': teleFlPark,
       'teleIdChargeAttempt': teleIdChargeAttempt,
-      'teleIdChargeOutcome': teleIdChargeOutcome,
-      'teleFlClimbFall': teleFlClimbFall,
-      'teleIdChargeBalanceSpeed': teleIdChargeBalanceSpeed,
-      'teleFlChargeAssist': teleFlChargeAssist,
-      'teleNumChargeAssist': teleNumChargeAssist,
+      'teleIdStageOutcome': teleIdStageOutcome,
+      'teleIdStageClimbSpeed': teleIdStageClimbSpeed,
+      'teleFlStageAssist': teleFlStageAssist,
       'teleNumHighConeSuccess': teleNumHighConeSuccess,
       'teleNumMidConeSuccess': teleNumMidConeSuccess,
       'teleNumLowConeSuccess': teleNumLowConeSuccess,
@@ -185,7 +173,7 @@ class MatchScoutingData {
       'commFlWarning': commFlWarning,
       'commFlHighlight': commFlHighlight,
       'commFlIntakeGround': commFlIntakeGround,
-      'commFlIntakeHigh': commFlIntakeHigh,
+      'commFlShuttle': commFlShuttle,
       'commFlIntakeStation': commFlIntakeStation,
       'commTxNotes': commTxNotes,
     };
@@ -216,23 +204,19 @@ class MatchScoutingData {
       'autoFlRobotContact': autoFlRobotContact,
       'autoFlLoseStartObject': autoFlLoseStartObject,
       'autoFlFail': autoFlFail,
-      'autoNumHighConeSuccess': autoNumHighConeSuccess,
-      'autoNumMidConeSuccess': autoNumMidConeSuccess,
-      'autoNumLowConeSuccess': autoNumLowConeSuccess,
-      'autoNumHighCubeSuccess': autoNumHighCubeSuccess,
-      'autoNumMidCubeSuccess': autoNumMidCubeSuccess,
-      'autoNumLowCubeSuccess': autoNumLowCubeSuccess,
-      'autoNumCubeAttempt': autoNumCubeAttempt,
-      'autoNumConeAttempt': autoNumConeAttempt,
+      'autoNumAmpSuccess': autoNumAmpSuccess,
+      'autoNumTrapSuccess': autoNumTrapSuccess,
+      'autoNumSpeakerSuccess': autoNumSpeakerSuccess,
+      'autoNumTrapAttempt': autoNumTrapAttempt,
+      'autoNumSpeakerAttempt': autoNumSpeakerAttempt,
+      'autoNumAmpAttempt': autoNumAmpAttempt,
       'autoIdChargeAttempt': autoIdChargeAttempt,
       'autoIdChargeOutcome': autoIdChargeOutcome,
       'teleFlPark': teleFlPark,
       'teleIdChargeAttempt': teleIdChargeAttempt,
-      'teleIdChargeOutcome': teleIdChargeOutcome,
-      'teleFlClimbFall': teleFlClimbFall,
-      'teleIdChargeBalanceSpeed': teleIdChargeBalanceSpeed,
-      'teleFlChargeAssist': teleFlChargeAssist,
-      'teleNumChargeAssist': teleNumChargeAssist,
+      'teleIdStageOutcome': teleIdStageOutcome,
+      'teleIdStageClimbSpeed': teleIdStageClimbSpeed,
+      'teleFlStageAssist': teleFlStageAssist,
       'teleNumHighConeSuccess': teleNumHighConeSuccess,
       'teleNumMidConeSuccess': teleNumMidConeSuccess,
       'teleNumLowConeSuccess': teleNumLowConeSuccess,
@@ -251,7 +235,7 @@ class MatchScoutingData {
       'commFlWarning': commFlWarning,
       'commFlHighlight': commFlHighlight,
       'commFlIntakeGround': commFlIntakeGround,
-      'commFlIntakeHigh': commFlIntakeHigh,
+      'commFlShuttle': commFlShuttle,
       'commFlIntakeStation': commFlIntakeStation,
       'commTxNotes': commTxNotes,
     };
@@ -284,25 +268,20 @@ class MatchScoutingData {
     this.autoFlLoseStartObject =
         map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
     this.autoFlFail = map['autoFlFail'].toString().toLowerCase() == 'true';
-    this.autoNumHighConeSuccess = map['autoNumHighConeSuccess'];
-    this.autoNumMidConeSuccess = map['autoNumMidConeSuccess'];
-    this.autoNumLowConeSuccess = map['autoNumLowConeSuccess'];
-    this.autoNumHighCubeSuccess = map['autoNumHighCubeSuccess'];
-    this.autoNumMidCubeSuccess = map['autoNumMidCubeSuccess'];
-    this.autoNumLowCubeSuccess = map['autoNumLowCubeSuccess'];
-    this.autoNumCubeAttempt = map['autoNumCubeAttempt'];
-    this.autoNumConeAttempt = map['autoNumConeAttempt'];
+    this.autoNumAmpSuccess = map['autoNumAmpSuccess'];
+    this.autoNumTrapSuccess = map['autoNumTrapSuccess'];
+    this.autoNumSpeakerSuccess = map['autoNumSpeakerSuccess'];
+    this.autoNumTrapAttempt = map['autoNumTrapAttempt'];
+    this.autoNumSpeakerAttempt = map['autoNumSpeakerAttempt'];
+    this.autoNumAmpAttempt = map['autoNumAmpAttempt'];
     this.autoIdChargeAttempt = map['autoIdChargeAttempt'];
     this.autoIdChargeOutcome = map['autoIdChargeOutcome'];
     this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
     this.teleIdChargeAttempt = map['teleIdChargeAttempt'];
-    this.teleIdChargeOutcome = map['teleIdChargeOutcome'];
-    this.teleFlClimbFall =
-        map['teleFlClimbFall'].toString().toLowerCase() == 'true';
-    this.teleIdChargeBalanceSpeed = map['teleIdChargeBalanceSpeed'];
-    this.teleFlChargeAssist =
-        map['teleFlChargeAssist'].toString().toLowerCase() == 'true';
-    this.teleNumChargeAssist = map['teleNumChargeAssist'];
+    this.teleIdStageOutcome = map['teleIdStageOutcome'];
+    this.teleIdStageClimbSpeed = map['teleIdStageClimbSpeed'];
+    this.teleFlStageAssist =
+        map['teleFlStageAssist'].toString().toLowerCase() == 'true';
     this.teleNumHighConeSuccess = map['teleNumHighConeSuccess'];
     this.teleNumMidConeSuccess = map['teleNumMidConeSuccess'];
     this.teleNumLowConeSuccess = map['teleNumLowConeSuccess'];
@@ -327,8 +306,8 @@ class MatchScoutingData {
         map['commFlHighlight'].toString().toLowerCase() == 'true';
     this.commFlIntakeGround =
         map['commFlIntakeGround'].toString().toLowerCase() == 'true';
-    this.commFlIntakeHigh =
-        map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
+    this.commFlShuttle =
+        map['commFlShuttle'].toString().toLowerCase() == 'true';
     this.commFlIntakeStation =
         map['commFlIntakeStation'].toString().toLowerCase() == 'true';
     this.commTxNotes = map['commTxNotes'];
@@ -359,25 +338,20 @@ class MatchScoutingData {
         map['autoFlRobotContact'].toString().toLowerCase() == 'true';
     this.autoFlLoseStartObject =
         map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
-    this.autoNumHighConeSuccess = map['autoNumHighConeSuccess'];
-    this.autoNumMidConeSuccess = map['autoNumMidConeSuccess'];
-    this.autoNumLowConeSuccess = map['autoNumLowConeSuccess'];
-    this.autoNumHighCubeSuccess = map['autoNumHighCubeSuccess'];
-    this.autoNumMidCubeSuccess = map['autoNumMidCubeSuccess'];
-    this.autoNumLowCubeSuccess = map['autoNumLowCubeSuccess'];
-    this.autoNumCubeAttempt = map['autoNumCubeAttempt'];
-    this.autoNumConeAttempt = map['autoNumConeAttempt'];
+    this.autoNumAmpSuccess = map['autoNumAmpSuccess'];
+    this.autoNumTrapSuccess = map['autoNumTrapSuccess'];
+    this.autoNumSpeakerSuccess = map['autoNumSpeakerSuccess'];
+    this.autoNumTrapAttempt = map['autoNumTrapAttempt'];
+    this.autoNumSpeakerAttempt = map['autoNumSpeakerAttempt'];
+    this.autoNumAmpAttempt = map['autoNumAmpAttempt'];
     this.autoIdChargeAttempt = map['autoIdChargeAttempt'];
     this.autoIdChargeOutcome = map['autoIdChargeOutcome'];
     this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
     this.teleIdChargeAttempt = map['teleIdChargeAttempt'];
-    this.teleIdChargeOutcome = map['teleIdChargeOutcome'];
-    this.teleFlClimbFall =
-        map['teleFlClimbFall'].toString().toLowerCase() == 'true';
-    this.teleIdChargeBalanceSpeed = map['teleIdChargeBalanceSpeed'];
-    this.teleFlChargeAssist =
-        map['teleFlChargeAssist'].toString().toLowerCase() == 'true';
-    this.teleNumChargeAssist = map['teleNumChargeAssist'];
+    this.teleIdStageOutcome = map['teleIdStageOutcome'];
+    this.teleIdStageClimbSpeed = map['teleIdStageClimbSpeed'];
+    this.teleFlStageAssist =
+        map['teleFlStageAssist'].toString().toLowerCase() == 'true';
     this.teleNumHighConeSuccess = map['teleNumHighConeSuccess'];
     this.teleNumMidConeSuccess = map['teleNumMidConeSuccess'];
     this.teleNumLowConeSuccess = map['teleNumLowConeSuccess'];
@@ -402,8 +376,8 @@ class MatchScoutingData {
         map['commFlHighlight'].toString().toLowerCase() == 'true';
     this.commFlIntakeGround =
         map['commFlIntakeGround'].toString().toLowerCase() == 'true';
-    this.commFlIntakeHigh =
-        map['commFlIntakeHigh'].toString().toLowerCase() == 'true';
+    this.commFlShuttle =
+        map['commFlShuttle'].toString().toLowerCase() == 'true';
     this.commFlIntakeStation =
         map['commFlIntakeStation'].toString().toLowerCase() == 'true';
     this.commTxNotes = map['commTxNotes'];
@@ -436,23 +410,19 @@ class MatchScoutingData {
         'autoFlRobotContact: $autoFlRobotContact,'
         'autoFlLoseStartObject: $autoFlLoseStartObject,'
         'autoFlFail: $autoFlFail,'
-        'autoNumHighConeSuccess: $autoNumHighConeSuccess,'
-        'autoNumMidConeSuccess: $autoNumMidConeSuccess,'
-        'autoNumLowConeSuccess: $autoNumLowConeSuccess,'
-        'autoNumHighCubeSuccess: $autoNumHighCubeSuccess,'
-        'autoNumMidCubeSuccess: $autoNumMidCubeSuccess,'
-        'autoNumLowCubeSuccess: $autoNumLowCubeSuccess,'
-        'autoNumCubeAttempt: $autoNumCubeAttempt,'
-        'autoNumConeAttempt: $autoNumConeAttempt,'
+        'autoNumAmpSuccess: $autoNumAmpSuccess,'
+        'autoNumTrapSuccess: $autoNumTrapSuccess,'
+        'autoNumSpeakerSuccess: $autoNumSpeakerSuccess,'
+        'autoNumTrapAttempt: $autoNumTrapAttempt,'
+        'autoNumSpeakerAttempt: $autoNumSpeakerAttempt,'
+        'autoNumAmpAttempt: $autoNumAmpAttempt,'
         'autoIdChargeAttempt: $autoIdChargeAttempt,'
         'autoIdChargeOutcome: $autoIdChargeOutcome,'
         'teleFlPark: $teleFlPark,'
         'teleIdChargeAttempt: $teleIdChargeAttempt,'
-        'teleIdChargeOutcome: $teleIdChargeOutcome,'
-        'teleFlClimbFall: $teleFlClimbFall,'
-        'teleIdChargeBalanceSpeed: $teleIdChargeBalanceSpeed,'
-        'teleFlChargeAssist: $teleFlChargeAssist,'
-        'teleNumChargeAssist: $teleNumChargeAssist,'
+        'teleIdStageOutcome: $teleIdStageOutcome,'
+        'teleIdStageClimbSpeed: $teleIdStageClimbSpeed,'
+        'teleFlStageAssist: $teleFlStageAssist,'
         'teleNumHighConeSuccess: $teleNumHighConeSuccess,'
         'teleNumMidConeSuccess: $teleNumMidConeSuccess,'
         'teleNumLowConeSuccess: $teleNumLowConeSuccess,'
@@ -471,7 +441,7 @@ class MatchScoutingData {
         'commFlWarning: $commFlWarning,'
         'commFlHighlight: $commFlHighlight,'
         'commFlIntakeGround: $commFlIntakeGround,'
-        'commFlIntakeHigh: $commFlIntakeHigh,'
+        'commFlShuttle: $commFlShuttle,'
         'commFlIntakeStation: $commFlIntakeStation,'
         'commTxNotes: $commTxNotes,'
         '}';

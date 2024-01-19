@@ -205,83 +205,53 @@ class _AutoTabState extends State<AutoTab> {
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          numConeAttempt: widget.matchScoutingData.autoNumConeAttempt,
-          numHighConeSuccess: widget.matchScoutingData.autoNumHighConeSuccess,
-          numCubeAttempt: widget.matchScoutingData.autoNumCubeAttempt,
-          numLowConeSuccess: widget.matchScoutingData.autoNumLowConeSuccess,
-          numMidConeSuccess: widget.matchScoutingData.autoNumMidConeSuccess,
-          numHighCubeSuccess: widget.matchScoutingData.autoNumHighCubeSuccess,
-          numMidCubeSuccess: widget.matchScoutingData.autoNumMidCubeSuccess,
-          numLowCubeSuccess: widget.matchScoutingData.autoNumLowCubeSuccess,
-          onNumHighCubeSuccessChanged: (int value) {
+          numAmpAttempt: widget.matchScoutingData.autoNumAmpAttempt,
+          numAmpSuccess: widget.matchScoutingData.autoNumAmpSuccess,
+          numSpeakerAttempt: widget.matchScoutingData.autoNumSpeakerAttempt,
+          numTrapSuccess: widget.matchScoutingData.autoNumTrapSuccess,
+          numSpeakerSuccess: widget.matchScoutingData.autoNumSpeakerSuccess,
+          onNumSpeakerSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumHighCubeSuccess = value;
+              widget.matchScoutingData.autoNumSpeakerSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumHighConeSuccessChanged: (int value) {
+          onNumAmpSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumHighConeSuccess = value;
+              widget.matchScoutingData.autoNumAmpSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumCubeAttemptChanged: (int value) {
+          onNumSpeakerAttemptChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumCubeAttempt = value;
+              widget.matchScoutingData.autoNumSpeakerAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumLowConeSuccessChanged: (int value) {
+          onNumAmpAttemptChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumLowConeSuccess = value;
+              widget.matchScoutingData.autoNumAmpAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumConeAttemptChanged: (int value) {
+          onNumTrapSuccessChanged: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumConeAttempt = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumMidConeSuccessChanged: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumMidConeSuccess = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumMidCubeSuccessChanged: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumMidCubeSuccess = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumLowCubeSuccessChanged: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumLowCubeSuccess = value;
+              widget.matchScoutingData.autoNumTrapSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },

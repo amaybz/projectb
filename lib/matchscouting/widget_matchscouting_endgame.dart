@@ -5,16 +5,17 @@ import '../widgets/widget_counter.dart';
 import '../widgets/widget_headingmain.dart';
 
 class EndGame extends StatefulWidget {
-  EndGame({Key? key,
-    required this.matchScoutingData,
-    this.styleFontSize = 16,
-    this.styleFontSizeHeadings = 18,
-    this.styleFieldTxClimbMaxWidth = 300,
-    this.styleCounterButtonHeight = 25,
-    this.styleCounterButtonWidth = 30,
-    this.onChanged,
-    this.txClimb,
-    this.onExpanded})
+  EndGame(
+      {Key? key,
+      required this.matchScoutingData,
+      this.styleFontSize = 16,
+      this.styleFontSizeHeadings = 18,
+      this.styleFieldTxClimbMaxWidth = 300,
+      this.styleCounterButtonHeight = 25,
+      this.styleCounterButtonWidth = 30,
+      this.onChanged,
+      this.txClimb,
+      this.onExpanded})
       : super(key: key);
 
   final MatchScoutingData matchScoutingData;
@@ -33,21 +34,20 @@ class EndGame extends StatefulWidget {
 
 class _EndGameState extends State<EndGame> {
   List<DropdownMenuItem<String>> ddsSpeed = [
-    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
     DropdownMenuItem(value: "2", child: Text("Slow (> 7 Secs)")),
     DropdownMenuItem(value: "3", child: Text("Medium (3-7 Secs)")),
     DropdownMenuItem(value: "4", child: Text("Fast <3 Secs")),
   ];
 
   List<DropdownMenuItem<String>> ddsPosition = [
-    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
     DropdownMenuItem(value: "2", child: Text("Failed")),
-    DropdownMenuItem(value: "3", child: Text("Docked")),
-    DropdownMenuItem(value: "4", child: Text("Engaged")),
+    DropdownMenuItem(value: "3", child: Text("Success")),
   ];
 
   List<DropdownMenuItem<String>> listSuccessFailNA = [
-    DropdownMenuItem(value: "1", child: Text("NA")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
     DropdownMenuItem(value: "2", child: Text("Fail")),
     DropdownMenuItem(value: "3", child: Text("Success")),
   ];
@@ -83,109 +83,58 @@ class _EndGameState extends State<EndGame> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Charge Station Outcome:",
+                "Outcome:",
                 style: TextStyle(fontSize: widget.styleFontSize),
               ),
               DropdownButton(
-                value: widget.matchScoutingData.teleIdChargeOutcome == null
+                value: widget.matchScoutingData.teleIdStageOutcome == null
                     ? null
-                    : widget.matchScoutingData.teleIdChargeOutcome,
+                    : widget.matchScoutingData.teleIdStageOutcome,
                 items: ddsPosition,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdChargeOutcome =
-                    item as String?;
+                    widget.matchScoutingData.teleIdStageOutcome =
+                        item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                   print("teleIdChargeOutcome: " +
-                      widget.matchScoutingData.teleIdChargeOutcome!);
+                      widget.matchScoutingData.teleIdStageOutcome!);
                 },
               ),
             ],
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Fall after T=0?:",
-                style: TextStyle(fontSize: widget.styleFontSize)),
-            Switch(
-                value: widget.matchScoutingData.teleFlClimbFall!,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.teleFlClimbFall = item;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                }),
-          ]),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Time (Balance):",
-                  style: TextStyle(fontSize: widget.styleFontSize)),
+              Text("Speed:", style: TextStyle(fontSize: widget.styleFontSize)),
               DropdownButton(
-                value: widget.matchScoutingData.teleIdChargeBalanceSpeed == null
+                value: widget.matchScoutingData.teleIdStageClimbSpeed == null
                     ? null
-                    : widget.matchScoutingData.teleIdChargeBalanceSpeed,
+                    : widget.matchScoutingData.teleIdStageClimbSpeed,
                 items: ddsSpeed,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdChargeBalanceSpeed =
-                    item as String?;
+                    widget.matchScoutingData.teleIdStageClimbSpeed =
+                        item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                   print("teleIdChargeBalanceSpeed: " +
-                      widget.matchScoutingData.teleIdChargeBalanceSpeed!);
+                      widget.matchScoutingData.teleIdStageClimbSpeed!);
                 },
               ),
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Charge Station Assist?:",
-                style: TextStyle(fontSize: widget.styleFontSize)),
+            Text("Assist?:", style: TextStyle(fontSize: widget.styleFontSize)),
             Switch(
-                value: widget.matchScoutingData.teleFlChargeAssist!,
+                value: widget.matchScoutingData.teleFlStageAssist!,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleFlChargeAssist = item;
+                    widget.matchScoutingData.teleFlStageAssist = item;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                 }),
-          ]),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("# Robots Assisted:"),
-            CounterWidget(
-              styleButtonHeight: widget.styleCounterButtonHeight,
-              styleButtonWidth: widget.styleCounterButtonWidth,
-              title: "",
-              value: widget.matchScoutingData.teleNumChargeAssist,
-              onIncreaseStateChanged: (int value) {
-                setState(() {
-                  widget.matchScoutingData.teleNumChargeAssist =
-                      widget.matchScoutingData.teleNumChargeAssist! + 1;
-                  if (widget.matchScoutingData.teleNumChargeAssist! > 2) {
-                    widget.matchScoutingData.teleNumChargeAssist = 2;
-                  }
-
-
-                  widget.onChanged!(widget.matchScoutingData);
-                });
-              },
-              onDecreaseStateChanged: (int value) {
-                setState(() {
-                  widget.matchScoutingData.teleNumChargeAssist =
-                      widget.matchScoutingData.teleNumChargeAssist! - 1;
-                  if (widget.matchScoutingData.teleNumChargeAssist! < 0) {
-                    widget.matchScoutingData.teleNumChargeAssist = 0;
-                  }
-                  widget.onChanged!(widget.matchScoutingData);
-                });
-              },
-              onSetValue: (int value) {
-                setState(() {
-                  widget.matchScoutingData.teleNumChargeAssist = value;
-                  widget.onChanged!(widget.matchScoutingData);
-                });
-              },
-            ),
           ]),
         ]),
       ),

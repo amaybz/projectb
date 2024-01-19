@@ -134,96 +134,99 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
         widthFactor: 0.99,
         child: Container(
           padding: const EdgeInsets.all(5.0),
-          child: ScoreWidget(
-            styleCounterButtonHeight: widget.styleCounterButtonHeight,
-            styleCounterButtonWidth: widget.styleCounterButtonWidth,
-            matchScoutingData: widget.matchScoutingData,
-            numLowCubeSuccess: widget.matchScoutingData.teleNumLowCubeSuccess,
-            numMidCubeSuccess: widget.matchScoutingData.teleNumMidCubeSuccess,
-            numHighCubeSuccess: widget.matchScoutingData.teleNumHighCubeSuccess,
-            numCubeAttempt: widget.matchScoutingData.teleNumCubeAttempt,
-            numConeAttempt: widget.matchScoutingData.teleNumConeAttempt,
-            numHighConeSuccess: widget.matchScoutingData.teleNumHighConeSuccess,
-            numMidConeSuccess: widget.matchScoutingData.teleNumMidConeSuccess,
-            numLowConeSuccess: widget.matchScoutingData.teleNumLowConeSuccess,
-            onChange: (MatchScoutingData newData) {
-              setState(() {
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumHighCubeSuccessChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumHighCubeSuccess = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumHighConeSuccessChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumHighConeSuccess = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumCubeAttemptChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumCubeAttempt = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumLowConeSuccessChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumLowConeSuccess = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumConeAttemptChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumConeAttempt = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumMidConeSuccessChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumMidConeSuccess = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumMidCubeSuccessChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumMidCubeSuccess = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-            onNumLowCubeSuccessChanged: (int value) {
-              setState(() {
-                if (value < 0) {
-                  value = 0;
-                }
-                widget.matchScoutingData.teleNumLowCubeSuccess = value;
-                widget.onChange!(widget.matchScoutingData);
-              });
-            },
-          ),
+          child: Column(children: <Widget>[
+            ScoreWidget(
+              styleCounterButtonHeight: widget.styleCounterButtonHeight,
+              styleCounterButtonWidth: widget.styleCounterButtonWidth,
+              matchScoutingData: widget.matchScoutingData,
+              numLowCubeSuccess: widget.matchScoutingData.teleNumLowCubeSuccess,
+              numMidCubeSuccess: widget.matchScoutingData.teleNumMidCubeSuccess,
+              numSpeakerSuccess:
+                  widget.matchScoutingData.teleNumHighCubeSuccess,
+              numSpeakerAttempt: widget.matchScoutingData.teleNumCubeAttempt,
+              numAmpAttempt: widget.matchScoutingData.teleNumConeAttempt,
+              numAmpSuccess: widget.matchScoutingData.teleNumHighConeSuccess,
+              numTrapSuccess: widget.matchScoutingData.teleNumMidConeSuccess,
+              numLowConeSuccess: widget.matchScoutingData.teleNumLowConeSuccess,
+              onChange: (MatchScoutingData newData) {
+                setState(() {
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumSpeakerSuccessChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumHighCubeSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumAmpSuccessChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumHighConeSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumSpeakerAttemptChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumCubeAttempt = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumLowConeSuccessChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumLowConeSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumAmpAttemptChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumConeAttempt = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumTrapSuccessChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumMidConeSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumMidCubeSuccessChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumMidCubeSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumLowCubeSuccessChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumLowCubeSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+            ),
+          ]),
         ),
       ),
       FractionallySizedBox(

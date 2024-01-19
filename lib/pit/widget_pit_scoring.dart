@@ -69,7 +69,7 @@ class _PitScoringState extends State<PitScoring> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "Score in Speaker:",
+                  "Speaker Scored From::",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 DropdownButton(
@@ -82,7 +82,7 @@ class _PitScoringState extends State<PitScoring> {
                       widget.pitData.idScoreSpeaker = item as String?;
                       widget.onChanged!(widget.pitData);
                     });
-                    print("flNodeType: " + widget.pitData.idScoreSpeaker!);
+                    print("idScoreSpeaker: " + widget.pitData.idScoreSpeaker!);
                   },
                 ),
               ],
@@ -109,7 +109,7 @@ class _PitScoringState extends State<PitScoring> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Notes on Scoring: ",
+                  "Notes: ",
                   style: TextStyle(fontSize: widget.styleFontSize),
                 ),
                 ConstrainedBox(
@@ -117,8 +117,7 @@ class _PitScoringState extends State<PitScoring> {
                       BoxConstraints(maxWidth: widget.styleFieldTextWidth),
                   child: TextField(
                     controller: widget.txScoringNotes,
-                    decoration:
-                        InputDecoration(hintText: 'Notes on intake system(s)'),
+                    decoration: InputDecoration(hintText: 'Notes on Scoring'),
                   ),
                 ),
               ],

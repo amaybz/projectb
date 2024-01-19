@@ -8,23 +8,23 @@ class ScoreWidget extends StatefulWidget {
   const ScoreWidget({
     Key? key,
     required this.matchScoutingData,
-    this.numConeAttempt,
-    this.numHighConeSuccess,
-    this.numMidConeSuccess,
+    this.numAmpAttempt,
+    this.numAmpSuccess,
+    this.numTrapSuccess,
     this.numLowConeSuccess,
-    this.numHighCubeSuccess,
+    this.numSpeakerSuccess,
     this.numMidCubeSuccess,
     this.numLowCubeSuccess,
-    this.numCubeAttempt,
+    this.numSpeakerAttempt,
     //onchange
-    this.onNumHighCubeSuccessChanged,
+    this.onNumSpeakerSuccessChanged,
     this.onNumMidCubeSuccessChanged,
     this.onNumLowCubeSuccessChanged,
-    this.onNumConeAttemptChanged,
-    this.onNumHighConeSuccessChanged,
-    this.onNumMidConeSuccessChanged,
+    this.onNumAmpAttemptChanged,
+    this.onNumAmpSuccessChanged,
+    this.onNumTrapSuccessChanged,
     this.onNumLowConeSuccessChanged,
-    this.onNumCubeAttemptChanged,
+    this.onNumSpeakerAttemptChanged,
     this.onChange,
     //style
     this.styleFontSizeBody = 16,
@@ -35,20 +35,20 @@ class ScoreWidget extends StatefulWidget {
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
-  final int? numConeAttempt;
-  final int? numHighConeSuccess;
-  final int? numCubeAttempt;
+  final int? numAmpAttempt;
+  final int? numAmpSuccess;
+  final int? numSpeakerAttempt;
   final int? numLowConeSuccess;
-  final int? numMidConeSuccess;
-  final int? numHighCubeSuccess;
+  final int? numTrapSuccess;
+  final int? numSpeakerSuccess;
   final int? numMidCubeSuccess;
   final int? numLowCubeSuccess;
-  final ValueChanged<int>? onNumConeAttemptChanged;
-  final ValueChanged<int>? onNumCubeAttemptChanged;
-  final ValueChanged<int>? onNumHighConeSuccessChanged;
-  final ValueChanged<int>? onNumMidConeSuccessChanged;
+  final ValueChanged<int>? onNumAmpAttemptChanged;
+  final ValueChanged<int>? onNumSpeakerAttemptChanged;
+  final ValueChanged<int>? onNumAmpSuccessChanged;
+  final ValueChanged<int>? onNumTrapSuccessChanged;
   final ValueChanged<int>? onNumLowConeSuccessChanged;
-  final ValueChanged<int>? onNumHighCubeSuccessChanged;
+  final ValueChanged<int>? onNumSpeakerSuccessChanged;
   final ValueChanged<int>? onNumMidCubeSuccessChanged;
   final ValueChanged<int>? onNumLowCubeSuccessChanged;
 
@@ -86,7 +86,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10)),
               image: DecorationImage(
-                image: AssetImage("assets/imgs/field.png"),
+                image: AssetImage("assets/imgs/ScoringLocations.png"),
                 fit: BoxFit.fill,
               ),
             ),
@@ -95,10 +95,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                 children: [
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(children: <Widget>[
                           Row(children: <Widget>[
-                            Column(children: []),
+                            Column(children: [
+                              SizedBox(
+                                height: 580,
+                              )
+                            ]),
                           ]),
                         ]),
                         Column(
@@ -110,239 +115,288 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: <Widget>[
                                     Container(
-                                      margin: const EdgeInsets.only(top: 110.0),
-                                      child: SizedBox(
-                                        width: 110,
-                                        height: 130,
-                                        child: Container(
-                                            //decoration: BoxDecoration(
-                                            //border:
-                                            //     Border.all(color: Colors.white),
-                                            //color: Colors.grey,
-                                            //),
-                                            //child: Image.asset(
-                                            //    "assets/imgs/terminal2023.png"),
-                                            ),
+                                      margin: const EdgeInsets.only(top: 210.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.8),
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10),
+                                              topRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)),
+                                        ),
+                                        margin: const EdgeInsets.only(
+                                            left: 90.0,
+                                            right: 0.0,
+                                            bottom: 5.0,
+                                            top: 2.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 5.0,
+                                            right: 5.0,
+                                            top: 5.0,
+                                            bottom: 0.0),
+                                        child: Column(children: [
+                                          CounterWidget(
+                                            styleButtonWidth:
+                                                widget.styleCounterButtonWidth,
+                                            styleButtonHeight:
+                                                widget.styleCounterButtonHeight,
+                                            value: widget.numTrapSuccess,
+                                            title: "Stage",
+                                            title1: "Success",
+                                            styleFontSize:
+                                                widget.styleFontSizeBody,
+                                            onIncreaseStateChanged:
+                                                (int increase) {
+                                              setState(() {
+                                                widget.onNumTrapSuccessChanged!(
+                                                    widget.numTrapSuccess! + 1);
+                                              });
+                                            },
+                                            onDecreaseStateChanged:
+                                                (int decrease) {
+                                              setState(() {
+                                                widget.onNumSpeakerAttemptChanged!(
+                                                    widget.numTrapSuccess! - 1);
+                                              });
+                                            },
+                                            onSetValue: (int value) {
+                                              widget.onNumSpeakerAttemptChanged!(
+                                                  value);
+                                            },
+                                          ),
+                                          CounterWidget(
+                                            styleButtonWidth:
+                                                widget.styleCounterButtonWidth,
+                                            styleButtonHeight:
+                                                widget.styleCounterButtonHeight,
+                                            value: widget.numAmpAttempt,
+                                            title: "Attempt",
+                                            styleFontSize:
+                                                widget.styleFontSizeBody,
+                                            onIncreaseStateChanged:
+                                                (int increase) {
+                                              setState(() {
+                                                widget.onNumAmpAttemptChanged!(
+                                                    widget.numAmpAttempt! + 1);
+                                              });
+                                            },
+                                            onDecreaseStateChanged:
+                                                (int decrease) {
+                                              setState(() {
+                                                widget.onNumAmpAttemptChanged!(
+                                                    widget.numAmpAttempt! - 1);
+                                              });
+                                            },
+                                            onSetValue: (int value) {
+                                              widget.onNumAmpAttemptChanged!(
+                                                  value);
+                                            },
+                                          ),
+                                        ]),
                                       ),
                                     ),
                                   ]),
                             ]),
                         Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(children: <Widget>[
-                                Row(children: <Widget>[
-                                  Column(children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 5.0, bottom: 0.0),
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0,
-                                          right: 40.0,
-                                          top: 25.0,
-                                          bottom: 0.0),
-                                      child: CounterWidget(
-                                        styleButtonWidth:
-                                            widget.styleCounterButtonWidth,
-                                        styleButtonHeight:
-                                            widget.styleCounterButtonHeight,
-                                        value: widget.numHighConeSuccess,
-                                        title: " ",
-                                        title1: " Success",
-                                        styleFontSize: widget.styleFontSizeBody,
-                                        onIncreaseStateChanged: (int increase) {
-                                          setState(() {
-                                            widget.onNumCubeAttemptChanged!(
-                                                widget.numCubeAttempt! + 1);
-                                          });
-                                        },
-                                        onDecreaseStateChanged: (int decrease) {
-                                          setState(() {
-                                            widget.onNumCubeAttemptChanged!(
-                                                widget.numCubeAttempt! - 1);
-                                          });
-                                        },
-                                        onSetValue: (int value) {
-                                          widget
-                                              .onNumCubeAttemptChanged!(value);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 5.0, bottom: 0.0),
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0,
-                                          right: 40.0,
-                                          top: 0.0,
-                                          bottom: 0.0),
-                                      child: CounterWidget(
-                                        styleButtonWidth:
-                                            widget.styleCounterButtonWidth,
-                                        styleButtonHeight:
-                                            widget.styleCounterButtonHeight,
-                                        value: widget.numConeAttempt,
-                                        title: "",
-                                        title1: " Attempt",
-                                        styleFontSize: widget.styleFontSizeBody,
-                                        onIncreaseStateChanged: (int increase) {
-                                          setState(() {
-                                            widget.onNumConeAttemptChanged!(
-                                                widget.numConeAttempt! + 1);
-                                          });
-                                        },
-                                        onDecreaseStateChanged: (int decrease) {
-                                          setState(() {
-                                            widget.onNumConeAttemptChanged!(
-                                                widget.numConeAttempt! - 1);
-                                          });
-                                        },
-                                        onSetValue: (int value) {
-                                          widget
-                                              .onNumConeAttemptChanged!(value);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 5.0, bottom: 0.0),
-                                      padding: const EdgeInsets.only(
-                                          left: 50.0,
-                                          right: 5.0,
-                                          top: 10.0,
-                                          bottom: 0.0),
-                                      child: CounterWidget(
-                                        styleButtonWidth:
-                                            widget.styleCounterButtonWidth,
-                                        styleButtonHeight:
-                                            widget.styleCounterButtonHeight,
-                                        value: widget.numHighConeSuccess,
-                                        title: " ",
-                                        title1: " Success",
-                                        styleFontSize: widget.styleFontSizeBody,
-                                        onIncreaseStateChanged: (int increase) {
-                                          setState(() {
-                                            widget.onNumCubeAttemptChanged!(
-                                                widget.numCubeAttempt! + 1);
-                                          });
-                                        },
-                                        onDecreaseStateChanged: (int decrease) {
-                                          setState(() {
-                                            widget.onNumCubeAttemptChanged!(
-                                                widget.numCubeAttempt! - 1);
-                                          });
-                                        },
-                                        onSetValue: (int value) {
-                                          widget
-                                              .onNumCubeAttemptChanged!(value);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 5.0, bottom: 0.0),
-                                      padding: const EdgeInsets.only(
-                                          left: 50.0,
-                                          right: 5.0,
-                                          top: 0.0,
-                                          bottom: 0.0),
-                                      child: CounterWidget(
-                                        styleButtonWidth:
-                                            widget.styleCounterButtonWidth,
-                                        styleButtonHeight:
-                                            widget.styleCounterButtonHeight,
-                                        value: widget.numConeAttempt,
-                                        title: "",
-                                        title1: " Attempt",
-                                        styleFontSize: widget.styleFontSizeBody,
-                                        onIncreaseStateChanged: (int increase) {
-                                          setState(() {
-                                            widget.onNumConeAttemptChanged!(
-                                                widget.numConeAttempt! + 1);
-                                          });
-                                        },
-                                        onDecreaseStateChanged: (int decrease) {
-                                          setState(() {
-                                            widget.onNumConeAttemptChanged!(
-                                                widget.numConeAttempt! - 1);
-                                          });
-                                        },
-                                        onSetValue: (int value) {
-                                          widget
-                                              .onNumConeAttemptChanged!(value);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 5.0, bottom: 0.0),
-                                      padding: const EdgeInsets.only(
-                                          left: 5.0,
-                                          right: 5.0,
-                                          top: 35.0,
-                                          bottom: 0.0),
-                                      child: CounterWidget(
-                                        styleButtonWidth:
-                                            widget.styleCounterButtonWidth,
-                                        styleButtonHeight:
-                                            widget.styleCounterButtonHeight,
-                                        value: widget.numHighConeSuccess,
-                                        title: " ",
-                                        title1: " Success",
-                                        styleFontSize: widget.styleFontSizeBody,
-                                        onIncreaseStateChanged: (int increase) {
-                                          setState(() {
-                                            widget.onNumCubeAttemptChanged!(
-                                                widget.numCubeAttempt! + 1);
-                                          });
-                                        },
-                                        onDecreaseStateChanged: (int decrease) {
-                                          setState(() {
-                                            widget.onNumCubeAttemptChanged!(
-                                                widget.numCubeAttempt! - 1);
-                                          });
-                                        },
-                                        onSetValue: (int value) {
-                                          widget
-                                              .onNumCubeAttemptChanged!(value);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 5.0, bottom: 0.0),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5.0, vertical: 0.0),
-                                      child: CounterWidget(
-                                        styleButtonWidth:
-                                            widget.styleCounterButtonWidth,
-                                        styleButtonHeight:
-                                            widget.styleCounterButtonHeight,
-                                        value: widget.numConeAttempt,
-                                        title: "",
-                                        title1: " Attempt",
-                                        styleFontSize: widget.styleFontSizeBody,
-                                        onIncreaseStateChanged: (int increase) {
-                                          setState(() {
-                                            widget.onNumConeAttemptChanged!(
-                                                widget.numConeAttempt! + 1);
-                                          });
-                                        },
-                                        onDecreaseStateChanged: (int decrease) {
-                                          setState(() {
-                                            widget.onNumConeAttemptChanged!(
-                                                widget.numConeAttempt! - 1);
-                                          });
-                                        },
-                                        onSetValue: (int value) {
-                                          widget
-                                              .onNumConeAttemptChanged!(value);
-                                        },
-                                      ),
-                                    ),
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomLeft:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10)),
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                  right: 5.0,
+                                                  bottom: 10.0,
+                                                  top: 5.0),
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0,
+                                                  right: 5.0,
+                                                  top: 5.0,
+                                                  bottom: 0.0),
+                                              child: Column(children: [
+                                                CounterWidget(
+                                                  styleButtonWidth: widget
+                                                      .styleCounterButtonWidth,
+                                                  styleButtonHeight: widget
+                                                      .styleCounterButtonHeight,
+                                                  value: widget.numAmpSuccess,
+                                                  title: "AMP",
+                                                  title1: "Success",
+                                                  styleFontSize:
+                                                      widget.styleFontSizeBody,
+                                                  onIncreaseStateChanged:
+                                                      (int increase) {
+                                                    setState(() {
+                                                      widget.onNumAmpSuccessChanged!(
+                                                          widget.numAmpSuccess! +
+                                                              1);
+                                                      widget.onNumAmpAttemptChanged!(
+                                                          widget.numAmpAttempt! +
+                                                              1);
+                                                    });
+                                                  },
+                                                  onDecreaseStateChanged:
+                                                      (int decrease) {
+                                                    setState(() {
+                                                      widget.onNumAmpSuccessChanged!(
+                                                          widget.numAmpSuccess! -
+                                                              1);
+                                                    });
+                                                  },
+                                                  onSetValue: (int value) {
+                                                    widget.onNumAmpSuccessChanged!(
+                                                        value);
+                                                  },
+                                                ),
+                                                CounterWidget(
+                                                  styleButtonWidth: widget
+                                                      .styleCounterButtonWidth,
+                                                  styleButtonHeight: widget
+                                                      .styleCounterButtonHeight,
+                                                  value: widget.numAmpAttempt,
+                                                  title: "Attempt",
+                                                  styleFontSize:
+                                                      widget.styleFontSizeBody,
+                                                  onIncreaseStateChanged:
+                                                      (int increase) {
+                                                    setState(() {
+                                                      widget.onNumAmpAttemptChanged!(
+                                                          widget.numAmpAttempt! +
+                                                              1);
+                                                    });
+                                                  },
+                                                  onDecreaseStateChanged:
+                                                      (int decrease) {
+                                                    setState(() {
+                                                      widget.onNumAmpAttemptChanged!(
+                                                          widget.numAmpAttempt! -
+                                                              1);
+                                                    });
+                                                  },
+                                                  onSetValue: (int value) {
+                                                    widget.onNumAmpAttemptChanged!(
+                                                        value);
+                                                  },
+                                                ),
+                                              ]),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(10),
+                                                    topRight:
+                                                        Radius.circular(10),
+                                                    bottomLeft:
+                                                        Radius.circular(10),
+                                                    bottomRight:
+                                                        Radius.circular(10)),
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                  left: 82,
+                                                  right: 0.0,
+                                                  bottom: 5.0,
+                                                  top: 15.0),
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0,
+                                                  right: 5.0,
+                                                  top: 5.0,
+                                                  bottom: 0.0),
+                                              child: Column(children: [
+                                                CounterWidget(
+                                                  styleButtonWidth: widget
+                                                      .styleCounterButtonWidth,
+                                                  styleButtonHeight: widget
+                                                      .styleCounterButtonHeight,
+                                                  value:
+                                                      widget.numSpeakerSuccess,
+                                                  title: "Speaker",
+                                                  title1: "Success",
+                                                  styleFontSize:
+                                                      widget.styleFontSizeBody,
+                                                  onIncreaseStateChanged:
+                                                      (int increase) {
+                                                    setState(() {
+                                                      widget.onNumSpeakerSuccessChanged!(
+                                                          widget.numSpeakerSuccess! +
+                                                              1);
+                                                      widget.onNumSpeakerAttemptChanged!(
+                                                          widget.numSpeakerAttempt! +
+                                                              1);
+                                                    });
+                                                  },
+                                                  onDecreaseStateChanged:
+                                                      (int decrease) {
+                                                    setState(() {
+                                                      widget.onNumSpeakerSuccessChanged!(
+                                                          widget.numSpeakerSuccess! -
+                                                              1);
+                                                    });
+                                                  },
+                                                  onSetValue: (int value) {
+                                                    widget.onNumSpeakerAttemptChanged!(
+                                                        value);
+                                                  },
+                                                ),
+                                                CounterWidget(
+                                                  styleButtonWidth: widget
+                                                      .styleCounterButtonWidth,
+                                                  styleButtonHeight: widget
+                                                      .styleCounterButtonHeight,
+                                                  value:
+                                                      widget.numSpeakerAttempt,
+                                                  title: "Attempt",
+                                                  styleFontSize:
+                                                      widget.styleFontSizeBody,
+                                                  onIncreaseStateChanged:
+                                                      (int increase) {
+                                                    setState(() {
+                                                      widget.onNumSpeakerAttemptChanged!(
+                                                          widget.numSpeakerAttempt! +
+                                                              1);
+                                                    });
+                                                  },
+                                                  onDecreaseStateChanged:
+                                                      (int decrease) {
+                                                    setState(() {
+                                                      widget.onNumSpeakerAttemptChanged!(
+                                                          widget.numSpeakerAttempt! -
+                                                              1);
+                                                    });
+                                                  },
+                                                  onSetValue: (int value) {
+                                                    widget.onNumSpeakerAttemptChanged!(
+                                                        value);
+                                                  },
+                                                ),
+                                              ]),
+                                            ),
+                                          ]),
+                                    ]),
                                   ]),
-                                ]),
-                              ]),
                             ]),
                       ]),
                 ]),

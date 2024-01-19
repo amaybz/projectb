@@ -560,41 +560,57 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   ),
                 ),
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    PitImages(
-                      title: "Team Shirt",
-                      camera: widget.camera!,
-                      onCapture: (newImage) {
-                        setState(() {
-                          pitData.imgTeamUniform = newImage;
-                        });
-                      },
-                      image: pitData.imgTeamUniform,
-                    ),
-                    PitImages(
-                      title: "Robot Side",
-                      camera: widget.camera!,
-                      onCapture: (newImage) {
-                        setState(() {
-                          pitData.imgRobotSide = newImage;
-                        });
-                      },
-                      image: pitData.imgRobotSide,
-                    ),
-                    PitImages(
-                      title: "Robot Front",
-                      camera: widget.camera!,
-                      onCapture: (newImage) {
-                        setState(() {
-                          pitData.imgRobotFront = newImage;
-                        });
-                      },
-                      image: pitData.imgRobotFront,
-                    ),
-                  ]),
+              FractionallySizedBox(
+                widthFactor: 0.99,
+                child: Container(
+                  margin: const EdgeInsets.all(5.0),
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(children: <Widget>[
+                      HeadingMain(
+                        styleFontSize: styleFontSizeHeadings,
+                        headingText: "Pictures",
+                        //backGroundColor: Colors.green,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            PitImages(
+                              title: "Team Shirt",
+                              camera: widget.camera!,
+                              onCapture: (newImage) {
+                                setState(() {
+                                  pitData.imgTeamUniform = newImage;
+                                });
+                              },
+                              image: pitData.imgTeamUniform,
+                            ),
+                            PitImages(
+                              title: "Robot Side",
+                              camera: widget.camera!,
+                              onCapture: (newImage) {
+                                setState(() {
+                                  pitData.imgRobotSide = newImage;
+                                });
+                              },
+                              image: pitData.imgRobotSide,
+                            ),
+                            PitImages(
+                              title: "Robot Front",
+                              camera: widget.camera!,
+                              onCapture: (newImage) {
+                                setState(() {
+                                  pitData.imgRobotFront = newImage;
+                                });
+                              },
+                              image: pitData.imgRobotFront,
+                            ),
+                          ]),
+                    ]),
+                  ),
+                ),
+              ),
               PitDriveBase(
                 pitData: pitData,
                 txDriveNotes: txDriveNotes,

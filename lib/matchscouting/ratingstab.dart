@@ -4,12 +4,13 @@ import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
 class RatingsTab extends StatefulWidget {
-  const RatingsTab({Key? key,
-    required this.styleFontSize,
-    required this.styleFontSizeHeadings,
-    required this.matchScoutingData,
-    this.onCommentsChanged,
-    required this.onChange})
+  const RatingsTab(
+      {Key? key,
+      required this.styleFontSize,
+      required this.styleFontSizeHeadings,
+      required this.matchScoutingData,
+      this.onCommentsChanged,
+      required this.onChange})
       : super(key: key);
 
   final double styleFontSize;
@@ -25,10 +26,11 @@ class RatingsTab extends StatefulWidget {
 class _RatingsTabState extends State<RatingsTab> {
   //lists
   final List<DropDownValue> listRatings = [
-    DropDownValue(id: "1", value: "Terrible"),
-    DropDownValue(id: "2", value: "Average"),
-    DropDownValue(id: "3", value: "Good"),
-    DropDownValue(id: "4", value: "Amazing"),
+    DropDownValue(id: "1", value: "N\A"),
+    DropDownValue(id: "2", value: "Terrible"),
+    DropDownValue(id: "3", value: "Average"),
+    DropDownValue(id: "4", value: "Good"),
+    DropDownValue(id: "5", value: "Amazing"),
   ];
 
   final List<DropDownValue> listRatingsDefence = [
@@ -91,7 +93,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       dropDownValues: listRatings,
                       onStateChanged: (String value) {
                         setState(
-                              () {
+                          () {
                             widget.matchScoutingData.commIdDriveRating = value;
                             widget.onChange!(widget.matchScoutingData);
                           },
@@ -113,31 +115,8 @@ class _RatingsTabState extends State<RatingsTab> {
                       dropDownValues: listRatingsDefence,
                       onStateChanged: (String value) {
                         setState(
-                              () {
+                          () {
                             widget.matchScoutingData.commIdDefenceRating =
-                                value;
-                            widget.onChange!(widget.matchScoutingData);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Charge Station Traction:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
-                    ),
-                    DropDownIndexedWidget(
-                      value: widget.matchScoutingData.commIdDriveTraction,
-                      title: null,
-                      dropDownValues: listTraction,
-                      onStateChanged: (String value) {
-                        setState(
-                              () {
-                            widget.matchScoutingData.commIdDriveTraction =
                                 value;
                             widget.onChange!(widget.matchScoutingData);
                           },
@@ -154,7 +133,25 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Assist Other Robot:",
+                      "Worked to a Strategy:",
+                      style: TextStyle(fontSize: widget.styleFontSize),
+                    ),
+                    Switch(
+                      value: widget.matchScoutingData.commFlStrategy!,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.matchScoutingData.commFlStrategy = value;
+                          widget.onChange!(widget.matchScoutingData);
+                        });
+                      },
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Assisted Robots:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
@@ -172,14 +169,14 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Worked to a Strategy:",
+                      "Shuttle Rings:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlStrategy!,
+                      value: widget.matchScoutingData.commFlShuttle!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.matchScoutingData.commFlStrategy = value;
+                          widget.matchScoutingData.commFlShuttle = value;
                           widget.onChange!(widget.matchScoutingData);
                         });
                       },
@@ -208,7 +205,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Robot System Failure:",
+                      "System Failure:",
                       style: TextStyle(fontSize: widget.styleFontSize),
                     ),
                     Switch(
@@ -225,34 +222,6 @@ class _RatingsTabState extends State<RatingsTab> {
                 HeadingMain(
                   styleFontSize: widget.styleFontSizeHeadings,
                   headingText: "Advice",
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Highlight Team:",
-                          style: TextStyle(fontSize: widget.styleFontSize),
-                        ),
-                        Text(
-                          "(Consider Regardless of performance)",
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      ],
-                    ),
-                    Switch(
-                      value: widget.matchScoutingData.commFlHighlight!,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.matchScoutingData.commFlHighlight = value;
-                          widget.onChange!(widget.matchScoutingData);
-                        });
-                      },
-                    ),
-                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -282,6 +251,34 @@ class _RatingsTabState extends State<RatingsTab> {
                     )
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Highlight Team:",
+                          style: TextStyle(fontSize: widget.styleFontSize),
+                        ),
+                        Text(
+                          "(Consider Regardless of performance)",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                    Switch(
+                      value: widget.matchScoutingData.commFlHighlight!,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.matchScoutingData.commFlHighlight = value;
+                          widget.onChange!(widget.matchScoutingData);
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ]),
             ),
           ),
@@ -309,24 +306,6 @@ class _RatingsTabState extends State<RatingsTab> {
                       onChanged: (bool value) {
                         setState(() {
                           widget.matchScoutingData.commFlIntakeGround = value;
-                          widget.onChange!(widget.matchScoutingData);
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Intake from Shelf:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
-                    ),
-                    Switch(
-                      value: widget.matchScoutingData.commFlIntakeHigh!,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.matchScoutingData.commFlIntakeHigh = value;
                           widget.onChange!(widget.matchScoutingData);
                         });
                       },
@@ -378,7 +357,7 @@ class _RatingsTabState extends State<RatingsTab> {
                             border: InputBorder.none,
                             isDense: true,
                             labelStyle:
-                            TextStyle(fontSize: widget.styleFontSize),
+                                TextStyle(fontSize: widget.styleFontSize),
                           ),
                           onChanged: (String value) {
                             widget.matchScoutingData.commTxNotes = value;

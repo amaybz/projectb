@@ -7,8 +7,9 @@ import 'package:projectb/class/class_macthscoutingdata.dart';
 
 class LocalDB {
   static final _databaseName = "local_database.db";
+
   // Increment this version when you need to change the schema.
-  static final _databaseVersion = 42;
+  static final _databaseVersion = 49;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -40,7 +41,7 @@ class LocalDB {
       "location TEXT"
       ")";
   final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
-      "id INTEGER PRIMARY KEY, "
+      'id INTEGER PRIMARY KEY,'
       'flUploaded TEXT,'
       'txEvent TEXT,'
       'txDeviceName TEXT,'
@@ -53,62 +54,49 @@ class LocalDB {
       'flRed TEXT,'
       'flYellow TEXT,'
       'flCrash TEXT,'
-      'flCoop TEXT,'
-      'flCoopAll TEXT,'
-      'flRanking1 TEXT,'
-      'flRanking2 TEXT,'
+      'flAutoStop TEXT,'
       'autoFlStart TEXT,'
       'autoFlBaseLine TEXT,'
       'autoNumCellLoad INTEGER,'
       'autoFlFoul TEXT,'
       'autoFlRobotContact TEXT,'
       'autoFlLoseStartObject TEXT,'
-      'autoFlCrossOver TEXT,'
-      'autoNumHighConeSuccess INTEGER,'
-      'autoNumMidConeSuccess INTEGER,'
-      'autoNumLowConeSuccess INTEGER,'
-      'autoNumHighCubeSuccess INTEGER,'
-      'autoNumMidCubeSuccess INTEGER,'
-      'autoNumLowCubeSuccess INTEGER,'
-      'autoNumCubeAttempt INTEGER,'
-      'autoNumConeAttempt INTEGER,'
-      'autoIdChargeAttempt TEXT,'
-      'autoIdChargeOutcome TEXT,'
+      'autoFlFail TEXT,'
+      'autoNumAmpAttempt INTEGER,'
+      'autoNumAmpSuccess INTEGER,'
+      'autoNumSpeakerAttempt INTEGER,'
+      'autoNumSpeakerSuccess INTEGER,'
+      'autoNumTrapAttempt INTEGER,'
+      'autoNumTrapSuccess INTEGER,'
+      'teleNumAmpAttempt INTEGER,'
+      'teleNumAmpSuccess INTEGER,'
+      'teleNumSpeakerAttempt INTEGER,'
+      'teleNumSpeakerSuccess INTEGER,'
+      'teleNumTrapAttempt INTEGER,'
+      'teleNumTrapSuccess INTEGER,'
       'teleFlPark TEXT,'
-      'teleIdChargeAttempt TEXT,'
-      'teleIdChargeOutcome TEXT,'
-      'teleFlClimbFall TEXT,'
-      'teleIdChargeBalanceSpeed TEXT,'
-      'teleFlChargeAssist TEXT,'
-      'teleNumChargeAssist INTEGER,'
-      'teleNumHighConeSuccess INTEGER,'
-      'teleNumMidConeSuccess INTEGER,'
-      'teleNumLowConeSuccess INTEGER,'
-      'teleNumHighCubeSuccess INTEGER,'
-      'teleNumMidCubeSuccess INTEGER,'
-      'teleNumLowCubeSuccess INTEGER,'
-      'teleNumCubeAttempt INTEGER,'
-      'teleNumConeAttempt INTEGER,'
+      'teleIdStageOutcome TEXT,'
+      'teleIdStageClimbSpeed TEXT,'
+      'teleFlStageAssist TEXT,'
+      'teleFlSpotlight TEXT,'
       'commIdDriveRating TEXT,'
       'commIdDefenceRating TEXT,'
-      'commIdDriveTraction TEXT,'
       'commFlStrategy TEXT,'
       'commFlAssist TEXT,'
+      'commFlShuttle TEXT,'
       'commFlRecovery TEXT,'
       'commFlFailure TEXT,'
       'commFlWarning TEXT,'
       'commFlHighlight TEXT,'
       'commFlIntakeGround TEXT,'
-      'commFlIntakeHigh TEXT,'
       'commFlIntakeStation TEXT,'
       'commTxNotes TEXT'
       ")";
   final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
-      'id INTEGER PRIMARY KEY, '
-      'uploaded TEXT,'
+      'id INTEGER PRIMARY KEY,'
       'txEvent TEXT,'
-      'idTeam INTEGER,'
       'txScoutName TEXT,'
+      'idTeam INTEGER,'
       'numWeight INTEGER,'
       'numHeight INTEGER,'
       'numWidth INTEGER,'
@@ -116,43 +104,38 @@ class LocalDB {
       'imgRobotFront TEXT,'
       'imgRobotSide TEXT,'
       'idDriveType TEXT,'
-      'intWheels INTEGER,'
       'txDriveNotes TEXT,'
-      'flCone TEXT,'
-      'flCube TEXT,'
-      'idObjectPreference TEXT,'
+      'flObject TEXT,'
       'flObjectCatch TEXT,'
-      'flObjectShelf TEXT,'
       'flObjectFloor TEXT,'
-      'flObjectSide TEXT,'
+      'flObjectAngle TEXT,'
       'txObjectNotes TEXT,'
-      'flNodeBottom TEXT,'
-      'flNodeMid TEXT,'
-      'flNodeHigh TEXT,'
-      'flNodeType TEXT,'
+      'flScoreAmp TEXT,'
+      'idScoreSpeaker TEXT,'
+      'flScoreTrap TEXT,'
       'txScoringNotes TEXT,'
-      'flCharge TEXT,'
-      'flChargeBalance TEXT,'
-      'idChargeBalanceType TEXT,'
-      'flChargeAssist TEXT,'
-      'txChargeNotes TEXT,'
+      'flStage TEXT,'
+      'idStageClimbPos TEXT,'
+      'idStageClimbType TEXT,'
+      'flStageAssist TEXT,'
+      'txStageNotes TEXT,'
       'flAuto TEXT,'
       'flAutoLine TEXT,'
       'flAutoScore TEXT,'
       'numAutoScore INTEGER,'
-      'flAutoNodeBottom TEXT,'
-      'flAutoNodeMid TEXT,'
-      'flAutoNodeHigh TEXT,'
-      'flAutoCharge TEXT,'
-      'flAutoChargeBalance TEXT,'
+      'idAutoScore TEXT,'
+      'numAutoRings INTEGER,'
+      'txAutoNotes TEXT,'
       'txPitNotes TEXT,'
       'dtCreation TEXT,'
       'dtModified TEXT,'
-      'txComputerName TEXT'
+      'txComputerName TEXT,'
+      'uploaded TEXT'
       ')';
 
   // Make this a singleton class.
   LocalDB._privateConstructor();
+
   static final LocalDB instance = LocalDB._privateConstructor();
 
   void _createTables(Database db, int version) async {
@@ -175,6 +158,7 @@ class LocalDB {
   }
 
   static Database? _database;
+
   Future<Database?> get database async {
     if (_database != null) return _database;
     _database = await _initDatabase();

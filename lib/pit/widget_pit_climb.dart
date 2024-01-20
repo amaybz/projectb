@@ -54,7 +54,10 @@ class _PitClimbState extends State<PitClimb> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSize,
+                styleFontSize:
+                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Stage",
                 //backGroundColor: Colors.green,
               ),
@@ -83,7 +86,10 @@ class _PitClimbState extends State<PitClimb> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSize,
+                styleFontSize:
+                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Stage",
                 //backGroundColor: Colors.green,
               ),

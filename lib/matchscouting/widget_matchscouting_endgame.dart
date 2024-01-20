@@ -60,7 +60,9 @@ class _EndGameState extends State<EndGame> {
         padding: EdgeInsets.all(1.0),
         child: Column(children: <Widget>[
           HeadingMain(
-            styleFontSize: widget.styleFontSizeHeadings,
+            styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+            textColor: Theme.of(context).textTheme.titleLarge!.color!,
+            backGroundColor: Theme.of(context).primaryColor,
             headingText: "End Game",
             //backGroundColor: Colors.green,
           ),

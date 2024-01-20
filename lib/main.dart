@@ -8,12 +8,15 @@ import 'package:projectb/pit/pitscouting.dart';
 import 'dart:async';
 import 'package:projectb/scoringdata.dart';
 import 'package:projectb/matchscouting/matchscouting.dart';
+import 'package:projectb/settings.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/webapi.dart';
+import 'package:projectb/widgets/widget_headingmain.dart';
 import 'package:projectb/widgets/widget_loading.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
 import 'package:projectb/barcodeScanner.dart';
+import 'package:projectb/widgets/widget_row_heading.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -73,25 +76,38 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
 
   ThemeData _darkTheme = ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Colors.blue,
+    primaryColor: Color(0xFF6200EE),
     splashColor: Colors.white,
-    textTheme: TextTheme(
-      displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      //bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-      bodyMedium: Typography.whiteCupertino.bodyMedium,
-      bodySmall: Typography.blackCupertino.bodySmall,
-      displaySmall: TextStyle(fontSize: 12.0, fontWeight: FontWeight.normal),
-    ),
+    textTheme: ThemeData.dark().textTheme.copyWith(
+          displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          //bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+          titleLarge:
+              TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
+          bodyMedium: Typography.whiteCupertino.bodyMedium,
+          bodySmall: Typography.blackCupertino.bodySmall,
+          labelMedium: TextStyle(
+            fontSize: 16,
+            color: Color(0xFFFFFFFF),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
   );
 
   ThemeData _lightTheme = ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.blue,
-    splashColor: Colors.green,
-    textTheme: const TextTheme(
-      displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-    ),
+    primaryColor: Color(0xFF234E70),
+    splashColor: Color(0xFFFBF8BE),
+    textTheme: ThemeData.light().textTheme.copyWith(
+          titleLarge:
+              TextStyle(color: Color(0xFFFBF8BE), fontWeight: FontWeight.bold),
+          //titleMedium:
+          //titleMedium: TextStyle(color: Color(0xFFFBF8BE)),
+          labelMedium: TextStyle(
+            fontSize: 16,
+            color: Color(0xFFFBF8BE),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
   );
 
   @override
@@ -176,7 +192,10 @@ class _MyHomePageState extends State<MyHomePage> {
     List<DropdownMenuItem<String>> years = [];
     years.clear();
     years.add(DropdownMenuItem(
-        child: new Text((year - 2).toString()), value: (year - 2).toString()));
+        child: new Text(
+          (year - 2).toString(),
+        ),
+        value: (year - 2).toString()));
     years.add(DropdownMenuItem(
         child: new Text((year - 1).toString()), value: (year - 1).toString()));
     years.add(DropdownMenuItem(
@@ -494,21 +513,21 @@ class _MyHomePageState extends State<MyHomePage> {
     if (width < 500) {
       setState(() {
         styleFontSize = 13;
-        styleTitleText = Theme.of(context).textTheme.titleMedium;
+        styleTitleText = Theme.of(context).textTheme.bodyMedium;
         styleMenuText = Theme.of(context).textTheme.bodyMedium;
       });
     }
     if (width < 393) {
       setState(() {
         styleFontSize = 11;
-        styleTitleText = Theme.of(context).textTheme.titleSmall;
+        styleTitleText = Theme.of(context).textTheme.bodySmall;
         styleMenuText = Theme.of(context).textTheme.bodySmall;
       });
     }
     if (width >= 600) {
       setState(() {
         styleFontSize = 15;
-        styleTitleText = Theme.of(context).textTheme.titleLarge;
+        styleTitleText = Theme.of(context).textTheme.bodyLarge;
         styleMenuText = Theme.of(context).textTheme.bodyLarge;
       });
     }
@@ -517,9 +536,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
+        foregroundColor: Theme.of(context).splashColor,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           widget.title!,
-          style: styleTitleText,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       drawer: Drawer(
@@ -530,12 +551,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Robot Scouting'),
-                  Text('Version: ' + versionName),
+                  Text(
+                    'Robot Scouting',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Text(
+                    'Version: ' + versionName,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ],
               ),
-              decoration:
-                  BoxDecoration(color: Theme.of(context).primaryColorDark),
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             ),
             ListTile(
               title: Text(
@@ -591,23 +617,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 _navigateToAddTeamScreen(context);
               },
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0),
-              child: Row(
-                children: [
-                  Text(
-                    'Dark Mode',
-                    style: styleMenuText,
-                  ),
-                  Switch(
-                      value: widget.theme,
-                      onChanged: (toggle) {
-                        setState(() {
-                          widget.onchangeTheme!(toggle);
-                        });
-                      })
-                ],
+            ListTile(
+              title: Text(
+                'Settings',
+                style: styleMenuText,
               ),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToSettings(context);
+              },
             ),
           ],
         ),
@@ -637,10 +655,19 @@ class _MyHomePageState extends State<MyHomePage> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 0.0),
-                                child: Text("Current Event",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall),
+                                child: HeadingMain(
+                                  headingText: "Current Event",
+                                  styleFontSize: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .fontSize!,
+                                  textColor: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .color!,
+                                  backGroundColor:
+                                      Theme.of(context).primaryColor,
+                                ),
                               ),
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
                               Text(selectedLocalEvent == null
@@ -671,8 +698,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: Text("Set New Event",
-                              style: Theme.of(context).textTheme.headlineSmall),
+                          child: HeadingMain(
+                            headingText: "Set New Event",
+                            styleFontSize: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .fontSize!,
+                            textColor:
+                                Theme.of(context).textTheme.titleLarge!.color!,
+                            backGroundColor: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ]),
                   Row(
@@ -697,7 +732,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Expanded(
                           child: DropdownButton<String>(
-                            hint: Text('Please select Year'),
+                            hint: Text(
+                              'Please select Year',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                             value: selectedYear,
                             onChanged: (String? newValue) {
                               setState(() {
@@ -835,12 +873,14 @@ class _MyHomePageState extends State<MyHomePage> {
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
-                eventName: eventName,
-                eventKey: selectedLocalEvent!.key,
-                eventTeams: teams,
-                deviceName: _txtDeviceName.text,
-                styleFontSize: this.styleFontSize,
-              )),
+              eventName: eventName,
+              eventKey: selectedLocalEvent!.key,
+              eventTeams: teams,
+              deviceName: _txtDeviceName.text,
+              styleFontSize: this.styleFontSize,
+              darkMode: (state) {
+                widget.onchangeTheme!(state);
+              })),
     );
   }
 
@@ -865,6 +905,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 camera: widget.camera,
                 deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
+                darkMode: (value) {
+                  widget.onchangeTheme!(value);
+                },
               )),
     );
   }
@@ -874,6 +917,22 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(builder: (context) => QRBarcodeScanner()),
+    );
+  }
+
+  _navigateToSettings(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      // Create the SelectionScreen in the next step.
+      MaterialPageRoute(
+        builder: (context) => SettingsScreen(
+          darkMode: (value) {
+            widget.onchangeTheme!(value);
+          },
+        ),
+      ),
     );
   }
 

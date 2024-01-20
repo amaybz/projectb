@@ -15,7 +15,6 @@ class PitData {
   String? idDriveType;
   String? txDriveNotes;
   bool? flObject;
-  String? idObjectPreference;
   bool? flObjectCatch;
   bool? flObjectAngle;
   bool? flObjectFloor;
@@ -52,10 +51,9 @@ class PitData {
     this.imgTeamUniform,
     this.imgRobotFront,
     this.imgRobotSide,
-    this.idDriveType,
+    this.idDriveType = "1",
     this.txDriveNotes,
     this.flObject = false,
-    this.idObjectPreference,
     this.flObjectCatch = false,
     this.flObjectAngle = false,
     this.flObjectFloor = false,
@@ -65,8 +63,8 @@ class PitData {
     this.idScoreSpeaker,
     this.txScoringNotes,
     this.flStage = false,
-    this.idStageClimbPos,
-    this.idStageClimbType,
+    this.idStageClimbPos = "1",
+    this.idStageClimbType = "1",
     this.flStageAssist = false,
     this.txStageNotes,
     this.flAuto = false,
@@ -74,7 +72,7 @@ class PitData {
     this.flAutoScore = false,
     this.numAutoScore = 0,
     this.numAutoRings = 0,
-    this.idAutoScore,
+    this.idAutoScore = "1",
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,
@@ -110,7 +108,6 @@ class PitData {
       'idDriveType': idDriveType,
       'txDriveNotes': txDriveNotes,
       'flObject': flObject.toString(),
-      'idObjectPreference': idObjectPreference,
       'flObjectCatch': flObjectCatch.toString(),
       'flObjectAngle': flObjectAngle.toString(),
       'flObjectFloor': flObjectFloor.toString(),
@@ -149,7 +146,6 @@ class PitData {
     this.idDriveType = map['idDriveType'];
     this.txDriveNotes = map['txDriveNotes'];
     this.flObject = map['flObject'].toString().toLowerCase() == 'true';
-    this.idObjectPreference = map['idObjectPreference'];
     this.flObjectCatch =
         map['flObjectCatch'].toString().toLowerCase() == 'true';
     this.flObjectAngle =
@@ -214,7 +210,6 @@ class PitData {
 
     data['txDriveNotes'] = this.txDriveNotes;
     data['flObject'] = this.flObject;
-    data['idObjectPreference'] = this.idObjectPreference;
     data['flObjectCatch'] = this.flObjectCatch;
     data['flObjectAngle'] = this.flObjectAngle;
     data['flObjectFloor'] = this.flObjectFloor;
@@ -256,7 +251,6 @@ class PitData {
     this.idDriveType = map['idDriveType'];
     this.txDriveNotes = map['txDriveNotes'];
     this.flObject = map['flObject'];
-    this.idObjectPreference = map['idObjectPreference'];
     this.flObjectCatch = map['flObjectCatch'];
     this.flObjectAngle = map['flObjectAngle'];
     this.flObjectFloor = map['flObjectFloor'];

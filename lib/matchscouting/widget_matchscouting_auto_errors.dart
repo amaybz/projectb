@@ -40,7 +40,9 @@ class _MatchAutoErrorsState extends State<MatchAutoErrors> {
         decoration: BoxDecoration(),
         child: Column(children: <Widget>[
           HeadingMain(
-            styleFontSize: widget.styleFontSizeHeadings,
+            styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+            textColor: Theme.of(context).textTheme.titleLarge!.color!,
+            backGroundColor: Theme.of(context).primaryColor,
             headingText: "Errors",
             //backGroundColor: Colors.green,
           ),

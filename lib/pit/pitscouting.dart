@@ -25,6 +25,7 @@ class PitScoutingScreen extends StatefulWidget {
     this.eventTeams,
     this.deviceName,
     this.camera,
+    required this.darkMode,
     this.styleFontSize = 14,
   }) : super(key: key);
 
@@ -32,6 +33,7 @@ class PitScoutingScreen extends StatefulWidget {
   final String? eventKey;
   final String? deviceName;
   final List<LocalTeam>? eventTeams;
+  final Function(bool) darkMode;
   final double? styleFontSize;
   final CameraDescription? camera;
 
@@ -328,7 +330,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => SettingsScreen()),
+      MaterialPageRoute(
+        builder: (context) => SettingsScreen(
+          darkMode: (value) {
+            widget.darkMode(value);
+          },
+        ),
+      ),
     );
     getMetricSystemValue();
   }
@@ -377,18 +385,22 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: AppBar(title: Text('Pit Scouting'), actions: <Widget>[
-          PopupMenuButton<String>(
-              onSelected: handleMenuClick,
-              itemBuilder: (BuildContext context) {
-                return {'Clear Pit', 'Settings'}.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              }),
-        ]),
+        appBar: AppBar(
+            foregroundColor: Theme.of(context).splashColor,
+            backgroundColor: Theme.of(context).primaryColor,
+            title: Text('Pit Scouting'),
+            actions: <Widget>[
+              PopupMenuButton<String>(
+                  onSelected: handleMenuClick,
+                  itemBuilder: (BuildContext context) {
+                    return {'Clear Pit', 'Settings'}.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  }),
+            ]),
         body: ListView(
             controller: _scrollController,
             reverse: false,
@@ -402,7 +414,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     child: Container(
                       margin: const EdgeInsets.all(5.0),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blueAccent),
+                        //border: Border.all(color: Colors.blueAccent),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10),
@@ -414,9 +426,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              "Event Name: " + widget.eventName!,
-                              style: TextStyle(fontSize: styleFontSizeHeadings),
+                            HeadingMain(
+                              styleFontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .fontSize!,
+                              textColor: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .color!,
+                              backGroundColor: Theme.of(context).primaryColor,
+                              headingText: "Event: " + widget.eventName!,
+                              //backGroundColor: Colors.green,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -485,7 +506,11 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
                       HeadingMain(
-                        styleFontSize: styleFontSizeHeadings,
+                        styleFontSize:
+                            Theme.of(context).textTheme.titleLarge!.fontSize!,
+                        textColor:
+                            Theme.of(context).textTheme.titleLarge!.color!,
+                        backGroundColor: Theme.of(context).primaryColor,
                         headingText: "Robot Stats",
                         //backGroundColor: Colors.green,
                       ),
@@ -568,9 +593,12 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
                       HeadingMain(
-                        styleFontSize: styleFontSizeHeadings,
                         headingText: "Pictures",
-                        //backGroundColor: Colors.green,
+                        styleFontSize:
+                            Theme.of(context).textTheme.titleLarge!.fontSize!,
+                        textColor:
+                            Theme.of(context).textTheme.titleLarge!.color!,
+                        backGroundColor: Theme.of(context).primaryColor,
                       ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -675,7 +703,11 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
                       HeadingMain(
-                        styleFontSize: styleFontSizeHeadings,
+                        styleFontSize:
+                            Theme.of(context).textTheme.titleLarge!.fontSize!,
+                        textColor:
+                            Theme.of(context).textTheme.titleLarge!.color!,
+                        backGroundColor: Theme.of(context).primaryColor,
                         headingText: "Comments",
                         //backGroundColor: Colors.green,
                       ),

@@ -43,7 +43,9 @@ class _PitScoringState extends State<PitScoring> {
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
             HeadingMain(
-              styleFontSize: widget.styleFontSizeHeadings,
+              styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+              textColor: Theme.of(context).textTheme.titleLarge!.color!,
+              backGroundColor: Theme.of(context).primaryColor,
               headingText: "Scoring",
               //backGroundColor: Colors.green,
             ),

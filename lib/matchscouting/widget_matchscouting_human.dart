@@ -34,8 +34,11 @@ class _HumanWidgetState extends State<HumanWidget> {
         padding: EdgeInsets.all(1.0),
         child: Column(children: <Widget>[
           HeadingMain(
-              headingText: "Human",
-              styleFontSize: widget.styleFontSizeHeadings),
+            headingText: "Human",
+            styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+            textColor: Theme.of(context).textTheme.titleLarge!.color!,
+            backGroundColor: Theme.of(context).primaryColor,
+          ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               "Spotlight:",

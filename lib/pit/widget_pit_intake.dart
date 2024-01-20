@@ -47,7 +47,9 @@ class _PitIntakeState extends State<PitIntake> {
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
             HeadingMain(
-              styleFontSize: widget.styleFontSize,
+              styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+              textColor: Theme.of(context).textTheme.titleLarge!.color!,
+              backGroundColor: Theme.of(context).primaryColor,
               headingText: "Intake",
               //backGroundColor: Colors.green,
             ),

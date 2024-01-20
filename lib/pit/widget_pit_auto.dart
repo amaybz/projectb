@@ -48,7 +48,10 @@ class _PitAutoState extends State<PitAuto> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
+                styleFontSize:
+                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Auto",
                 //backGroundColor: Colors.green,
               ),
@@ -77,7 +80,10 @@ class _PitAutoState extends State<PitAuto> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
+                styleFontSize:
+                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Auto",
                 //backGroundColor: Colors.green,
               ),

@@ -13,6 +13,7 @@ import 'dart:io';
 import 'package:projectb/googleinterface.dart';
 import 'package:projectb/widgets/widget_dropdown.dart';
 import 'package:projectb/widgets/widget_dropdown_indexed.dart';
+import 'package:projectb/widgets/widget_headingmain.dart';
 
 class MatchScoutingScreen extends StatefulWidget {
   MatchScoutingScreen({
@@ -22,12 +23,14 @@ class MatchScoutingScreen extends StatefulWidget {
     this.eventTeams,
     this.styleFontSize = 14,
     this.deviceName,
+    required this.darkMode,
   }) : super(key: key);
 
   final String? eventName;
   final String? eventKey;
   final List<LocalTeam>? eventTeams;
   final String? deviceName;
+  final Function(bool) darkMode;
 
   //style
   final double styleFontSize;
@@ -357,7 +360,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => SettingsScreen()),
+      MaterialPageRoute(
+        builder: (context) => SettingsScreen(darkMode: (value) {
+          widget.darkMode(value);
+        }),
+      ),
     );
     getMetricSystemValue();
   }
@@ -417,18 +424,22 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: AppBar(title: Text('Match Scouting'), actions: <Widget>[
-          PopupMenuButton<String>(
-              onSelected: handleMenuClick,
-              itemBuilder: (BuildContext context) {
-                return {'Clear Match', 'Settings'}.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              }),
-        ]),
+        appBar: AppBar(
+            foregroundColor: Theme.of(context).splashColor,
+            backgroundColor: Theme.of(context).primaryColor,
+            title: Text('Match Scouting'),
+            actions: <Widget>[
+              PopupMenuButton<String>(
+                  onSelected: handleMenuClick,
+                  itemBuilder: (BuildContext context) {
+                    return {'Clear Match', 'Settings'}.map((String choice) {
+                      return PopupMenuItem<String>(
+                        value: choice,
+                        child: Text(choice),
+                      );
+                    }).toList();
+                  }),
+            ]),
         body: ListView(children: <Widget>[
           FractionallySizedBox(
             widthFactor: 0.99,
@@ -438,7 +449,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                   child: Container(
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blueAccent),
+                      //border: Border.all(color: Colors.blueAccent),
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10),
@@ -452,10 +463,17 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text(
-                                "Event Name: " + widget.eventName!,
-                                style:
-                                    TextStyle(fontSize: widget.styleFontSize),
+                              HeadingMain(
+                                headingText: "Event: " + widget.eventName!,
+                                styleFontSize: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .fontSize!,
+                                textColor: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .color!,
+                                backGroundColor: Theme.of(context).primaryColor,
                               ),
                             ]),
                         Container(
@@ -496,7 +514,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             child: Container(
               margin: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueAccent),
+                //border: Border.all(color: Colors.blueAccent),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
@@ -805,7 +823,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         ]),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.blue,
+          //backgroundColor: Colors.blue,
+          //foregroundColor: Theme.of(context).splashColor,
+          backgroundColor: Theme.of(context).primaryColor,
           selectedItemColor: Colors.white,
           currentIndex: _selectedTab,
           // th

@@ -26,7 +26,7 @@ class RatingsTab extends StatefulWidget {
 class _RatingsTabState extends State<RatingsTab> {
   //lists
   final List<DropDownValue> listRatings = [
-    DropDownValue(id: "1", value: "N\A"),
+    DropDownValue(id: "1", value: "N/A"),
     DropDownValue(id: "2", value: "Terrible"),
     DropDownValue(id: "3", value: "Average"),
     DropDownValue(id: "4", value: "Good"),
@@ -77,7 +77,10 @@ class _RatingsTabState extends State<RatingsTab> {
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
                 HeadingMain(
-                  styleFontSize: widget.styleFontSizeHeadings,
+                  styleFontSize:
+                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Drive",
                 ),
                 Row(
@@ -126,7 +129,10 @@ class _RatingsTabState extends State<RatingsTab> {
                   ],
                 ),
                 HeadingMain(
-                  styleFontSize: widget.styleFontSizeHeadings,
+                  styleFontSize:
+                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Quick Ratings",
                 ),
                 Row(
@@ -220,7 +226,10 @@ class _RatingsTabState extends State<RatingsTab> {
                   ],
                 ),
                 HeadingMain(
-                  styleFontSize: widget.styleFontSizeHeadings,
+                  styleFontSize:
+                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Advice",
                 ),
                 Row(
@@ -291,7 +300,10 @@ class _RatingsTabState extends State<RatingsTab> {
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
                 HeadingMain(
-                  styleFontSize: widget.styleFontSizeHeadings,
+                  styleFontSize:
+                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Load Type",
                 ),
                 Row(
@@ -342,7 +354,10 @@ class _RatingsTabState extends State<RatingsTab> {
                 padding: EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
                   HeadingMain(
-                    styleFontSize: widget.styleFontSizeHeadings,
+                    styleFontSize:
+                        Theme.of(context).textTheme.titleLarge!.fontSize!,
+                    textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                    backGroundColor: Theme.of(context).primaryColor,
                     headingText: "Comments",
                   ),
                   Row(

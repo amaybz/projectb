@@ -76,8 +76,11 @@ class _ScoreWidgetState extends State<ScoreWidget> {
         padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 4.0),
         child: Column(children: [
           HeadingMain(
-              headingText: "Score",
-              styleFontSize: widget.styleFontSizeHeadings),
+            headingText: "Score",
+            styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+            textColor: Theme.of(context).textTheme.titleLarge!.color!,
+            backGroundColor: Theme.of(context).primaryColor,
+          ),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(

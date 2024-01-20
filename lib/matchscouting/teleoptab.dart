@@ -140,15 +140,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
               styleCounterButtonHeight: widget.styleCounterButtonHeight,
               styleCounterButtonWidth: widget.styleCounterButtonWidth,
               matchScoutingData: widget.matchScoutingData,
-              numLowCubeSuccess: widget.matchScoutingData.teleNumLowCubeSuccess,
-              numMidCubeSuccess: widget.matchScoutingData.teleNumMidCubeSuccess,
-              numSpeakerSuccess:
-                  widget.matchScoutingData.teleNumHighCubeSuccess,
-              numSpeakerAttempt: widget.matchScoutingData.teleNumCubeAttempt,
-              numAmpAttempt: widget.matchScoutingData.teleNumConeAttempt,
-              numAmpSuccess: widget.matchScoutingData.teleNumHighConeSuccess,
-              numTrapSuccess: widget.matchScoutingData.teleNumMidConeSuccess,
-              numLowConeSuccess: widget.matchScoutingData.teleNumLowConeSuccess,
+              numSpeakerSuccess: widget.matchScoutingData.teleNumSpeakerSuccess,
+              numSpeakerAttempt: widget.matchScoutingData.teleNumSpeakerAttempt,
+              numAmpAttempt: widget.matchScoutingData.teleNumAmpAttempt,
+              numAmpSuccess: widget.matchScoutingData.teleNumAmpSuccess,
+              numTrapSuccess: widget.matchScoutingData.teleNumTrapSuccess,
               onChange: (MatchScoutingData newData) {
                 setState(() {
                   widget.onChange!(widget.matchScoutingData);
@@ -159,7 +155,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumHighCubeSuccess = value;
+                  widget.matchScoutingData.teleNumSpeakerSuccess = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
@@ -168,7 +164,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumHighConeSuccess = value;
+                  widget.matchScoutingData.teleNumAmpSuccess = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
@@ -177,16 +173,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumCubeAttempt = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumLowConeSuccessChanged: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumLowConeSuccess = value;
+                  widget.matchScoutingData.teleNumSpeakerAttempt = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
@@ -195,7 +182,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumConeAttempt = value;
+                  widget.matchScoutingData.teleNumAmpAttempt = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
@@ -204,25 +191,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumMidConeSuccess = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumMidCubeSuccessChanged: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumMidCubeSuccess = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumLowCubeSuccessChanged: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumLowCubeSuccess = value;
+                  widget.matchScoutingData.teleNumTrapSuccess = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },

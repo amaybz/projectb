@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto_errors.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_charge_station.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
 
 import '../widgets/widget_headingmain.dart';
@@ -59,7 +57,10 @@ class _AutoTabState extends State<AutoTab> {
             margin: const EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize: widget.styleFontSizeHeadings,
+                styleFontSize:
+                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Driver Position",
                 //backGroundColor: Colors.green,
               ),

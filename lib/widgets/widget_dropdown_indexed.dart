@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart';
-
 
 class DropDownIndexedWidget extends StatefulWidget {
   DropDownIndexedWidget({
@@ -15,7 +12,6 @@ class DropDownIndexedWidget extends StatefulWidget {
     this.styleFieldPadding = 2.0,
     this.styleFontSize = 12,
   }) : super(key: key);
-
 
   final String? value;
   final String? title;
@@ -32,8 +28,31 @@ class DropDownIndexedWidget extends StatefulWidget {
 }
 
 class _DropDownIndexedWidgetState extends State<DropDownIndexedWidget> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: widget.styleFieldPadding,
@@ -43,9 +62,8 @@ class _DropDownIndexedWidgetState extends State<DropDownIndexedWidget> {
       child: DropdownButtonFormField<String>(
         isExpanded: true,
         decoration: InputDecoration(
-          labelStyle:
-          TextStyle(fontSize: widget.styleFontSize),
           labelText: widget.title,
+          labelStyle: styleBodyTextTheme,
           border: InputBorder.none,
           isDense: true,
         ),
@@ -54,14 +72,12 @@ class _DropDownIndexedWidgetState extends State<DropDownIndexedWidget> {
           setState(() {
             widget.onStateChanged!(newValue!);
           });
-
         },
         items: widget.dropDownValues!.map((dropDownValue) {
           return DropdownMenuItem(
             child: new Text(
               dropDownValue.value!,
-              style: TextStyle(
-                  fontSize: widget.styleFontSize),
+              style: styleBodyTextTheme,
             ),
             value: dropDownValue.id,
           );
@@ -94,5 +110,3 @@ class DropDownValue {
     return 'DropDownValue{id: $id, value: $value}';
   }
 }
-
-

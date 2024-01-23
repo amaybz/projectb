@@ -33,8 +33,69 @@ class _PitScoringState extends State<PitScoring> {
     DropdownMenuItem(value: "5", child: Text("All")),
   ];
 
+  getNodeTypeDropDownMenu(TextStyle textStyle) {
+    listNodeType.clear();
+    listNodeType.addAll([
+      DropdownMenuItem(
+          value: "1",
+          child: Text(
+            "N/A",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "2",
+          child: Text(
+            "Subwoofer",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "3",
+          child: Text(
+            "Podium",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "4",
+          child: Text(
+            "Long",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "5",
+          child: Text(
+            "All",
+            style: textStyle,
+          )),
+    ]);
+  }
+
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
+    getNodeTypeDropDownMenu(styleBodyTextTheme!);
+
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
@@ -43,7 +104,7 @@ class _PitScoringState extends State<PitScoring> {
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
             HeadingMain(
-              styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+              styleFontSize: styleTitleTextTheme!.fontSize!,
               textColor: Theme.of(context).textTheme.titleLarge!.color!,
               backGroundColor: Theme.of(context).primaryColor,
               headingText: "Scoring",
@@ -54,7 +115,7 @@ class _PitScoringState extends State<PitScoring> {
               children: [
                 Text(
                   "Score in Amp:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.pitData.flScoreAmp!,
@@ -72,7 +133,7 @@ class _PitScoringState extends State<PitScoring> {
               children: <Widget>[
                 Text(
                   "Speaker Scored From::",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 DropdownButton(
                   value: widget.pitData.idScoreSpeaker == null
@@ -94,7 +155,7 @@ class _PitScoringState extends State<PitScoring> {
               children: [
                 Text(
                   "Score in Trap:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.pitData.flScoreTrap!,
@@ -112,14 +173,16 @@ class _PitScoringState extends State<PitScoring> {
               children: [
                 Text(
                   "Notes: ",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 ConstrainedBox(
                   constraints:
                       BoxConstraints(maxWidth: widget.styleFieldTextWidth),
                   child: TextField(
                     controller: widget.txScoringNotes,
-                    decoration: InputDecoration(hintText: 'Notes on Scoring'),
+                    decoration: InputDecoration(
+                        hintText: 'Notes on Scoring',
+                        hintStyle: styleBodyTextTheme),
                   ),
                 ),
               ],

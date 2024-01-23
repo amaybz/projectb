@@ -65,6 +65,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     DropDownValue(id: "2", value: "Blue")
   ];
 
+  List<DropdownMenuItem<String>> listAlliance = [
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+  ];
+
   MatchScoutingData matchScoutingData = MatchScoutingData();
 
   final List<DropDownValue> _listRobotPosition = [
@@ -90,6 +94,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   double styleCounterButtonWidth = 30;
   double styleFontSizeHeadings = 16;
   double styleRedBoxSize = 300;
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
 
   LocalTeam? selectedTeam;
   List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
@@ -387,6 +393,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleRedBoxSize = 180;
       styleCounterButtonHeight = 35;
       styleCounterButtonWidth = 40;
+      styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
     }
     if (width < 393) {
       setState(() {
@@ -396,13 +404,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         styleFieldPadding = 2.0;
         styleFieldPaddingSides = 2.0;
         styleFieldWidthFacing = 140;
-        styleImgFieldMapWidth = 250;
+        styleImgFieldMapWidth = 225;
         styleFieldWidthTeam = 210;
-
         styleFontSizeHeadings = 15;
         styleRedBoxSize = 180;
         styleCounterButtonHeight = 25;
         styleCounterButtonWidth = 30;
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
       });
     }
     if (width >= 600) {
@@ -419,6 +428,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleFieldWidthStartingCells = 150;
       styleCounterButtonHeight = 35;
       styleCounterButtonWidth = 40;
+      styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
     }
 
     return WillPopScope(
@@ -427,7 +438,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         appBar: AppBar(
             foregroundColor: Theme.of(context).splashColor,
             backgroundColor: Theme.of(context).primaryColor,
-            title: Text('Match Scouting'),
+            title: Text(
+              'Match Scouting',
+              style: styleTitleTextTheme,
+            ),
             actions: <Widget>[
               PopupMenuButton<String>(
                   onSelected: handleMenuClick,
@@ -435,7 +449,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                     return {'Clear Match', 'Settings'}.map((String choice) {
                       return PopupMenuItem<String>(
                         value: choice,
-                        child: Text(choice),
+                        child: Text(
+                          choice,
+                          style: styleBodyTextTheme,
+                        ),
                       );
                     }).toList();
                   }),
@@ -465,10 +482,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             children: <Widget>[
                               HeadingMain(
                                 headingText: "Event: " + widget.eventName!,
-                                styleFontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .fontSize!,
+                                styleFontSize: styleTitleTextTheme!.fontSize!,
                                 textColor: Theme.of(context)
                                     .textTheme
                                     .titleLarge!
@@ -477,29 +491,26 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               ),
                             ]),
                         Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: styleFieldPadding,
-                              horizontal: styleFieldPaddingSides),
-                          width: styleFieldScoutName,
+                          //  padding: EdgeInsets.symmetric(
+                          //      vertical: styleFieldPadding,
+                          //      horizontal: styleFieldPaddingSides),
+                          //width: styleFieldScoutName,
                           height: 50,
                           child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
                                   "Scout Name: ",
-                                  style:
-                                      TextStyle(fontSize: widget.styleFontSize),
+                                  style: styleBodyTextTheme,
                                 ),
                                 Expanded(
                                   child: TextField(
                                     controller: _txtScoutName,
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize),
+                                    style: styleBodyTextTheme,
                                     decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Scout Name',
-                                    ),
+                                        hintText: 'Scout Name',
+                                        hintStyle: styleBodyTextTheme),
                                   ),
                                 ),
                               ]),
@@ -535,9 +546,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 vertical: styleFieldPadding,
                                 horizontal: styleFieldPaddingSides),
                             width: styleFieldMatchNumber,
-                            height: 58,
+                            // height: 58,
                             child: TextField(
-                              style: TextStyle(fontSize: widget.styleFontSize),
+                              style: styleBodyTextTheme,
                               controller: _txtMatchNumber,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
@@ -551,6 +562,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               },
                               decoration: InputDecoration(
                                 labelText: "Match #",
+                                labelStyle: styleBodyTextTheme,
                                 border: InputBorder.none,
                                 isDense: true,
                               ),
@@ -558,11 +570,12 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           ),
                           //Expanded(
                           //child:
+
                           DropDownIndexedWidget(
                               value: matchScoutingData.idAlliance,
                               title: "Alliance",
                               dropDownValues: _listAlliance,
-                              styleFontSize: widget.styleFontSize,
+                              styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldAlliance,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -584,7 +597,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               value: matchScoutingData.idDriveStation,
                               title: "Drive Station",
                               dropDownValues: listDriveStations,
-                              styleFontSize: widget.styleFontSize,
+                              styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -594,9 +607,22 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   print(matchScoutingData.idDriveStation);
                                 });
                               }),
+                          DropDownIndexedWidget(
+                              value: matchScoutingData.idStartPosition,
+                              title: "Robot Position",
+                              dropDownValues: _listRobotPosition,
+                              styleFontSize: widget.styleFontSize,
+                              styleFieldWidth: styleFieldWidth,
+                              styleFieldPadding: styleFieldPadding,
+                              styleFieldPaddingSides: styleFieldPaddingSides,
+                              onStateChanged: (String newValue) {
+                                setState(() {
+                                  matchScoutingData.idStartPosition = newValue;
+                                });
+                              }),
                         ]),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
@@ -610,6 +636,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                             child: DropdownButton(
                               isExpanded: true,
                               isDense: true,
+                              style: styleBodyTextTheme,
                               value: selectedTeam == null
                                   ? null
                                   : selectedTeam!.key,
@@ -653,23 +680,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           ),
                         ]),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          DropDownIndexedWidget(
-                              value: matchScoutingData.idStartPosition,
-                              title: "Robot Position",
-                              dropDownValues: _listRobotPosition,
-                              styleFontSize: widget.styleFontSize,
-                              styleFieldWidth: styleFieldWidth,
-                              styleFieldPadding: styleFieldPadding,
-                              styleFieldPaddingSides: styleFieldPaddingSides,
-                              onStateChanged: (String newValue) {
-                                setState(() {
-                                  matchScoutingData.idStartPosition = newValue;
-                                });
-                              }),
-                        ]),
+                        children: <Widget>[]),
                   ]),
             ),
           ),
@@ -824,9 +837,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           //backgroundColor: Colors.blue,
-          //foregroundColor: Theme.of(context).splashColor,
           backgroundColor: Theme.of(context).primaryColor,
-          selectedItemColor: Colors.white,
+          selectedItemColor: Theme.of(context).splashColor,
+          unselectedItemColor: Theme.of(context).canvasColor,
           currentIndex: _selectedTab,
           // th
           onTap: (value) {

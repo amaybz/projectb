@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/finishtab.dart';
 
 import '../widgets/widget_counter.dart';
 import '../widgets/widget_headingmain.dart';
@@ -33,6 +34,9 @@ class EndGame extends StatefulWidget {
 }
 
 class _EndGameState extends State<EndGame> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   List<DropdownMenuItem<String>> ddsSpeed = [
     DropdownMenuItem(value: "1", child: Text("N/A")),
     DropdownMenuItem(value: "2", child: Text("Slow (> 7 Secs)")),
@@ -54,13 +58,33 @@ class _EndGameState extends State<EndGame> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
         padding: EdgeInsets.all(1.0),
         child: Column(children: <Widget>[
           HeadingMain(
-            styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+            styleFontSize: styleTitleTextTheme!.fontSize!,
             textColor: Theme.of(context).textTheme.titleLarge!.color!,
             backGroundColor: Theme.of(context).primaryColor,
             headingText: "End Game",
@@ -69,7 +93,7 @@ class _EndGameState extends State<EndGame> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               "Park:",
-              style: TextStyle(fontSize: widget.styleFontSize),
+              style: styleBodyTextTheme,
             ),
             Switch(
                 value: widget.matchScoutingData.teleFlPark!,
@@ -84,15 +108,13 @@ class _EndGameState extends State<EndGame> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "Outcome:",
-                style: TextStyle(fontSize: widget.styleFontSize),
-              ),
+              Text("Outcome:", style: styleBodyTextTheme),
               DropdownButton(
                 value: widget.matchScoutingData.teleIdStageOutcome == null
                     ? null
                     : widget.matchScoutingData.teleIdStageOutcome,
                 items: ddsPosition,
+                style: styleBodyTextTheme,
                 onChanged: (item) {
                   setState(() {
                     widget.matchScoutingData.teleIdStageOutcome =
@@ -109,12 +131,13 @@ class _EndGameState extends State<EndGame> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Speed:", style: TextStyle(fontSize: widget.styleFontSize)),
+              Text("Speed:", style: styleBodyTextTheme),
               DropdownButton(
                 value: widget.matchScoutingData.teleIdStageClimbSpeed == null
                     ? null
                     : widget.matchScoutingData.teleIdStageClimbSpeed,
                 items: ddsSpeed,
+                style: styleBodyTextTheme,
                 onChanged: (item) {
                   setState(() {
                     widget.matchScoutingData.teleIdStageClimbSpeed =
@@ -128,7 +151,7 @@ class _EndGameState extends State<EndGame> {
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Assist?:", style: TextStyle(fontSize: widget.styleFontSize)),
+            Text("Assist?:", style: styleBodyTextTheme),
             Switch(
                 value: widget.matchScoutingData.teleFlStageAssist!,
                 onChanged: (item) {

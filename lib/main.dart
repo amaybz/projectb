@@ -79,12 +79,12 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     primaryColor: Color(0xFF6200EE),
     splashColor: Colors.white,
     textTheme: ThemeData.dark().textTheme.copyWith(
-          displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-          //bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
           titleLarge:
               TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
-          bodyMedium: Typography.whiteCupertino.bodyMedium,
-          bodySmall: Typography.blackCupertino.bodySmall,
+          titleMedium:
+              TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
+          titleSmall:
+              TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
           labelMedium: TextStyle(
             fontSize: 16,
             color: Color(0xFFFFFFFF),
@@ -100,8 +100,10 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     textTheme: ThemeData.light().textTheme.copyWith(
           titleLarge:
               TextStyle(color: Color(0xFFFBF8BE), fontWeight: FontWeight.bold),
-          //titleMedium:
-          //titleMedium: TextStyle(color: Color(0xFFFBF8BE)),
+          titleMedium:
+              TextStyle(color: Color(0xFFFBF8BE), fontWeight: FontWeight.bold),
+          titleSmall:
+              TextStyle(color: Color(0xFFFBF8BE), fontWeight: FontWeight.bold),
           labelMedium: TextStyle(
             fontSize: 16,
             color: Color(0xFFFBF8BE),
@@ -157,6 +159,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double styleFontSize = 14;
   TextStyle? styleTitleText = ThemeData().textTheme.titleLarge;
   TextStyle? styleMenuText = ThemeData().textTheme.bodyLarge;
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.bodyMedium;
 
   String versionName = "";
   String versionCode = "";
@@ -168,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String _downloadingText = "Please select Location and Event to download data";
   String txtEventHelpText = "Please choose a event";
   String? locationDropDown;
-  String selectedYear = "2018";
+  String selectedYear = "setme";
   final List<String> _locations = [
     'Australia',
     'Canada',
@@ -186,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DropdownMenuItem(child: new Text("2018"), value: "2018")
   ];
 
-  List<DropdownMenuItem<String>> updateYears() {
+  List<DropdownMenuItem<String>> updateYears(TextStyle textStyle) {
     DateTime now = DateTime.now();
     int year = now.year;
     List<DropdownMenuItem<String>> years = [];
@@ -194,17 +198,30 @@ class _MyHomePageState extends State<MyHomePage> {
     years.add(DropdownMenuItem(
         child: new Text(
           (year - 2).toString(),
+          style: textStyle,
         ),
         value: (year - 2).toString()));
     years.add(DropdownMenuItem(
-        child: new Text((year - 1).toString()), value: (year - 1).toString()));
+        child: new Text(
+          (year - 1).toString(),
+          style: textStyle,
+        ),
+        value: (year - 1).toString()));
     years.add(DropdownMenuItem(
-        child: new Text(year.toString()), value: year.toString()));
+        child: new Text(
+          year.toString(),
+          style: textStyle,
+        ),
+        value: year.toString()));
     years.add(DropdownMenuItem(
-        child: new Text((year + 1).toString()), value: (year + 1).toString()));
+        child: new Text(
+          (year + 1).toString(),
+          style: textStyle,
+        ),
+        value: (year + 1).toString()));
     setState(() {
       _years = years;
-      selectedYear = year.toString();
+      if (selectedYear == "setme") selectedYear = year.toString();
     });
     return years;
   }
@@ -230,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     //get events from API
-    updateYears();
+    updateYears(styleBodyTextTheme!);
     updateEventsFromAPI(selectedYear);
     //update device name from local db
     getDeviceName();
@@ -453,7 +470,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await getMatches(selectedEvent!.key!);
   }
 
-  setEventItems() async {
+  setEventItems(TextStyle textStyle) async {
     //clear current selected event and dropdown box
     setState(() {
       selectedEvent = null;
@@ -491,7 +508,21 @@ class _MyHomePageState extends State<MyHomePage> {
             value: event.key,
             child: Text(
               event.name!,
-              style: TextStyle(fontSize: 16),
+              style: textStyle,
+            )));
+      });
+    }
+  }
+
+  updateEventItemsTheme(TextStyle textStyle) async {
+    eventListDropDown.clear();
+    for (EventsList event in eventsList) {
+      setState(() {
+        eventListDropDown.add(new DropdownMenuItem(
+            value: event.key,
+            child: Text(
+              event.name!,
+              style: textStyle,
             )));
       });
     }
@@ -499,14 +530,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    //style
-
     double width = MediaQuery.of(context).size.width;
     print("Screen Size: " + width.toString());
 
@@ -515,6 +538,8 @@ class _MyHomePageState extends State<MyHomePage> {
         styleFontSize = 13;
         styleTitleText = Theme.of(context).textTheme.bodyMedium;
         styleMenuText = Theme.of(context).textTheme.bodyMedium;
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
       });
     }
     if (width < 393) {
@@ -522,15 +547,21 @@ class _MyHomePageState extends State<MyHomePage> {
         styleFontSize = 11;
         styleTitleText = Theme.of(context).textTheme.bodySmall;
         styleMenuText = Theme.of(context).textTheme.bodySmall;
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
       });
     }
     if (width >= 600) {
       setState(() {
         styleFontSize = 15;
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
         styleTitleText = Theme.of(context).textTheme.bodyLarge;
         styleMenuText = Theme.of(context).textTheme.bodyLarge;
       });
     }
+    updateYears(styleBodyTextTheme!);
+    updateEventItemsTheme(styleBodyTextTheme!);
 
     return Scaffold(
       appBar: AppBar(
@@ -540,7 +571,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           widget.title!,
-          style: Theme.of(context).textTheme.titleLarge,
+          //style: Theme.of(context).textTheme.titleLarge,
+          style: styleTitleTextTheme,
         ),
       ),
       drawer: Drawer(
@@ -657,34 +689,36 @@ class _MyHomePageState extends State<MyHomePage> {
                                     vertical: 10.0, horizontal: 0.0),
                                 child: HeadingMain(
                                   headingText: "Current Event",
-                                  styleFontSize: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .fontSize!,
-                                  textColor: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .color!,
+                                  styleFontSize: styleTitleTextTheme!.fontSize!,
+                                  textColor: styleTitleTextTheme!.color!,
                                   backGroundColor:
                                       Theme.of(context).primaryColor,
                                 ),
                               ),
                               //Text(selectedLocalEvent == null ? "none" : selectedLocalEvent.shortName),
-                              Text(selectedLocalEvent == null
-                                  ? "none"
-                                  : selectedLocalEvent!.name!),
-                              Text(selectedLocalEvent == null
-                                  ? ""
-                                  : selectedLocalEvent!.location!),
-                              Text(selectedLocalEvent == null
-                                  ? ""
-                                  : selectedYear!),
+                              Text(
+                                selectedLocalEvent == null
+                                    ? "none"
+                                    : selectedLocalEvent!.name!,
+                                style: styleBodyTextTheme,
+                              ),
+                              Text(
+                                selectedLocalEvent == null
+                                    ? ""
+                                    : selectedLocalEvent!.location!,
+                                style: styleBodyTextTheme,
+                              ),
+                              Text(
+                                selectedLocalEvent == null ? "" : selectedYear,
+                                style: styleBodyTextTheme,
+                              ),
 
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 0.0),
                                 child: Text(
                                   "Teams Loaded: " + _countOfTeams.toString(),
+                                  style: styleBodyTextTheme,
                                 ),
                               ),
                             ],
@@ -700,12 +734,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           margin: const EdgeInsets.symmetric(vertical: 20.0),
                           child: HeadingMain(
                             headingText: "Set New Event",
-                            styleFontSize: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .fontSize!,
-                            textColor:
-                                Theme.of(context).textTheme.titleLarge!.color!,
+                            styleFontSize: styleTitleTextTheme!.fontSize!,
+                            textColor: styleTitleTextTheme!.color!,
                             backGroundColor: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -715,7 +745,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         SizedBox(
                           width: 100,
-                          child: Text("Device Name: "),
+                          child: Text(
+                            "Device Name: ",
+                            style: styleBodyTextTheme,
+                          ),
                         ),
                         Expanded(
                           child: TextField(
@@ -732,10 +765,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Expanded(
                           child: DropdownButton<String>(
-                            hint: Text(
-                              'Please select Year',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
+                            hint: Text('Please select Year',
+                                style: styleBodyTextTheme),
                             value: selectedYear,
                             onChanged: (String? newValue) {
                               setState(() {
@@ -758,17 +789,19 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Expanded(
                           child: DropdownButton<String>(
-                            hint: Text('Please choose a location'),
+                            hint: Text('Please choose a location',
+                                style: styleBodyTextTheme),
                             value: locationDropDown,
                             onChanged: (String? newValue) {
                               setState(() {
                                 locationDropDown = newValue;
                               });
-                              setEventItems();
+                              setEventItems(styleBodyTextTheme!);
                             },
                             items: _locations.map((location) {
                               return DropdownMenuItem(
-                                child: new Text(location),
+                                child: new Text(location,
+                                    style: styleBodyTextTheme),
                                 value: location,
                               );
                             }).toList(),
@@ -785,7 +818,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           child: DropdownButton<String>(
                             isExpanded: true,
-                            hint: Text(txtEventHelpText),
+                            hint: Text(txtEventHelpText,
+                                style: styleBodyTextTheme),
                             value: selectedEvent == null
                                 ? null
                                 : selectedEvent!.key,

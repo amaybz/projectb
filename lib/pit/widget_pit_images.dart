@@ -23,17 +23,46 @@ class PitImages extends StatefulWidget {
 }
 
 class _PitImagesState extends State<PitImages> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return Column(
       children: [
-        Text(widget.title!),
+        Text(
+          widget.title!,
+          style: styleBodyTextTheme,
+        ),
         loadImage(widget.image),
         ElevatedButton(
           onPressed: () {
             getImageFromCamera(context);
           },
-          child: Text("Take Picture"),
+          child: Text(
+            "Take Picture",
+            style: styleBodyTextTheme,
+          ),
         ),
       ],
     );

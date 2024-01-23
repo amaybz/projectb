@@ -31,17 +31,77 @@ class PitDriveBase extends StatefulWidget {
 }
 
 class _PitDriveBaseState extends State<PitDriveBase> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   List<DropdownMenuItem<String>> listIdDriveType = [
-    DropdownMenuItem(value: "1", child: Text("N/A")),
-    DropdownMenuItem(value: "2", child: Text("KOP")),
-    DropdownMenuItem(value: "3", child: Text("Custom Tank")),
-    DropdownMenuItem(value: "4", child: Text("Meccanum")),
-    DropdownMenuItem(value: "5", child: Text("Swerve")),
-    DropdownMenuItem(value: "6", child: Text("Other")),
+    DropdownMenuItem(value: "1", child: Text("N/A"))
   ];
+
+  getDriveBaseDropDownMenu(TextStyle textStyle) {
+    listIdDriveType.clear();
+    listIdDriveType.add(DropdownMenuItem(
+        value: "1",
+        child: Text(
+          "N/A",
+          style: textStyle,
+        )));
+    listIdDriveType.add(DropdownMenuItem(
+        value: "2",
+        child: Text(
+          "KOP",
+          style: textStyle,
+        )));
+    listIdDriveType.add(DropdownMenuItem(
+        value: "3",
+        child: Text(
+          "Custom Tank",
+          style: textStyle,
+        )));
+    listIdDriveType.add(DropdownMenuItem(
+        value: "4",
+        child: Text(
+          "Meccanum",
+          style: textStyle,
+        )));
+    listIdDriveType.add(DropdownMenuItem(
+        value: "5",
+        child: Text(
+          "Swerve",
+          style: textStyle,
+        )));
+    listIdDriveType.add(DropdownMenuItem(
+        value: "6",
+        child: Text(
+          "Other",
+          style: textStyle,
+        )));
+  }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
+    getDriveBaseDropDownMenu(styleBodyTextTheme!);
+
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
@@ -50,7 +110,7 @@ class _PitDriveBaseState extends State<PitDriveBase> {
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
             HeadingMain(
-              styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+              styleFontSize: styleTitleTextTheme!.fontSize!,
               textColor: Theme.of(context).textTheme.titleLarge!.color!,
               backGroundColor: Theme.of(context).primaryColor,
               headingText: "Drivebase",
@@ -62,7 +122,7 @@ class _PitDriveBaseState extends State<PitDriveBase> {
               children: <Widget>[
                 Text(
                   "Driving Type:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 DropdownButton(
                   value: widget.pitData.idDriveType == null
@@ -85,7 +145,7 @@ class _PitDriveBaseState extends State<PitDriveBase> {
               children: [
                 Text(
                   "Notes: ",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 ConstrainedBox(
                   constraints:
@@ -93,7 +153,8 @@ class _PitDriveBaseState extends State<PitDriveBase> {
                   child: TextField(
                     controller: widget.txDriveNotes,
                     decoration: InputDecoration(
-                        hintText: 'Notes on drive and control system'),
+                        hintText: 'Notes on drive and control system',
+                        hintStyle: styleBodyTextTheme),
                   ),
                 ),
               ],

@@ -30,6 +30,9 @@ class PitIntake extends StatefulWidget {
 }
 
 class _PitIntakeState extends State<PitIntake> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   List<DropdownMenuItem<String>> listObjectTypes = [
     DropdownMenuItem(value: "1", child: Text("Both")),
     DropdownMenuItem(value: "2", child: Text("Cone")),
@@ -39,6 +42,26 @@ class _PitIntakeState extends State<PitIntake> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
@@ -47,7 +70,7 @@ class _PitIntakeState extends State<PitIntake> {
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
             HeadingMain(
-              styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+              styleFontSize: styleTitleTextTheme!.fontSize!,
               textColor: Theme.of(context).textTheme.titleLarge!.color!,
               backGroundColor: Theme.of(context).primaryColor,
               headingText: "Intake",
@@ -58,7 +81,7 @@ class _PitIntakeState extends State<PitIntake> {
               children: [
                 Text(
                   "Use Note?:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.pitData.flObject!,
@@ -76,7 +99,7 @@ class _PitIntakeState extends State<PitIntake> {
               children: [
                 Text(
                   "Catch:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.pitData.flObjectCatch!,
@@ -93,7 +116,7 @@ class _PitIntakeState extends State<PitIntake> {
               children: [
                 Text(
                   "Floor Pickup:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.pitData.flObjectFloor!,
@@ -110,7 +133,7 @@ class _PitIntakeState extends State<PitIntake> {
               children: [
                 Text(
                   "Angled Pickup:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.pitData.flObjectAngle!,
@@ -127,16 +150,18 @@ class _PitIntakeState extends State<PitIntake> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Intake Notes: ",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  "Notes: ",
+                  style: styleBodyTextTheme,
                 ),
                 ConstrainedBox(
                   constraints: BoxConstraints(
                       maxWidth: widget.styleFieldTxShootingMaxWidth),
                   child: TextField(
                     controller: widget.txNotes,
-                    decoration:
-                        InputDecoration(hintText: 'Notes on intake system(s)'),
+                    style: styleBodyTextTheme,
+                    decoration: InputDecoration(
+                        hintText: 'Notes on intake system(s)',
+                        hintStyle: styleBodyTextTheme),
                   ),
                 ),
               ],

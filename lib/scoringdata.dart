@@ -225,6 +225,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Theme.of(context).splashColor,
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Saved Match Scouting'),
       ),
       body: Column(children: <Widget>[

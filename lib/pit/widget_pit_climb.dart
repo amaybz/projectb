@@ -31,20 +31,95 @@ class PitClimb extends StatefulWidget {
 
 class _PitClimbState extends State<PitClimb> {
   List<DropdownMenuItem<String>> listClimbType = [
-    DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Passive")),
-    DropdownMenuItem(value: "3", child: Text("Active")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
   ];
 
   List<DropdownMenuItem<String>> listClimbPos = [
-    DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Middle")),
-    DropdownMenuItem(value: "3", child: Text("High")),
-    DropdownMenuItem(value: "4", child: Text("Any")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
   ];
+
+  getClimbTypeDropDownMenu(TextStyle textStyle) {
+    listClimbType.clear();
+    listClimbType.addAll([
+      DropdownMenuItem(
+          value: "1",
+          child: Text(
+            "N/A",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "2",
+          child: Text(
+            "Passive",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "3",
+          child: Text(
+            "Active",
+            style: textStyle,
+          )),
+    ]);
+  }
+
+  getClimbPosDropDownMenu(TextStyle textStyle) {
+    listClimbPos.clear();
+    listClimbPos.addAll([
+      DropdownMenuItem(
+          value: "1",
+          child: Text(
+            "N/A",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "2",
+          child: Text(
+            "Middle",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "3",
+          child: Text(
+            "High",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "4",
+          child: Text(
+            "Any",
+            style: textStyle,
+          )),
+    ]);
+  }
+
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
+    getClimbTypeDropDownMenu(styleBodyTextTheme!);
+    getClimbPosDropDownMenu(styleBodyTextTheme!);
+
     if (widget.pitData.flStage == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
@@ -54,8 +129,7 @@ class _PitClimbState extends State<PitClimb> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize:
-                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Stage",
@@ -86,15 +160,14 @@ class _PitClimbState extends State<PitClimb> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize:
-                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Stage",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
-                styleFontSize: widget.styleFontSize,
+                styleFontSize: styleBodyTextTheme!.fontSize!,
                 text: "Climb Stage:",
                 value: widget.pitData.flStage,
                 styleBackGroundColor: Colors.green,
@@ -112,7 +185,7 @@ class _PitClimbState extends State<PitClimb> {
                 children: <Widget>[
                   Text(
                     "Climb Location:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   DropdownButton(
                     value: widget.pitData.idStageClimbPos == null
@@ -136,7 +209,7 @@ class _PitClimbState extends State<PitClimb> {
                 children: <Widget>[
                   Text(
                     "Climb Type:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   DropdownButton(
                     value: widget.pitData.idStageClimbType == null
@@ -159,7 +232,7 @@ class _PitClimbState extends State<PitClimb> {
                 children: [
                   Text(
                     "Climb Assist?:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   Switch(
                     value: widget.pitData.flStageAssist!,
@@ -177,14 +250,17 @@ class _PitClimbState extends State<PitClimb> {
                 children: [
                   Text(
                     "Notes: ",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   ConstrainedBox(
                     constraints: BoxConstraints(
                         maxWidth: widget.styleFieldTxShootingMaxWidth),
                     child: TextField(
                       controller: widget.txChargeNotes,
-                      decoration: InputDecoration(hintText: 'Climb Notes'),
+                      decoration: InputDecoration(
+                        hintText: 'Climb Notes',
+                        hintStyle: styleBodyTextTheme,
+                      ),
                     ),
                   ),
                 ],

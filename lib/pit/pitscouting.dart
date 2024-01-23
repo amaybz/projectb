@@ -75,6 +75,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   int googleUploadStatus = 0;
   GoogleInterface googleInterface = GoogleInterface.instance;
 
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   void initState() {
     super.initState();
@@ -92,7 +95,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       pitData.idTeam = null;
       ddsEventTeams.clear();
     });
-    //get events based on location
+
     if (widget.eventTeams == null) {
       //show no teams
       setState(() {
@@ -100,7 +103,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
             value: "0",
             child: Text(
               "NO TEAMS for this EVENT",
-              style: TextStyle(fontSize: styleFontSize),
+              style: styleBodyTextTheme,
             )));
       });
     }
@@ -112,10 +115,37 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
             value: team.key,
             child: Text(
               team.teamNumber.toString() + " - " + team.nickName!,
-              style: TextStyle(fontSize: styleFontSize),
+              style: styleBodyTextTheme,
               overflow: TextOverflow.ellipsis,
             )));
       });
+    }
+  }
+
+  updateThemeForEventTeams(TextStyle textStyle) async {
+    ddsEventTeams.clear();
+    if (widget.eventTeams == null) {
+      //show no teams
+      setState(() {
+        ddsEventTeams.add(new DropdownMenuItem(
+            value: "0",
+            child: Text(
+              "NO TEAMS for this EVENT",
+              style: textStyle,
+            )));
+      });
+    } else {
+      for (LocalTeam team in widget.eventTeams!) {
+        setState(() {
+          ddsEventTeams.add(new DropdownMenuItem(
+              value: team.key,
+              child: Text(
+                team.teamNumber.toString() + " - " + team.nickName!,
+                style: textStyle,
+                overflow: TextOverflow.ellipsis,
+              )));
+        });
+      }
     }
   }
 
@@ -216,7 +246,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(heading),
-      content: Text(text),
+      content: Text(text, style: styleBodyTextTheme),
       actions: [
         okButton,
       ],
@@ -236,7 +266,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('This will clear the current Pit?'),
+            content: new Text('This will clear the current Pit?',
+                style: styleBodyTextTheme),
             actions: <Widget>[
               new TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -368,19 +399,26 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       styleFieldTxShootingMaxWidth = 250;
       styleFieldTxClimbMaxWidth = 240;
       styleFieldTxPitNotesMaxWidth = 300;
+      styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
     }
     if (width < 395) {
       styleFontSizeHeadings = 16;
       styleFieldScoutNameMaxWidth = 200;
       styleFieldTxShootingMaxWidth = 198;
       styleFieldTxPitNotesMaxWidth = 250;
+      styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
     }
     if (width >= 600) {
       styleFieldTxShootingMaxWidth = 400;
       styleFieldScoutNameMaxWidth = 400;
       styleFieldTxPitNotesMaxWidth = 500;
       styleFieldTxClimbMaxWidth = 420;
+      styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
     }
+    updateThemeForEventTeams(styleBodyTextTheme!);
 
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -388,7 +426,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         appBar: AppBar(
             foregroundColor: Theme.of(context).splashColor,
             backgroundColor: Theme.of(context).primaryColor,
-            title: Text('Pit Scouting'),
+            title: Text(
+              'Pit Scouting',
+              style: styleTitleTextTheme,
+            ),
             actions: <Widget>[
               PopupMenuButton<String>(
                   onSelected: handleMenuClick,
@@ -427,17 +468,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             HeadingMain(
-                              styleFontSize: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .fontSize!,
-                              textColor: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .color!,
+                              styleFontSize: styleTitleTextTheme!.fontSize!,
+                              textColor: styleTitleTextTheme!.color!,
                               backGroundColor: Theme.of(context).primaryColor,
                               headingText: "Event: " + widget.eventName!,
-                              //backGroundColor: Colors.green,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -445,16 +479,17 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               children: [
                                 Text(
                                   "Scout: ",
-                                  style:
-                                      TextStyle(fontSize: widget.styleFontSize),
+                                  style: styleBodyTextTheme,
                                 ),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
                                       maxWidth: styleFieldScoutNameMaxWidth),
                                   child: TextField(
                                     controller: _txtScoutName,
-                                    decoration:
-                                        InputDecoration(hintText: 'Scout Name'),
+                                    style: styleBodyTextTheme,
+                                    decoration: InputDecoration(
+                                        hintText: 'Scout Name',
+                                        hintStyle: styleBodyTextTheme),
                                   ),
                                 ),
                               ],
@@ -467,7 +502,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                   Text(
                                     "Team ",
                                     style: TextStyle(
-                                        fontSize: widget.styleFontSize),
+                                        fontSize:
+                                            styleBodyTextTheme!.fontSize!),
                                   ),
                                   ConstrainedBox(
                                     constraints: BoxConstraints(
@@ -506,10 +542,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
                       HeadingMain(
-                        styleFontSize:
-                            Theme.of(context).textTheme.titleLarge!.fontSize!,
-                        textColor:
-                            Theme.of(context).textTheme.titleLarge!.color!,
+                        styleFontSize: styleTitleTextTheme!.fontSize!,
+                        textColor: styleTitleTextTheme!.color!,
                         backGroundColor: Theme.of(context).primaryColor,
                         headingText: "Robot Stats",
                         //backGroundColor: Colors.green,
@@ -521,11 +555,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
-                              width: 100,
+                              width: 105,
                               height: 58,
                               child: TextField(
-                                style:
-                                    TextStyle(fontSize: widget.styleFontSize),
+                                style: styleBodyTextTheme,
                                 controller: txWeight,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -533,7 +566,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Weight (" + strWeight + ")",
-                                  border: InputBorder.none,
+                                  labelStyle: styleBodyTextTheme,
+                                  //border: InputBorder.none,
                                   isDense: true,
                                 ),
                               ),
@@ -542,11 +576,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
-                              width: 100,
+                              width: 105,
                               height: 58,
                               child: TextField(
-                                style:
-                                    TextStyle(fontSize: widget.styleFontSize),
+                                style: styleBodyTextTheme,
                                 controller: txHeight,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -554,7 +587,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Height(" + strDistance + ")",
-                                  border: InputBorder.none,
+                                  labelStyle: styleBodyTextTheme,
+                                  //border: InputBorder.none,
                                   isDense: true,
                                 ),
                               ),
@@ -563,11 +597,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                               padding: EdgeInsets.symmetric(
                                   vertical: styleFieldPadding,
                                   horizontal: styleFieldPaddingSides),
-                              width: 100,
+                              width: 105,
                               height: 58,
                               child: TextField(
-                                style:
-                                    TextStyle(fontSize: widget.styleFontSize),
+                                style: styleBodyTextTheme,
                                 controller: txWidth,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
@@ -575,7 +608,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Width (" + strDistance + ")",
-                                  border: InputBorder.none,
+                                  labelStyle: styleBodyTextTheme,
+                                  //border: InputBorder.none,
                                   isDense: true,
                                 ),
                               ),
@@ -594,8 +628,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     child: Column(children: <Widget>[
                       HeadingMain(
                         headingText: "Pictures",
-                        styleFontSize:
-                            Theme.of(context).textTheme.titleLarge!.fontSize!,
+                        styleFontSize: styleTitleTextTheme!.fontSize!,
                         textColor:
                             Theme.of(context).textTheme.titleLarge!.color!,
                         backGroundColor: Theme.of(context).primaryColor,
@@ -703,8 +736,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                     padding: EdgeInsets.all(5.0),
                     child: Column(children: <Widget>[
                       HeadingMain(
-                        styleFontSize:
-                            Theme.of(context).textTheme.titleLarge!.fontSize!,
+                        styleFontSize: styleTitleTextTheme!.fontSize!,
                         textColor:
                             Theme.of(context).textTheme.titleLarge!.color!,
                         backGroundColor: Theme.of(context).primaryColor,
@@ -717,15 +749,16 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           children: [
                             Text(
                               "Notes: ",
-                              style: TextStyle(fontSize: widget.styleFontSize),
+                              style: styleBodyTextTheme,
                             ),
                             ConstrainedBox(
                               constraints: BoxConstraints(
                                   maxWidth: styleFieldTxPitNotesMaxWidth),
                               child: TextField(
                                 controller: txPitNotes,
-                                decoration:
-                                    InputDecoration(hintText: 'General Notes'),
+                                decoration: InputDecoration(
+                                    hintText: 'General Notes',
+                                    hintStyle: styleBodyTextTheme),
                               ),
                             ),
                           ]),

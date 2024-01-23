@@ -43,7 +43,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(
+          foregroundColor: Theme.of(context).splashColor,
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text('Settings')),
       body: ListView(reverse: false, shrinkWrap: true, children: <Widget>[
         FractionallySizedBox(
           widthFactor: 0.95,

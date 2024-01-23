@@ -31,14 +31,66 @@ class PitAuto extends StatefulWidget {
 
 class _PitAutoState extends State<PitAuto> {
   List<DropdownMenuItem<String>> listAutoScore = [
-    DropdownMenuItem(value: "1", child: Text("NA")),
-    DropdownMenuItem(value: "2", child: Text("Amp")),
-    DropdownMenuItem(value: "3", child: Text("Speaker")),
-    DropdownMenuItem(value: "4", child: Text("All")),
+    DropdownMenuItem(value: "1", child: Text("N/A")),
   ];
+
+  getAutoScoreDropDownMenu(TextStyle textStyle) {
+    listAutoScore.clear();
+    listAutoScore.addAll([
+      DropdownMenuItem(
+          value: "1",
+          child: Text(
+            "N/A",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "2",
+          child: Text(
+            "Amp",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "3",
+          child: Text(
+            "Speaker",
+            style: textStyle,
+          )),
+      DropdownMenuItem(
+          value: "4",
+          child: Text(
+            "All",
+            style: textStyle,
+          )),
+    ]);
+  }
+
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
+    getAutoScoreDropDownMenu(styleBodyTextTheme!);
+
     if (widget.pitData.flAuto == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
@@ -48,15 +100,14 @@ class _PitAutoState extends State<PitAuto> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize:
-                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Auto",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
-                styleFontSize: widget.styleFontSize,
+                styleFontSize: styleBodyTextTheme!.fontSize!,
                 text: "Does Auto?",
                 value: widget.pitData.flAuto,
                 onChange: (bool value) {
@@ -80,15 +131,14 @@ class _PitAutoState extends State<PitAuto> {
             padding: EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize:
-                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Auto",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
-                styleFontSize: widget.styleFontSize,
+                styleFontSize: styleBodyTextTheme!.fontSize!,
                 text: "Does Auto?",
                 value: widget.pitData.flAuto,
                 styleBackGroundColor: Colors.green,
@@ -104,7 +154,7 @@ class _PitAutoState extends State<PitAuto> {
                 children: [
                   Text(
                     "Leaves Line:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   Switch(
                     value: widget.pitData.flAutoLine!,
@@ -122,7 +172,7 @@ class _PitAutoState extends State<PitAuto> {
                 children: [
                   Text(
                     "Score:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   Switch(
                     value: widget.pitData.flAutoScore!,
@@ -138,7 +188,7 @@ class _PitAutoState extends State<PitAuto> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
                   "#Rings Scored:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 CounterWidget(
                   title: "",
@@ -172,7 +222,7 @@ class _PitAutoState extends State<PitAuto> {
                 children: <Widget>[
                   Text(
                     "Score Locations:",
-                    style: TextStyle(fontSize: widget.styleFontSize),
+                    style: styleBodyTextTheme,
                   ),
                   DropdownButton(
                     value: widget.pitData.idAutoScore == null
@@ -192,7 +242,7 @@ class _PitAutoState extends State<PitAuto> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
                   "#Extra Rings:",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 CounterWidget(
                   title: "",

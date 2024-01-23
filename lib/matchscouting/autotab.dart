@@ -47,8 +47,31 @@ class AutoTab extends StatefulWidget {
 }
 
 class _AutoTabState extends State<AutoTab> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return Column(
       children: [
         FractionallySizedBox(
@@ -57,22 +80,13 @@ class _AutoTabState extends State<AutoTab> {
             margin: const EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
               HeadingMain(
-                styleFontSize:
-                    Theme.of(context).textTheme.titleLarge!.fontSize!,
+                styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
                 headingText: "Driver Position",
                 //backGroundColor: Colors.green,
               ),
-              //Image.asset('assets/imgs/field.png'),
               Container(
-                decoration: BoxDecoration(
-                    //border: Border.all(color: Colors.black),
-                    //image: DecorationImage(
-                    // image: AssetImage("assets/imgs/field.png"),
-                    // fit: BoxFit.cover,
-                    //),
-                    ),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

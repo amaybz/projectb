@@ -30,8 +30,31 @@ class MatchAuto extends StatefulWidget {
 }
 
 class _MatchAutoState extends State<MatchAuto> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
@@ -41,14 +64,14 @@ class _MatchAutoState extends State<MatchAuto> {
           padding: EdgeInsets.all(5.0),
           child: Column(children: <Widget>[
             HeadingMain(
-              styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+              styleFontSize: styleTitleTextTheme!.fontSize!,
               textColor: Theme.of(context).textTheme.titleLarge!.color!,
               backGroundColor: Theme.of(context).primaryColor,
               headingText: "Auto",
               //backGroundColor: Colors.green,
             ),
             RowHeading(
-              styleFontSize: widget.styleFontSize,
+              styleFontSize: styleBodyTextTheme!.fontSize!,
               text: "Does Auto?",
               value: widget.matchScoutingData.autoFlStart,
               styleBackGroundColor: Colors.yellow,
@@ -64,7 +87,7 @@ class _MatchAutoState extends State<MatchAuto> {
               children: [
                 Text(
                   "Leave?",
-                  style: TextStyle(fontSize: widget.styleFontSize),
+                  style: styleBodyTextTheme,
                 ),
                 Switch(
                   value: widget.matchScoutingData.autoFlBaseLine!,
@@ -78,7 +101,10 @@ class _MatchAutoState extends State<MatchAuto> {
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text("#Pickup new Objects?:"),
+              Text(
+                "#Pickup new Objects?:",
+                style: styleBodyTextTheme,
+              ),
               CounterWidget(
                 styleButtonHeight: widget.styleCounterButtonHeight,
                 styleButtonWidth: widget.styleCounterButtonWidth,

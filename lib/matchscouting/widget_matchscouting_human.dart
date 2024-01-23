@@ -26,8 +26,30 @@ class HumanWidget extends StatefulWidget {
 }
 
 class _HumanWidgetState extends State<HumanWidget> {
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
@@ -35,14 +57,14 @@ class _HumanWidgetState extends State<HumanWidget> {
         child: Column(children: <Widget>[
           HeadingMain(
             headingText: "Human",
-            styleFontSize: Theme.of(context).textTheme.titleLarge!.fontSize!,
+            styleFontSize: styleTitleTextTheme!.fontSize!,
             textColor: Theme.of(context).textTheme.titleLarge!.color!,
             backGroundColor: Theme.of(context).primaryColor,
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               "Spotlight:",
-              style: TextStyle(fontSize: widget.styleFontSizeBody),
+              style: styleBodyTextTheme,
             ),
             Switch(
                 value: widget.matchScoutingData.teleFlSpotlight!,

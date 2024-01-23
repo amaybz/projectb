@@ -50,6 +50,7 @@ class _HumanWidgetState extends State<HumanWidget> {
         styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
       });
     }
+
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(

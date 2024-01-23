@@ -65,8 +65,31 @@ class _RatingsTabState extends State<RatingsTab> {
     }
   }
 
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return Column(
       children: [
         FractionallySizedBox(
@@ -77,8 +100,7 @@ class _RatingsTabState extends State<RatingsTab> {
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
                 HeadingMain(
-                  styleFontSize:
-                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
                   textColor: Theme.of(context).textTheme.titleLarge!.color!,
                   backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Drive",
@@ -88,7 +110,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Drive Ability:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     DropDownIndexedWidget(
                       value: widget.matchScoutingData.commIdDriveRating,
@@ -110,7 +132,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Defence Rating:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     DropDownIndexedWidget(
                       value: widget.matchScoutingData.commIdDefenceRating,
@@ -129,8 +151,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   ],
                 ),
                 HeadingMain(
-                  styleFontSize:
-                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
                   textColor: Theme.of(context).textTheme.titleLarge!.color!,
                   backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Quick Ratings",
@@ -140,7 +161,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Worked to a Strategy:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlStrategy!,
@@ -158,7 +179,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Assisted Robots:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlAssist!,
@@ -176,7 +197,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Shuttle Rings:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlShuttle!,
@@ -194,7 +215,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Recovered:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlRecovery!,
@@ -212,7 +233,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "System Failure:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlFailure!,
@@ -226,8 +247,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   ],
                 ),
                 HeadingMain(
-                  styleFontSize:
-                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
                   textColor: Theme.of(context).textTheme.titleLarge!.color!,
                   backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Advice",
@@ -241,7 +261,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       children: [
                         Text(
                           "Warning:",
-                          style: TextStyle(fontSize: widget.styleFontSize),
+                          style: styleBodyTextTheme,
                         ),
                         Text(
                           "(Scout Team Futher before Considering)",
@@ -269,7 +289,7 @@ class _RatingsTabState extends State<RatingsTab> {
                       children: [
                         Text(
                           "Highlight Team:",
-                          style: TextStyle(fontSize: widget.styleFontSize),
+                          style: styleBodyTextTheme,
                         ),
                         Text(
                           "(Consider Regardless of performance)",
@@ -300,8 +320,7 @@ class _RatingsTabState extends State<RatingsTab> {
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
                 HeadingMain(
-                  styleFontSize:
-                      Theme.of(context).textTheme.titleLarge!.fontSize!,
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
                   textColor: Theme.of(context).textTheme.titleLarge!.color!,
                   backGroundColor: Theme.of(context).primaryColor,
                   headingText: "Load Type",
@@ -311,7 +330,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Intake from Ground:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlIntakeGround!,
@@ -329,7 +348,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   children: [
                     Text(
                       "Intake from Chute:",
-                      style: TextStyle(fontSize: widget.styleFontSize),
+                      style: styleBodyTextTheme,
                     ),
                     Switch(
                       value: widget.matchScoutingData.commFlIntakeStation!,
@@ -354,8 +373,7 @@ class _RatingsTabState extends State<RatingsTab> {
                 padding: EdgeInsets.all(5.0),
                 child: Column(children: <Widget>[
                   HeadingMain(
-                    styleFontSize:
-                        Theme.of(context).textTheme.titleLarge!.fontSize!,
+                    styleFontSize: styleTitleTextTheme!.fontSize!,
                     textColor: Theme.of(context).textTheme.titleLarge!.color!,
                     backGroundColor: Theme.of(context).primaryColor,
                     headingText: "Comments",
@@ -371,8 +389,7 @@ class _RatingsTabState extends State<RatingsTab> {
                             labelText: "Comments on Performance",
                             border: InputBorder.none,
                             isDense: true,
-                            labelStyle:
-                                TextStyle(fontSize: widget.styleFontSize),
+                            labelStyle: styleBodyTextTheme,
                           ),
                           onChanged: (String value) {
                             widget.matchScoutingData.commTxNotes = value;

@@ -45,7 +45,7 @@ class _CounterWidgetState extends State<CounterWidget> {
         child: ElevatedButton(
           //padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 5.0),
           style: ElevatedButton.styleFrom(
-              primary: Colors.green,
+              backgroundColor: Colors.green,
               padding: EdgeInsets.symmetric(vertical: 0.0)),
           child: Text(
             "+",

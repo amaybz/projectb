@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:projectb/class/eventmatches.dart';
 import 'package:projectb/localdb.dart';
@@ -16,7 +15,6 @@ import 'package:projectb/widgets/widget_loading.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
 import 'package:projectb/barcodeScanner.dart';
-import 'package:projectb/widgets/widget_row_heading.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -28,7 +26,7 @@ Future<void> main() async {
   try {
     cameras = await availableCameras();
   } on CameraException catch (e) {
-    print("no cameras");
+    print("no cameras" + e.toString());
   }
   final firstCamera = cameras?.first;
   runApp(MyApp(camera: firstCamera));
@@ -78,6 +76,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     brightness: Brightness.dark,
     primaryColor: Color(0xFF6200EE),
     splashColor: Colors.white,
+    primaryColorDark: Color(0xFF47247A),
     textTheme: ThemeData.dark().textTheme.copyWith(
           titleLarge:
               TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),

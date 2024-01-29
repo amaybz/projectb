@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
-import 'package:projectb/finishtab.dart';
-
-import '../widgets/widget_counter.dart';
 import '../widgets/widget_headingmain.dart';
 
 class EndGame extends StatefulWidget {

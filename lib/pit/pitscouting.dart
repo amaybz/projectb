@@ -420,8 +420,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     }
     updateThemeForEventTeams(styleBodyTextTheme!);
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        if (didPop) {
+          return;
+        }
+        final NavigatorState navigator = Navigator.of(context);
+        final bool? shouldPop = await _onWillPop();
+        if (shouldPop ?? false) {
+          navigator.pop();
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
             foregroundColor: Theme.of(context).splashColor,

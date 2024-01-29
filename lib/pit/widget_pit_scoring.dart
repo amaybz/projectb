@@ -143,7 +143,7 @@ class _PitScoringState extends State<PitScoring> {
                   onChanged: (item) {
                     setState(() {
                       widget.pitData.idScoreSpeaker = item as String?;
-                      widget.onChanged!(widget.pitData);
+                      widget.onChanged(widget.pitData);
                     });
                     print("idScoreSpeaker: " + widget.pitData.idScoreSpeaker!);
                   },

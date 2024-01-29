@@ -221,13 +221,39 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   //style
   double styleFontSizeHeadings = 18;
 
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).splashColor,
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Saved Match Scouting'),
+        title: Text(
+          'Saved Match Scouting',
+          style: styleTitleTextTheme,
+        ),
       ),
       body: Column(children: <Widget>[
         FractionallySizedBox(
@@ -247,7 +273,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               children: [
                 Text(
                   "Google Account: " + googleEmail,
-                  style: TextStyle(fontSize: 14),
+                  style: styleBodyTextTheme,
                 ),
                 GoogleLoginButton(
                   googleLoginState: isSignedInToGoogle,
@@ -265,9 +291,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         ),
 
         HeadingMain(
-          styleFontSize: styleFontSizeHeadings,
+          styleFontSize: styleTitleTextTheme!.fontSize!,
           headingText: "Saved Records",
-          //backGroundColor: Colors.green,
+          backGroundColor: Theme.of(context).primaryColor,
         ),
         _showTab(_selectedTab)
         //Expanded(
@@ -333,8 +359,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue, // background
-                      onPrimary: Colors.white, // foreground
+                      backgroundColor:
+                          Theme.of(context).primaryColorDark, // background
+                      foregroundColor:
+                          Theme.of(context).splashColor, // foreground
                     ),
                     onPressed: () {
                       _showDialogMatchQRCode(context, item.id.toString());
@@ -346,8 +374,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue, // background
-                      onPrimary: Colors.white, // foreground
+                      backgroundColor:
+                          Theme.of(context).primaryColorDark, // background
+                      foregroundColor:
+                          Theme.of(context).splashColor, // foreground
                     ),
                     onPressed: () {
                       writeMatchFileAndUploadToGoogle(item);
@@ -359,8 +389,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red, // background
-                      onPrimary: Colors.white, // foreground
+                      backgroundColor: Colors.red, // background
+                      foregroundColor: Colors.white, // foreground
                     ),
                     onPressed: () {
                       deleteMatchRecord(context, item.id!);
@@ -395,8 +425,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.green, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.green, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -405,8 +435,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     );
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.red, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.red, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -470,8 +500,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blue, // background
-                            onPrimary: Colors.white, // foreground
+                            backgroundColor: Theme.of(context)
+                                .primaryColorDark, // background
+                            foregroundColor:
+                                Theme.of(context).splashColor, // foreground
                           ),
                           onPressed: () {
                             _showDialogPitQRCode(context, item.id.toString());
@@ -483,8 +515,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blue, // background
-                            onPrimary: Colors.white, // foreground
+                            backgroundColor: Theme.of(context)
+                                .primaryColorDark, // background
+                            foregroundColor:
+                                Theme.of(context).splashColor, // foreground
                           ),
                           onPressed: () {
                             writePitFileAndUploadToGoogle(item);
@@ -496,8 +530,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red, // background
-                            onPrimary: Colors.white, // foreground
+                            backgroundColor: Colors.red, // background
+                            foregroundColor: Colors.white, // foreground
                           ),
                           onPressed: () {
                             deletePitRecord(context, item.id!);
@@ -518,8 +552,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.green, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.green, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -528,8 +562,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     );
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.red, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.red, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();

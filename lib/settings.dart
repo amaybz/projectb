@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projectb/main.dart';
 import 'package:projectb/sharedprefs.dart';
 
 class SettingsScreen extends StatefulWidget {

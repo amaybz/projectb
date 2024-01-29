@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
-import 'package:projectb/widgets/widget_counter.dart';
-
 import '../widgets/widget_headingmain.dart';
-import '../widgets/widget_row_heading.dart';
 
 class MatchAutoErrors extends StatefulWidget {
   MatchAutoErrors({

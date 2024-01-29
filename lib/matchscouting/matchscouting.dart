@@ -11,7 +11,6 @@ import 'package:projectb/finishtab.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'dart:io';
 import 'package:projectb/googleinterface.dart';
-import 'package:projectb/widgets/widget_dropdown.dart';
 import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
@@ -257,6 +256,41 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     );
   }
 
+  showAlertDialogExitMatch(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Clear Data"),
+      onPressed: () {
+        Navigator.of(context).pop();
+        clearMatch();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("EXIT"),
+      content: Text("This will clear the current Match?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
     Widget okButton = TextButton(
@@ -289,7 +323,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('This will clear the current Match?'),
+            content: new Text('This will clear the current Pit?',
+                style: styleBodyTextTheme),
             actions: <Widget>[
               new TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -432,8 +467,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
     }
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      //canPop: _canPop,
+      //onPopInvoked: _onWillPop,
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        if (didPop) {
+          return;
+        }
+        final NavigatorState navigator = Navigator.of(context);
+        final bool? shouldPop = await _onWillPop();
+        if (shouldPop ?? false) {
+          navigator.pop();
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
             foregroundColor: Theme.of(context).splashColor,

@@ -160,10 +160,10 @@ class DisplayPictureScreen extends StatelessWidget {
       // constructor with the given path to display the image.
       body: ListView(
         children: [
-          Image.file(File(imagePath!)),
           ElevatedButton(
             onPressed: () {
               uploadToGoogle(File(imagePath!));
+              Navigator.pop(context);
             },
             child: Text("Save to Google"),
           ),
@@ -171,9 +171,11 @@ class DisplayPictureScreen extends StatelessWidget {
             onPressed: () {
               saveToDevice(
                   File(imagePath!), "PitPicture" + DateTime.now().toString());
+              Navigator.pop(context);
             },
             child: Text("Save to Device"),
           ),
+          Image.file(File(imagePath!)),
         ],
       ),
     );
@@ -215,7 +217,7 @@ class DisplayPictureScreen extends StatelessWidget {
   Future<File> uploadToGoogle(File file) async {
     GoogleInterface googleInterface = GoogleInterface.instance;
     await googleInterface.uploadFile(
-        file, "TESTPicture" + DateTime.now().toString(), "jpg");
+        file, "PitPicture" + DateTime.now().toString(), "jpg");
     print("Upload Complete");
     return file;
   }

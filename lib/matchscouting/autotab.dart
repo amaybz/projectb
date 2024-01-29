@@ -221,6 +221,7 @@ class _AutoTabState extends State<AutoTab> {
           },
           numAmpAttempt: widget.matchScoutingData.autoNumAmpAttempt,
           numAmpSuccess: widget.matchScoutingData.autoNumAmpSuccess,
+          numTrapAttempt: widget.matchScoutingData.autoNumTrapAttempt,
           numSpeakerAttempt: widget.matchScoutingData.autoNumSpeakerAttempt,
           numTrapSuccess: widget.matchScoutingData.autoNumTrapSuccess,
           numSpeakerSuccess: widget.matchScoutingData.autoNumSpeakerSuccess,
@@ -266,6 +267,15 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumTrapSuccess = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumTrapAttemptChanged: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumTrapAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },

@@ -145,6 +145,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
               numAmpAttempt: widget.matchScoutingData.teleNumAmpAttempt,
               numAmpSuccess: widget.matchScoutingData.teleNumAmpSuccess,
               numTrapSuccess: widget.matchScoutingData.teleNumTrapSuccess,
+              numTrapAttempt: widget.matchScoutingData.teleNumTrapAttempt,
               onChange: (MatchScoutingData newData) {
                 setState(() {
                   widget.onChange!(widget.matchScoutingData);
@@ -192,6 +193,15 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                     value = 0;
                   }
                   widget.matchScoutingData.teleNumTrapSuccess = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumTrapAttemptChanged: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumTrapAttempt = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },

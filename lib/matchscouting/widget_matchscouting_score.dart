@@ -11,6 +11,7 @@ class ScoreWidget extends StatefulWidget {
     this.numAmpAttempt,
     this.numAmpSuccess,
     this.numTrapSuccess,
+    this.numTrapAttempt,
     this.numLowConeSuccess,
     this.numSpeakerSuccess,
     this.numMidCubeSuccess,
@@ -23,6 +24,7 @@ class ScoreWidget extends StatefulWidget {
     this.onNumAmpAttemptChanged,
     this.onNumAmpSuccessChanged,
     this.onNumTrapSuccessChanged,
+    this.onNumTrapAttemptChanged,
     this.onNumLowConeSuccessChanged,
     this.onNumSpeakerAttemptChanged,
     this.onChange,
@@ -40,6 +42,7 @@ class ScoreWidget extends StatefulWidget {
   final int? numSpeakerAttempt;
   final int? numLowConeSuccess;
   final int? numTrapSuccess;
+  final int? numTrapAttempt;
   final int? numSpeakerSuccess;
   final int? numMidCubeSuccess;
   final int? numLowCubeSuccess;
@@ -47,6 +50,7 @@ class ScoreWidget extends StatefulWidget {
   final ValueChanged<int>? onNumSpeakerAttemptChanged;
   final ValueChanged<int>? onNumAmpSuccessChanged;
   final ValueChanged<int>? onNumTrapSuccessChanged;
+  final ValueChanged<int>? onNumTrapAttemptChanged;
   final ValueChanged<int>? onNumLowConeSuccessChanged;
   final ValueChanged<int>? onNumSpeakerSuccessChanged;
   final ValueChanged<int>? onNumMidCubeSuccessChanged;
@@ -196,26 +200,26 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                 widget.styleCounterButtonWidth,
                                             styleButtonHeight:
                                                 widget.styleCounterButtonHeight,
-                                            value: widget.numAmpAttempt,
+                                            value: widget.numTrapAttempt,
                                             title: "Attempt",
                                             styleFontSize:
                                                 widget.styleFontSizeBody,
                                             onIncreaseStateChanged:
                                                 (int increase) {
                                               setState(() {
-                                                widget.onNumAmpAttemptChanged!(
-                                                    widget.numAmpAttempt! + 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! + 1);
                                               });
                                             },
                                             onDecreaseStateChanged:
                                                 (int decrease) {
                                               setState(() {
-                                                widget.onNumAmpAttemptChanged!(
-                                                    widget.numAmpAttempt! - 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! - 1);
                                               });
                                             },
                                             onSetValue: (int value) {
-                                              widget.onNumAmpAttemptChanged!(
+                                              widget.onNumTrapAttemptChanged!(
                                                   value);
                                             },
                                           ),

@@ -181,13 +181,17 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                               setState(() {
                                                 widget.onNumTrapSuccessChanged!(
                                                     widget.numTrapSuccess! + 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! + 1);
                                               });
                                             },
                                             onDecreaseStateChanged:
                                                 (int decrease) {
                                               setState(() {
-                                                widget.onNumSpeakerAttemptChanged!(
+                                                widget.onNumTrapSuccessChanged!(
                                                     widget.numTrapSuccess! - 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! - 1);
                                               });
                                             },
                                             onSetValue: (int value) {

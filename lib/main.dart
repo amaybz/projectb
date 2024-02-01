@@ -273,8 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void refreshLocalTeamsCount() async {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
     setState(() {
-      _countOfTeams =
-          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      _countOfTeams = listSelectedLocalTeams.length;
     });
   }
 
@@ -288,8 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedLocalEvent = listSelectedLocalEvents.length > 0
           ? listSelectedLocalEvents.first
           : null;
-      _countOfTeams =
-          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      _countOfTeams = listSelectedLocalTeams.length;
       //locationDropDown = selectedLocalEvent?.location;
     });
     //print("LocalEvent: " + selectedLocalEvent.key);
@@ -348,15 +346,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getDeviceName() async {
     DeviceName deviceName = await localDB.getDeviceName();
-    if (deviceName == null) {
-      setState(() {
-        _txtDeviceName.text = "";
-      });
-    } else {
-      setState(() {
-        _txtDeviceName.text = deviceName.name!;
-      });
-    }
+
+    setState(() {
+      _txtDeviceName.text = deviceName.name!;
+    });
   }
 
   Future<void> updateEventsFromAPI(String year) async {
@@ -878,7 +871,7 @@ class _MyHomePageState extends State<MyHomePage> {
         : selectedLocalEvent!.shortName;
     var eventKey =
         (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
@@ -901,7 +894,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       eventName = selectedLocalEvent!.name!;
     }
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
@@ -928,7 +921,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       eventName = selectedLocalEvent!.name!;
     }
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => PitScoutingScreen(
@@ -973,7 +966,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     //List<LocalTeam> teams = await localDB.listLocalTeams();
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(builder: (context) => AddTeam()),

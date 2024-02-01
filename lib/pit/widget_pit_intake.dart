@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
-import '../widgets/widget_row_heading.dart';
-
 class PitIntake extends StatefulWidget {
   PitIntake({
     Key? key,

@@ -174,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedYear = "setme";
   final List<String> _locations = [
     'Australia',
+    'Brazil',
     'Canada',
     'China',
     'Chinese Taipei',

@@ -34,6 +34,9 @@ class ScoreWidget extends StatefulWidget {
     this.styleImgFieldWidth = 150,
     this.styleCounterButtonHeight = 25,
     this.styleCounterButtonWidth = 30,
+    this.styleMarginLeftTrap = 90,
+    this.styleMarginLeftSpeaker = 82,
+    this.styleMarginTopAmp = 5,
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
@@ -62,6 +65,9 @@ class ScoreWidget extends StatefulWidget {
   final double styleImgFieldWidth;
   final double styleCounterButtonHeight;
   final double styleCounterButtonWidth;
+  final double styleMarginLeftTrap;
+  final double styleMarginLeftSpeaker;
+  final double styleMarginTopAmp;
 
   @override
   _ScoreWidgetState createState() => _ScoreWidgetState();
@@ -109,6 +115,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
             backGroundColor: Theme.of(context).primaryColor,
           ),
           Container(
+            constraints: BoxConstraints(maxWidth: 600),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -117,7 +124,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                   bottomRight: Radius.circular(10)),
               image: DecorationImage(
                 image: AssetImage("assets/imgs/ScoringLocations.png"),
-                fit: BoxFit.fill,
+                fit: BoxFit.scaleDown,
               ),
             ),
             child: Column(
@@ -155,8 +162,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                               bottomLeft: Radius.circular(10),
                                               bottomRight: Radius.circular(10)),
                                         ),
-                                        margin: const EdgeInsets.only(
-                                            left: 90.0,
+                                        margin: EdgeInsets.only(
+                                            left: widget.styleMarginLeftTrap,
                                             right: 0.0,
                                             bottom: 5.0,
                                             top: 2.0),
@@ -172,7 +179,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                             styleButtonHeight:
                                                 widget.styleCounterButtonHeight,
                                             value: widget.numTrapSuccess,
-                                            title: "Stage",
+                                            title: "Trap",
                                             title1: "Success",
                                             styleFontSize:
                                                 widget.styleFontSizeBody,
@@ -259,10 +266,11 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                     bottomRight:
                                                         Radius.circular(10)),
                                               ),
-                                              margin: const EdgeInsets.only(
+                                              margin: EdgeInsets.only(
                                                   right: 5.0,
                                                   bottom: 10.0,
-                                                  top: 5.0),
+                                                  top:
+                                                      widget.styleMarginTopAmp),
                                               padding: const EdgeInsets.only(
                                                   left: 5.0,
                                                   right: 5.0,
@@ -349,8 +357,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                     bottomRight:
                                                         Radius.circular(10)),
                                               ),
-                                              margin: const EdgeInsets.only(
-                                                  left: 82,
+                                              margin: EdgeInsets.only(
+                                                  left: widget
+                                                      .styleMarginLeftSpeaker,
                                                   right: 0.0,
                                                   bottom: 5.0,
                                                   top: 15.0),

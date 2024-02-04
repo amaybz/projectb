@@ -101,6 +101,8 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   ];
 
   //style
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
   double styleFieldCellsWidth = 40.0;
   double styleFieldPadding = 5.0;
   double styleFieldPaddingSides = 10.0;
@@ -109,17 +111,32 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   double styleFieldControlPanelDropDownsWidth = 550.0;
   double styleFieldControlPanelDropDownsPaddingSides = 1.0;
   double styleTimeTakenWidth = 180;
+  double styleMarginLeftTrap = 90;
+  double styleMarginLeftSpeaker = 82;
+  double styleMarginTopAmp = 5;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
     if (width < 500) {
+      styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
       styleFieldCellsWidth = 38.0;
       styleFieldPadding = 3.0;
       styleFieldPaddingSides = 3.0;
       styleFontSizeBody = 12;
       styleFieldControlPanelDropDownsWidth = 350;
+      styleMarginLeftTrap = 80;
+      styleMarginTopAmp = 5;
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+        styleMarginLeftTrap = 55;
+        styleMarginTopAmp = 30;
+      });
     }
     if (width >= 600) {
       styleFieldCellsWidth = 40.0;
@@ -128,6 +145,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       styleFontSizeBody = 16;
       styleImgFieldWidth = 200;
       styleFieldControlPanelDropDownsWidth = 600.0;
+      styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+      styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      styleMarginLeftTrap = 100;
+      styleMarginTopAmp = 5;
     }
 
     return Column(children: [
@@ -139,6 +160,10 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
             ScoreWidget(
               styleCounterButtonHeight: widget.styleCounterButtonHeight,
               styleCounterButtonWidth: widget.styleCounterButtonWidth,
+              styleMarginLeftTrap: styleMarginLeftTrap,
+              styleMarginLeftSpeaker: styleMarginLeftSpeaker,
+              styleMarginTopAmp: styleMarginTopAmp,
+              styleFontSizeBody: styleBodyTextTheme!.fontSize!,
               matchScoutingData: widget.matchScoutingData,
               numSpeakerSuccess: widget.matchScoutingData.teleNumSpeakerSuccess,
               numSpeakerAttempt: widget.matchScoutingData.teleNumSpeakerAttempt,
@@ -220,6 +245,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                 EndGame(
                   styleCounterButtonHeight: widget.styleCounterButtonHeight,
                   styleCounterButtonWidth: widget.styleCounterButtonWidth,
+                  styleFontSize: styleBodyTextTheme!.fontSize!,
                   matchScoutingData: widget.matchScoutingData,
                   onChanged: (matchScoutingData) {
                     setState(() {

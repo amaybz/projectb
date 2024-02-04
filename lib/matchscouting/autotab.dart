@@ -49,6 +49,9 @@ class AutoTab extends StatefulWidget {
 class _AutoTabState extends State<AutoTab> {
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+  double styleMarginLeftTrap = 90;
+  double styleMarginLeftSpeaker = 82;
+  double styleMarginTopAmp = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +60,24 @@ class _AutoTabState extends State<AutoTab> {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
         styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+        styleMarginLeftTrap = 80;
+        styleMarginTopAmp = 5;
       });
     }
     if (width < 393) {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+        styleMarginLeftTrap = 65;
+        styleMarginTopAmp = 30;
       });
     }
     if (width >= 600) {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
         styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+        styleMarginLeftTrap = 100;
+        styleMarginTopAmp = 5;
       });
     }
 
@@ -83,7 +92,7 @@ class _AutoTabState extends State<AutoTab> {
                 styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Driver Position",
+                headingText: "Driver Station Diagram",
                 //backGroundColor: Colors.green,
               ),
               Container(
@@ -213,6 +222,9 @@ class _AutoTabState extends State<AutoTab> {
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
+          styleMarginLeftTrap: styleMarginLeftTrap,
+          styleMarginLeftSpeaker: styleMarginLeftSpeaker,
+          styleMarginTopAmp: styleMarginTopAmp,
           matchScoutingData: widget.matchScoutingData,
           onChange: (MatchScoutingData newData) {
             setState(() {

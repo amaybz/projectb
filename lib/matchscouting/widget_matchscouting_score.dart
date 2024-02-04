@@ -304,6 +304,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                       widget.onNumAmpSuccessChanged!(
                                                           widget.numAmpSuccess! -
                                                               1);
+                                                      widget.onNumAmpAttemptChanged!(
+                                                          widget.numAmpAttempt! -
+                                                              1);
                                                     });
                                                   },
                                                   onSetValue: (int value) {
@@ -396,6 +399,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                     setState(() {
                                                       widget.onNumSpeakerSuccessChanged!(
                                                           widget.numSpeakerSuccess! -
+                                                              1);
+                                                      widget.onNumSpeakerAttemptChanged!(
+                                                          widget.numSpeakerAttempt! -
                                                               1);
                                                     });
                                                   },

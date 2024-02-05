@@ -135,7 +135,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
         styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
         styleMarginLeftTrap = 55;
-        styleMarginTopAmp = 30;
+        styleMarginTopAmp = 45;
       });
     }
     if (width >= 600) {

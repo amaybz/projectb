@@ -802,7 +802,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   String alertMsg = (recordSaved == true)
                       ? "Pit has been saved to Local Database."
                       : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
-                  showAlertOKDialog(context, "Saved", alertMsg);
+                  showAlertOKDialog(context, "Save", alertMsg);
                 },
               ),
             ]),

@@ -58,14 +58,15 @@ class _DropDownIndexedWidgetState extends State<DropDownIndexedWidget> {
           vertical: widget.styleFieldPadding,
           horizontal: widget.styleFieldPaddingSides),
       width: widget.styleFieldWidth,
-      height: 58,
+      //height: 58,
       child: DropdownButtonFormField<String>(
         isExpanded: true,
         decoration: InputDecoration(
           labelText: widget.title,
           labelStyle: styleBodyTextTheme,
-          border: InputBorder.none,
-          isDense: true,
+          //border: InputBorder.none,
+          contentPadding: EdgeInsets.all(0.0),
+          isDense: false,
         ),
         value: widget.value,
         onChanged: (String? newValue) {

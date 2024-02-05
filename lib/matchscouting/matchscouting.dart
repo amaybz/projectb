@@ -43,6 +43,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   String strWeight = "lbs";
   String strDistance = "Inches";
+  ScrollController _scrollController = new ScrollController();
 
   //manage save record
   bool recordSaved = false;
@@ -323,7 +324,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('This will clear the current Pit?',
+            content: new Text('This will clear the current Match?',
                 style: styleBodyTextTheme),
             actions: <Widget>[
               new TextButton(
@@ -504,7 +505,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                     }).toList();
                   }),
             ]),
-        body: ListView(children: <Widget>[
+        body: ListView(controller: _scrollController, children: <Widget>[
           FractionallySizedBox(
             widthFactor: 0.99,
             child: Center(
@@ -586,15 +587,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                   children: <Widget>[
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.symmetric(
                                 vertical: styleFieldPadding,
                                 horizontal: styleFieldPaddingSides),
                             width: styleFieldMatchNumber,
-                            // height: 58,
-                            child: TextField(
+                            //height: 65,
+                            child: TextFormField(
                               style: styleBodyTextTheme,
                               controller: _txtMatchNumber,
                               keyboardType: TextInputType.number,
@@ -603,15 +604,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               ],
                               onEditingComplete: () {
                                 if (filterTeams == true) {
-                                  setEventTeams(widget.styleFontSize);
+                                  setEventTeams(styleBodyTextTheme!.fontSize!);
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               },
                               decoration: InputDecoration(
-                                labelText: "Match #",
+                                labelText: "Match #:",
                                 labelStyle: styleBodyTextTheme,
-                                border: InputBorder.none,
-                                isDense: true,
+                                contentPadding: EdgeInsets.all(0.0),
+                                //border: InputBorder.none,
+                                isDense: false,
                               ),
                             ),
                           ),
@@ -620,7 +622,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
                           DropDownIndexedWidget(
                               value: matchScoutingData.idAlliance,
-                              title: "Alliance",
+                              title: "Alliance:",
                               dropDownValues: _listAlliance,
                               styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldAlliance,
@@ -632,17 +634,17 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   filterTeams = true;
                                 });
                                 getDriveStationsByTeam(
-                                    newValue, widget.styleFontSize);
+                                    newValue, styleBodyTextTheme!.fontSize!);
                                 print(matchScoutingData.idAlliance);
                                 if (filterTeams == true) {
-                                  setEventTeams(widget.styleFontSize);
+                                  setEventTeams(styleBodyTextTheme!.fontSize!);
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               }),
 
                           DropDownIndexedWidget(
                               value: matchScoutingData.idDriveStation,
-                              title: "Drive Station",
+                              title: "Drive Station:",
                               dropDownValues: listDriveStations,
                               styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldWidth,
@@ -656,9 +658,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               }),
                           DropDownIndexedWidget(
                               value: matchScoutingData.idStartPosition,
-                              title: "Robot Position",
+                              title: "Robot Position:",
                               dropDownValues: _listRobotPosition,
-                              styleFontSize: widget.styleFontSize,
+                              styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -673,8 +675,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Team ",
-                            style: TextStyle(fontSize: widget.styleFontSize),
+                            "Team:",
+                            style: TextStyle(
+                                fontSize: styleBodyTextTheme!.fontSize!),
                           ),
                           ConstrainedBox(
                             constraints: BoxConstraints(
@@ -682,7 +685,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 maxWidth: styleFieldTeamMaxWidth),
                             child: DropdownButton(
                               isExpanded: true,
-                              isDense: true,
+                              isDense: false,
                               style: styleBodyTextTheme,
                               value: selectedTeam == null
                                   ? null
@@ -710,7 +713,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     filterTeams == true
                                         ? filterTeams = false
                                         : filterTeams = true;
-                                    setEventTeams(widget.styleFontSize);
+                                    setEventTeams(
+                                        styleBodyTextTheme!.fontSize!);
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -891,6 +895,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           // th
           onTap: (value) {
             setState(() => _selectedTab = value);
+            scrollToTop();
           },
           // is will be set when a new tab is tapped
           items: [
@@ -988,7 +993,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           alertMsg = (recordSaved == true)
               ? "Match has been saved to Local Database"
               : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
-          showAlertOKDialog(context, "Saved", alertMsg);
+          showAlertOKDialog(context, "Save", alertMsg);
         },
         onUploadToGoogle: (bool value) {
           if (recordSaved == true) {
@@ -999,14 +1004,13 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           _uploadDataToGoogleDrive(matchScoutingData);
         },
       );
-    } else {
-      return Container(
-        child: Text(
-          "HOW did you get HERE?????",
-          style: TextStyle(fontSize: 18),
-        ),
-      );
     }
+  }
+
+  scrollToTop() async {
+    // After 1 second, it takes you to the bottom of the ListView
+    _scrollController.jumpTo(1);
+    print(_scrollController.position);
   }
 
   _uploadDataToGoogleDrive(MatchScoutingData matchScoutingData) async {

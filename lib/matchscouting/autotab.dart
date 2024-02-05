@@ -69,7 +69,7 @@ class _AutoTabState extends State<AutoTab> {
         styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
         styleMarginLeftTrap = 65;
-        styleMarginTopAmp = 30;
+        styleMarginTopAmp = 45;
       });
     }
     if (width >= 600) {

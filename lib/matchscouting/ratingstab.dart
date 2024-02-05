@@ -386,8 +386,8 @@ class _RatingsTabState extends State<RatingsTab> {
                         child: TextField(
                           controller: _txtComments,
                           decoration: InputDecoration(
-                            labelText: "Comments on Performance",
-                            border: InputBorder.none,
+                            labelText: "Comments on Performance:",
+                            //border: InputBorder.none,
                             isDense: true,
                             labelStyle: styleBodyTextTheme,
                           ),

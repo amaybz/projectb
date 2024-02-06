@@ -64,24 +64,26 @@ class _CounterWidgetState extends State<CounterWidget> {
             vertical: widget.styleFieldPadding,
             horizontal: widget.styleFieldPaddingSides),
         width: widget.styleFieldCellsWidth,
-        child: TextField(
-          style: TextStyle(fontSize: widget.styleFontSize),
-          controller: widget.txtCounterValue,
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onChanged: (String value) {
-            int newValue = 0;
-            if (widget.txtCounterValue.text != "") {
-              newValue = int.parse(widget.txtCounterValue.text);
-            }
-            widget.onSetValue!(newValue);
-          },
-          decoration: InputDecoration(
-            labelStyle: TextStyle(fontSize: widget.styleFontSize),
-            border: InputBorder.none,
-            isDense: true,
-          ),
-        ),
+        child: Text(widget.value.toString()),
+
+        //  TextField(
+        //    style: TextStyle(fontSize: widget.styleFontSize),
+        //    controller: widget.txtCounterValue,
+        //   keyboardType: TextInputType.number,
+        //   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        //   onChanged: (String value) {
+        //     int newValue = 0;
+        //      if (widget.txtCounterValue.text != "") {
+        //        newValue = int.parse(widget.txtCounterValue.text);
+        //      }
+        //      widget.onSetValue!(newValue);
+        //   },
+        //   decoration: InputDecoration(
+        //      labelStyle: TextStyle(fontSize: widget.styleFontSize),
+        //      border: InputBorder.none,
+        //      isDense: true,
+        //   ),
+        //  ),
       ),
       SizedBox(
         height: widget.styleButtonHeight,

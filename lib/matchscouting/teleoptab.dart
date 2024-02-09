@@ -127,8 +127,9 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       styleFieldPaddingSides = 3.0;
       styleFontSizeBody = 12;
       styleFieldControlPanelDropDownsWidth = 350;
-      styleMarginLeftTrap = 80;
+      styleMarginLeftTrap = 55;
       styleMarginTopAmp = 5;
+      styleMarginLeftSpeaker = 60;
     }
     if (width < 393) {
       setState(() {
@@ -136,6 +137,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
         styleMarginLeftTrap = 55;
         styleMarginTopAmp = 45;
+        styleMarginLeftSpeaker = 55;
       });
     }
     if (width >= 600) {

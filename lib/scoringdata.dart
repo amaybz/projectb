@@ -261,7 +261,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
           child: Container(
             margin: const EdgeInsets.all(15.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent),
+              //border: Border.all(color: Colors.blueAccent),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -329,7 +329,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildListViewMatchData() {
     return ListView.builder(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(5.0),
         itemCount: dataList == null ? 0 : dataList!.length,
         itemBuilder: (context, index) {
           return _buildRowMatchData(dataList![index]);
@@ -338,7 +338,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildRowMatchData(MatchScoutingData item) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -346,8 +346,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               children: [
                 Text(
                   item.id.toString() + ". Match: " + item.numMatch.toString(),
+                  style: styleBodyTextTheme,
                 ),
-                Text("Team: " + item.idTeam.toString())
+                Text(
+                  "Team: " + item.idTeam.toString(),
+                  style: styleBodyTextTheme,
+                )
               ],
             ),
             Column(
@@ -467,7 +471,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildListViewPitData() {
     return ListView.builder(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(5.0),
         itemCount: listPitData == null ? 0 : listPitData!.length,
         itemBuilder: (context, index) {
           return _buildRowPitData(listPitData![index]);
@@ -476,7 +480,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildRowPitData(PitData item) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -484,8 +488,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               children: [
                 Text(
                   item.id.toString() + ". PIT: " + item.idTeam.toString(),
+                  style: styleBodyTextTheme,
                 ),
-                Text("Scout: " + item.txScoutName!),
+                Text(
+                  "Scout: " + item.txScoutName!,
+                  style: styleBodyTextTheme,
+                ),
               ],
             ),
             Column(

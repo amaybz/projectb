@@ -220,7 +220,7 @@ class _PitClimbState extends State<PitClimb> {
                         widget.pitData.idStageClimbType = item as String?;
                         widget.onChanged!(widget.pitData);
                       });
-                      print("idChargeBalanceType: " +
+                      print("idStageClimbType: " +
                           widget.pitData.idStageClimbType!);
                     },
                   ),

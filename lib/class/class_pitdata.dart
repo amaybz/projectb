@@ -220,7 +220,7 @@ class PitData {
     data['txScoringNotes'] = this.txScoringNotes;
     data['flStage'] = this.flStage;
     data['idStageClimbPos'] = this.idStageClimbPos;
-    data['idChargeBalanceType'] = this.idStageClimbType;
+    data['idStageClimbType'] = this.idStageClimbType;
     data['flStageAssist'] = this.flStageAssist;
     data['txStageNotes'] = this.txStageNotes;
     data['flAuto'] = this.flAuto;

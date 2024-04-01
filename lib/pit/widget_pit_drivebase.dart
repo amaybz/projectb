@@ -150,7 +150,8 @@ class _PitDriveBaseState extends State<PitDriveBase> {
                     controller: widget.txDriveNotes,
                     decoration: InputDecoration(
                         hintText: 'Notes on drive and control system',
-                        hintStyle: styleBodyTextTheme),
+                        hintStyle:
+                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
                   ),
                 ),
               ],

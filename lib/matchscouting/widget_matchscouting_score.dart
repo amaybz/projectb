@@ -228,6 +228,11 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                 widget.onNumTrapAttemptChanged!(
                                                     widget.numTrapAttempt! - 1);
                                               });
+                                              if (widget.numTrapSuccess! >=
+                                                  widget.numTrapAttempt!) {
+                                                widget.onNumTrapSuccessChanged!(
+                                                    widget.numTrapSuccess! - 1);
+                                              }
                                             },
                                             onSetValue: (int value) {
                                               widget.onNumTrapAttemptChanged!(
@@ -338,6 +343,13 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                           widget.numAmpAttempt! -
                                                               1);
                                                     });
+
+                                                    if (widget.numAmpSuccess! >=
+                                                        widget.numAmpAttempt!) {
+                                                      widget.onNumAmpSuccessChanged!(
+                                                          widget.numAmpSuccess! -
+                                                              1);
+                                                    }
                                                   },
                                                   onSetValue: (int value) {
                                                     widget.onNumAmpAttemptChanged!(
@@ -435,6 +447,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                           widget.numSpeakerAttempt! -
                                                               1);
                                                     });
+
+                                                    if (widget
+                                                            .numSpeakerSuccess! >=
+                                                        widget
+                                                            .numSpeakerAttempt!) {
+                                                      widget.onNumSpeakerSuccessChanged!(
+                                                          widget.numSpeakerSuccess! -
+                                                              1);
+                                                    }
                                                   },
                                                   onSetValue: (int value) {
                                                     widget.onNumSpeakerAttemptChanged!(

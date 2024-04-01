@@ -36,6 +36,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
   double styleQRSize = 320;
+  bool sort = false;
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
@@ -68,6 +69,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     List<MatchScoutingData> list = await localDB.listScoringData();
     setState(() {
       dataList = list;
+      dataList?.sort((a, b) => b.id!.compareTo(a.id!));
     });
   }
 
@@ -75,7 +77,41 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     List<PitData> list = await localDB.listPitData();
     setState(() {
       listPitData = list;
+      listPitData?.sort((a, b) => b.id!.compareTo(a.id!));
     });
+  }
+
+  _sortList() {
+    if (_selectedTab == 0) {
+      if (sort == true) {
+        dataList?.sort((a, b) => b.id!.compareTo(a.id!));
+        setState(() {
+          dataList = dataList;
+          sort = false;
+        });
+      } else {
+        dataList?.sort((a, b) => a.id!.compareTo(b.id!));
+        setState(() {
+          dataList = dataList;
+          sort = true;
+        });
+      }
+    }
+    if (_selectedTab == 1) {
+      if (sort == true) {
+        listPitData?.sort((a, b) => b.id!.compareTo(a.id!));
+        setState(() {
+          listPitData = listPitData;
+          sort = false;
+        });
+      } else {
+        listPitData?.sort((a, b) => a.id!.compareTo(b.id!));
+        setState(() {
+          listPitData = listPitData;
+          sort = true;
+        });
+      }
+    }
   }
 
   _updateGoogleEmail() async {
@@ -289,12 +325,23 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             ),
           ),
         ),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          HeadingMain(
+            styleFontSize: styleTitleTextTheme!.fontSize!,
+            headingText: "Saved Records",
+            backGroundColor: Theme.of(context).primaryColor,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _sortList();
+            },
+            child: Image.asset(
+              'assets/imgs/sort.png',
+              scale: 20,
+            ),
+          ),
+        ]),
 
-        HeadingMain(
-          styleFontSize: styleTitleTextTheme!.fontSize!,
-          headingText: "Saved Records",
-          backGroundColor: Theme.of(context).primaryColor,
-        ),
         _showTab(_selectedTab)
         //Expanded(
         //   child: _buildListViewMatchData(),

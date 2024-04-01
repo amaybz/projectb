@@ -52,6 +52,28 @@ class _AutoTabState extends State<AutoTab> {
   double styleMarginLeftTrap = 90;
   double styleMarginLeftSpeaker = 82;
   double styleMarginTopAmp = 5;
+  bool swapLocation = false;
+  Color colorLeftSide = Colors.blue;
+  Color colorRightSide = Colors.red;
+  double imgFieldRotation = 0;
+
+  _swapFieldDirections() async {
+    if (swapLocation == true) {
+      setState(() {
+        colorLeftSide = Colors.red;
+        colorRightSide = Colors.blue;
+        imgFieldRotation = 3.14;
+        swapLocation = false;
+      });
+    } else {
+      setState(() {
+        colorLeftSide = Colors.blue;
+        colorRightSide = Colors.red;
+        imgFieldRotation = 0;
+        swapLocation = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +112,25 @@ class _AutoTabState extends State<AutoTab> {
           child: Container(
             margin: const EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: styleTitleTextTheme!.fontSize!,
-                textColor: Theme.of(context).textTheme.titleLarge!.color!,
-                backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Driver Station Diagram",
-                //backGroundColor: Colors.green,
-              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    HeadingMain(
+                      styleFontSize: styleTitleTextTheme!.fontSize!,
+                      textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                      backGroundColor: Theme.of(context).primaryColor,
+                      headingText: "Driver Station Diagram",
+                    ),
+                    //      ElevatedButton(
+                    //        onPressed: () {
+                    //          _swapFieldDirections();
+                    //        },
+                    //        child: Image.asset(
+                    //          'assets/imgs/flipImage.png',
+                    //           scale: 25,
+                    //         ),
+                    //       ),
+                  ]),
               Container(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +142,7 @@ class _AutoTabState extends State<AutoTab> {
                           padding: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
-                            color: Colors.blue,
+                            color: colorLeftSide,
                           ),
                           child: Text(
                             "1",
@@ -120,7 +154,7 @@ class _AutoTabState extends State<AutoTab> {
                           padding: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
-                            color: Colors.blue,
+                            color: colorLeftSide,
                           ),
                           child: Text(
                             "2",
@@ -132,7 +166,7 @@ class _AutoTabState extends State<AutoTab> {
                           padding: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
-                            color: Colors.blue,
+                            color: colorLeftSide,
                           ),
                           child: Text(
                             "3",
@@ -140,18 +174,20 @@ class _AutoTabState extends State<AutoTab> {
                           ),
                         ),
                       ]),
-                      Column(children: <Widget>[
-                        SizedBox(
-                          width: widget.styleImgFieldMapWidth + 80,
-                          height: (widget.styleImgFieldMapWidth),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                //border: Border.all(color: Colors.white),
-                                color: Theme.of(context).canvasColor),
-                            child: Image.asset("assets/imgs/field.png"),
-                          ),
-                        ),
-                      ]),
+                      Column(
+                          //mainAxisAlignment: MainAxisAlignment.start,
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: widget.styleImgFieldMapWidth + 80,
+                              height: (widget.styleImgFieldMapWidth),
+                              child: Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(imgFieldRotation),
+                                child: Image.asset("assets/imgs/field.png"),
+                              ),
+                            ),
+                          ]),
                       Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -161,7 +197,7 @@ class _AutoTabState extends State<AutoTab> {
                               padding: EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                color: Colors.red,
+                                color: colorRightSide,
                               ),
                               child: Text(
                                 "3",
@@ -173,7 +209,7 @@ class _AutoTabState extends State<AutoTab> {
                               padding: EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                color: Colors.red,
+                                color: colorRightSide,
                               ),
                               child: Text(
                                 "2",
@@ -185,7 +221,7 @@ class _AutoTabState extends State<AutoTab> {
                               padding: EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                color: Colors.red,
+                                color: colorRightSide,
                               ),
                               child: Text(
                                 "1",

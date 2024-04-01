@@ -105,7 +105,7 @@ class _EndGameState extends State<EndGame> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Outcome:", style: styleBodyTextTheme),
+              Text("Climb Outcome:", style: styleBodyTextTheme),
               DropdownButton(
                 value: widget.matchScoutingData.teleIdStageOutcome == null
                     ? null
@@ -118,7 +118,7 @@ class _EndGameState extends State<EndGame> {
                         item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
-                  print("teleIdChargeOutcome: " +
+                  print("teleIdStageOutcome: " +
                       widget.matchScoutingData.teleIdStageOutcome!);
                 },
               ),

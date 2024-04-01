@@ -257,9 +257,9 @@ class _PitClimbState extends State<PitClimb> {
                     child: TextField(
                       controller: widget.txChargeNotes,
                       decoration: InputDecoration(
-                        hintText: 'Climb Notes',
-                        hintStyle: styleBodyTextTheme,
-                      ),
+                          hintText: 'Climb Notes',
+                          hintStyle:
+                              styleBodyTextTheme?.copyWith(color: Colors.grey)),
                     ),
                   ),
                 ],

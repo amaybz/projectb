@@ -182,7 +182,8 @@ class _PitScoringState extends State<PitScoring> {
                     controller: widget.txScoringNotes,
                     decoration: InputDecoration(
                         hintText: 'Notes on Scoring',
-                        hintStyle: styleBodyTextTheme),
+                        hintStyle:
+                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
                   ),
                 ),
               ],

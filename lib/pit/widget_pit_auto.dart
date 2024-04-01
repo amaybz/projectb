@@ -13,6 +13,7 @@ class PitAuto extends StatefulWidget {
       this.styleFontSizeHeadings = 18,
       this.onChanged,
       this.onExpanded,
+      this.txAutoNotes,
       this.strWeight = "lbs",
       this.strDistance = "inches"})
       : super(key: key);
@@ -24,6 +25,7 @@ class PitAuto extends StatefulWidget {
   final ValueChanged<bool>? onExpanded;
   final String strWeight;
   final String strDistance;
+  final TextEditingController? txAutoNotes;
 
   @override
   _PitAutoState createState() => _PitAutoState();
@@ -187,7 +189,7 @@ class _PitAutoState extends State<PitAuto> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
-                  "#Rings Scored:",
+                  "#Notes Scored:",
                   style: styleBodyTextTheme,
                 ),
                 CounterWidget(
@@ -205,6 +207,9 @@ class _PitAutoState extends State<PitAuto> {
                     setState(() {
                       widget.pitData.numAutoScore =
                           widget.pitData.numAutoScore! - 1;
+                      if (widget.pitData.numAutoScore! < 0) {
+                        widget.pitData.numAutoScore = 0;
+                      }
                       widget.onChanged!(widget.pitData);
                     });
                   },
@@ -241,7 +246,7 @@ class _PitAutoState extends State<PitAuto> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
-                  "#Extra Rings:",
+                  "#Extra Notes:",
                   style: styleBodyTextTheme,
                 ),
                 CounterWidget(
@@ -259,6 +264,9 @@ class _PitAutoState extends State<PitAuto> {
                     setState(() {
                       widget.pitData.numAutoRings =
                           widget.pitData.numAutoRings! - 1;
+                      if (widget.pitData.numAutoRings! < 0) {
+                        widget.pitData.numAutoRings = 0;
+                      }
                       widget.onChanged!(widget.pitData);
                     });
                   },
@@ -270,6 +278,26 @@ class _PitAutoState extends State<PitAuto> {
                   },
                 ),
               ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Notes: ",
+                    style: styleBodyTextTheme,
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 300),
+                    child: TextField(
+                      controller: widget.txAutoNotes,
+                      decoration: InputDecoration(
+                          hintText: 'Auto Notes',
+                          hintStyle:
+                              styleBodyTextTheme?.copyWith(color: Colors.grey)),
+                    ),
+                  ),
+                ],
+              ),
             ]),
           ),
         ),

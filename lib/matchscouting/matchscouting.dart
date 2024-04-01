@@ -558,7 +558,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     style: styleBodyTextTheme,
                                     decoration: InputDecoration(
                                         hintText: 'Scout Name',
-                                        hintStyle: styleBodyTextTheme),
+                                        hintStyle: styleBodyTextTheme?.copyWith(
+                                            color: Colors.grey)),
                                   ),
                                 ),
                               ]),
@@ -995,13 +996,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
               : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
           showAlertOKDialog(context, "Save", alertMsg);
         },
-        onUploadToGoogle: (bool value) {
+        onUploadToGoogle: (bool value) async {
           if (recordSaved == true) {
-            saveMatchScout(recordID: recordID!);
+            await saveMatchScout(recordID: recordID!);
           } else {
-            saveMatchScout();
+            await saveMatchScout();
           }
-          _uploadDataToGoogleDrive(matchScoutingData);
+          String alertMsg;
+          alertMsg = (recordSaved == true)
+              ? "Match has been saved to Local Database"
+              : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
+          showAlertOKDialog(context, "Save", alertMsg);
+          if (recordSaved == true) {
+            _uploadDataToGoogleDrive(matchScoutingData);
+          }
         },
       );
     }

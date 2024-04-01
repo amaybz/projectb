@@ -158,7 +158,8 @@ class _PitIntakeState extends State<PitIntake> {
                     style: styleBodyTextTheme,
                     decoration: InputDecoration(
                         hintText: 'Notes on intake system(s)',
-                        hintStyle: styleBodyTextTheme),
+                        hintStyle:
+                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
                   ),
                 ),
               ],

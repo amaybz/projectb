@@ -11,6 +11,7 @@ import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 import 'package:projectb/widgets/widget_loading_popup.dart';
 import 'package:projectb/widgets/widget_uploadedimg.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ScoringDataScreen extends StatefulWidget {
   ScoringDataScreen({
@@ -140,20 +141,65 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     return directory.path;
   }
 
+  Future<String?> get _externalPath async {
+    final directory =
+        await Directory("/storage/emulated/0/Download/RobotMatchScouting/")
+            .create(recursive: true);
+    return directory.path;
+  }
+
   Future<File> get _localFile async {
     final path = await _localPath;
     return File('$path/temp.json');
   }
 
+  Future<File> writeMatchFileToDownloads(
+      MatchScoutingData matchScoutingData) async {
+    Permission.manageExternalStorage.request();
+    DialogBuilder(context).showLoadingIndicator('Saving Match JSON');
+    print("get file Path");
+    final file = await _localFile;
+    final exFilepath = await _externalPath;
+    print("External File Path: " + exFilepath!);
+    // Write the file.
+    print("writing to file");
+    var dataToWrite = json.encode(matchScoutingData.toMap());
+    File newFile = await file.writeAsString(dataToWrite.toString());
+
+    newFile.copy(exFilepath +
+        "/MATCH " +
+        matchScoutingData.numMatch.toString() +
+        " " +
+        matchScoutingData.idTeam.toString() +
+        ".json");
+
+    print("JSON: " + dataToWrite);
+    print("Save Complete");
+    DialogBuilder(context).hideOpenDialog();
+    showAlertOKDialog(context, "Download", "Result Downloaded");
+    return newFile;
+  }
+
   Future<File> writeMatchFileAndUploadToGoogle(
       MatchScoutingData matchScoutingData) async {
+    Permission.manageExternalStorage.request();
     DialogBuilder(context).showLoadingIndicator('Uploading Match JSON');
     print("get file Path");
     final file = await _localFile;
+    final exFilepath = await _externalPath;
+    print("External File Path: " + exFilepath!);
     // Write the file.
-    print("write file");
+    print("writing to file");
     var dataToWrite = json.encode(matchScoutingData.toMap());
     File newFile = await file.writeAsString(dataToWrite.toString());
+
+    newFile.copy(exFilepath! +
+        "/MATCH " +
+        matchScoutingData.numMatch.toString() +
+        " " +
+        matchScoutingData.idTeam.toString() +
+        ".json");
+
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
         newFile,
@@ -163,7 +209,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             matchScoutingData.idTeam.toString() +
             " - " +
             DateTime.now().toString(),
-        "json");
+        ".json");
     print("Upload Complete");
     setState(() {
       matchScoutingData.flUploaded = true;
@@ -173,6 +219,66 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     DialogBuilder(context).hideOpenDialog();
     checkIsSignedInToGoogle();
     showAlertOKDialog(context, "Upload", "Result uploaded to Google");
+
+    return newFile;
+  }
+
+  Future<File> writePitFileToDownloads(PitData pitData) async {
+    bool fileExists;
+    DialogBuilder(context).showLoadingIndicator('Saving PIT JSON');
+    print("get file Path");
+    final file = await _localFile;
+    final exFilepath = await _externalPath;
+    print("External File Path: " + exFilepath!);
+    // Write the file.
+    print("write file");
+    var dataToWrite = json.encode(pitData.toMap());
+    File newFile = await file.writeAsString(dataToWrite.toString());
+    print("JSON: " + dataToWrite);
+
+    newFile.copy(exFilepath + "PIT_" + pitData.idTeam.toString() + ".json");
+
+    if (pitData.imgTeamUniform != null) {
+      fileExists = await File(pitData.imgTeamUniform!.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      pitData.imgTeamUniform!.copy(exFilepath +
+          pitData.idTeam.toString() +
+          " PIT_TeamUniform" +
+          pitData.idTeam.toString() +
+          ".jpg");
+    }
+
+    if (pitData.imgRobotSide != null) {
+      fileExists = await File(pitData.imgRobotSide!.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      pitData.imgRobotSide!.copy(exFilepath +
+          pitData.idTeam.toString() +
+          " PIT_RobotSide" +
+          pitData.idTeam.toString() +
+          ".jpg");
+    }
+
+    if (pitData.imgRobotFront != null) {
+      fileExists = await File(pitData.imgRobotFront!.path).exists();
+    } else {
+      fileExists = false;
+    }
+    if (fileExists == true) {
+      pitData.imgRobotFront!.copy(exFilepath +
+          pitData.idTeam.toString() +
+          " PIT_RobotFront" +
+          pitData.idTeam.toString() +
+          ".jpg");
+    }
+
+    DialogBuilder(context).hideOpenDialog();
+    showAlertOKDialog(context, "Download", "Result Downloaded to Device");
 
     return newFile;
   }
@@ -209,7 +315,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     if (fileExists == true) {
       googleInterface.uploadFile(
           pitData.imgTeamUniform!,
-          "PIT_TeamUniform" +
+          pitData.idTeam.toString() +
+              " PIT_TeamUniform" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
@@ -223,7 +330,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     if (fileExists == true) {
       googleInterface.uploadFile(
           pitData.imgRobotSide!,
-          "PIT_RobotSide" +
+          pitData.idTeam.toString() +
+              " PIT_RobotSide" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
@@ -237,7 +345,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     if (fileExists == true) {
       googleInterface.uploadFile(
           pitData.imgRobotFront!,
-          "PIT_RobotFront" +
+          pitData.idTeam.toString() +
+              " PIT_RobotFront" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
@@ -401,9 +510,6 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 )
               ],
             ),
-            Column(
-              children: [UploadedImg(state: item.flUploaded!)],
-            ),
             Column(children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Container(
@@ -424,6 +530,20 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).primaryColorDark, // background
+                        foregroundColor:
+                            Theme.of(context).splashColor, // foreground
+                      ),
+                      onPressed: () {
+                        writeMatchFileAndUploadToGoogle(item);
+                      },
+                      child: UploadedImg(state: item.flUploaded!)),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 2.5),
+                  child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           Theme.of(context).primaryColorDark, // background
@@ -431,9 +551,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                           Theme.of(context).splashColor, // foreground
                     ),
                     onPressed: () {
-                      writeMatchFileAndUploadToGoogle(item);
+                      writeMatchFileToDownloads(item);
                     },
-                    child: Text('Upload'),
+                    child: Image.asset(
+                      'assets/imgs/download.png',
+                      scale: 2,
+                    ),
                   ),
                 ),
                 Container(
@@ -448,7 +571,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
                       setState(() {});
                     },
-                    child: Text('Delete'),
+                    child: Image.asset(
+                      'assets/imgs/delete.png',
+                      scale: 2,
+                    ),
                   ),
                 ),
               ]),
@@ -544,9 +670,6 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               ],
             ),
             Column(
-              children: [UploadedImg(state: item.uploaded!)],
-            ),
-            Column(
               children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -569,6 +692,20 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context)
+                                  .primaryColorDark, // background
+                              foregroundColor:
+                                  Theme.of(context).splashColor, // foreground
+                            ),
+                            onPressed: () {
+                              writePitFileAndUploadToGoogle(item);
+                            },
+                            child: UploadedImg(state: item.uploaded!)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 2.5),
+                        child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context)
                                 .primaryColorDark, // background
@@ -576,9 +713,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                                 Theme.of(context).splashColor, // foreground
                           ),
                           onPressed: () {
-                            writePitFileAndUploadToGoogle(item);
+                            writePitFileToDownloads(item);
                           },
-                          child: Text('Upload'),
+                          child: Image.asset(
+                            'assets/imgs/download.png',
+                            scale: 2,
+                          ),
                         ),
                       ),
                       Container(
@@ -593,7 +733,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
                             setState(() {});
                           },
-                          child: Text('Delete'),
+                          child: Image.asset(
+                            'assets/imgs/delete.png',
+                            scale: 2,
+                          ),
                         ),
                       ),
                     ]),

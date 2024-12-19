@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:projectb/localdb.dart';
 
 class DisplayQRCode extends StatefulWidget {
-  final String data;
+  final String? data;
   final double styleQRSize;
 
   const DisplayQRCode({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.styleQRSize = 100,
   }) : super(key: key);
 
@@ -21,15 +20,20 @@ class _DisplayQRCodeState extends State<DisplayQRCode> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(5.0),
-      child: Column(children: [
-        //Text("QR Code"),
-        QrImage(
-          data: widget.data,
-          version: QrVersions.auto,
-          size: widget.styleQRSize,
-          gapless: false,
-        )
-      ]),
+      width: widget.styleQRSize,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //Text("QR Code"),
+            QrImageView(
+              data: widget.data!,
+              version: QrVersions.auto,
+              size: widget.styleQRSize,
+              gapless: true,
+              backgroundColor: Colors.white,
+            )
+          ]),
     );
   }
 }

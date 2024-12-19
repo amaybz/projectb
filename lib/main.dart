@@ -170,8 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
   static int _countOfTeams = 0;
   String _downloadingText = "Please select Location and Event to download data";
   String txtEventHelpText = "Please choose a event";
+
   String? locationDropDown;
   String selectedYear = "setme";
+
   final List<String> _locations = [
     'Australia',
     'Brazil',
@@ -485,6 +487,7 @@ class _MyHomePageState extends State<MyHomePage> {
         eventsList.add(EventsList(name: i.name, key: i.key));
       }
     });
+
 
     if (eventsList.length == 0) {
       txtEventHelpText = "No Events for this location!";
@@ -811,8 +814,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           child: DropdownButton<String>(
                             isExpanded: true,
+
+
                             hint: Text(txtEventHelpText,
                                 style: styleBodyTextTheme),
+
                             value: selectedEvent == null
                                 ? null
                                 : selectedEvent!.key,

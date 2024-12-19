@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_pitdata.dart';
-import 'package:projectb/widgets/widget_counter.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
-
-import '../widgets/widget_row_heading.dart';
 
 class PitIntake extends StatefulWidget {
   PitIntake({
@@ -161,7 +158,8 @@ class _PitIntakeState extends State<PitIntake> {
                     style: styleBodyTextTheme,
                     decoration: InputDecoration(
                         hintText: 'Notes on intake system(s)',
-                        hintStyle: styleBodyTextTheme),
+                        hintStyle:
+                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
                   ),
                 ),
               ],

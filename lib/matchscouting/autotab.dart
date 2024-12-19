@@ -49,6 +49,31 @@ class AutoTab extends StatefulWidget {
 class _AutoTabState extends State<AutoTab> {
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+  double styleMarginLeftTrap = 90;
+  double styleMarginLeftSpeaker = 82;
+  double styleMarginTopAmp = 5;
+  bool swapLocation = false;
+  Color colorLeftSide = Colors.blue;
+  Color colorRightSide = Colors.red;
+  double imgFieldRotation = 0;
+
+  _swapFieldDirections() async {
+    if (swapLocation == true) {
+      setState(() {
+        colorLeftSide = Colors.red;
+        colorRightSide = Colors.blue;
+        imgFieldRotation = 3.14;
+        swapLocation = false;
+      });
+    } else {
+      setState(() {
+        colorLeftSide = Colors.blue;
+        colorRightSide = Colors.red;
+        imgFieldRotation = 0;
+        swapLocation = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +82,26 @@ class _AutoTabState extends State<AutoTab> {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
         styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+        styleMarginLeftTrap = 64;
+        styleMarginTopAmp = 5;
+        styleMarginLeftSpeaker = 64;
       });
     }
     if (width < 393) {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+        styleMarginLeftTrap = 63;
+        styleMarginTopAmp = 45;
+        styleMarginLeftSpeaker = 63;
       });
     }
     if (width >= 600) {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
         styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+        styleMarginLeftTrap = 100;
+        styleMarginTopAmp = 5;
       });
     }
 
@@ -79,13 +112,25 @@ class _AutoTabState extends State<AutoTab> {
           child: Container(
             margin: const EdgeInsets.all(5.0),
             child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: styleTitleTextTheme!.fontSize!,
-                textColor: Theme.of(context).textTheme.titleLarge!.color!,
-                backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Driver Position",
-                //backGroundColor: Colors.green,
-              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    HeadingMain(
+                      styleFontSize: styleTitleTextTheme!.fontSize!,
+                      textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                      backGroundColor: Theme.of(context).primaryColor,
+                      headingText: "Driver Station Diagram",
+                    ),
+                    //      ElevatedButton(
+                    //        onPressed: () {
+                    //          _swapFieldDirections();
+                    //        },
+                    //        child: Image.asset(
+                    //          'assets/imgs/flipImage.png',
+                    //           scale: 25,
+                    //         ),
+                    //       ),
+                  ]),
               Container(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +142,7 @@ class _AutoTabState extends State<AutoTab> {
                           padding: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
-                            color: Colors.blue,
+                            color: colorLeftSide,
                           ),
                           child: Text(
                             "1",
@@ -109,7 +154,7 @@ class _AutoTabState extends State<AutoTab> {
                           padding: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
-                            color: Colors.blue,
+                            color: colorLeftSide,
                           ),
                           child: Text(
                             "2",
@@ -121,7 +166,7 @@ class _AutoTabState extends State<AutoTab> {
                           padding: EdgeInsets.all(4.0),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.black),
-                            color: Colors.blue,
+                            color: colorLeftSide,
                           ),
                           child: Text(
                             "3",
@@ -129,18 +174,20 @@ class _AutoTabState extends State<AutoTab> {
                           ),
                         ),
                       ]),
-                      Column(children: <Widget>[
-                        SizedBox(
-                          width: widget.styleImgFieldMapWidth + 80,
-                          height: (widget.styleImgFieldMapWidth),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                //border: Border.all(color: Colors.white),
-                                color: Theme.of(context).canvasColor),
-                            child: Image.asset("assets/imgs/field.png"),
-                          ),
-                        ),
-                      ]),
+                      Column(
+                          //mainAxisAlignment: MainAxisAlignment.start,
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: widget.styleImgFieldMapWidth + 80,
+                              height: (widget.styleImgFieldMapWidth),
+                              child: Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.rotationY(imgFieldRotation),
+                                child: Image.asset("assets/imgs/field.png"),
+                              ),
+                            ),
+                          ]),
                       Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -150,7 +197,7 @@ class _AutoTabState extends State<AutoTab> {
                               padding: EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                color: Colors.red,
+                                color: colorRightSide,
                               ),
                               child: Text(
                                 "3",
@@ -162,7 +209,7 @@ class _AutoTabState extends State<AutoTab> {
                               padding: EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                color: Colors.red,
+                                color: colorRightSide,
                               ),
                               child: Text(
                                 "2",
@@ -174,7 +221,7 @@ class _AutoTabState extends State<AutoTab> {
                               padding: EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
-                                color: Colors.red,
+                                color: colorRightSide,
                               ),
                               child: Text(
                                 "1",
@@ -213,6 +260,9 @@ class _AutoTabState extends State<AutoTab> {
           styleCounterButtonHeight: widget.styleCounterButtonHeight,
           styleCounterButtonWidth: widget.styleCounterButtonWidth,
           styleImgFieldWidth: widget.styleImgFieldPerformanceWidth,
+          styleMarginLeftTrap: styleMarginLeftTrap,
+          styleMarginLeftSpeaker: styleMarginLeftSpeaker,
+          styleMarginTopAmp: styleMarginTopAmp,
           matchScoutingData: widget.matchScoutingData,
           onChange: (MatchScoutingData newData) {
             setState(() {
@@ -221,6 +271,7 @@ class _AutoTabState extends State<AutoTab> {
           },
           numAmpAttempt: widget.matchScoutingData.autoNumAmpAttempt,
           numAmpSuccess: widget.matchScoutingData.autoNumAmpSuccess,
+          numTrapAttempt: widget.matchScoutingData.autoNumTrapAttempt,
           numSpeakerAttempt: widget.matchScoutingData.autoNumSpeakerAttempt,
           numTrapSuccess: widget.matchScoutingData.autoNumTrapSuccess,
           numSpeakerSuccess: widget.matchScoutingData.autoNumSpeakerSuccess,
@@ -266,6 +317,15 @@ class _AutoTabState extends State<AutoTab> {
                 value = 0;
               }
               widget.matchScoutingData.autoNumTrapSuccess = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumTrapAttemptChanged: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumTrapAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },

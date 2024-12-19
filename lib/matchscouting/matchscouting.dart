@@ -11,7 +11,6 @@ import 'package:projectb/finishtab.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'dart:io';
 import 'package:projectb/googleinterface.dart';
-import 'package:projectb/widgets/widget_dropdown.dart';
 import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
@@ -44,6 +43,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   String strWeight = "lbs";
   String strDistance = "Inches";
+  ScrollController _scrollController = new ScrollController();
 
   //manage save record
   bool recordSaved = false;
@@ -257,6 +257,41 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     );
   }
 
+  showAlertDialogExitMatch(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Clear Data"),
+      onPressed: () {
+        Navigator.of(context).pop();
+        clearMatch();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("EXIT"),
+      content: Text("This will clear the current Match?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
     Widget okButton = TextButton(
@@ -289,7 +324,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('This will clear the current Match?'),
+            content: new Text('This will clear the current Match?',
+                style: styleBodyTextTheme),
             actions: <Widget>[
               new TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
@@ -432,8 +468,20 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
     }
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      //canPop: _canPop,
+      //onPopInvoked: _onWillPop,
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        if (didPop) {
+          return;
+        }
+        final NavigatorState navigator = Navigator.of(context);
+        final bool? shouldPop = await _onWillPop();
+        if (shouldPop ?? false) {
+          navigator.pop();
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
             foregroundColor: Theme.of(context).splashColor,
@@ -457,7 +505,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                     }).toList();
                   }),
             ]),
-        body: ListView(children: <Widget>[
+        body: ListView(controller: _scrollController, children: <Widget>[
           FractionallySizedBox(
             widthFactor: 0.99,
             child: Center(
@@ -510,7 +558,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     style: styleBodyTextTheme,
                                     decoration: InputDecoration(
                                         hintText: 'Scout Name',
-                                        hintStyle: styleBodyTextTheme),
+                                        hintStyle: styleBodyTextTheme?.copyWith(
+                                            color: Colors.grey)),
                                   ),
                                 ),
                               ]),
@@ -539,15 +588,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                   children: <Widget>[
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.symmetric(
                                 vertical: styleFieldPadding,
                                 horizontal: styleFieldPaddingSides),
                             width: styleFieldMatchNumber,
-                            // height: 58,
-                            child: TextField(
+                            //height: 65,
+                            child: TextFormField(
                               style: styleBodyTextTheme,
                               controller: _txtMatchNumber,
                               keyboardType: TextInputType.number,
@@ -556,15 +605,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               ],
                               onEditingComplete: () {
                                 if (filterTeams == true) {
-                                  setEventTeams(widget.styleFontSize);
+                                  setEventTeams(styleBodyTextTheme!.fontSize!);
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               },
                               decoration: InputDecoration(
-                                labelText: "Match #",
+                                labelText: "Match #:",
                                 labelStyle: styleBodyTextTheme,
-                                border: InputBorder.none,
-                                isDense: true,
+                                contentPadding: EdgeInsets.all(0.0),
+                                //border: InputBorder.none,
+                                isDense: false,
                               ),
                             ),
                           ),
@@ -573,7 +623,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
                           DropDownIndexedWidget(
                               value: matchScoutingData.idAlliance,
-                              title: "Alliance",
+                              title: "Alliance:",
                               dropDownValues: _listAlliance,
                               styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldAlliance,
@@ -585,17 +635,17 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                   filterTeams = true;
                                 });
                                 getDriveStationsByTeam(
-                                    newValue, widget.styleFontSize);
+                                    newValue, styleBodyTextTheme!.fontSize!);
                                 print(matchScoutingData.idAlliance);
                                 if (filterTeams == true) {
-                                  setEventTeams(widget.styleFontSize);
+                                  setEventTeams(styleBodyTextTheme!.fontSize!);
                                 }
                                 FocusManager.instance.primaryFocus?.unfocus();
                               }),
 
                           DropDownIndexedWidget(
                               value: matchScoutingData.idDriveStation,
-                              title: "Drive Station",
+                              title: "Drive Station:",
                               dropDownValues: listDriveStations,
                               styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldWidth,
@@ -609,9 +659,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                               }),
                           DropDownIndexedWidget(
                               value: matchScoutingData.idStartPosition,
-                              title: "Robot Position",
+                              title: "Robot Position:",
                               dropDownValues: _listRobotPosition,
-                              styleFontSize: widget.styleFontSize,
+                              styleFontSize: styleBodyTextTheme!.fontSize!,
                               styleFieldWidth: styleFieldWidth,
                               styleFieldPadding: styleFieldPadding,
                               styleFieldPaddingSides: styleFieldPaddingSides,
@@ -626,8 +676,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "Team ",
-                            style: TextStyle(fontSize: widget.styleFontSize),
+                            "Team:",
+                            style: TextStyle(
+                                fontSize: styleBodyTextTheme!.fontSize!),
                           ),
                           ConstrainedBox(
                             constraints: BoxConstraints(
@@ -635,7 +686,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                 maxWidth: styleFieldTeamMaxWidth),
                             child: DropdownButton(
                               isExpanded: true,
-                              isDense: true,
+                              isDense: false,
                               style: styleBodyTextTheme,
                               value: selectedTeam == null
                                   ? null
@@ -663,7 +714,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                                     filterTeams == true
                                         ? filterTeams = false
                                         : filterTeams = true;
-                                    setEventTeams(widget.styleFontSize);
+                                    setEventTeams(
+                                        styleBodyTextTheme!.fontSize!);
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -844,6 +896,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           // th
           onTap: (value) {
             setState(() => _selectedTab = value);
+            scrollToTop();
           },
           // is will be set when a new tab is tapped
           items: [
@@ -941,25 +994,31 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           alertMsg = (recordSaved == true)
               ? "Match has been saved to Local Database"
               : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
-          showAlertOKDialog(context, "Saved", alertMsg);
+          showAlertOKDialog(context, "Save", alertMsg);
         },
-        onUploadToGoogle: (bool value) {
+        onUploadToGoogle: (bool value) async {
           if (recordSaved == true) {
-            saveMatchScout(recordID: recordID!);
+            await saveMatchScout(recordID: recordID!);
           } else {
-            saveMatchScout();
+            await saveMatchScout();
           }
-          _uploadDataToGoogleDrive(matchScoutingData);
+          String alertMsg;
+          alertMsg = (recordSaved == true)
+              ? "Match has been saved to Local Database"
+              : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
+          showAlertOKDialog(context, "Save", alertMsg);
+          if (recordSaved == true) {
+            _uploadDataToGoogleDrive(matchScoutingData);
+          }
         },
-      );
-    } else {
-      return Container(
-        child: Text(
-          "HOW did you get HERE?????",
-          style: TextStyle(fontSize: 18),
-        ),
       );
     }
+  }
+
+  scrollToTop() async {
+    // After 1 second, it takes you to the bottom of the ListView
+    _scrollController.jumpTo(1);
+    print(_scrollController.position);
   }
 
   _uploadDataToGoogleDrive(MatchScoutingData matchScoutingData) async {

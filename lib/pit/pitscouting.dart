@@ -64,6 +64,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   final TextEditingController txDriveNotes = TextEditingController();
   final TextEditingController txObjectNotes = TextEditingController();
   final TextEditingController txScoringNotes = TextEditingController();
+  final TextEditingController txAutoNotes = TextEditingController();
 
   File? imgPitTeamShirt;
   File? imgPitRobotFront;
@@ -226,6 +227,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       txWeight.text = "0";
       txWidth.text = "0";
       txPitNotes.text = "";
+      txScoringNotes.text = "";
+      txDriveNotes.text = "";
+      txAutoNotes.text = "";
       txObjectNotes.text = "";
       txScoringNotes.text = "";
       numClimbHeight.text = "0";
@@ -302,8 +306,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txEvent = widget.eventKey;
     pitData.txScoutName = _txtScoutName.text;
     pitData.txPitNotes = txPitNotes.text;
+    pitData.txScoringNotes = txScoringNotes.text;
+    pitData.txStageNotes = txChargeNotes.text;
+    pitData.txDriveNotes = txDriveNotes.text;
+    pitData.txAutoNotes = txAutoNotes.text;
     pitData.txComputerName = widget.deviceName;
     pitData.txObjectNotes = txObjectNotes.text;
+
     //if (pitData.imgTeamUniform == null) return false;
     //if (pitData.imgRobotSide == null) return false;
     //if (pitData.imgRobotFront == null) return false;
@@ -420,8 +429,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     }
     updateThemeForEventTeams(styleBodyTextTheme!);
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        if (didPop) {
+          return;
+        }
+        final NavigatorState navigator = Navigator.of(context);
+        final bool? shouldPop = await _onWillPop();
+        if (shouldPop ?? false) {
+          navigator.pop();
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
             foregroundColor: Theme.of(context).splashColor,
@@ -719,6 +738,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 pitData: pitData,
                 strDistance: strDistance,
                 strWeight: strWeight,
+                txAutoNotes: txAutoNotes,
                 onChanged: (PitData updates) {
                   setState(() {
                     pitData = updates;
@@ -758,7 +778,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 controller: txPitNotes,
                                 decoration: InputDecoration(
                                     hintText: 'General Notes',
-                                    hintStyle: styleBodyTextTheme),
+                                    hintStyle: styleBodyTextTheme?.copyWith(
+                                        color: Colors.grey)),
                               ),
                             ),
                           ]),
@@ -792,7 +813,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                   String alertMsg = (recordSaved == true)
                       ? "Pit has been saved to Local Database."
                       : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
-                  showAlertOKDialog(context, "Saved", alertMsg);
+                  showAlertOKDialog(context, "Save", alertMsg);
                 },
               ),
             ]),

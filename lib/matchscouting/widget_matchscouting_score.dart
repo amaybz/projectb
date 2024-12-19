@@ -11,6 +11,7 @@ class ScoreWidget extends StatefulWidget {
     this.numAmpAttempt,
     this.numAmpSuccess,
     this.numTrapSuccess,
+    this.numTrapAttempt,
     this.numLowConeSuccess,
     this.numSpeakerSuccess,
     this.numMidCubeSuccess,
@@ -23,6 +24,7 @@ class ScoreWidget extends StatefulWidget {
     this.onNumAmpAttemptChanged,
     this.onNumAmpSuccessChanged,
     this.onNumTrapSuccessChanged,
+    this.onNumTrapAttemptChanged,
     this.onNumLowConeSuccessChanged,
     this.onNumSpeakerAttemptChanged,
     this.onChange,
@@ -32,6 +34,9 @@ class ScoreWidget extends StatefulWidget {
     this.styleImgFieldWidth = 150,
     this.styleCounterButtonHeight = 25,
     this.styleCounterButtonWidth = 30,
+    this.styleMarginLeftTrap = 90,
+    this.styleMarginLeftSpeaker = 82,
+    this.styleMarginTopAmp = 5,
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
@@ -40,6 +45,7 @@ class ScoreWidget extends StatefulWidget {
   final int? numSpeakerAttempt;
   final int? numLowConeSuccess;
   final int? numTrapSuccess;
+  final int? numTrapAttempt;
   final int? numSpeakerSuccess;
   final int? numMidCubeSuccess;
   final int? numLowCubeSuccess;
@@ -47,6 +53,7 @@ class ScoreWidget extends StatefulWidget {
   final ValueChanged<int>? onNumSpeakerAttemptChanged;
   final ValueChanged<int>? onNumAmpSuccessChanged;
   final ValueChanged<int>? onNumTrapSuccessChanged;
+  final ValueChanged<int>? onNumTrapAttemptChanged;
   final ValueChanged<int>? onNumLowConeSuccessChanged;
   final ValueChanged<int>? onNumSpeakerSuccessChanged;
   final ValueChanged<int>? onNumMidCubeSuccessChanged;
@@ -58,6 +65,9 @@ class ScoreWidget extends StatefulWidget {
   final double styleImgFieldWidth;
   final double styleCounterButtonHeight;
   final double styleCounterButtonWidth;
+  final double styleMarginLeftTrap;
+  final double styleMarginLeftSpeaker;
+  final double styleMarginTopAmp;
 
   @override
   _ScoreWidgetState createState() => _ScoreWidgetState();
@@ -105,6 +115,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
             backGroundColor: Theme.of(context).primaryColor,
           ),
           Container(
+            constraints: BoxConstraints(maxWidth: 600),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -113,7 +124,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                   bottomRight: Radius.circular(10)),
               image: DecorationImage(
                 image: AssetImage("assets/imgs/ScoringLocations.png"),
-                fit: BoxFit.fill,
+                fit: BoxFit.scaleDown,
               ),
             ),
             child: Column(
@@ -151,8 +162,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                               bottomLeft: Radius.circular(10),
                                               bottomRight: Radius.circular(10)),
                                         ),
-                                        margin: const EdgeInsets.only(
-                                            left: 90.0,
+                                        margin: EdgeInsets.only(
+                                            left: widget.styleMarginLeftTrap,
                                             right: 0.0,
                                             bottom: 5.0,
                                             top: 2.0),
@@ -168,7 +179,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                             styleButtonHeight:
                                                 widget.styleCounterButtonHeight,
                                             value: widget.numTrapSuccess,
-                                            title: "Stage",
+                                            title: "Trap",
                                             title1: "Success",
                                             styleFontSize:
                                                 widget.styleFontSizeBody,
@@ -177,13 +188,17 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                               setState(() {
                                                 widget.onNumTrapSuccessChanged!(
                                                     widget.numTrapSuccess! + 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! + 1);
                                               });
                                             },
                                             onDecreaseStateChanged:
                                                 (int decrease) {
                                               setState(() {
-                                                widget.onNumSpeakerAttemptChanged!(
+                                                widget.onNumTrapSuccessChanged!(
                                                     widget.numTrapSuccess! - 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! - 1);
                                               });
                                             },
                                             onSetValue: (int value) {
@@ -196,26 +211,31 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                 widget.styleCounterButtonWidth,
                                             styleButtonHeight:
                                                 widget.styleCounterButtonHeight,
-                                            value: widget.numAmpAttempt,
+                                            value: widget.numTrapAttempt,
                                             title: "Attempt",
                                             styleFontSize:
                                                 widget.styleFontSizeBody,
                                             onIncreaseStateChanged:
                                                 (int increase) {
                                               setState(() {
-                                                widget.onNumAmpAttemptChanged!(
-                                                    widget.numAmpAttempt! + 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! + 1);
                                               });
                                             },
                                             onDecreaseStateChanged:
                                                 (int decrease) {
                                               setState(() {
-                                                widget.onNumAmpAttemptChanged!(
-                                                    widget.numAmpAttempt! - 1);
+                                                widget.onNumTrapAttemptChanged!(
+                                                    widget.numTrapAttempt! - 1);
                                               });
+                                              if (widget.numTrapSuccess! >=
+                                                  widget.numTrapAttempt!) {
+                                                widget.onNumTrapSuccessChanged!(
+                                                    widget.numTrapSuccess! - 1);
+                                              }
                                             },
                                             onSetValue: (int value) {
-                                              widget.onNumAmpAttemptChanged!(
+                                              widget.onNumTrapAttemptChanged!(
                                                   value);
                                             },
                                           ),
@@ -251,10 +271,11 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                     bottomRight:
                                                         Radius.circular(10)),
                                               ),
-                                              margin: const EdgeInsets.only(
+                                              margin: EdgeInsets.only(
                                                   right: 5.0,
                                                   bottom: 10.0,
-                                                  top: 5.0),
+                                                  top:
+                                                      widget.styleMarginTopAmp),
                                               padding: const EdgeInsets.only(
                                                   left: 5.0,
                                                   right: 5.0,
@@ -288,6 +309,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                       widget.onNumAmpSuccessChanged!(
                                                           widget.numAmpSuccess! -
                                                               1);
+                                                      widget.onNumAmpAttemptChanged!(
+                                                          widget.numAmpAttempt! -
+                                                              1);
                                                     });
                                                   },
                                                   onSetValue: (int value) {
@@ -319,6 +343,13 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                           widget.numAmpAttempt! -
                                                               1);
                                                     });
+
+                                                    if (widget.numAmpSuccess! >=
+                                                        widget.numAmpAttempt!) {
+                                                      widget.onNumAmpSuccessChanged!(
+                                                          widget.numAmpSuccess! -
+                                                              1);
+                                                    }
                                                   },
                                                   onSetValue: (int value) {
                                                     widget.onNumAmpAttemptChanged!(
@@ -341,8 +372,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                     bottomRight:
                                                         Radius.circular(10)),
                                               ),
-                                              margin: const EdgeInsets.only(
-                                                  left: 82,
+                                              margin: EdgeInsets.only(
+                                                  left: widget
+                                                      .styleMarginLeftSpeaker,
                                                   right: 0.0,
                                                   bottom: 5.0,
                                                   top: 15.0),
@@ -380,6 +412,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                       widget.onNumSpeakerSuccessChanged!(
                                                           widget.numSpeakerSuccess! -
                                                               1);
+                                                      widget.onNumSpeakerAttemptChanged!(
+                                                          widget.numSpeakerAttempt! -
+                                                              1);
                                                     });
                                                   },
                                                   onSetValue: (int value) {
@@ -412,6 +447,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                           widget.numSpeakerAttempt! -
                                                               1);
                                                     });
+
+                                                    if (widget
+                                                            .numSpeakerSuccess! >=
+                                                        widget
+                                                            .numSpeakerAttempt!) {
+                                                      widget.onNumSpeakerSuccessChanged!(
+                                                          widget.numSpeakerSuccess! -
+                                                              1);
+                                                    }
                                                   },
                                                   onSetValue: (int value) {
                                                     widget.onNumSpeakerAttemptChanged!(

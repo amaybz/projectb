@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
-
-import '../widgets/widget_counter.dart';
-import '../widgets/widget_row_heading.dart';
 
 class PitDriveBase extends StatefulWidget {
   PitDriveBase({
@@ -154,7 +150,8 @@ class _PitDriveBaseState extends State<PitDriveBase> {
                     controller: widget.txDriveNotes,
                     decoration: InputDecoration(
                         hintText: 'Notes on drive and control system',
-                        hintStyle: styleBodyTextTheme),
+                        hintStyle:
+                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
                   ),
                 ),
               ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_pitdata.dart';
-import 'package:projectb/widgets/widget_counter.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
 import '../widgets/widget_row_heading.dart';
@@ -221,7 +220,7 @@ class _PitClimbState extends State<PitClimb> {
                         widget.pitData.idStageClimbType = item as String?;
                         widget.onChanged!(widget.pitData);
                       });
-                      print("idChargeBalanceType: " +
+                      print("idStageClimbType: " +
                           widget.pitData.idStageClimbType!);
                     },
                   ),
@@ -258,9 +257,9 @@ class _PitClimbState extends State<PitClimb> {
                     child: TextField(
                       controller: widget.txChargeNotes,
                       decoration: InputDecoration(
-                        hintText: 'Climb Notes',
-                        hintStyle: styleBodyTextTheme,
-                      ),
+                          hintText: 'Climb Notes',
+                          hintStyle:
+                              styleBodyTextTheme?.copyWith(color: Colors.grey)),
                     ),
                   ),
                 ],

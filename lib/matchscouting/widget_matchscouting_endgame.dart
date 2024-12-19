@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
-import 'package:projectb/finishtab.dart';
-
-import '../widgets/widget_counter.dart';
 import '../widgets/widget_headingmain.dart';
 
 class EndGame extends StatefulWidget {
@@ -108,7 +105,7 @@ class _EndGameState extends State<EndGame> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text("Outcome:", style: styleBodyTextTheme),
+              Text("Climb Outcome:", style: styleBodyTextTheme),
               DropdownButton(
                 value: widget.matchScoutingData.teleIdStageOutcome == null
                     ? null
@@ -121,7 +118,7 @@ class _EndGameState extends State<EndGame> {
                         item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
-                  print("teleIdChargeOutcome: " +
+                  print("teleIdStageOutcome: " +
                       widget.matchScoutingData.teleIdStageOutcome!);
                 },
               ),

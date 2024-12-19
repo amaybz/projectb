@@ -31,6 +31,7 @@ class PitData {
   bool? flAuto;
   bool? flAutoLine;
   bool? flAutoScore;
+  String? txAutoNotes;
   int? numAutoScore;
   int? numAutoRings;
   String? idAutoScore;
@@ -73,6 +74,7 @@ class PitData {
     this.numAutoScore = 0,
     this.numAutoRings = 0,
     this.idAutoScore = "1",
+    this.txAutoNotes,
     this.txPitNotes,
     this.dtCreation,
     this.dtModified,
@@ -126,6 +128,7 @@ class PitData {
       'flAutoScore': flAutoScore.toString(),
       'numAutoScore': numAutoScore,
       'numAutoRings': numAutoRings,
+      'txAutoNotes': txAutoNotes,
       'idAutoScore': idAutoScore,
       'txPitNotes': txPitNotes,
       'dtCreation': dtCreation,
@@ -169,6 +172,7 @@ class PitData {
     this.numAutoScore = map['numAutoScore'];
     this.numAutoRings = map['numAutoRings'];
     this.idAutoScore = map['idAutoScore'];
+    this.txAutoNotes = map['txAutoNotes'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
@@ -220,7 +224,7 @@ class PitData {
     data['txScoringNotes'] = this.txScoringNotes;
     data['flStage'] = this.flStage;
     data['idStageClimbPos'] = this.idStageClimbPos;
-    data['idChargeBalanceType'] = this.idStageClimbType;
+    data['idStageClimbType'] = this.idStageClimbType;
     data['flStageAssist'] = this.flStageAssist;
     data['txStageNotes'] = this.txStageNotes;
     data['flAuto'] = this.flAuto;
@@ -229,6 +233,7 @@ class PitData {
     data['numAutoScore'] = this.numAutoScore;
     data['numAutoRings'] = this.numAutoRings;
     data['idAutoScore'] = this.idAutoScore;
+    data['txAutoNotes'] = this.txAutoNotes;
     data['txPitNotes'] = this.txPitNotes;
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
@@ -270,6 +275,7 @@ class PitData {
     this.numAutoScore = map['numAutoScore'];
     this.numAutoRings = map['numAutoRings'];
     this.idAutoScore = map['idAutoScore'];
+    this.txAutoNotes = map['txAutoNotes'];
     this.txPitNotes = map['txPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];

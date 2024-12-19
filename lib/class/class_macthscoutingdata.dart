@@ -22,6 +22,7 @@ class MatchScoutingData {
   bool? autoFlFail;
   int? autoNumAmpSuccess;
   int? autoNumTrapSuccess;
+  int? teleNumTrapAttempt;
   int? autoNumSpeakerSuccess;
   int? autoNumSpeakerAttempt;
   int? autoNumAmpAttempt;
@@ -78,11 +79,12 @@ class MatchScoutingData {
     this.autoNumAmpAttempt = 0,
     this.autoNumTrapAttempt = 0,
     this.teleFlPark = false,
-    this.teleIdStageOutcome,
-    this.teleIdStageClimbSpeed,
+    this.teleIdStageOutcome = "1",
+    this.teleIdStageClimbSpeed = "1",
     this.teleFlStageAssist = false,
     this.teleNumAmpSuccess = 0,
     this.teleNumTrapSuccess = 0,
+    this.teleNumTrapAttempt = 0,
     this.teleNumSpeakerSuccess = 0,
     this.teleNumSpeakerAttempt = 0,
     this.teleNumAmpAttempt = 0,
@@ -126,6 +128,7 @@ class MatchScoutingData {
       'autoFlFail': autoFlFail,
       'autoNumAmpSuccess': autoNumAmpSuccess,
       'autoNumTrapSuccess': autoNumTrapSuccess,
+      'teleNumTrapAttempt': teleNumTrapAttempt,
       'autoNumSpeakerSuccess': autoNumSpeakerSuccess,
       'autoNumTrapAttempt': autoNumTrapAttempt,
       'autoNumSpeakerAttempt': autoNumSpeakerAttempt,
@@ -180,6 +183,7 @@ class MatchScoutingData {
       'autoFlFail': autoFlFail,
       'autoNumAmpSuccess': autoNumAmpSuccess,
       'autoNumTrapSuccess': autoNumTrapSuccess,
+      'teleNumTrapAttempt': teleNumTrapAttempt,
       'autoNumSpeakerSuccess': autoNumSpeakerSuccess,
       'autoNumTrapAttempt': autoNumTrapAttempt,
       'autoNumSpeakerAttempt': autoNumSpeakerAttempt,
@@ -247,6 +251,7 @@ class MatchScoutingData {
         map['teleFlStageAssist'].toString().toLowerCase() == 'true';
     this.teleNumAmpSuccess = map['teleNumAmpSuccess'];
     this.teleNumTrapSuccess = map['teleNumTrapSuccess'];
+    this.teleNumTrapAttempt = map['teleNumTrapAttempt'];
     this.teleNumSpeakerSuccess = map['teleNumSpeakerSuccess'];
     this.teleNumSpeakerAttempt = map['teleNumSpeakerAttempt'];
     this.teleNumAmpAttempt = map['teleNumAmpAttempt'];
@@ -310,6 +315,7 @@ class MatchScoutingData {
         map['teleFlStageAssist'].toString().toLowerCase() == 'true';
     this.teleNumAmpSuccess = map['teleNumAmpSuccess'];
     this.teleNumTrapSuccess = map['teleNumTrapSuccess'];
+    this.teleNumTrapAttempt = map['teleNumTrapAttempt'];
     this.teleNumSpeakerSuccess = map['teleNumSpeakerSuccess'];
     this.teleNumSpeakerAttempt = map['teleNumSpeakerAttempt'];
     this.teleNumAmpAttempt = map['teleNumAmpAttempt'];
@@ -374,6 +380,7 @@ class MatchScoutingData {
         'teleFlStageAssist: $teleFlStageAssist,'
         'teleNumAmpSuccess: $teleNumAmpSuccess,'
         'teleNumTrapSuccess: $teleNumTrapSuccess,'
+        'teleNumTrapAttempt: $teleNumTrapAttempt,'
         'teleNumSpeakerSuccess: $teleNumSpeakerSuccess,'
         'teleNumSpeakerAttempt: $teleNumSpeakerAttempt,'
         'teleNumAmpAttempt: $teleNumAmpAttempt,'

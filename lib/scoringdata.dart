@@ -36,6 +36,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
   double styleQRSize = 320;
+  bool sort = false;
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
     // set up the buttons
@@ -68,6 +69,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     List<MatchScoutingData> list = await localDB.listScoringData();
     setState(() {
       dataList = list;
+      dataList?.sort((a, b) => b.id!.compareTo(a.id!));
     });
   }
 
@@ -75,7 +77,41 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     List<PitData> list = await localDB.listPitData();
     setState(() {
       listPitData = list;
+      listPitData?.sort((a, b) => b.id!.compareTo(a.id!));
     });
+  }
+
+  _sortList() {
+    if (_selectedTab == 0) {
+      if (sort == true) {
+        dataList?.sort((a, b) => b.id!.compareTo(a.id!));
+        setState(() {
+          dataList = dataList;
+          sort = false;
+        });
+      } else {
+        dataList?.sort((a, b) => a.id!.compareTo(b.id!));
+        setState(() {
+          dataList = dataList;
+          sort = true;
+        });
+      }
+    }
+    if (_selectedTab == 1) {
+      if (sort == true) {
+        listPitData?.sort((a, b) => b.id!.compareTo(a.id!));
+        setState(() {
+          listPitData = listPitData;
+          sort = false;
+        });
+      } else {
+        listPitData?.sort((a, b) => a.id!.compareTo(b.id!));
+        setState(() {
+          listPitData = listPitData;
+          sort = true;
+        });
+      }
+    }
   }
 
   _updateGoogleEmail() async {
@@ -221,13 +257,39 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   //style
   double styleFontSizeHeadings = 18;
 
+  TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
+  TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    if (width < 500) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyMedium;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
+      });
+    }
+    if (width < 393) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
+      });
+    }
+    if (width >= 600) {
+      setState(() {
+        styleBodyTextTheme = Theme.of(context).textTheme.bodyLarge;
+        styleTitleTextTheme = Theme.of(context).textTheme.titleLarge;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).splashColor,
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Saved Match Scouting'),
+        title: Text(
+          'Saved Match Scouting',
+          style: styleTitleTextTheme,
+        ),
       ),
       body: Column(children: <Widget>[
         FractionallySizedBox(
@@ -235,7 +297,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
           child: Container(
             margin: const EdgeInsets.all(15.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent),
+              //border: Border.all(color: Colors.blueAccent),
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -247,7 +309,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               children: [
                 Text(
                   "Google Account: " + googleEmail,
-                  style: TextStyle(fontSize: 14),
+                  style: styleBodyTextTheme,
                 ),
                 GoogleLoginButton(
                   googleLoginState: isSignedInToGoogle,
@@ -263,12 +325,23 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
             ),
           ),
         ),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          HeadingMain(
+            styleFontSize: styleTitleTextTheme!.fontSize!,
+            headingText: "Saved Records",
+            backGroundColor: Theme.of(context).primaryColor,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _sortList();
+            },
+            child: Image.asset(
+              'assets/imgs/sort.png',
+              scale: 20,
+            ),
+          ),
+        ]),
 
-        HeadingMain(
-          styleFontSize: styleFontSizeHeadings,
-          headingText: "Saved Records",
-          //backGroundColor: Colors.green,
-        ),
         _showTab(_selectedTab)
         //Expanded(
         //   child: _buildListViewMatchData(),
@@ -303,7 +376,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildListViewMatchData() {
     return ListView.builder(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(5.0),
         itemCount: dataList == null ? 0 : dataList!.length,
         itemBuilder: (context, index) {
           return _buildRowMatchData(dataList![index]);
@@ -312,7 +385,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildRowMatchData(MatchScoutingData item) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -320,8 +393,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               children: [
                 Text(
                   item.id.toString() + ". Match: " + item.numMatch.toString(),
+                  style: styleBodyTextTheme,
                 ),
-                Text("Team: " + item.idTeam.toString())
+                Text(
+                  "Team: " + item.idTeam.toString(),
+                  style: styleBodyTextTheme,
+                )
               ],
             ),
             Column(
@@ -333,8 +410,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue, // background
-                      onPrimary: Colors.white, // foreground
+                      backgroundColor:
+                          Theme.of(context).primaryColorDark, // background
+                      foregroundColor:
+                          Theme.of(context).splashColor, // foreground
                     ),
                     onPressed: () {
                       _showDialogMatchQRCode(context, item.id.toString());
@@ -346,8 +425,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue, // background
-                      onPrimary: Colors.white, // foreground
+                      backgroundColor:
+                          Theme.of(context).primaryColorDark, // background
+                      foregroundColor:
+                          Theme.of(context).splashColor, // foreground
                     ),
                     onPressed: () {
                       writeMatchFileAndUploadToGoogle(item);
@@ -359,8 +440,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 2.5),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red, // background
-                      onPrimary: Colors.white, // foreground
+                      backgroundColor: Colors.red, // background
+                      foregroundColor: Colors.white, // foreground
                     ),
                     onPressed: () {
                       deleteMatchRecord(context, item.id!);
@@ -395,8 +476,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.green, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.green, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -405,8 +486,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     );
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.red, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.red, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -437,7 +518,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildListViewPitData() {
     return ListView.builder(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(5.0),
         itemCount: listPitData == null ? 0 : listPitData!.length,
         itemBuilder: (context, index) {
           return _buildRowPitData(listPitData![index]);
@@ -446,7 +527,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildRowPitData(PitData item) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(10.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -454,8 +535,12 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
               children: [
                 Text(
                   item.id.toString() + ". PIT: " + item.idTeam.toString(),
+                  style: styleBodyTextTheme,
                 ),
-                Text("Scout: " + item.txScoutName!),
+                Text(
+                  "Scout: " + item.txScoutName!,
+                  style: styleBodyTextTheme,
+                ),
               ],
             ),
             Column(
@@ -470,8 +555,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blue, // background
-                            onPrimary: Colors.white, // foreground
+                            backgroundColor: Theme.of(context)
+                                .primaryColorDark, // background
+                            foregroundColor:
+                                Theme.of(context).splashColor, // foreground
                           ),
                           onPressed: () {
                             _showDialogPitQRCode(context, item.id.toString());
@@ -483,8 +570,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.blue, // background
-                            onPrimary: Colors.white, // foreground
+                            backgroundColor: Theme.of(context)
+                                .primaryColorDark, // background
+                            foregroundColor:
+                                Theme.of(context).splashColor, // foreground
                           ),
                           onPressed: () {
                             writePitFileAndUploadToGoogle(item);
@@ -496,8 +585,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 2.5),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.red, // background
-                            onPrimary: Colors.white, // foreground
+                            backgroundColor: Colors.red, // background
+                            foregroundColor: Colors.white, // foreground
                           ),
                           onPressed: () {
                             deletePitRecord(context, item.id!);
@@ -518,8 +607,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     // set up the buttons
     Widget cancelButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.green, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.green, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -528,8 +617,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     );
     Widget continueButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Colors.red, // background
-        onPrimary: Colors.white, // foreground
+        backgroundColor: Colors.red, // background
+        foregroundColor: Colors.white, // foreground
       ),
       onPressed: () {
         Navigator.of(context).pop();

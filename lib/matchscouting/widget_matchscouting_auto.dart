@@ -32,6 +32,7 @@ class MatchAuto extends StatefulWidget {
 class _MatchAutoState extends State<MatchAuto> {
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
+  bool flAutoSelected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +79,9 @@ class _MatchAutoState extends State<MatchAuto> {
               onChange: (bool value) {
                 setState(() {
                   widget.matchScoutingData.autoFlStart = value;
+                  flAutoSelected = value;
+                  widget.matchScoutingData.autoFlBaseLine = false;
+                  widget.matchScoutingData.autoNumCellLoad = 0;
                   widget.onChanged!(widget.matchScoutingData);
                 });
               },
@@ -92,10 +96,12 @@ class _MatchAutoState extends State<MatchAuto> {
                 Switch(
                   value: widget.matchScoutingData.autoFlBaseLine!,
                   onChanged: (bool value) {
-                    setState(() {
-                      widget.matchScoutingData.autoFlBaseLine = value;
-                      widget.onChanged!(widget.matchScoutingData);
-                    });
+                    if (flAutoSelected == true) {
+                      setState(() {
+                        widget.matchScoutingData.autoFlBaseLine = value;
+                        widget.onChanged!(widget.matchScoutingData);
+                      });
+                    }
                   },
                 ),
               ],
@@ -111,21 +117,25 @@ class _MatchAutoState extends State<MatchAuto> {
                 title: "",
                 value: widget.matchScoutingData.autoNumCellLoad,
                 onIncreaseStateChanged: (int value) {
-                  setState(() {
-                    widget.matchScoutingData.autoNumCellLoad =
-                        widget.matchScoutingData.autoNumCellLoad! + 1;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
+                  if (flAutoSelected == true) {
+                    setState(() {
+                      widget.matchScoutingData.autoNumCellLoad =
+                          widget.matchScoutingData.autoNumCellLoad! + 1;
+                      widget.onChanged!(widget.matchScoutingData);
+                    });
+                  }
                 },
                 onDecreaseStateChanged: (int value) {
-                  setState(() {
-                    widget.matchScoutingData.autoNumCellLoad =
-                        widget.matchScoutingData.autoNumCellLoad! - 1;
-                    if (widget.matchScoutingData.autoNumCellLoad! < 0) {
-                      widget.matchScoutingData.autoNumCellLoad = 0;
-                    }
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
+                  if (flAutoSelected == true) {
+                    setState(() {
+                      widget.matchScoutingData.autoNumCellLoad =
+                          widget.matchScoutingData.autoNumCellLoad! - 1;
+                      if (widget.matchScoutingData.autoNumCellLoad! < 0) {
+                        widget.matchScoutingData.autoNumCellLoad = 0;
+                      }
+                      widget.onChanged!(widget.matchScoutingData);
+                    });
+                  }
                 },
                 onSetValue: (int value) {
                   setState(() {

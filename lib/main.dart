@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis/cloudsearch/v1.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:projectb/class/eventmatches.dart';
 import 'package:projectb/localdb.dart';
@@ -16,7 +15,6 @@ import 'package:projectb/widgets/widget_loading.dart';
 import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
 import 'package:projectb/barcodeScanner.dart';
-import 'package:projectb/widgets/widget_row_heading.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -28,7 +26,7 @@ Future<void> main() async {
   try {
     cameras = await availableCameras();
   } on CameraException catch (e) {
-    print("no cameras");
+    print("no cameras" + e.toString());
   }
   final firstCamera = cameras?.first;
   runApp(MyApp(camera: firstCamera));
@@ -78,6 +76,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
     brightness: Brightness.dark,
     primaryColor: Color(0xFF6200EE),
     splashColor: Colors.white,
+    primaryColorDark: Color(0xFF47247A),
     textTheme: ThemeData.dark().textTheme.copyWith(
           titleLarge:
               TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
@@ -175,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedYear = "setme";
   final List<String> _locations = [
     'Australia',
+    'Brazil',
     'Canada',
     'China',
     'Chinese Taipei',
@@ -274,8 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void refreshLocalTeamsCount() async {
     List<LocalTeam> listSelectedLocalTeams = await localDB.listLocalTeams();
     setState(() {
-      _countOfTeams =
-          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      _countOfTeams = listSelectedLocalTeams.length;
     });
   }
 
@@ -289,8 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedLocalEvent = listSelectedLocalEvents.length > 0
           ? listSelectedLocalEvents.first
           : null;
-      _countOfTeams =
-          listSelectedLocalTeams != null ? listSelectedLocalTeams.length : 0;
+      _countOfTeams = listSelectedLocalTeams.length;
       //locationDropDown = selectedLocalEvent?.location;
     });
     //print("LocalEvent: " + selectedLocalEvent.key);
@@ -349,15 +347,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getDeviceName() async {
     DeviceName deviceName = await localDB.getDeviceName();
-    if (deviceName == null) {
-      setState(() {
-        _txtDeviceName.text = "";
-      });
-    } else {
-      setState(() {
-        _txtDeviceName.text = deviceName.name!;
-      });
-    }
+
+    setState(() {
+      _txtDeviceName.text = deviceName.name!;
+    });
   }
 
   Future<void> updateEventsFromAPI(String year) async {
@@ -879,7 +872,7 @@ class _MyHomePageState extends State<MyHomePage> {
         : selectedLocalEvent!.shortName;
     var eventKey =
         (selectedLocalEvent == null) ? "NA" : selectedLocalEvent!.key;
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
@@ -902,7 +895,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       eventName = selectedLocalEvent!.name!;
     }
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
@@ -929,7 +922,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       eventName = selectedLocalEvent!.name!;
     }
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => PitScoutingScreen(
@@ -974,7 +967,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     //List<LocalTeam> teams = await localDB.listLocalTeams();
-    final result = await Navigator.push(
+    await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(builder: (context) => AddTeam()),

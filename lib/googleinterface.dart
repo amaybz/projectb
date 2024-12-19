@@ -17,9 +17,11 @@ class GoogleInterface {
 
   // Make this a singleton class.
   GoogleInterface._privateConstructor();
+
   static final GoogleInterface instance = GoogleInterface._privateConstructor();
 
   static signIn.GoogleSignInAccount? _account;
+
   Future<signIn.GoogleSignInAccount?> get account async {
     if (_account != null) return _account;
     _account = await googleSignIn.signIn();
@@ -28,6 +30,7 @@ class GoogleInterface {
   }
 
   static drive.DriveApi? _driveApi;
+
   Future<drive.DriveApi?>? get driveApi async {
     //if (_driveApi != null) return _driveApi;
     final signIn.GoogleSignInAccount? googleAccount = await account;
@@ -116,7 +119,8 @@ class GoogleInterface {
     if (fileExists == true) {
       await uploadFile(
           pitData.imgTeamUniform!,
-          "PIT_TeamUniform" +
+          pitData.idTeam.toString() +
+              " PIT_TeamUniform" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
@@ -129,7 +133,8 @@ class GoogleInterface {
     if (fileExists == true) {
       await uploadFile(
           pitData.imgRobotSide!,
-          "PIT_RobotSide" +
+          pitData.idTeam.toString() +
+              " PIT_RobotSide" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");
@@ -143,7 +148,8 @@ class GoogleInterface {
     if (fileExists == true) {
       await uploadFile(
           pitData.imgRobotFront!,
-          "PIT_RobotFront" +
+          pitData.idTeam.toString() +
+              " PIT_RobotFront" +
               pitData.idTeam.toString() +
               DateTime.now().toString(),
           "jpg");

@@ -5,6 +5,7 @@ class UploadedImg extends StatefulWidget {
 
   final bool state;
   final String? text;
+
   @override
   _UploadedImgState createState() => _UploadedImgState();
 }
@@ -13,17 +14,25 @@ class _UploadedImgState extends State<UploadedImg> {
   @override
   Widget build(BuildContext context) {
     if (widget.state == false) {
-      return Container();
+      return Container(
+        child: Image.asset(
+          'assets/imgs/upload.png',
+          scale: 2,
+        ),
+      );
     } else if (widget.state == true) {
       return Container(
         child: Image.asset(
           'assets/imgs/UploadComplete.png',
-          scale: 20,
+          scale: 21,
         ),
       );
     } else {
       return Container(
-        child: Text(widget.text!),
+        child: Image.asset(
+          'assets/imgs/upload.png',
+          scale: 2,
+        ),
       );
     }
   }

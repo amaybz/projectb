@@ -111,62 +111,140 @@ class _PitScoringState extends State<PitScoring> {
               //backGroundColor: Colors.green,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Score in Amp:",
-                  style: styleBodyTextTheme,
-                ),
-                Switch(
-                  value: widget.pitData.flScoreAmp!,
-                  onChanged: (bool value) {
-                    setState(() {
-                      widget.pitData.flScoreAmp = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Speaker Scored From::",
-                  style: styleBodyTextTheme,
-                ),
-                DropdownButton(
-                  value: widget.pitData.idScoreSpeaker == null
-                      ? null
-                      : widget.pitData.idScoreSpeaker,
-                  items: listNodeType,
-                  onChanged: (item) {
-                    setState(() {
-                      widget.pitData.idScoreSpeaker = item as String?;
-                      widget.onChanged(widget.pitData);
-                    });
-                    print("idScoreSpeaker: " + widget.pitData.idScoreSpeaker!);
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Score in Trap:",
-                  style: styleBodyTextTheme,
-                ),
-                Switch(
-                  value: widget.pitData.flScoreTrap!,
-                  onChanged: (bool value) {
-                    setState(() {
-                      widget.pitData.flScoreTrap = value;
-                    });
-                  },
-                ),
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        HeadingMain(
+                          styleFontSize: styleTitleTextTheme!.fontSize!,
+                          textColor:
+                              Theme.of(context).textTheme.titleLarge!.color!,
+                          backGroundColor:
+                              Theme.of(context).dialogBackgroundColor,
+                          headingText: "Coral",
+                          //backGroundColor: Colors.green,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "L1:",
+                              style: styleBodyTextTheme,
+                            ),
+                            Switch(
+                              value: widget.pitData.flScoreCoralL1!,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  widget.pitData.flScoreCoralL1 = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "L2:",
+                              style: styleBodyTextTheme,
+                            ),
+                            Switch(
+                              value: widget.pitData.flScoreCoralL2!,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  widget.pitData.flScoreCoralL2 = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "L3:",
+                              style: styleBodyTextTheme,
+                            ),
+                            Switch(
+                              value: widget.pitData.flScoreCoralL3!,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  widget.pitData.flScoreCoralL3 = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "L4:",
+                              style: styleBodyTextTheme,
+                            ),
+                            Switch(
+                              value: widget.pitData.flScoreCoralL4!,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  widget.pitData.flScoreCoralL4 = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ]),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: <Widget>[
+                        HeadingMain(
+                          styleFontSize: styleTitleTextTheme!.fontSize!,
+                          textColor:
+                              Theme.of(context).textTheme.titleLarge!.color!,
+                          backGroundColor:
+                              Theme.of(context).dialogBackgroundColor,
+                          headingText: "Algae",
+                          //backGroundColor: Colors.green,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Barge:",
+                              style: styleBodyTextTheme,
+                            ),
+                            Switch(
+                              value: widget.pitData.flScoreAlgaeBarge!,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  widget.pitData.flScoreAlgaeBarge = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Processor:",
+                              style: styleBodyTextTheme,
+                            ),
+                            Switch(
+                              value: widget.pitData.flScoreAlgaeProcess!,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  widget.pitData.flScoreAlgaeProcess = value;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ]),
+                ]),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,

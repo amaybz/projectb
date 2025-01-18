@@ -173,14 +173,14 @@ class _PitAutoState extends State<PitAuto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Score:",
+                    "Score Coral:",
                     style: styleBodyTextTheme,
                   ),
                   Switch(
-                    value: widget.pitData.flAutoScore!,
+                    value: widget.pitData.flAutoScoreCoral!,
                     onChanged: (bool value) {
                       setState(() {
-                        widget.pitData.flAutoScore = value;
+                        widget.pitData.flAutoScoreCoral = value;
                         widget.onChanged!(widget.pitData);
                       });
                     },
@@ -189,90 +189,33 @@ class _PitAutoState extends State<PitAuto> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
-                  "#Notes Scored:",
+                  "#Coral L1:",
                   style: styleBodyTextTheme,
                 ),
                 CounterWidget(
                   title: "",
                   styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScore,
+                  value: widget.pitData.numAutoScoreCoralL1,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numAutoScore =
-                          widget.pitData.numAutoScore! + 1;
+                      widget.pitData.numAutoScoreCoralL1 =
+                          widget.pitData.numAutoScoreCoralL1! + 1;
                       widget.onChanged!(widget.pitData);
                     });
                   },
                   onDecreaseStateChanged: (int value) {
                     setState(() {
-                      widget.pitData.numAutoScore =
-                          widget.pitData.numAutoScore! - 1;
-                      if (widget.pitData.numAutoScore! < 0) {
-                        widget.pitData.numAutoScore = 0;
+                      widget.pitData.numAutoScoreCoralL1 =
+                          widget.pitData.numAutoScoreCoralL1! - 1;
+                      if (widget.pitData.numAutoScoreCoralL1! < 0) {
+                        widget.pitData.numAutoScoreCoralL1 = 0;
                       }
                       widget.onChanged!(widget.pitData);
                     });
                   },
                   onSetValue: (int value) {
                     setState(() {
-                      widget.pitData.numAutoScore = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Score Locations:",
-                    style: styleBodyTextTheme,
-                  ),
-                  DropdownButton(
-                    value: widget.pitData.idAutoScore == null
-                        ? null
-                        : widget.pitData.idAutoScore,
-                    items: listAutoScore,
-                    onChanged: (item) {
-                      setState(() {
-                        widget.pitData.idAutoScore = item as String?;
-                        widget.onChanged!(widget.pitData);
-                      });
-                      print("idAutoScore: " + widget.pitData.idAutoScore!);
-                    },
-                  ),
-                ],
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Extra Notes:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoRings,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoRings =
-                          widget.pitData.numAutoRings! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoRings =
-                          widget.pitData.numAutoRings! - 1;
-                      if (widget.pitData.numAutoRings! < 0) {
-                        widget.pitData.numAutoRings = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoRings = value;
+                      widget.pitData.numAutoScoreCoralL1 = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },

@@ -12,7 +12,7 @@ class PitClimb extends StatefulWidget {
     this.styleFontSizeHeadings = 18,
     this.styleFieldTxShootingMaxWidth = 300,
     this.onChanged,
-    this.txChargeNotes,
+    this.txNotes,
     this.onExpanded,
   }) : super(key: key);
 
@@ -21,7 +21,7 @@ class PitClimb extends StatefulWidget {
   final double styleFontSizeHeadings;
   final double styleFieldTxShootingMaxWidth;
   final ValueChanged<PitData>? onChanged;
-  final TextEditingController? txChargeNotes;
+  final TextEditingController? txNotes;
   final ValueChanged<bool>? onExpanded;
 
   @override
@@ -73,13 +73,13 @@ class _PitClimbState extends State<PitClimb> {
       DropdownMenuItem(
           value: "2",
           child: Text(
-            "Middle",
+            "Shallow",
             style: textStyle,
           )),
       DropdownMenuItem(
           value: "3",
           child: Text(
-            "High",
+            "Deep",
             style: textStyle,
           )),
       DropdownMenuItem(
@@ -131,12 +131,12 @@ class _PitClimbState extends State<PitClimb> {
                 styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Stage",
+                headingText: "Climb",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Climb Stage:",
+                text: "Climb?:",
                 value: widget.pitData.flClimb,
                 onChange: (bool value) {
                   setState(() {
@@ -162,12 +162,12 @@ class _PitClimbState extends State<PitClimb> {
                 styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Stage",
+                headingText: "Climb",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: styleBodyTextTheme!.fontSize!,
-                text: "Climb Stage:",
+                text: "Climb?:",
                 value: widget.pitData.flClimb,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
@@ -213,7 +213,7 @@ class _PitClimbState extends State<PitClimb> {
                     constraints: BoxConstraints(
                         maxWidth: widget.styleFieldTxShootingMaxWidth),
                     child: TextField(
-                      controller: widget.txChargeNotes,
+                      controller: widget.txNotes,
                       decoration: InputDecoration(
                           hintText: 'Climb Notes',
                           hintStyle:

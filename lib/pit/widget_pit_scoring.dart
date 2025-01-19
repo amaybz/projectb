@@ -111,139 +111,148 @@ class _PitScoringState extends State<PitScoring> {
               //backGroundColor: Colors.green,
             ),
             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        HeadingMain(
-                          styleFontSize: styleTitleTextTheme!.fontSize!,
-                          textColor:
-                              Theme.of(context).textTheme.titleLarge!.color!,
-                          backGroundColor:
-                              Theme.of(context).dialogBackgroundColor,
-                          headingText: "Coral",
-                          //backGroundColor: Colors.green,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "L1:",
-                              style: styleBodyTextTheme,
-                            ),
-                            Switch(
-                              value: widget.pitData.flScoreCoralL1!,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.pitData.flScoreCoralL1 = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "L2:",
-                              style: styleBodyTextTheme,
-                            ),
-                            Switch(
-                              value: widget.pitData.flScoreCoralL2!,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.pitData.flScoreCoralL2 = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "L3:",
-                              style: styleBodyTextTheme,
-                            ),
-                            Switch(
-                              value: widget.pitData.flScoreCoralL3!,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.pitData.flScoreCoralL3 = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "L4:",
-                              style: styleBodyTextTheme,
-                            ),
-                            Switch(
-                              value: widget.pitData.flScoreCoralL4!,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.pitData.flScoreCoralL4 = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ]),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        HeadingMain(
-                          styleFontSize: styleTitleTextTheme!.fontSize!,
-                          textColor:
-                              Theme.of(context).textTheme.titleLarge!.color!,
-                          backGroundColor:
-                              Theme.of(context).dialogBackgroundColor,
-                          headingText: "Algae",
-                          //backGroundColor: Colors.green,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Barge:",
-                              style: styleBodyTextTheme,
-                            ),
-                            Switch(
-                              value: widget.pitData.flScoreAlgaeBarge!,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.pitData.flScoreAlgaeBarge = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Processor:",
-                              style: styleBodyTextTheme,
-                            ),
-                            Switch(
-                              value: widget.pitData.flScoreAlgaeProcess!,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  widget.pitData.flScoreAlgaeProcess = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ]),
+                  Expanded(flex: 1, child: Column()),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          HeadingMain(
+                            styleFontSize: styleTitleTextTheme!.fontSize!,
+                            textColor:
+                                Theme.of(context).textTheme.labelLarge!.color!,
+                            backGroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            headingText: "Coral",
+                            //backGroundColor: Colors.green,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "L1:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flScoreCoralL1!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flScoreCoralL1 = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "L2:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flScoreCoralL2!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flScoreCoralL2 = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "L3:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flScoreCoralL3!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flScoreCoralL3 = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "L4:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flScoreCoralL4!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flScoreCoralL4 = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ]),
+                  ),
+                  Expanded(flex: 1, child: Column()),
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          HeadingMain(
+                            styleFontSize: styleTitleTextTheme!.fontSize!,
+                            textColor:
+                                Theme.of(context).textTheme.labelLarge!.color!,
+                            backGroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            headingText: "Algae",
+                            //backGroundColor: Colors.green,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Barge:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flScoreAlgaeBarge!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flScoreAlgaeBarge = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Processor:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flScoreAlgaeProcess!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flScoreAlgaeProcess = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ]),
+                  ),
+                  Expanded(flex: 1, child: Column()),
                 ]),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

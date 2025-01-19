@@ -221,6 +221,262 @@ class _PitAutoState extends State<PitAuto> {
                   },
                 ),
               ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Coral L2:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreCoralL2,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL2 =
+                          widget.pitData.numAutoScoreCoralL2! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL2 =
+                          widget.pitData.numAutoScoreCoralL2! - 1;
+                      if (widget.pitData.numAutoScoreCoralL2! < 0) {
+                        widget.pitData.numAutoScoreCoralL2 = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL2 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Coral L3:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreCoralL3,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL3 =
+                          widget.pitData.numAutoScoreCoralL3! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL3 =
+                          widget.pitData.numAutoScoreCoralL3! - 1;
+                      if (widget.pitData.numAutoScoreCoralL3! < 0) {
+                        widget.pitData.numAutoScoreCoralL3 = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL3 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Coral L4:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreCoralL4,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL4 =
+                          widget.pitData.numAutoScoreCoralL4! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL4 =
+                          widget.pitData.numAutoScoreCoralL4! - 1;
+                      if (widget.pitData.numAutoScoreCoralL4! < 0) {
+                        widget.pitData.numAutoScoreCoralL4 = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL4 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Score Algae:",
+                    style: styleBodyTextTheme,
+                  ),
+                  Switch(
+                    value: widget.pitData.flAutoScoreAlgae!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.flAutoScoreAlgae = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Remove L2:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreAlgaeL2,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeL2 =
+                          widget.pitData.numAutoScoreAlgaeL2! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeL2 =
+                          widget.pitData.numAutoScoreAlgaeL2! - 1;
+                      if (widget.pitData.numAutoScoreAlgaeL2! < 0) {
+                        widget.pitData.numAutoScoreAlgaeL2 = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeL2 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Remove L3:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreAlgaeL3,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeL3 =
+                          widget.pitData.numAutoScoreAlgaeL3! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeL3 =
+                          widget.pitData.numAutoScoreAlgaeL3! - 1;
+                      if (widget.pitData.numAutoScoreAlgaeL3! < 0) {
+                        widget.pitData.numAutoScoreAlgaeL3 = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeL3 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Ground:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreAlgaeGround,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeGround =
+                          widget.pitData.numAutoScoreAlgaeGround! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeGround =
+                          widget.pitData.numAutoScoreAlgaeGround! - 1;
+                      if (widget.pitData.numAutoScoreAlgaeGround! < 0) {
+                        widget.pitData.numAutoScoreAlgaeGround = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL3 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Barge:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreAlgaeBarge,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeBarge =
+                          widget.pitData.numAutoScoreAlgaeBarge! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeBarge =
+                          widget.pitData.numAutoScoreAlgaeBarge! - 1;
+                      if (widget.pitData.numAutoScoreAlgaeBarge! < 0) {
+                        widget.pitData.numAutoScoreAlgaeBarge = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreCoralL4 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

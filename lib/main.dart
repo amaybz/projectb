@@ -488,7 +488,6 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
 
-
     if (eventsList.length == 0) {
       txtEventHelpText = "No Events for this location!";
     } else {
@@ -814,11 +813,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           child: DropdownButton<String>(
                             isExpanded: true,
-
-
                             hint: Text(txtEventHelpText,
                                 style: styleBodyTextTheme),
-
                             value: selectedEvent == null
                                 ? null
                                 : selectedEvent!.key,
@@ -907,7 +903,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
               eventName: eventName,
-              eventKey: selectedLocalEvent!.key,
+              eventKey: selectedLocalEvent?.key,
               eventTeams: teams,
               deviceName: _txtDeviceName.text,
               styleFontSize: this.styleFontSize,

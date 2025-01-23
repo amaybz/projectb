@@ -7,6 +7,7 @@ class PitData {
   int? idTeam;
   int? numWeight;
   int? numHeight;
+  int? numWidth;
   File? imgTeamUniform;
   File? imgRobotFront;
   File? imgRobotSide;
@@ -55,6 +56,7 @@ class PitData {
     this.idTeam = 0,
     this.numWeight = 0,
     this.numHeight = 0,
+    this.numWidth = 0,
     this.imgTeamUniform,
     this.imgRobotFront,
     this.imgRobotSide,
@@ -118,6 +120,7 @@ class PitData {
       'idTeam': idTeam,
       'numWeight': numWeight,
       'numHeight': numHeight,
+      'numWidth': numWidth,
       'imgTeamUniform': fileImgTeamUniform,
       'imgRobotFront': fileRobotFront,
       'imgRobotSide': fileImgRobotSide,
@@ -168,6 +171,7 @@ class PitData {
     this.idTeam = map['idTeam'];
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
+    this.numWidth = map['numWidth'];
     //this.imgTeamUniform = map['imgTeamUniform'];
     //this.imgRobotFront = map['imgRobotFront'];
     //this.imgRobotSide = map['imgRobotSide'];
@@ -252,6 +256,7 @@ class PitData {
     data['idTeam'] = this.idTeam;
     data['numWeight'] = this.numWeight;
     data['numHeight'] = this.numHeight;
+    data['numWidth'] = this.numWidth;
     data['imgTeamUniform'] = fileImgTeamUniform;
     data['imgRobotFront'] = fileImgRobotFront;
     data['imgRobotSide'] = fileImgRobotSide;
@@ -302,6 +307,7 @@ class PitData {
     this.idTeam = map['idTeam'];
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
+    this.numWidth = map['numWidth'];
     //this.imgTeamUniform = map['imgTeamUniform'];
     //this.imgRobotFront = map['imgRobotFront'];
     //this.imgRobotSide = map['imgRobotSide'];

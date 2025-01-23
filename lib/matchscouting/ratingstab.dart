@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
+
+import '../localdb.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab(
@@ -9,7 +12,11 @@ class RatingsTab extends StatefulWidget {
       required this.styleFontSize,
       required this.styleFontSizeHeadings,
       required this.matchScoutingData,
+      this.styleCounterButtonHeight = 25,
+      this.styleCounterButtonWidth = 30,
       this.onCommentsChanged,
+      required this.eventTeamsListDropDown,
+      required this.eventTeams,
       required this.onChange})
       : super(key: key);
 
@@ -18,6 +25,10 @@ class RatingsTab extends StatefulWidget {
   final MatchScoutingData matchScoutingData;
   final ValueChanged<String>? onCommentsChanged;
   final ValueChanged<MatchScoutingData>? onChange;
+  final double styleCounterButtonHeight;
+  final double styleCounterButtonWidth;
+  final List<DropdownMenuItem<String>> eventTeamsListDropDown;
+  final List<LocalTeam>? eventTeams;
 
   @override
   _RatingsTabState createState() => _RatingsTabState();
@@ -38,6 +49,14 @@ class _RatingsTabState extends State<RatingsTab> {
     DropDownValue(id: "2", value: "Weak"),
     DropDownValue(id: "3", value: "Harassment"),
     DropDownValue(id: "4", value: "Game Changing"),
+  ];
+
+  final List<DropDownValue> listDefenceType = [
+    DropDownValue(id: "1", value: "N/A"),
+    DropDownValue(id: "2", value: "Block Station"),
+    DropDownValue(id: "3", value: "Block Scoring"),
+    DropDownValue(id: "4", value: "Mobile"),
+    DropDownValue(id: "5", value: "All"),
   ];
 
   final List<DropDownValue> listTraction = [
@@ -99,6 +118,18 @@ class _RatingsTabState extends State<RatingsTab> {
             child: Container(
               padding: EdgeInsets.all(5.0),
               child: Column(children: <Widget>[
+                HumanWidget(
+                  matchScoutingData: widget.matchScoutingData,
+                  styleCounterButtonHeight: widget.styleCounterButtonHeight,
+                  styleCounterButtonWidth: widget.styleCounterButtonWidth,
+                  eventTeams: widget.eventTeams,
+                  eventTeamsListDropDown: widget.eventTeamsListDropDown,
+                  onChange: (matchScoutingData) {
+                    setState(() {
+                      widget.onChange!(matchScoutingData);
+                    });
+                  },
+                ),
                 HeadingMain(
                   styleFontSize: styleTitleTextTheme!.fontSize!,
                   textColor: Theme.of(context).textTheme.titleLarge!.color!,
@@ -127,6 +158,12 @@ class _RatingsTabState extends State<RatingsTab> {
                     ),
                   ],
                 ),
+                HeadingMain(
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
+                  headingText: "Defence",
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -143,6 +180,28 @@ class _RatingsTabState extends State<RatingsTab> {
                           () {
                             widget.matchScoutingData.commIdDefenceRating =
                                 value;
+                            widget.onChange!(widget.matchScoutingData);
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Defence Type:",
+                      style: styleBodyTextTheme,
+                    ),
+                    DropDownIndexedWidget(
+                      value: widget.matchScoutingData.commIdDefenceType,
+                      title: null,
+                      dropDownValues: listDefenceType,
+                      onStateChanged: (String value) {
+                        setState(
+                          () {
+                            widget.matchScoutingData.commIdDefenceType = value;
                             widget.onChange!(widget.matchScoutingData);
                           },
                         );
@@ -178,25 +237,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Assisted Robots:",
-                      style: styleBodyTextTheme,
-                    ),
-                    Switch(
-                      value: widget.matchScoutingData.commFlAssist!,
-                      onChanged: (bool value) {
-                        setState(() {
-                          widget.matchScoutingData.commFlAssist = value;
-                          widget.onChange!(widget.matchScoutingData);
-                        });
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Shuttle Rings:",
+                      "Shuttle:",
                       style: styleBodyTextTheme,
                     ),
                     Switch(
@@ -214,7 +255,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Recovered:",
+                      "Crash Recovery:",
                       style: styleBodyTextTheme,
                     ),
                     Switch(
@@ -329,14 +370,15 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Intake from Ground:",
+                      "Intake Coral from Ground:",
                       style: styleBodyTextTheme,
                     ),
                     Switch(
-                      value: widget.matchScoutingData.commFlIntakeGround!,
+                      value: widget.matchScoutingData.commFlIntakeGroundCoral!,
                       onChanged: (bool value) {
                         setState(() {
-                          widget.matchScoutingData.commFlIntakeGround = value;
+                          widget.matchScoutingData.commFlIntakeGroundCoral =
+                              value;
                           widget.onChange!(widget.matchScoutingData);
                         });
                       },
@@ -347,7 +389,7 @@ class _RatingsTabState extends State<RatingsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Intake from Chute:",
+                      "Intake from Station:",
                       style: styleBodyTextTheme,
                     ),
                     Switch(
@@ -355,6 +397,25 @@ class _RatingsTabState extends State<RatingsTab> {
                       onChanged: (bool value) {
                         setState(() {
                           widget.matchScoutingData.commFlIntakeStation = value;
+                          widget.onChange!(widget.matchScoutingData);
+                        });
+                      },
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Intake Algae from Ground:",
+                      style: styleBodyTextTheme,
+                    ),
+                    Switch(
+                      value: widget.matchScoutingData.commFlIntakeGroundAlgae!,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.matchScoutingData.commFlIntakeGroundAlgae =
+                              value;
                           widget.onChange!(widget.matchScoutingData);
                         });
                       },

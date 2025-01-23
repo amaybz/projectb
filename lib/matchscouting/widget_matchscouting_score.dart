@@ -8,25 +8,31 @@ class ScoreWidget extends StatefulWidget {
   const ScoreWidget({
     Key? key,
     required this.matchScoutingData,
-    this.numAmpAttempt,
-    this.numAmpSuccess,
-    this.numTrapSuccess,
-    this.numTrapAttempt,
-    this.numLowConeSuccess,
-    this.numSpeakerSuccess,
-    this.numMidCubeSuccess,
-    this.numLowCubeSuccess,
-    this.numSpeakerAttempt,
+    this.numCoralAttempt,
+    this.numCoralL1Success,
+    this.numCoralL4Success,
+    this.numCoralL2Success,
+    this.numCoralL3Success,
+    this.numAlgaeAttempt,
+    this.numAlgaeL2Success,
+    this.numAlgaeL3Success,
+    this.numAlgaeNetAttempt,
+    this.numAlgaeNetSuccess,
+    this.numAlgaeProcessAttempt,
+    this.numAlgaeProcessSuccess,
     //onchange
-    this.onNumSpeakerSuccessChanged,
-    this.onNumMidCubeSuccessChanged,
-    this.onNumLowCubeSuccessChanged,
-    this.onNumAmpAttemptChanged,
-    this.onNumAmpSuccessChanged,
-    this.onNumTrapSuccessChanged,
-    this.onNumTrapAttemptChanged,
-    this.onNumLowConeSuccessChanged,
-    this.onNumSpeakerAttemptChanged,
+    this.onNumAlgaeL2Success,
+    this.onNumAlgaeL3Success,
+    this.onNumCoralAttempt,
+    this.onNumCoralL2Success,
+    this.onNumCoralL3Success,
+    this.onNumCoralL4Success,
+    this.onNumAlgaeAttempt,
+    this.onNumCoralL1Success,
+    this.onNumAlgaeNetAttempt,
+    this.onNumAlgaeNetSuccess,
+    this.onNumAlgaeProcessAttempt,
+    this.onNumAlgaeProcessSuccess,
     this.onChange,
     //style
     this.styleFontSizeBody = 16,
@@ -40,24 +46,30 @@ class ScoreWidget extends StatefulWidget {
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
-  final int? numAmpAttempt;
-  final int? numAmpSuccess;
-  final int? numSpeakerAttempt;
-  final int? numLowConeSuccess;
-  final int? numTrapSuccess;
-  final int? numTrapAttempt;
-  final int? numSpeakerSuccess;
-  final int? numMidCubeSuccess;
-  final int? numLowCubeSuccess;
-  final ValueChanged<int>? onNumAmpAttemptChanged;
-  final ValueChanged<int>? onNumSpeakerAttemptChanged;
-  final ValueChanged<int>? onNumAmpSuccessChanged;
-  final ValueChanged<int>? onNumTrapSuccessChanged;
-  final ValueChanged<int>? onNumTrapAttemptChanged;
-  final ValueChanged<int>? onNumLowConeSuccessChanged;
-  final ValueChanged<int>? onNumSpeakerSuccessChanged;
-  final ValueChanged<int>? onNumMidCubeSuccessChanged;
-  final ValueChanged<int>? onNumLowCubeSuccessChanged;
+  final int? numCoralAttempt;
+  final int? numCoralL1Success;
+  final int? numCoralL2Success;
+  final int? numCoralL3Success;
+  final int? numCoralL4Success;
+  final int? numAlgaeAttempt;
+  final int? numAlgaeL2Success;
+  final int? numAlgaeL3Success;
+  final int? numAlgaeNetAttempt;
+  final int? numAlgaeNetSuccess;
+  final int? numAlgaeProcessAttempt;
+  final int? numAlgaeProcessSuccess;
+  final ValueChanged<int>? onNumCoralAttempt;
+  final ValueChanged<int>? onNumCoralL1Success;
+  final ValueChanged<int>? onNumCoralL2Success;
+  final ValueChanged<int>? onNumCoralL3Success;
+  final ValueChanged<int>? onNumCoralL4Success;
+  final ValueChanged<int>? onNumAlgaeAttempt;
+  final ValueChanged<int>? onNumAlgaeL2Success;
+  final ValueChanged<int>? onNumAlgaeL3Success;
+  final ValueChanged<int>? onNumAlgaeNetAttempt;
+  final ValueChanged<int>? onNumAlgaeNetSuccess;
+  final ValueChanged<int>? onNumAlgaeProcessAttempt;
+  final ValueChanged<int>? onNumAlgaeProcessSuccess;
 
   final ValueChanged<MatchScoutingData>? onChange;
   final double styleFontSizeBody;
@@ -122,354 +134,491 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                   topRight: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10)),
-              image: DecorationImage(
-                image: AssetImage("assets/imgs/ScoringLocations.png"),
-                fit: BoxFit.scaleDown,
-              ),
             ),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(children: <Widget>[
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 1, right: 5.0, bottom: 1.0, top: 5.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                            ),
+                            child: SizedBox(
+                              width: 215,
+                              height: 400,
+                              child: Image.asset(
+                                "assets/imgs/ScoringLocations.png",
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                        ]),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
                           Row(children: <Widget>[
-                            Column(children: [
-                              SizedBox(
-                                height: 580,
-                              )
-                            ]),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.8),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        left: 0,
+                                        right: 0.0,
+                                        bottom: 0.0,
+                                        top: 5.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 5.0,
+                                        right: 5.0,
+                                        top: 5.0,
+                                        bottom: 0.0),
+                                    child: Column(children: [
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numCoralAttempt,
+                                        title: "Coral",
+                                        title1: "Attempts",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumCoralAttempt!(value);
+                                        },
+                                      ),
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numCoralL4Success,
+                                        title: "L4",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumCoralL4Success!(
+                                                widget.numCoralL4Success! + 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumCoralL4Success!(
+                                                widget.numCoralL4Success! - 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumCoralL4Success!(value);
+                                        },
+                                      ),
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numCoralL3Success,
+                                        title: "L3",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumCoralL3Success!(
+                                                widget.numCoralL3Success! + 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumCoralL3Success!(
+                                                widget.numCoralL3Success! - 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumCoralL3Success!(value);
+                                        },
+                                      ),
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numCoralL2Success,
+                                        title: "L2",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumCoralL2Success!(
+                                                widget.numCoralL2Success! + 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumCoralL2Success!(
+                                                widget.numCoralL2Success! - 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumCoralL2Success!(value);
+                                        },
+                                      ),
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numCoralL1Success,
+                                        title: "L1",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumCoralL1Success!(
+                                                widget.numCoralL1Success! + 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumCoralL1Success!(
+                                                widget.numCoralL1Success! - 1);
+                                            widget.onNumCoralAttempt!(
+                                                widget.numCoralAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumCoralL1Success!(value);
+                                        },
+                                      ),
+                                    ]),
+                                  ),
+                                ]),
                           ]),
                         ]),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 210.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.withOpacity(0.8),
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                              bottomRight: Radius.circular(10)),
-                                        ),
-                                        margin: EdgeInsets.only(
-                                            left: widget.styleMarginLeftTrap,
-                                            right: 0.0,
-                                            bottom: 5.0,
-                                            top: 2.0),
-                                        padding: const EdgeInsets.only(
-                                            left: 5.0,
-                                            right: 5.0,
-                                            top: 5.0,
-                                            bottom: 0.0),
-                                        child: Column(children: [
-                                          CounterWidget(
-                                            styleButtonWidth:
-                                                widget.styleCounterButtonWidth,
-                                            styleButtonHeight:
-                                                widget.styleCounterButtonHeight,
-                                            value: widget.numTrapSuccess,
-                                            title: "Trap",
-                                            title1: "Success",
-                                            styleFontSize:
-                                                widget.styleFontSizeBody,
-                                            onIncreaseStateChanged:
-                                                (int increase) {
-                                              setState(() {
-                                                widget.onNumTrapSuccessChanged!(
-                                                    widget.numTrapSuccess! + 1);
-                                                widget.onNumTrapAttemptChanged!(
-                                                    widget.numTrapAttempt! + 1);
-                                              });
-                                            },
-                                            onDecreaseStateChanged:
-                                                (int decrease) {
-                                              setState(() {
-                                                widget.onNumTrapSuccessChanged!(
-                                                    widget.numTrapSuccess! - 1);
-                                                widget.onNumTrapAttemptChanged!(
-                                                    widget.numTrapAttempt! - 1);
-                                              });
-                                            },
-                                            onSetValue: (int value) {
-                                              widget.onNumSpeakerAttemptChanged!(
-                                                  value);
-                                            },
-                                          ),
-                                          CounterWidget(
-                                            styleButtonWidth:
-                                                widget.styleCounterButtonWidth,
-                                            styleButtonHeight:
-                                                widget.styleCounterButtonHeight,
-                                            value: widget.numTrapAttempt,
-                                            title: "Attempt",
-                                            styleFontSize:
-                                                widget.styleFontSizeBody,
-                                            onIncreaseStateChanged:
-                                                (int increase) {
-                                              setState(() {
-                                                widget.onNumTrapAttemptChanged!(
-                                                    widget.numTrapAttempt! + 1);
-                                              });
-                                            },
-                                            onDecreaseStateChanged:
-                                                (int decrease) {
-                                              setState(() {
-                                                widget.onNumTrapAttemptChanged!(
-                                                    widget.numTrapAttempt! - 1);
-                                              });
-                                              if (widget.numTrapSuccess! >=
-                                                  widget.numTrapAttempt!) {
-                                                widget.onNumTrapSuccessChanged!(
-                                                    widget.numTrapSuccess! - 1);
-                                              }
-                                            },
-                                            onSetValue: (int value) {
-                                              widget.onNumTrapAttemptChanged!(
-                                                  value);
-                                            },
-                                          ),
-                                        ]),
-                                      ),
+                  ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 1, right: 5.0, bottom: 1.0, top: 5.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                            ),
+                            child: SizedBox(
+                              width: 215,
+                              height: 200,
+                              child: Image.asset(
+                                "assets/imgs/ScoringLocations2.png",
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
+                          ),
+                        ]),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(children: <Widget>[
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.8),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
                                     ),
-                                  ]),
-                            ]),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey
-                                                    .withOpacity(0.8),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    topRight:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10)),
-                                              ),
-                                              margin: EdgeInsets.only(
-                                                  right: 5.0,
-                                                  bottom: 10.0,
-                                                  top:
-                                                      widget.styleMarginTopAmp),
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0,
-                                                  right: 5.0,
-                                                  top: 5.0,
-                                                  bottom: 0.0),
-                                              child: Column(children: [
-                                                CounterWidget(
-                                                  styleButtonWidth: widget
-                                                      .styleCounterButtonWidth,
-                                                  styleButtonHeight: widget
-                                                      .styleCounterButtonHeight,
-                                                  value: widget.numAmpSuccess,
-                                                  title: "AMP",
-                                                  title1: "Success",
-                                                  styleFontSize:
-                                                      widget.styleFontSizeBody,
-                                                  onIncreaseStateChanged:
-                                                      (int increase) {
-                                                    setState(() {
-                                                      widget.onNumAmpSuccessChanged!(
-                                                          widget.numAmpSuccess! +
-                                                              1);
-                                                      widget.onNumAmpAttemptChanged!(
-                                                          widget.numAmpAttempt! +
-                                                              1);
-                                                    });
-                                                  },
-                                                  onDecreaseStateChanged:
-                                                      (int decrease) {
-                                                    setState(() {
-                                                      widget.onNumAmpSuccessChanged!(
-                                                          widget.numAmpSuccess! -
-                                                              1);
-                                                      widget.onNumAmpAttemptChanged!(
-                                                          widget.numAmpAttempt! -
-                                                              1);
-                                                    });
-                                                  },
-                                                  onSetValue: (int value) {
-                                                    widget.onNumAmpSuccessChanged!(
-                                                        value);
-                                                  },
-                                                ),
-                                                CounterWidget(
-                                                  styleButtonWidth: widget
-                                                      .styleCounterButtonWidth,
-                                                  styleButtonHeight: widget
-                                                      .styleCounterButtonHeight,
-                                                  value: widget.numAmpAttempt,
-                                                  title: "Attempt",
-                                                  styleFontSize:
-                                                      widget.styleFontSizeBody,
-                                                  onIncreaseStateChanged:
-                                                      (int increase) {
-                                                    setState(() {
-                                                      widget.onNumAmpAttemptChanged!(
-                                                          widget.numAmpAttempt! +
-                                                              1);
-                                                    });
-                                                  },
-                                                  onDecreaseStateChanged:
-                                                      (int decrease) {
-                                                    setState(() {
-                                                      widget.onNumAmpAttemptChanged!(
-                                                          widget.numAmpAttempt! -
-                                                              1);
-                                                    });
-
-                                                    if (widget.numAmpSuccess! >=
-                                                        widget.numAmpAttempt!) {
-                                                      widget.onNumAmpSuccessChanged!(
-                                                          widget.numAmpSuccess! -
-                                                              1);
-                                                    }
-                                                  },
-                                                  onSetValue: (int value) {
-                                                    widget.onNumAmpAttemptChanged!(
-                                                        value);
-                                                  },
-                                                ),
-                                              ]),
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey
-                                                    .withOpacity(0.8),
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    topRight:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                    bottomRight:
-                                                        Radius.circular(10)),
-                                              ),
-                                              margin: EdgeInsets.only(
-                                                  left: widget
-                                                      .styleMarginLeftSpeaker,
-                                                  right: 0.0,
-                                                  bottom: 5.0,
-                                                  top: 15.0),
-                                              padding: const EdgeInsets.only(
-                                                  left: 5.0,
-                                                  right: 5.0,
-                                                  top: 5.0,
-                                                  bottom: 0.0),
-                                              child: Column(children: [
-                                                CounterWidget(
-                                                  styleButtonWidth: widget
-                                                      .styleCounterButtonWidth,
-                                                  styleButtonHeight: widget
-                                                      .styleCounterButtonHeight,
-                                                  value:
-                                                      widget.numSpeakerSuccess,
-                                                  title: "Speaker",
-                                                  title1: "Success",
-                                                  styleFontSize:
-                                                      widget.styleFontSizeBody,
-                                                  onIncreaseStateChanged:
-                                                      (int increase) {
-                                                    setState(() {
-                                                      widget.onNumSpeakerSuccessChanged!(
-                                                          widget.numSpeakerSuccess! +
-                                                              1);
-                                                      widget.onNumSpeakerAttemptChanged!(
-                                                          widget.numSpeakerAttempt! +
-                                                              1);
-                                                    });
-                                                  },
-                                                  onDecreaseStateChanged:
-                                                      (int decrease) {
-                                                    setState(() {
-                                                      widget.onNumSpeakerSuccessChanged!(
-                                                          widget.numSpeakerSuccess! -
-                                                              1);
-                                                      widget.onNumSpeakerAttemptChanged!(
-                                                          widget.numSpeakerAttempt! -
-                                                              1);
-                                                    });
-                                                  },
-                                                  onSetValue: (int value) {
-                                                    widget.onNumSpeakerAttemptChanged!(
-                                                        value);
-                                                  },
-                                                ),
-                                                CounterWidget(
-                                                  styleButtonWidth: widget
-                                                      .styleCounterButtonWidth,
-                                                  styleButtonHeight: widget
-                                                      .styleCounterButtonHeight,
-                                                  value:
-                                                      widget.numSpeakerAttempt,
-                                                  title: "Attempt",
-                                                  styleFontSize:
-                                                      widget.styleFontSizeBody,
-                                                  onIncreaseStateChanged:
-                                                      (int increase) {
-                                                    setState(() {
-                                                      widget.onNumSpeakerAttemptChanged!(
-                                                          widget.numSpeakerAttempt! +
-                                                              1);
-                                                    });
-                                                  },
-                                                  onDecreaseStateChanged:
-                                                      (int decrease) {
-                                                    setState(() {
-                                                      widget.onNumSpeakerAttemptChanged!(
-                                                          widget.numSpeakerAttempt! -
-                                                              1);
-                                                    });
-
-                                                    if (widget
-                                                            .numSpeakerSuccess! >=
-                                                        widget
-                                                            .numSpeakerAttempt!) {
-                                                      widget.onNumSpeakerSuccessChanged!(
-                                                          widget.numSpeakerSuccess! -
-                                                              1);
-                                                    }
-                                                  },
-                                                  onSetValue: (int value) {
-                                                    widget.onNumSpeakerAttemptChanged!(
-                                                        value);
-                                                  },
-                                                ),
-                                              ]),
-                                            ),
-                                          ]),
+                                    margin: EdgeInsets.only(
+                                        left: 0,
+                                        right: 0.0,
+                                        bottom: 0.0,
+                                        top: 5.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 5.0,
+                                        right: 5.0,
+                                        top: 5.0,
+                                        bottom: 0.0),
+                                    child: Column(children: [
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numAlgaeAttempt,
+                                        title: "Algae",
+                                        title1: "Attempts",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumAlgaeAttempt!(
+                                                widget.numAlgaeAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumAlgaeAttempt!(
+                                                widget.numAlgaeAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumAlgaeAttempt!(value);
+                                        },
+                                      ),
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numAlgaeL3Success,
+                                        title: "L3",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumAlgaeL3Success!(
+                                                widget.numAlgaeL3Success! + 1);
+                                            widget.onNumAlgaeAttempt!(
+                                                widget.numAlgaeAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumAlgaeL3Success!(
+                                                widget.numAlgaeL3Success! - 1);
+                                            widget.onNumAlgaeAttempt!(
+                                                widget.numAlgaeAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumAlgaeL3Success!(value);
+                                        },
+                                      ),
+                                      CounterWidget(
+                                        styleButtonWidth:
+                                            widget.styleCounterButtonWidth,
+                                        styleButtonHeight:
+                                            widget.styleCounterButtonHeight,
+                                        value: widget.numAlgaeL2Success,
+                                        title: "L2",
+                                        styleFontSize: widget.styleFontSizeBody,
+                                        onIncreaseStateChanged: (int increase) {
+                                          setState(() {
+                                            widget.onNumAlgaeL2Success!(
+                                                widget.numAlgaeL2Success! + 1);
+                                            widget.onNumAlgaeAttempt!(
+                                                widget.numAlgaeAttempt! + 1);
+                                          });
+                                        },
+                                        onDecreaseStateChanged: (int decrease) {
+                                          setState(() {
+                                            widget.onNumAlgaeL2Success!(
+                                                widget.numAlgaeL2Success! - 1);
+                                            widget.onNumAlgaeAttempt!(
+                                                widget.numAlgaeAttempt! - 1);
+                                          });
+                                        },
+                                        onSetValue: (int value) {
+                                          widget.onNumAlgaeL2Success!(value);
+                                        },
+                                      ),
                                     ]),
-                                  ]),
-                            ]),
+                                  ),
+                                ]),
+                          ]),
+                        ]),
+                  ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.8),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                      ),
+                      margin: EdgeInsets.only(
+                          left: 0, right: 0.0, bottom: 0.0, top: 5.0),
+                      padding: const EdgeInsets.only(
+                          left: 5.0, right: 5.0, top: 5.0, bottom: 0.0),
+                      child: Column(children: [
+                        CounterWidget(
+                          styleButtonWidth: widget.styleCounterButtonWidth,
+                          styleButtonHeight: widget.styleCounterButtonHeight,
+                          value: widget.numAlgaeProcessAttempt,
+                          title: "Algae Processor",
+                          title1: "Attempts",
+                          styleFontSize: widget.styleFontSizeBody,
+                          onIncreaseStateChanged: (int increase) {
+                            setState(() {
+                              widget.onNumAlgaeProcessAttempt!(
+                                  widget.numAlgaeProcessAttempt! + 1);
+                            });
+                          },
+                          onDecreaseStateChanged: (int decrease) {
+                            setState(() {
+                              widget.onNumAlgaeProcessAttempt!(
+                                  widget.numAlgaeProcessAttempt! - 1);
+                            });
+                          },
+                          onSetValue: (int value) {
+                            widget.onNumAlgaeProcessAttempt!(value);
+                          },
+                        ),
+                        CounterWidget(
+                          styleButtonWidth: widget.styleCounterButtonWidth,
+                          styleButtonHeight: widget.styleCounterButtonHeight,
+                          value: widget.numAlgaeProcessSuccess,
+                          title: "Success",
+                          styleFontSize: widget.styleFontSizeBody,
+                          onIncreaseStateChanged: (int increase) {
+                            setState(() {
+                              widget.onNumAlgaeProcessSuccess!(
+                                  widget.numAlgaeProcessSuccess! + 1);
+                              widget.onNumAlgaeProcessAttempt!(
+                                  widget.numAlgaeProcessAttempt! + 1);
+                            });
+                          },
+                          onDecreaseStateChanged: (int decrease) {
+                            setState(() {
+                              widget.onNumAlgaeProcessSuccess!(
+                                  widget.numAlgaeProcessSuccess! - 1);
+                              widget.onNumAlgaeProcessAttempt!(
+                                  widget.numAlgaeProcessAttempt! - 1);
+                            });
+                          },
+                          onSetValue: (int value) {
+                            widget.onNumAlgaeProcessSuccess!(value);
+                          },
+                        ),
                       ]),
-                ]),
+                    ),
+                  ]),
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.8),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                      ),
+                      margin: EdgeInsets.only(
+                          left: 0, right: 0.0, bottom: 0.0, top: 5.0),
+                      padding: const EdgeInsets.only(
+                          left: 5.0, right: 5.0, top: 5.0, bottom: 0.0),
+                      child: Column(children: [
+                        CounterWidget(
+                          styleButtonWidth: widget.styleCounterButtonWidth,
+                          styleButtonHeight: widget.styleCounterButtonHeight,
+                          value: widget.numAlgaeNetAttempt,
+                          title: "Algae Net",
+                          title1: "Attempts",
+                          styleFontSize: widget.styleFontSizeBody,
+                          onIncreaseStateChanged: (int increase) {
+                            setState(() {
+                              widget.onNumAlgaeNetAttempt!(
+                                  widget.numAlgaeNetAttempt! + 1);
+                            });
+                          },
+                          onDecreaseStateChanged: (int decrease) {
+                            setState(() {
+                              widget.onNumAlgaeNetAttempt!(
+                                  widget.numAlgaeNetAttempt! - 1);
+                            });
+                          },
+                          onSetValue: (int value) {
+                            widget.onNumAlgaeNetAttempt!(value);
+                          },
+                        ),
+                        CounterWidget(
+                          styleButtonWidth: widget.styleCounterButtonWidth,
+                          styleButtonHeight: widget.styleCounterButtonHeight,
+                          value: widget.numAlgaeNetSuccess,
+                          title: "Success",
+                          styleFontSize: widget.styleFontSizeBody,
+                          onIncreaseStateChanged: (int increase) {
+                            setState(() {
+                              widget.onNumAlgaeNetSuccess!(
+                                  widget.numAlgaeNetSuccess! + 1);
+                              widget.onNumAlgaeNetAttempt!(
+                                  widget.numAlgaeNetAttempt! + 1);
+                            });
+                          },
+                          onDecreaseStateChanged: (int decrease) {
+                            setState(() {
+                              widget.onNumAlgaeNetSuccess!(
+                                  widget.numAlgaeNetSuccess! - 1);
+                              widget.onNumAlgaeNetAttempt!(
+                                  widget.numAlgaeNetAttempt! - 1);
+                            });
+                          },
+                          onSetValue: (int value) {
+                            widget.onNumAlgaeNetSuccess!(value);
+                          },
+                        ),
+                      ]),
+                    ),
+                  ]),
+                ],
+              ),
+            ]),
           ),
         ]),
       ),

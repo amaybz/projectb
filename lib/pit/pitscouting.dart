@@ -351,6 +351,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       print("Error Converting txHeight: " + e.toString());
     }
 
+    try {
+      pitData.numWidth = int.parse(txWidth.text);
+    } catch (e) {
+      pitData.numWidth = 0;
+      print("Error Converting txWidth: " + e.toString());
+    }
+
     //insert Pit Record
     pitData.id = await localDB.insertPitData(pitData);
     if (pitData.id! > 0) {
@@ -620,6 +627,27 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: "Height(" + strDistance + ")",
+                                  labelStyle: styleBodyTextTheme,
+                                  //border: InputBorder.none,
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: styleFieldPadding,
+                                  horizontal: styleFieldPaddingSides),
+                              width: 105,
+                              height: 58,
+                              child: TextField(
+                                style: styleBodyTextTheme,
+                                controller: txWidth,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: "Width (" + strDistance + ")",
                                   labelStyle: styleBodyTextTheme,
                                   //border: InputBorder.none,
                                   isDense: true,

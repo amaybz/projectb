@@ -328,12 +328,33 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                 style: styleBodyTextTheme),
             actions: <Widget>[
               new TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('No'),
+                onPressed: () async {
+                  //savePitData(exit: true);
+
+                  if (recordSaved == true) {
+                    await saveMatchScout(recordID: matchScoutingData.id!);
+                  } else {
+                    await saveMatchScout();
+                  }
+                  if (recordSaved == true) {
+                    Navigator.of(context).pop(true);
+                  } else {
+                    String alertMsg;
+                    alertMsg = (recordSaved == true)
+                        ? "Match has been saved to Local Database"
+                        : "FAILED to Save Record: The following fields must be filled in: Team, Match#";
+                    showAlertOKDialog(context, "Saving", alertMsg);
+                  }
+                },
+                child: new Text('Save and Exit'),
               ),
               new TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: new Text('Yes'),
+                child: new Text('Exit without Saving'),
+              ),
+              new TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('Cancel'),
               ),
             ],
           ),
@@ -359,6 +380,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   Future<bool> saveMatchScout({
     int recordID = 0,
   }) async {
+    matchScoutingData.id = null;
     print("saving record");
     if (recordID > 0) {
       matchScoutingData.id = recordID;
@@ -370,6 +392,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     matchScoutingData.idTeam = selectedTeam!.teamNumber.toString();
     matchScoutingData.numMatch = int.parse(_txtMatchNumber.text);
     matchScoutingData.txScoutName = _txtScoutName.text;
+    print(matchScoutingData.toString());
     this.recordID = await localDB.insertScoringData(matchScoutingData);
     if (this.recordID! > 0) {
       recordSaved = true;
@@ -973,6 +996,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           matchScoutingData: matchScoutingData,
           styleFontSize: widget.styleFontSize,
           styleFontSizeHeadings: styleFontSizeHeadings,
+          styleCounterButtonWidth: styleCounterButtonWidth,
+          styleCounterButtonHeight: styleCounterButtonHeight,
+          eventTeams: widget.eventTeams,
+          eventTeamsListDropDown: eventTeamsListDropDown,
           onChange: (updates) {
             setState(() {
               matchScoutingData = updates;

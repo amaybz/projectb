@@ -53,6 +53,12 @@ class _EndGameState extends State<EndGame> {
     DropdownMenuItem(value: "3", child: Text("Success")),
   ];
 
+  List<DropdownMenuItem<String>> listClimbType = [
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("Shallow")),
+    DropdownMenuItem(value: "3", child: Text("Deep")),
+  ];
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -107,19 +113,41 @@ class _EndGameState extends State<EndGame> {
             children: <Widget>[
               Text("Climb Outcome:", style: styleBodyTextTheme),
               DropdownButton(
-                value: widget.matchScoutingData.teleIdStageOutcome == null
+                value: widget.matchScoutingData.teleIdClimbOutcome == null
                     ? null
-                    : widget.matchScoutingData.teleIdStageOutcome,
+                    : widget.matchScoutingData.teleIdClimbOutcome,
                 items: ddsPosition,
                 style: styleBodyTextTheme,
                 onChanged: (item) {
                   setState(() {
-                    widget.matchScoutingData.teleIdStageOutcome =
+                    widget.matchScoutingData.teleIdClimbOutcome =
                         item as String?;
                     widget.onChanged!(widget.matchScoutingData);
                   });
-                  print("teleIdStageOutcome: " +
-                      widget.matchScoutingData.teleIdStageOutcome!);
+                  print("teleIdClimbOutcome: " +
+                      widget.matchScoutingData.teleIdClimbOutcome!);
+                },
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("Climb Type:", style: styleBodyTextTheme),
+              DropdownButton(
+                value: widget.matchScoutingData.teleIdClimbType == null
+                    ? null
+                    : widget.matchScoutingData.teleIdClimbType,
+                items: listClimbType,
+                style: styleBodyTextTheme,
+                onChanged: (item) {
+                  setState(() {
+                    widget.matchScoutingData.teleIdClimbType = item as String?;
+                    widget.onChanged!(widget.matchScoutingData);
+                  });
+                  print("teleIdClimbType: " +
+                      widget.matchScoutingData.teleIdClimbType!);
                 },
               ),
             ],
@@ -147,17 +175,6 @@ class _EndGameState extends State<EndGame> {
               ),
             ],
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Assist?:", style: styleBodyTextTheme),
-            Switch(
-                value: widget.matchScoutingData.teleFlStageAssist!,
-                onChanged: (item) {
-                  setState(() {
-                    widget.matchScoutingData.teleFlStageAssist = item;
-                    widget.onChanged!(widget.matchScoutingData);
-                  });
-                }),
-          ]),
         ]),
       ),
     );

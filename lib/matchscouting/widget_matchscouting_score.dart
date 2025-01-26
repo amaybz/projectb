@@ -150,6 +150,28 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
+                                    margin: EdgeInsets.only(
+                                        left: 0.0,
+                                        right: 0.0,
+                                        bottom: 1.0,
+                                        top: 20.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                    ),
+                                    child: SizedBox(
+                                      width: 25,
+                                      height: 25,
+                                      child: Image.asset(
+                                        "assets/imgs/ball.png",
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
                                     decoration: BoxDecoration(
                                       color: Colors.grey.withOpacity(0.8),
                                       borderRadius: BorderRadius.only(
@@ -167,7 +189,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                         left: 3.0,
                                         right: 3.0,
                                         top: 5.0,
-                                        bottom: 0.0),
+                                        bottom: 2.0),
                                     child: Column(children: [
                                       CounterWidget(
                                         styleButtonWidth:
@@ -226,6 +248,28 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           widget.onNumAlgaeL2Success!(value);
                                         },
                                       ),
+                                    ]),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.8),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        left: 0,
+                                        right: 0.0,
+                                        bottom: 0.0,
+                                        top: 20.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 3.0,
+                                        right: 3.0,
+                                        top: 5.0,
+                                        bottom: 2.0),
+                                    child: Column(children: [
                                       CounterWidget(
                                         styleButtonWidth:
                                             widget.styleCounterButtonWidth,
@@ -262,7 +306,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(
-                                left: 0.0, right: 0.0, bottom: 1.0, top: 20.0),
+                                left: 0.0, right: 0.0, bottom: 1.0, top: 50.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
@@ -289,6 +333,28 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Container(
+                                    margin: EdgeInsets.only(
+                                        left: 0.0,
+                                        right: 0.0,
+                                        bottom: 1.0,
+                                        top: 20.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                    ),
+                                    child: SizedBox(
+                                      width: 25,
+                                      height: 25,
+                                      child: Image.asset(
+                                        "assets/imgs/Coral.png",
+                                        fit: BoxFit.fitHeight,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
                                     decoration: BoxDecoration(
                                       color: Colors.grey.withOpacity(0.8),
                                       borderRadius: BorderRadius.only(
@@ -306,7 +372,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                         left: 3.0,
                                         right: 3.0,
                                         top: 5.0,
-                                        bottom: 0.0),
+                                        bottom: 2.0),
                                     child: Column(children: [
                                       CounterWidget(
                                         styleButtonWidth:
@@ -421,6 +487,28 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           widget.onNumCoralL1Success!(value);
                                         },
                                       ),
+                                    ]),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.8),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                    ),
+                                    margin: EdgeInsets.only(
+                                        left: 0,
+                                        right: 0.0,
+                                        bottom: 0.0,
+                                        top: 5.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 3.0,
+                                        right: 3.0,
+                                        top: 5.0,
+                                        bottom: 2.0),
+                                    child: Column(children: [
                                       CounterWidget(
                                         styleButtonWidth:
                                             widget.styleCounterButtonWidth,
@@ -453,22 +541,22 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         ]),
                   ]),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.8),
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
+                            topRight: Radius.circular(0),
                             bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
+                            bottomRight: Radius.circular(0)),
                       ),
                       margin: EdgeInsets.only(
                           left: 0, right: 0.0, bottom: 0.0, top: 5.0),
                       padding: const EdgeInsets.only(
-                          left: 5.0, right: 5.0, top: 5.0, bottom: 0.0),
+                          left: 5.0, right: 5.0, top: 5.0, bottom: 2.0),
                       child: Column(children: [
                         CounterWidget(
                           styleButtonWidth: widget.styleCounterButtonWidth,
@@ -527,15 +615,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.8),
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
+                            topLeft: Radius.circular(0),
                             topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(0),
                             bottomRight: Radius.circular(10)),
                       ),
                       margin: EdgeInsets.only(
                           left: 0, right: 0.0, bottom: 0.0, top: 5.0),
                       padding: const EdgeInsets.only(
-                          left: 5.0, right: 5.0, top: 5.0, bottom: 0.0),
+                          left: 5.0, right: 5.0, top: 5.0, bottom: 2.0),
                       child: Column(children: [
                         CounterWidget(
                           styleButtonWidth: widget.styleCounterButtonWidth,

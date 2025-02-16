@@ -250,6 +250,40 @@ class _PitScoringState extends State<PitScoring> {
                               ),
                             ],
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Remove L1:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flRemoveAlgaeL1!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flRemoveAlgaeL1 = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Remove L2:",
+                                style: styleBodyTextTheme,
+                              ),
+                              Switch(
+                                value: widget.pitData.flRemoveAlgaeL2!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    widget.pitData.flRemoveAlgaeL2 = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                         ]),
                   ),
                   Expanded(flex: 1, child: Column()),

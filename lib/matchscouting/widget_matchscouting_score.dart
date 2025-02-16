@@ -163,8 +163,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           bottomRight: Radius.circular(10)),
                                     ),
                                     child: SizedBox(
-                                      width: 25,
-                                      height: 25,
+                                      width: 35,
+                                      height: 35,
                                       child: Image.asset(
                                         "assets/imgs/ball.png",
                                         fit: BoxFit.fitHeight,
@@ -306,7 +306,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(
-                                left: 0.0, right: 0.0, bottom: 1.0, top: 50.0),
+                                left: 0.0, right: 0.0, bottom: 1.0, top: 60.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
@@ -346,8 +346,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           bottomRight: Radius.circular(10)),
                                     ),
                                     child: SizedBox(
-                                      width: 25,
-                                      height: 25,
+                                      width: 35,
+                                      height: 35,
                                       child: Image.asset(
                                         "assets/imgs/Coral.png",
                                         fit: BoxFit.fitHeight,
@@ -540,142 +540,193 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                           ]),
                         ]),
                   ]),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.8),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(0),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(0)),
+                  HeadingMain(
+                      styleFontSize: styleTitleTextTheme!.fontSize!,
+                      headingText: "Algae"),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 0.0, right: 0.0, bottom: 1.0, top: 20.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                            ),
+                            child: SizedBox(
+                              width: 55,
+                              height: 40,
+                              child: Image.asset(
+                                "assets/imgs/net.png",
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.8),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(0),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(0)),
+                            ),
+                            margin: EdgeInsets.only(
+                                left: 0, right: 0.0, bottom: 0.0, top: 5.0),
+                            padding: const EdgeInsets.only(
+                                left: 5.0, right: 10.0, top: 5.0, bottom: 2.0),
+                            child: Column(children: [
+                              CounterWidget(
+                                styleButtonWidth:
+                                    widget.styleCounterButtonWidth,
+                                styleButtonHeight:
+                                    widget.styleCounterButtonHeight,
+                                value: widget.numAlgaeNetSuccess,
+                                title: "Barge",
+                                title1: "Success",
+                                styleFontSize: widget.styleFontSizeBody,
+                                onIncreaseStateChanged: (int increase) {
+                                  setState(() {
+                                    widget.onNumAlgaeNetSuccess!(
+                                        widget.numAlgaeNetSuccess! + 1);
+                                    widget.onNumAlgaeNetAttempt!(
+                                        widget.numAlgaeNetAttempt! + 1);
+                                  });
+                                },
+                                onDecreaseStateChanged: (int decrease) {
+                                  setState(() {
+                                    widget.onNumAlgaeNetSuccess!(
+                                        widget.numAlgaeNetSuccess! - 1);
+                                    widget.onNumAlgaeNetAttempt!(
+                                        widget.numAlgaeNetAttempt! - 1);
+                                  });
+                                },
+                                onSetValue: (int value) {
+                                  widget.onNumAlgaeNetSuccess!(value);
+                                },
+                              ),
+                              CounterWidget(
+                                styleButtonWidth:
+                                    widget.styleCounterButtonWidth,
+                                styleButtonHeight:
+                                    widget.styleCounterButtonHeight,
+                                value: widget.numAlgaeNetAttempt,
+                                title: "",
+                                title1: "Attempts",
+                                styleFontSize: widget.styleFontSizeBody,
+                                onIncreaseStateChanged: (int increase) {
+                                  setState(() {
+                                    widget.onNumAlgaeNetAttempt!(
+                                        widget.numAlgaeNetAttempt! + 1);
+                                  });
+                                },
+                                onDecreaseStateChanged: (int decrease) {
+                                  setState(() {
+                                    widget.onNumAlgaeNetAttempt!(
+                                        widget.numAlgaeNetAttempt! - 1);
+                                  });
+                                },
+                                onSetValue: (int value) {
+                                  widget.onNumAlgaeNetAttempt!(value);
+                                },
+                              ),
+                            ]),
+                          ),
+                        ]),
+                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            left: 0.0, right: 0.0, bottom: 1.0, top: 20.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)),
+                        ),
+                        child: SizedBox(
+                          width: 55,
+                          height: 40,
+                          child: Image.asset(
+                            "assets/imgs/processor.png",
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
                       ),
-                      margin: EdgeInsets.only(
-                          left: 0, right: 0.0, bottom: 0.0, top: 5.0),
-                      padding: const EdgeInsets.only(
-                          left: 5.0, right: 5.0, top: 5.0, bottom: 2.0),
-                      child: Column(children: [
-                        CounterWidget(
-                          styleButtonWidth: widget.styleCounterButtonWidth,
-                          styleButtonHeight: widget.styleCounterButtonHeight,
-                          value: widget.numAlgaeProcessAttempt,
-                          title: "Algae Processor",
-                          title1: "Attempts",
-                          styleFontSize: widget.styleFontSizeBody,
-                          onIncreaseStateChanged: (int increase) {
-                            setState(() {
-                              widget.onNumAlgaeProcessAttempt!(
-                                  widget.numAlgaeProcessAttempt! + 1);
-                            });
-                          },
-                          onDecreaseStateChanged: (int decrease) {
-                            setState(() {
-                              widget.onNumAlgaeProcessAttempt!(
-                                  widget.numAlgaeProcessAttempt! - 1);
-                            });
-                          },
-                          onSetValue: (int value) {
-                            widget.onNumAlgaeProcessAttempt!(value);
-                          },
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.8),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(0),
+                              bottomRight: Radius.circular(10)),
                         ),
-                        CounterWidget(
-                          styleButtonWidth: widget.styleCounterButtonWidth,
-                          styleButtonHeight: widget.styleCounterButtonHeight,
-                          value: widget.numAlgaeProcessSuccess,
-                          title: "Success",
-                          styleFontSize: widget.styleFontSizeBody,
-                          onIncreaseStateChanged: (int increase) {
-                            setState(() {
-                              widget.onNumAlgaeProcessSuccess!(
-                                  widget.numAlgaeProcessSuccess! + 1);
-                              widget.onNumAlgaeProcessAttempt!(
-                                  widget.numAlgaeProcessAttempt! + 1);
-                            });
-                          },
-                          onDecreaseStateChanged: (int decrease) {
-                            setState(() {
-                              widget.onNumAlgaeProcessSuccess!(
-                                  widget.numAlgaeProcessSuccess! - 1);
-                              widget.onNumAlgaeProcessAttempt!(
-                                  widget.numAlgaeProcessAttempt! - 1);
-                            });
-                          },
-                          onSetValue: (int value) {
-                            widget.onNumAlgaeProcessSuccess!(value);
-                          },
-                        ),
-                      ]),
-                    ),
-                  ]),
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.8),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(0),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(0),
-                            bottomRight: Radius.circular(10)),
+                        margin: EdgeInsets.only(
+                            left: 0, right: 0.0, bottom: 0.0, top: 5.0),
+                        padding: const EdgeInsets.only(
+                            left: 10.0, right: 5.0, top: 5.0, bottom: 2.0),
+                        child: Column(children: [
+                          CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            value: widget.numAlgaeProcessSuccess,
+                            title: "Processor",
+                            title1: "Success",
+                            styleFontSize: widget.styleFontSizeBody,
+                            onIncreaseStateChanged: (int increase) {
+                              setState(() {
+                                widget.onNumAlgaeProcessSuccess!(
+                                    widget.numAlgaeProcessSuccess! + 1);
+                                widget.onNumAlgaeProcessAttempt!(
+                                    widget.numAlgaeProcessAttempt! + 1);
+                              });
+                            },
+                            onDecreaseStateChanged: (int decrease) {
+                              setState(() {
+                                widget.onNumAlgaeProcessSuccess!(
+                                    widget.numAlgaeProcessSuccess! - 1);
+                                widget.onNumAlgaeProcessAttempt!(
+                                    widget.numAlgaeProcessAttempt! - 1);
+                              });
+                            },
+                            onSetValue: (int value) {
+                              widget.onNumAlgaeProcessSuccess!(value);
+                            },
+                          ),
+                          CounterWidget(
+                            styleButtonWidth: widget.styleCounterButtonWidth,
+                            styleButtonHeight: widget.styleCounterButtonHeight,
+                            value: widget.numAlgaeProcessAttempt,
+                            title: "",
+                            title1: "Attempts",
+                            styleFontSize: widget.styleFontSizeBody,
+                            onIncreaseStateChanged: (int increase) {
+                              setState(() {
+                                widget.onNumAlgaeProcessAttempt!(
+                                    widget.numAlgaeProcessAttempt! + 1);
+                              });
+                            },
+                            onDecreaseStateChanged: (int decrease) {
+                              setState(() {
+                                widget.onNumAlgaeProcessAttempt!(
+                                    widget.numAlgaeProcessAttempt! - 1);
+                              });
+                            },
+                            onSetValue: (int value) {
+                              widget.onNumAlgaeProcessAttempt!(value);
+                            },
+                          ),
+                        ]),
                       ),
-                      margin: EdgeInsets.only(
-                          left: 0, right: 0.0, bottom: 0.0, top: 5.0),
-                      padding: const EdgeInsets.only(
-                          left: 5.0, right: 5.0, top: 5.0, bottom: 2.0),
-                      child: Column(children: [
-                        CounterWidget(
-                          styleButtonWidth: widget.styleCounterButtonWidth,
-                          styleButtonHeight: widget.styleCounterButtonHeight,
-                          value: widget.numAlgaeNetAttempt,
-                          title: "Algae Net",
-                          title1: "Attempts",
-                          styleFontSize: widget.styleFontSizeBody,
-                          onIncreaseStateChanged: (int increase) {
-                            setState(() {
-                              widget.onNumAlgaeNetAttempt!(
-                                  widget.numAlgaeNetAttempt! + 1);
-                            });
-                          },
-                          onDecreaseStateChanged: (int decrease) {
-                            setState(() {
-                              widget.onNumAlgaeNetAttempt!(
-                                  widget.numAlgaeNetAttempt! - 1);
-                            });
-                          },
-                          onSetValue: (int value) {
-                            widget.onNumAlgaeNetAttempt!(value);
-                          },
-                        ),
-                        CounterWidget(
-                          styleButtonWidth: widget.styleCounterButtonWidth,
-                          styleButtonHeight: widget.styleCounterButtonHeight,
-                          value: widget.numAlgaeNetSuccess,
-                          title: "Success",
-                          styleFontSize: widget.styleFontSizeBody,
-                          onIncreaseStateChanged: (int increase) {
-                            setState(() {
-                              widget.onNumAlgaeNetSuccess!(
-                                  widget.numAlgaeNetSuccess! + 1);
-                              widget.onNumAlgaeNetAttempt!(
-                                  widget.numAlgaeNetAttempt! + 1);
-                            });
-                          },
-                          onDecreaseStateChanged: (int decrease) {
-                            setState(() {
-                              widget.onNumAlgaeNetSuccess!(
-                                  widget.numAlgaeNetSuccess! - 1);
-                              widget.onNumAlgaeNetAttempt!(
-                                  widget.numAlgaeNetAttempt! - 1);
-                            });
-                          },
-                          onSetValue: (int value) {
-                            widget.onNumAlgaeNetSuccess!(value);
-                          },
-                        ),
-                      ]),
-                    ),
+                    ]),
                   ]),
                 ],
               ),

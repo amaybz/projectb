@@ -10,7 +10,7 @@ class LocalDB {
 
   // Increment this version when you need to change the schema.
 
-  static final _databaseVersion = 52;
+  static final _databaseVersion = 53;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -133,6 +133,8 @@ class LocalDB {
       'flScoreCoralL4 TEXT,'
       'flScoreAlgaeBarge TEXT,'
       'flScoreAlgaeProcess TEXT,'
+      'flRemoveAlgaeL1 TEXT,'
+      'flRemoveAlgaeL2 TEXT,'
       'txScoringNotes TEXT,'
       'flClimb TEXT,'
       'idClimbPos TEXT,'

@@ -113,7 +113,7 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Catch:",
+                  "Station Intake (Coral):",
                   style: styleBodyTextTheme,
                 ),
                 Switch(

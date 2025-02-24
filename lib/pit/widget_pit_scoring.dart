@@ -254,14 +254,14 @@ class _PitScoringState extends State<PitScoring> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Remove L1:",
+                                "Remove L2:",
                                 style: styleBodyTextTheme,
                               ),
                               Switch(
-                                value: widget.pitData.flRemoveAlgaeL1!,
+                                value: widget.pitData.flRemoveAlgaeL2!,
                                 onChanged: (bool value) {
                                   setState(() {
-                                    widget.pitData.flRemoveAlgaeL1 = value;
+                                    widget.pitData.flRemoveAlgaeL2 = value;
                                   });
                                 },
                               ),
@@ -271,14 +271,14 @@ class _PitScoringState extends State<PitScoring> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Remove L2:",
+                                "Remove L3:",
                                 style: styleBodyTextTheme,
                               ),
                               Switch(
-                                value: widget.pitData.flRemoveAlgaeL2!,
+                                value: widget.pitData.flRemoveAlgaeL3!,
                                 onChanged: (bool value) {
                                   setState(() {
-                                    widget.pitData.flRemoveAlgaeL2 = value;
+                                    widget.pitData.flRemoveAlgaeL3 = value;
                                   });
                                 },
                               ),

@@ -25,7 +25,7 @@ class PitData {
   bool? flScoreCoralL4;
   bool? flScoreAlgaeBarge;
   bool? flScoreAlgaeProcess;
-  bool? flRemoveAlgaeL1;
+  bool? flRemoveAlgaeL3;
   bool? flRemoveAlgaeL2;
   String? txScoringNotes;
   bool? flClimb;
@@ -76,7 +76,7 @@ class PitData {
     this.flScoreCoralL4 = false,
     this.flScoreAlgaeBarge = false,
     this.flScoreAlgaeProcess = false,
-    this.flRemoveAlgaeL1 = false,
+    this.flRemoveAlgaeL3 = false,
     this.flRemoveAlgaeL2 = false,
     this.txScoringNotes,
     this.flClimb = false,
@@ -142,7 +142,7 @@ class PitData {
       'flScoreCoralL4': flScoreCoralL4.toString(),
       'flScoreAlgaeBarge': flScoreAlgaeBarge.toString(),
       'flScoreAlgaeProcess': flScoreAlgaeProcess.toString(),
-      'flRemoveAlgaeL1': flRemoveAlgaeL1.toString(),
+      'flRemoveAlgaeL3': flRemoveAlgaeL3.toString(),
       'flRemoveAlgaeL2': flRemoveAlgaeL2.toString(),
       'txScoringNotes': txScoringNotes,
       'flClimb': flClimb.toString(),
@@ -206,8 +206,8 @@ class PitData {
         map['flScoreAlgaeBarge'].toString().toLowerCase() == 'true';
     this.flScoreAlgaeProcess =
         map['flScoreAlgaeProcess'].toString().toLowerCase() == 'true';
-    this.flRemoveAlgaeL1 =
-        map['flRemoveAlgaeL1'].toString().toLowerCase() == 'true';
+    this.flRemoveAlgaeL3 =
+        map['flRemoveAlgaeL3'].toString().toLowerCase() == 'true';
     this.flRemoveAlgaeL2 =
         map['flRemoveAlgaeL2'].toString().toLowerCase() == 'true';
     this.txScoringNotes = map['txScoringNotes'];
@@ -284,7 +284,7 @@ class PitData {
     data['flScoreCoralL4'] = this.flScoreCoralL4;
     data['flScoreAlgaeBarge'] = this.flScoreAlgaeBarge;
     data['flScoreAlgaeProcess'] = this.flScoreAlgaeProcess;
-    data['flRemoveAlgaeL1'] = this.flRemoveAlgaeL1;
+    data['flRemoveAlgaeL3'] = this.flRemoveAlgaeL3;
     data['flRemoveAlgaeL2'] = this.flRemoveAlgaeL2;
     data['txScoringNotes'] = this.txScoringNotes;
     data['flClimb'] = this.flClimb;

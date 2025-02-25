@@ -411,7 +411,7 @@ class _PitAutoState extends State<PitAuto> {
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
-                  "#Ground:",
+                  "#Ground Pickup:",
                   style: styleBodyTextTheme,
                 ),
                 CounterWidget(
@@ -472,6 +472,40 @@ class _PitAutoState extends State<PitAuto> {
                   onSetValue: (int value) {
                     setState(() {
                       widget.pitData.numAutoScoreCoralL4 = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  "#Processor:",
+                  style: styleBodyTextTheme,
+                ),
+                CounterWidget(
+                  title: "",
+                  styleFontSize: widget.styleFontSize,
+                  value: widget.pitData.numAutoScoreAlgaeBarge,
+                  onIncreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeProcess =
+                          widget.pitData.numAutoScoreAlgaeProcess! + 1;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onDecreaseStateChanged: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeProcess =
+                          widget.pitData.numAutoScoreAlgaeProcess! - 1;
+                      if (widget.pitData.numAutoScoreAlgaeProcess! < 0) {
+                        widget.pitData.numAutoScoreAlgaeProcess = 0;
+                      }
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                  onSetValue: (int value) {
+                    setState(() {
+                      widget.pitData.numAutoScoreAlgaeProcess = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },

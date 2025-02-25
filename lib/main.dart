@@ -16,6 +16,8 @@ import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
 import 'package:projectb/barcodeScanner.dart';
 
+import 'scanner/mobileScanner.dart';
+
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
 // can be called before `runApp()`

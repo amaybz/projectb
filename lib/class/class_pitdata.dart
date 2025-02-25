@@ -43,7 +43,7 @@ class PitData {
   int? numAutoScoreAlgaeL3;
   int? numAutoScoreAlgaeGround;
   int? numAutoScoreAlgaeBarge;
-  String? numAutoScoreAlgaeProcess;
+  int? numAutoScoreAlgaeProcess;
   String? txAutoNotes;
   String? txPitNotes;
   String? dtCreation;

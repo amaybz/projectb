@@ -454,7 +454,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _downloadingText = "Please select Location and Event to download data";
       });
       localDB.clearLocalTeams();
+      eventTeams!.sort((a, b) => a.teamNumber!.compareTo(b.teamNumber!));
       for (TeamsList team in eventTeams!) {
+        print(TeamsList);
         LocalTeam insertTeam = LocalTeam(
             key: team.key,
             name: team.name,

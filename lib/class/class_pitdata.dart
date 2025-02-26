@@ -25,8 +25,8 @@ class PitData {
   bool? flScoreCoralL4;
   bool? flScoreAlgaeBarge;
   bool? flScoreAlgaeProcess;
-  bool? flRemoveAlgaeL3;
   bool? flRemoveAlgaeL2;
+  bool? flRemoveAlgaeL3;
   String? txScoringNotes;
   bool? flClimb;
   String? idClimbPos;
@@ -76,8 +76,8 @@ class PitData {
     this.flScoreCoralL4 = false,
     this.flScoreAlgaeBarge = false,
     this.flScoreAlgaeProcess = false,
-    this.flRemoveAlgaeL3 = false,
     this.flRemoveAlgaeL2 = false,
+    this.flRemoveAlgaeL3 = false,
     this.txScoringNotes,
     this.flClimb = false,
     this.idClimbPos = "1",
@@ -94,7 +94,7 @@ class PitData {
     this.numAutoScoreAlgaeL3 = 0,
     this.numAutoScoreAlgaeGround = 0,
     this.numAutoScoreAlgaeBarge = 0,
-    this.numAutoScoreAlgaeProcess,
+    this.numAutoScoreAlgaeProcess = 0,
     this.txAutoNotes,
     this.txPitNotes,
     this.dtCreation,
@@ -142,8 +142,8 @@ class PitData {
       'flScoreCoralL4': flScoreCoralL4.toString(),
       'flScoreAlgaeBarge': flScoreAlgaeBarge.toString(),
       'flScoreAlgaeProcess': flScoreAlgaeProcess.toString(),
-      'flRemoveAlgaeL3': flRemoveAlgaeL3.toString(),
       'flRemoveAlgaeL2': flRemoveAlgaeL2.toString(),
+      'flRemoveAlgaeL3': flRemoveAlgaeL3.toString(),
       'txScoringNotes': txScoringNotes,
       'flClimb': flClimb.toString(),
       'idClimbPos': idClimbPos,
@@ -178,52 +178,34 @@ class PitData {
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
     this.numWidth = map['numWidth'];
-    //this.imgTeamUniform = map['imgTeamUniform'];
-    //this.imgRobotFront = map['imgRobotFront'];
-    //this.imgRobotSide = map['imgRobotSide'];
     this.idDriveType = map['idDriveType'];
     this.txDriveNotes = map['txDriveNotes'];
-    this.flObjectCoral =
-        map['flObjectCoral'].toString().toLowerCase() == 'true';
-    this.flObjectAlgae =
-        map['flObjectAlgae'].toString().toLowerCase() == 'true';
-    this.flObjectCatch =
-        map['flObjectCatch'].toString().toLowerCase() == 'true';
-    this.flObjectAlgaeFloor =
-        map['flObjectAlgaeFloor'].toString().toLowerCase() == 'true';
-    this.flObjectCoralFloor =
-        map['flObjectCoralFloor'].toString().toLowerCase() == 'true';
+    this.flObjectCoral = map['flObjectCoral'];
+    this.flObjectAlgae = map['flObjectAlgae'];
+    this.flObjectCatch = map['flObjectCatch'];
+    this.flObjectAlgaeFloor = map['flObjectAlgaeFloor'];
+    this.flObjectCoralFloor = map['flObjectCoralFloor'];
     this.txObjectNotes = map['txObjectNotes'];
-    this.flScoreCoralL1 =
-        map['flScoreCoralL1'].toString().toLowerCase() == 'true';
-    this.flScoreCoralL2 =
-        map['flScoreCoralL2'].toString().toLowerCase() == 'true';
-    this.flScoreCoralL3 =
-        map['flScoreCoralL3'].toString().toLowerCase() == 'true';
-    this.flScoreCoralL4 =
-        map['flScoreCoralL4'].toString().toLowerCase() == 'true';
-    this.flScoreAlgaeBarge =
-        map['flScoreAlgaeBarge'].toString().toLowerCase() == 'true';
-    this.flScoreAlgaeProcess =
-        map['flScoreAlgaeProcess'].toString().toLowerCase() == 'true';
-    this.flRemoveAlgaeL3 =
-        map['flRemoveAlgaeL3'].toString().toLowerCase() == 'true';
-    this.flRemoveAlgaeL2 =
-        map['flRemoveAlgaeL2'].toString().toLowerCase() == 'true';
+    this.flScoreCoralL1 = map['flScoreCoralL1'];
+    this.flScoreCoralL2 = map['flScoreCoralL2'];
+    this.flScoreCoralL3 = map['flScoreCoralL3'];
+    this.flScoreCoralL4 = map['flScoreCoralL4'];
+    this.flScoreAlgaeBarge = map['flScoreAlgaeBarge'];
+    this.flScoreAlgaeProcess = map['flScoreAlgaeProcess'];
+    this.flRemoveAlgaeL2 = map['flRemoveAlgaeL2'];
+    this.flRemoveAlgaeL3 = map['flRemoveAlgaeL3'];
     this.txScoringNotes = map['txScoringNotes'];
-    this.flClimb = map['flClimb'].toString().toLowerCase() == 'true';
+    this.flClimb = map['flClimb'];
     this.idClimbPos = map['idClimbPos'];
     this.txClimbNotes = map['txClimbNotes'];
-    this.flAuto = map['flAuto'].toString().toLowerCase() == 'true';
-    this.flAutoLine = map['flAutoLine'].toString().toLowerCase() == 'true';
-    this.flAutoScoreCoral =
-        map['flAutoScoreCoral'].toString().toLowerCase() == 'true';
+    this.flAuto = map['flAuto'];
+    this.flAutoLine = map['flAutoLine'];
+    this.flAutoScoreCoral = map['flAutoScoreCoral'];
     this.numAutoScoreCoralL1 = map['numAutoScoreCoralL1'];
     this.numAutoScoreCoralL2 = map['numAutoScoreCoralL2'];
     this.numAutoScoreCoralL3 = map['numAutoScoreCoralL3'];
     this.numAutoScoreCoralL4 = map['numAutoScoreCoralL4'];
-    this.flAutoScoreAlgae =
-        map['flAutoScoreAlgae'].toString().toLowerCase() == 'true';
+    this.flAutoScoreAlgae = map['flAutoScoreAlgae'];
     this.numAutoScoreAlgaeL2 = map['numAutoScoreAlgaeL2'];
     this.numAutoScoreAlgaeL3 = map['numAutoScoreAlgaeL3'];
     this.numAutoScoreAlgaeGround = map['numAutoScoreAlgaeGround'];
@@ -234,7 +216,7 @@ class PitData {
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
-    this.uploaded = map['uploaded'].toString().toLowerCase() == 'true';
+    this.uploaded = map['uploaded'];
     if (map['imgRobotFront'] != null) {
       this.imgRobotFront = File(map['imgRobotFront']);
     }
@@ -284,8 +266,8 @@ class PitData {
     data['flScoreCoralL4'] = this.flScoreCoralL4;
     data['flScoreAlgaeBarge'] = this.flScoreAlgaeBarge;
     data['flScoreAlgaeProcess'] = this.flScoreAlgaeProcess;
-    data['flRemoveAlgaeL3'] = this.flRemoveAlgaeL3;
     data['flRemoveAlgaeL2'] = this.flRemoveAlgaeL2;
+    data['flRemoveAlgaeL3'] = this.flRemoveAlgaeL3;
     data['txScoringNotes'] = this.txScoringNotes;
     data['flClimb'] = this.flClimb;
     data['idClimbPos'] = this.idClimbPos;
@@ -320,9 +302,6 @@ class PitData {
     this.numWeight = map['numWeight'];
     this.numHeight = map['numHeight'];
     this.numWidth = map['numWidth'];
-    //this.imgTeamUniform = map['imgTeamUniform'];
-    //this.imgRobotFront = map['imgRobotFront'];
-    //this.imgRobotSide = map['imgRobotSide'];
     this.idDriveType = map['idDriveType'];
     this.txDriveNotes = map['txDriveNotes'];
     this.flObjectCoral = map['flObjectCoral'];
@@ -337,6 +316,8 @@ class PitData {
     this.flScoreCoralL4 = map['flScoreCoralL4'];
     this.flScoreAlgaeBarge = map['flScoreAlgaeBarge'];
     this.flScoreAlgaeProcess = map['flScoreAlgaeProcess'];
+    this.flRemoveAlgaeL2 = map['flRemoveAlgaeL2'];
+    this.flRemoveAlgaeL3 = map['flRemoveAlgaeL3'];
     this.txScoringNotes = map['txScoringNotes'];
     this.flClimb = map['flClimb'];
     this.idClimbPos = map['idClimbPos'];

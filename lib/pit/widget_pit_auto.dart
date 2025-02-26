@@ -437,7 +437,7 @@ class _PitAutoState extends State<PitAuto> {
                   },
                   onSetValue: (int value) {
                     setState(() {
-                      widget.pitData.numAutoScoreCoralL3 = value;
+                      widget.pitData.numAutoScoreAlgaeGround = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },
@@ -471,7 +471,7 @@ class _PitAutoState extends State<PitAuto> {
                   },
                   onSetValue: (int value) {
                     setState(() {
-                      widget.pitData.numAutoScoreCoralL4 = value;
+                      widget.pitData.numAutoScoreAlgaeBarge = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },
@@ -485,7 +485,7 @@ class _PitAutoState extends State<PitAuto> {
                 CounterWidget(
                   title: "",
                   styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreAlgaeBarge,
+                  value: widget.pitData.numAutoScoreAlgaeProcess,
                   onIncreaseStateChanged: (int value) {
                     setState(() {
                       widget.pitData.numAutoScoreAlgaeProcess =

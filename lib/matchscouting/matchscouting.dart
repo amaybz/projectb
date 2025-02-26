@@ -398,6 +398,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       recordSaved = true;
       print("Record Saved: " + recordSaved.toString());
       print("Record ID: " + this.recordID.toString());
+      matchScoutingData.id = this.recordID;
       return true;
     } else {
       recordSaved = false;

@@ -3,6 +3,7 @@ import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto_errors.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
+import 'package:projectb/widgets/widget_driver_positions.dart';
 
 import '../widgets/widget_headingmain.dart';
 
@@ -15,11 +16,6 @@ class AutoTab extends StatefulWidget {
     this.onLoseStartObjectChange,
     this.onContactWithRobotChange,
     this.onFoulChange,
-    this.onAutoNumMidConeSuccessChange,
-    this.onAutoNumLowConeSuccessChange,
-    this.onAutoNumHighConeSuccessChange,
-    this.onAutoNumCubeAttemptChange,
-    this.onAutoNumCellSuccessChange,
     this.styleCounterButtonHeight = 25,
     this.styleCounterButtonWidth = 30,
     this.styleFontSizeHeadings = 18,
@@ -32,14 +28,10 @@ class AutoTab extends StatefulWidget {
   final double styleCounterButtonHeight;
   final double styleCounterButtonWidth;
   final double styleFontSizeHeadings;
-  final ValueChanged<int>? onAutoNumCubeAttemptChange;
-  final ValueChanged<int>? onAutoNumCellSuccessChange;
   final ValueChanged<bool>? onLoseStartObjectChange;
   final ValueChanged<bool>? onContactWithRobotChange;
   final ValueChanged<bool>? onFoulChange;
-  final ValueChanged<bool>? onAutoNumHighConeSuccessChange;
-  final ValueChanged<bool>? onAutoNumMidConeSuccessChange;
-  final ValueChanged<bool>? onAutoNumLowConeSuccessChange;
+
   final ValueChanged<MatchScoutingData>? onChanged;
 
   @override
@@ -55,28 +47,100 @@ class _AutoTabState extends State<AutoTab> {
   bool swapLocation = false;
   Color colorLeftSide = Colors.blue;
   Color colorRightSide = Colors.red;
-  double imgFieldRotation = 0;
+  String teamLeftSide = "2";
+  String teamRightSide = "1";
+  Image imgFieldMap = Image.asset("assets/imgs/field.png");
+  bool highLightLeft1 = false;
+  bool highLightLeft2 = false;
+  bool highLightLeft3 = false;
+  bool highLightRight1 = false;
+  bool highLightRight2 = false;
+  bool highLightRight3 = false;
 
   _swapFieldDirections() async {
     if (swapLocation == true) {
       setState(() {
         colorLeftSide = Colors.red;
         colorRightSide = Colors.blue;
-        imgFieldRotation = 3.14;
+        teamLeftSide = "1";
+        teamRightSide = "2";
         swapLocation = false;
+        imgFieldMap = Image.asset("assets/imgs/fieldinverted.png");
+        ;
       });
     } else {
       setState(() {
         colorLeftSide = Colors.blue;
         colorRightSide = Colors.red;
-        imgFieldRotation = 0;
+        teamLeftSide = "2";
+        teamRightSide = "1";
         swapLocation = true;
+        imgFieldMap = Image.asset("assets/imgs/field.png");
       });
+    }
+    _highlightDriverLocation();
+  }
+
+  _highlightDriverLocation() async {
+    if (teamLeftSide == widget.matchScoutingData.idAlliance) {
+      if (widget.matchScoutingData.idDriveStation == "1") {
+        highLightLeft1 = true;
+      } else {
+        highLightLeft1 = false;
+      }
+      if (widget.matchScoutingData.idDriveStation == "2") {
+        highLightLeft2 = true;
+      } else {
+        highLightLeft2 = false;
+      }
+      if (widget.matchScoutingData.idDriveStation == "3") {
+        highLightLeft3 = true;
+      } else {
+        highLightLeft3 = false;
+      }
+    } else {
+      highLightLeft1 = false;
+      highLightLeft2 = false;
+      highLightLeft3 = false;
+    }
+    if (teamRightSide == widget.matchScoutingData.idAlliance) {
+      if (widget.matchScoutingData.idDriveStation == "1") {
+        setState(() {
+          highLightRight1 = true;
+        });
+      } else {
+        setState(() {
+          highLightRight1 = false;
+        });
+      }
+      if (widget.matchScoutingData.idDriveStation == "2") {
+        setState(() {
+          highLightRight2 = true;
+        });
+      } else {
+        setState(() {
+          highLightRight2 = false;
+        });
+      }
+      if (widget.matchScoutingData.idDriveStation == "3") {
+        setState(() {
+          highLightRight3 = true;
+        });
+      } else {
+        setState(() {
+          highLightRight3 = false;
+        });
+      }
+    } else {
+      highLightRight1 = false;
+      highLightRight2 = false;
+      highLightRight3 = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    _highlightDriverLocation();
     double width = MediaQuery.of(context).size.width;
     if (width < 500) {
       setState(() {
@@ -121,59 +185,28 @@ class _AutoTabState extends State<AutoTab> {
                       backGroundColor: Theme.of(context).primaryColor,
                       headingText: "Driver Station Diagram",
                     ),
-                    //      ElevatedButton(
-                    //        onPressed: () {
-                    //          _swapFieldDirections();
-                    //        },
-                    //        child: Image.asset(
-                    //          'assets/imgs/flipImage.png',
-                    //           scale: 25,
-                    //         ),
-                    //       ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _swapFieldDirections();
+                      },
+                      child: Image.asset(
+                        'assets/imgs/flipImage.png',
+                        scale: 25,
+                      ),
+                    ),
                   ]),
               Container(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Column(children: <Widget>[
-                        Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: colorLeftSide,
-                          ),
-                          child: Text(
-                            "1",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: colorLeftSide,
-                          ),
-                          child: Text(
-                            "2",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(5.0),
-                          padding: EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            color: colorLeftSide,
-                          ),
-                          child: Text(
-                            "3",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ]),
+                      DriverPositions(
+                        LeftSide: true,
+                        color: colorLeftSide,
+                        highLight1: highLightLeft1,
+                        highLight2: highLightLeft2,
+                        highLight3: highLightLeft3,
+                      ),
                       Column(
                           //mainAxisAlignment: MainAxisAlignment.start,
                           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,52 +216,18 @@ class _AutoTabState extends State<AutoTab> {
                               height: (widget.styleImgFieldMapWidth),
                               child: Transform(
                                 alignment: Alignment.center,
-                                transform: Matrix4.rotationY(imgFieldRotation),
-                                child: Image.asset("assets/imgs/field.png"),
+                                transform: Matrix4.rotationY(0),
+                                child: imgFieldMap,
                               ),
                             ),
                           ]),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Container(
-                              margin: const EdgeInsets.all(5.0),
-                              padding: EdgeInsets.all(4.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                color: colorRightSide,
-                              ),
-                              child: Text(
-                                "3",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(5.0),
-                              padding: EdgeInsets.all(4.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                color: colorRightSide,
-                              ),
-                              child: Text(
-                                "2",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(5.0),
-                              padding: EdgeInsets.all(4.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                color: colorRightSide,
-                              ),
-                              child: Text(
-                                "1",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ),
-                          ]),
+                      DriverPositions(
+                        LeftSide: false,
+                        color: colorRightSide,
+                        highLight1: highLightRight1,
+                        highLight2: highLightRight2,
+                        highLight3: highLightRight3,
+                      ),
                     ]),
               ),
             ]),
@@ -264,68 +263,130 @@ class _AutoTabState extends State<AutoTab> {
           styleMarginLeftSpeaker: styleMarginLeftSpeaker,
           styleMarginTopAmp: styleMarginTopAmp,
           matchScoutingData: widget.matchScoutingData,
+          numCoralAttempt: widget.matchScoutingData.autoNumCoralAttempt,
+          numCoralL1Success: widget.matchScoutingData.autoNumCoralL1Success,
+          numCoralL2Success: widget.matchScoutingData.autoNumCoralL2Success,
+          numCoralL3Success: widget.matchScoutingData.autoNumCoralL3Success,
+          numCoralL4Success: widget.matchScoutingData.autoNumCoralL4Success,
+          numAlgaeAttempt: widget.matchScoutingData.autoNumAlgaeAttempt,
+          numAlgaeL2Success: widget.matchScoutingData.autoNumAlgaeL2Success,
+          numAlgaeL3Success: widget.matchScoutingData.autoNumAlgaeL3Success,
+          numAlgaeNetAttempt: widget.matchScoutingData.autoNumAlgaeNetAttempt,
+          numAlgaeNetSuccess: widget.matchScoutingData.autoNumAlgaeNetSuccess,
+          numAlgaeProcessAttempt:
+              widget.matchScoutingData.autoNumAlgaeProcessAttempt,
+          numAlgaeProcessSuccess:
+              widget.matchScoutingData.autoNumAlgaeProcessSuccess,
           onChange: (MatchScoutingData newData) {
             setState(() {
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          numAmpAttempt: widget.matchScoutingData.autoNumAmpAttempt,
-          numAmpSuccess: widget.matchScoutingData.autoNumAmpSuccess,
-          numTrapAttempt: widget.matchScoutingData.autoNumTrapAttempt,
-          numSpeakerAttempt: widget.matchScoutingData.autoNumSpeakerAttempt,
-          numTrapSuccess: widget.matchScoutingData.autoNumTrapSuccess,
-          numSpeakerSuccess: widget.matchScoutingData.autoNumSpeakerSuccess,
-          onNumSpeakerSuccessChanged: (int value) {
+          onNumAlgaeNetAttempt: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumSpeakerSuccess = value;
+              widget.matchScoutingData.autoNumAlgaeNetAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumAmpSuccessChanged: (int value) {
+          onNumAlgaeNetSuccess: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumAmpSuccess = value;
+              widget.matchScoutingData.autoNumAlgaeNetSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumSpeakerAttemptChanged: (int value) {
+          onNumAlgaeProcessAttempt: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumSpeakerAttempt = value;
+              widget.matchScoutingData.autoNumAlgaeProcessAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumAmpAttemptChanged: (int value) {
+          onNumAlgaeProcessSuccess: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumAmpAttempt = value;
+              widget.matchScoutingData.autoNumAlgaeProcessSuccess = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumTrapSuccessChanged: (int value) {
+          onNumAlgaeAttempt: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumTrapSuccess = value;
+              widget.matchScoutingData.autoNumAlgaeAttempt = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },
-          onNumTrapAttemptChanged: (int value) {
+          onNumAlgaeL3Success: (int value) {
             setState(() {
               if (value < 0) {
                 value = 0;
               }
-              widget.matchScoutingData.autoNumTrapAttempt = value;
+              widget.matchScoutingData.autoNumAlgaeL3Success = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumAlgaeL2Success: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumAlgaeL2Success = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumCoralL2Success: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumCoralL2Success = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumCoralL1Success: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumCoralL1Success = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumCoralAttempt: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumCoralAttempt = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumCoralL3Success: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumCoralL3Success = value;
+              widget.onChanged!(widget.matchScoutingData);
+            });
+          },
+          onNumCoralL4Success: (int value) {
+            setState(() {
+              if (value < 0) {
+                value = 0;
+              }
+              widget.matchScoutingData.autoNumCoralL4Success = value;
               widget.onChanged!(widget.matchScoutingData);
             });
           },

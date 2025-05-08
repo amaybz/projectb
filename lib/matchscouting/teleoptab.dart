@@ -167,68 +167,132 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
               styleMarginTopAmp: styleMarginTopAmp,
               styleFontSizeBody: styleBodyTextTheme!.fontSize!,
               matchScoutingData: widget.matchScoutingData,
-              numSpeakerSuccess: widget.matchScoutingData.teleNumSpeakerSuccess,
-              numSpeakerAttempt: widget.matchScoutingData.teleNumSpeakerAttempt,
-              numAmpAttempt: widget.matchScoutingData.teleNumAmpAttempt,
-              numAmpSuccess: widget.matchScoutingData.teleNumAmpSuccess,
-              numTrapSuccess: widget.matchScoutingData.teleNumTrapSuccess,
-              numTrapAttempt: widget.matchScoutingData.teleNumTrapAttempt,
+              numAlgaeAttempt: widget.matchScoutingData.teleNumAlgaeAttempt,
+              numAlgaeL2Success: widget.matchScoutingData.teleNumAlgaeL2Success,
+              numAlgaeL3Success: widget.matchScoutingData.teleNumAlgaeL3Success,
+              numCoralAttempt: widget.matchScoutingData.teleNumCoralAttempt,
+              numCoralL1Success: widget.matchScoutingData.teleNumCoralL1Success,
+              numCoralL2Success: widget.matchScoutingData.teleNumCoralL2Success,
+              numCoralL3Success: widget.matchScoutingData.teleNumCoralL3Success,
+              numCoralL4Success: widget.matchScoutingData.teleNumCoralL4Success,
+              numAlgaeProcessAttempt:
+                  widget.matchScoutingData.teleNumAlgaeProcessAttempt,
+              numAlgaeProcessSuccess:
+                  widget.matchScoutingData.teleNumAlgaeProcessSuccess,
+              numAlgaeNetAttempt:
+                  widget.matchScoutingData.teleNumAlgaeNetAttempt,
+              numAlgaeNetSuccess:
+                  widget.matchScoutingData.teleNumAlgaeNetSuccess,
               onChange: (MatchScoutingData newData) {
                 setState(() {
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
-              onNumSpeakerSuccessChanged: (int value) {
+              onNumAlgaeProcessAttempt: (int value) {
                 setState(() {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumSpeakerSuccess = value;
+                  widget.matchScoutingData.teleNumAlgaeProcessAttempt = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
-              onNumAmpSuccessChanged: (int value) {
+              onNumAlgaeProcessSuccess: (int value) {
                 setState(() {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumAmpSuccess = value;
+                  widget.matchScoutingData.teleNumAlgaeProcessSuccess = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
-              onNumSpeakerAttemptChanged: (int value) {
+              onNumAlgaeNetAttempt: (int value) {
                 setState(() {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumSpeakerAttempt = value;
+                  widget.matchScoutingData.teleNumAlgaeNetAttempt = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
-              onNumAmpAttemptChanged: (int value) {
+              onNumAlgaeNetSuccess: (int value) {
                 setState(() {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumAmpAttempt = value;
+                  widget.matchScoutingData.teleNumAlgaeNetSuccess = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
-              onNumTrapSuccessChanged: (int value) {
+              onNumAlgaeAttempt: (int value) {
                 setState(() {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumTrapSuccess = value;
+                  widget.matchScoutingData.teleNumAlgaeAttempt = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
-              onNumTrapAttemptChanged: (int value) {
+              onNumAlgaeL3Success: (int value) {
                 setState(() {
                   if (value < 0) {
                     value = 0;
                   }
-                  widget.matchScoutingData.teleNumTrapAttempt = value;
+                  widget.matchScoutingData.teleNumAlgaeL3Success = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumAlgaeL2Success: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumAlgaeL2Success = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumCoralL2Success: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumCoralL2Success = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumCoralL1Success: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumCoralL1Success = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumCoralAttempt: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumCoralAttempt = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumCoralL3Success: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumCoralL3Success = value;
+                  widget.onChange!(widget.matchScoutingData);
+                });
+              },
+              onNumCoralL4Success: (int value) {
+                setState(() {
+                  if (value < 0) {
+                    value = 0;
+                  }
+                  widget.matchScoutingData.teleNumCoralL4Success = value;
                   widget.onChange!(widget.matchScoutingData);
                 });
               },
@@ -256,14 +320,6 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   },
                   onExpanded: (value) {},
                 ),
-                HumanWidget(
-                  matchScoutingData: widget.matchScoutingData,
-                  onChange: (matchScoutingData) {
-                    setState(() {
-                      widget.onChange!(matchScoutingData);
-                    });
-                  },
-                )
               ]),
         ),
       ),

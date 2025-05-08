@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleinterface.dart';
@@ -79,6 +80,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 try {
                   await _initializeControllerFuture;
                   await _controller!.setFlashMode(FlashMode.auto);
+                  //await _controller
+                  //?.lockCaptureOrientation(DeviceOrientation.portraitUp);
                 } catch (e) {
                   // If an error occurs, log the error to the console.
                   print(e);
@@ -182,24 +185,6 @@ class DisplayPictureScreen extends StatelessWidget {
   }
 
   Future<File> saveToDevice(File file, String fileName) async {
-    final permissionStatus = await Permission.photos.status;
-    if (permissionStatus.isDenied) {
-      // Here just ask for the permission for the first time
-      await Permission.photos.request();
-
-      // I noticed that sometimes popup won't show after user press deny
-      // so I do the check once again but now go straight to appSettings
-      if (permissionStatus.isDenied) {
-        await openAppSettings();
-      }
-    } else if (permissionStatus.isPermanentlyDenied) {
-      // Here open app settings for user to manually enable permission in case
-      // where permission was permanently denied
-      await openAppSettings();
-    } else {
-      // Do stuff that require permission here
-    }
-
     final appDirectory = await getApplicationDocumentsDirectory();
     final appExternalDirectory = await getExternalStorageDirectory();
 

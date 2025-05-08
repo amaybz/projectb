@@ -77,14 +77,14 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Use Note?:",
+                  "Use Coral?:",
                   style: styleBodyTextTheme,
                 ),
                 Switch(
-                  value: widget.pitData.flObject!,
+                  value: widget.pitData.flObjectCoral!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flObject = value;
+                      widget.pitData.flObjectCoral = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },
@@ -95,7 +95,25 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Catch:",
+                  "Use Algae?:",
+                  style: styleBodyTextTheme,
+                ),
+                Switch(
+                  value: widget.pitData.flObjectAlgae!,
+                  onChanged: (bool value) {
+                    setState(() {
+                      widget.pitData.flObjectAlgae = value;
+                      widget.onChanged!(widget.pitData);
+                    });
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Station Intake (Coral):",
                   style: styleBodyTextTheme,
                 ),
                 Switch(
@@ -112,14 +130,14 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Floor Pickup:",
+                  "Floor Pickup (Algae):",
                   style: styleBodyTextTheme,
                 ),
                 Switch(
-                  value: widget.pitData.flObjectFloor!,
+                  value: widget.pitData.flObjectAlgaeFloor!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flObjectFloor = value;
+                      widget.pitData.flObjectAlgaeFloor = value;
                     });
                   },
                 ),
@@ -129,14 +147,14 @@ class _PitIntakeState extends State<PitIntake> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Angled Pickup:",
+                  "Floor Pickup (Coral):",
                   style: styleBodyTextTheme,
                 ),
                 Switch(
-                  value: widget.pitData.flObjectAngle!,
+                  value: widget.pitData.flObjectCoralFloor!,
                   onChanged: (bool value) {
                     setState(() {
-                      widget.pitData.flObjectAngle = value;
+                      widget.pitData.flObjectCoralFloor = value;
                     });
                   },
                 ),

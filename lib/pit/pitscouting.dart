@@ -270,16 +270,37 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('This will clear the current Pit?',
+            content: new Text('Would you like to save the record?',
                 style: styleBodyTextTheme),
             actions: <Widget>[
               new TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('No'),
+                onPressed: () async {
+                  //savePitData(exit: true);
+
+                  if (recordSaved == true) {
+                    await savePitData(recordID: pitData.id!);
+                  } else {
+                    await savePitData();
+                  }
+                  if (recordSaved == true) {
+                    Navigator.of(context).pop(true);
+                  } else {
+                    String alertMsg;
+                    alertMsg = (recordSaved == true)
+                        ? "Pit has been saved to Local Database"
+                        : "FAILED to Save Record: The following fields must be filled in: Team";
+                    showAlertOKDialog(context, "Saving", alertMsg);
+                  }
+                },
+                child: new Text('Save and Exit'),
               ),
               new TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: new Text('Yes'),
+                child: new Text('Exit without Saving'),
+              ),
+              new TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('Cancel'),
               ),
             ],
           ),
@@ -307,7 +328,6 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     pitData.txScoutName = _txtScoutName.text;
     pitData.txPitNotes = txPitNotes.text;
     pitData.txScoringNotes = txScoringNotes.text;
-    pitData.txStageNotes = txChargeNotes.text;
     pitData.txDriveNotes = txDriveNotes.text;
     pitData.txAutoNotes = txAutoNotes.text;
     pitData.txComputerName = widget.deviceName;
@@ -344,6 +364,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       recordSaved = true;
       print("Record Saved: " + recordSaved.toString());
       print("Record ID: " + pitData.id.toString());
+
       return true;
     } else {
       print("ERROR Saving Record: " + recordSaved.toString());
@@ -723,9 +744,12 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               ),
               PitClimb(
                 pitData: pitData,
-                txChargeNotes: txChargeNotes,
+                txNotes: txChargeNotes,
                 styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
                 onChanged: (PitData updates) {
+                  if (pitData.flClimb == false) {
+                    pitData.idClimbPos = "1";
+                  }
                   setState(() {
                     pitData = updates;
                   });

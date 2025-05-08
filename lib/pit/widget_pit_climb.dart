@@ -12,7 +12,7 @@ class PitClimb extends StatefulWidget {
     this.styleFontSizeHeadings = 18,
     this.styleFieldTxShootingMaxWidth = 300,
     this.onChanged,
-    this.txChargeNotes,
+    this.txNotes,
     this.onExpanded,
   }) : super(key: key);
 
@@ -21,7 +21,7 @@ class PitClimb extends StatefulWidget {
   final double styleFontSizeHeadings;
   final double styleFieldTxShootingMaxWidth;
   final ValueChanged<PitData>? onChanged;
-  final TextEditingController? txChargeNotes;
+  final TextEditingController? txNotes;
   final ValueChanged<bool>? onExpanded;
 
   @override
@@ -73,13 +73,13 @@ class _PitClimbState extends State<PitClimb> {
       DropdownMenuItem(
           value: "2",
           child: Text(
-            "Middle",
+            "Shallow",
             style: textStyle,
           )),
       DropdownMenuItem(
           value: "3",
           child: Text(
-            "High",
+            "Deep",
             style: textStyle,
           )),
       DropdownMenuItem(
@@ -119,7 +119,7 @@ class _PitClimbState extends State<PitClimb> {
     getClimbTypeDropDownMenu(styleBodyTextTheme!);
     getClimbPosDropDownMenu(styleBodyTextTheme!);
 
-    if (widget.pitData.flStage == false) {
+    if (widget.pitData.flClimb == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
@@ -131,16 +131,16 @@ class _PitClimbState extends State<PitClimb> {
                 styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Stage",
+                headingText: "Climb",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: widget.styleFontSize,
-                text: "Climb Stage:",
-                value: widget.pitData.flStage,
+                text: "Climb?:",
+                value: widget.pitData.flClimb,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flStage = value;
+                    widget.pitData.flClimb = value;
                     widget.onChanged!(widget.pitData);
                     widget.onExpanded!(true);
                   });
@@ -162,17 +162,17 @@ class _PitClimbState extends State<PitClimb> {
                 styleFontSize: styleTitleTextTheme!.fontSize!,
                 textColor: Theme.of(context).textTheme.titleLarge!.color!,
                 backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Stage",
+                headingText: "Climb",
                 //backGroundColor: Colors.green,
               ),
               RowHeading(
                 styleFontSize: styleBodyTextTheme!.fontSize!,
-                text: "Climb Stage:",
-                value: widget.pitData.flStage,
+                text: "Climb?:",
+                value: widget.pitData.flClimb,
                 styleBackGroundColor: Colors.green,
                 onChange: (bool value) {
                   setState(() {
-                    widget.pitData.flStage = value;
+                    widget.pitData.flClimb = value;
                     widget.onChanged!(widget.pitData);
                     widget.onExpanded!(true);
                   });
@@ -187,58 +187,16 @@ class _PitClimbState extends State<PitClimb> {
                     style: styleBodyTextTheme,
                   ),
                   DropdownButton(
-                    value: widget.pitData.idStageClimbPos == null
-                        ? null
-                        : widget.pitData.idStageClimbPos,
+                    value: widget.pitData.idClimbPos == null
+                        ? 1
+                        : widget.pitData.idClimbPos,
                     items: listClimbPos,
                     onChanged: (item) {
                       setState(() {
-                        widget.pitData.idStageClimbPos = item as String?;
+                        widget.pitData.idClimbPos = item as String?;
                         widget.onChanged!(widget.pitData);
                       });
-                      print("idStageClimbPos: " +
-                          widget.pitData.idStageClimbPos!);
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Climb Type:",
-                    style: styleBodyTextTheme,
-                  ),
-                  DropdownButton(
-                    value: widget.pitData.idStageClimbType == null
-                        ? null
-                        : widget.pitData.idStageClimbType,
-                    items: listClimbType,
-                    onChanged: (item) {
-                      setState(() {
-                        widget.pitData.idStageClimbType = item as String?;
-                        widget.onChanged!(widget.pitData);
-                      });
-                      print("idStageClimbType: " +
-                          widget.pitData.idStageClimbType!);
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Climb Assist?:",
-                    style: styleBodyTextTheme,
-                  ),
-                  Switch(
-                    value: widget.pitData.flStageAssist!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flStageAssist = value;
-                      });
+                      print("idClimbPos: " + widget.pitData.idClimbPos!);
                     },
                   ),
                 ],
@@ -255,7 +213,7 @@ class _PitClimbState extends State<PitClimb> {
                     constraints: BoxConstraints(
                         maxWidth: widget.styleFieldTxShootingMaxWidth),
                     child: TextField(
-                      controller: widget.txChargeNotes,
+                      controller: widget.txNotes,
                       decoration: InputDecoration(
                           hintText: 'Climb Notes',
                           hintStyle:

@@ -16,6 +16,8 @@ import 'package:camera/camera.dart';
 import 'package:projectb/addteamscreen.dart';
 import 'package:projectb/barcodeScanner.dart';
 
+import 'scanner/mobileScanner.dart';
+
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
 // can be called before `runApp()`
@@ -452,7 +454,9 @@ class _MyHomePageState extends State<MyHomePage> {
         _downloadingText = "Please select Location and Event to download data";
       });
       localDB.clearLocalTeams();
+      eventTeams!.sort((a, b) => a.teamNumber!.compareTo(b.teamNumber!));
       for (TeamsList team in eventTeams!) {
+        print(TeamsList);
         LocalTeam insertTeam = LocalTeam(
             key: team.key,
             name: team.name,
@@ -487,7 +491,6 @@ class _MyHomePageState extends State<MyHomePage> {
         eventsList.add(EventsList(name: i.name, key: i.key));
       }
     });
-
 
     if (eventsList.length == 0) {
       txtEventHelpText = "No Events for this location!";
@@ -814,11 +817,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         Expanded(
                           child: DropdownButton<String>(
                             isExpanded: true,
-
-
                             hint: Text(txtEventHelpText,
                                 style: styleBodyTextTheme),
-
                             value: selectedEvent == null
                                 ? null
                                 : selectedEvent!.key,
@@ -907,7 +907,7 @@ class _MyHomePageState extends State<MyHomePage> {
       MaterialPageRoute(
           builder: (context) => MatchScoutingScreen(
               eventName: eventName,
-              eventKey: selectedLocalEvent!.key,
+              eventKey: selectedLocalEvent?.key,
               eventTeams: teams,
               deviceName: _txtDeviceName.text,
               styleFontSize: this.styleFontSize,

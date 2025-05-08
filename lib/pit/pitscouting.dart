@@ -747,6 +747,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                 txNotes: txChargeNotes,
                 styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
                 onChanged: (PitData updates) {
+                  if (pitData.flClimb == false) {
+                    pitData.idClimbPos = "1";
+                  }
                   setState(() {
                     pitData = updates;
                   });

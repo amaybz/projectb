@@ -188,7 +188,7 @@ class _PitClimbState extends State<PitClimb> {
                   ),
                   DropdownButton(
                     value: widget.pitData.idClimbPos == null
-                        ? null
+                        ? 1
                         : widget.pitData.idClimbPos,
                     items: listClimbPos,
                     onChanged: (item) {

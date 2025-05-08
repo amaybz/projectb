@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleinterface.dart';
@@ -79,6 +80,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 try {
                   await _initializeControllerFuture;
                   await _controller!.setFlashMode(FlashMode.auto);
+                  //await _controller
+                  //?.lockCaptureOrientation(DeviceOrientation.portraitUp);
                 } catch (e) {
                   // If an error occurs, log the error to the console.
                   print(e);

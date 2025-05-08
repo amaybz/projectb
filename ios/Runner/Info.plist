@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>projectb</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -41,18 +43,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-    <key>NSCameraUsageDescription</key>
-    <string>The Camera is required to read QR codes</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-    	<dict>
-    		<key>CFBundleTypeRole</key>
-    		<string>Editor</string>
-    		<key>CFBundleURLSchemes</key>
-    		<array>
-    			<string>com.googleusercontent.apps.1019600754633-8auosnvj80bril5ch00g609rcev76m31</string>
-    		</array>
-    	</dict>
-    </array>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

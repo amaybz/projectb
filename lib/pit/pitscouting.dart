@@ -94,11 +94,19 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   setCamera() async {
     List<CameraDescription>? cameras;
     // Obtain a list of the available cameras on the device.
+
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      cameras = await availableCameras();
+      camera = cameras.first;
+    } on CameraException catch (e) {
+      print(e.code + " " + e.description.toString());
+    }
     try {
       cameras = await availableCameras();
       camera = cameras.first;
     } on CameraException catch (e) {
-      print("no cameras" + e.toString());
+      print("no cameras:" + e.toString());
     }
   }
 

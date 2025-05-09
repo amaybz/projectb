@@ -46,6 +46,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   PitData pitData = PitData();
+  CameraDescription? camera;
 
   //manage save record
   bool recordSaved = false;
@@ -87,6 +88,18 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     setEventTeams(14);
     numClimbHeight.text = "0";
     getMetricSystemValue();
+    setCamera();
+  }
+
+  setCamera() async {
+    List<CameraDescription>? cameras;
+    // Obtain a list of the available cameras on the device.
+    try {
+      cameras = await availableCameras();
+      camera = cameras.first;
+    } on CameraException catch (e) {
+      print("no cameras" + e.toString());
+    }
   }
 
   setEventTeams(double styleFontSize) async {
@@ -679,7 +692,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           children: [
                             PitImages(
                               title: "Team Shirt",
-                              camera: widget.camera!,
+                              camera: camera!,
                               onCapture: (newImage) {
                                 setState(() {
                                   pitData.imgTeamUniform = newImage;
@@ -689,7 +702,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             ),
                             PitImages(
                               title: "Robot Side",
-                              camera: widget.camera!,
+                              camera: camera!,
                               onCapture: (newImage) {
                                 setState(() {
                                   pitData.imgRobotSide = newImage;
@@ -699,7 +712,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             ),
                             PitImages(
                               title: "Robot Front",
-                              camera: widget.camera!,
+                              camera: camera!,
                               onCapture: (newImage) {
                                 setState(() {
                                   pitData.imgRobotFront = newImage;

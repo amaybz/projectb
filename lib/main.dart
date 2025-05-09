@@ -21,25 +21,26 @@ import 'scanner/mobileScanner.dart';
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
 // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
-
-  List<CameraDescription>? cameras;
+//  WidgetsFlutterBinding.ensureInitialized();
+//
+//  List<CameraDescription>? cameras;
   // Obtain a list of the available cameras on the device.
-  try {
-    cameras = await availableCameras();
-  } on CameraException catch (e) {
-    print("no cameras" + e.toString());
-  }
-  final firstCamera = cameras?.first;
-  runApp(MyApp(camera: firstCamera));
+//  try {
+//    cameras = await availableCameras();
+  // } on CameraException catch (e) {
+//    print("no cameras" + e.toString());
+  // }
+  // final firstCamera = cameras?.first;
+  // runApp(MyApp(camera: firstCamera));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final CameraDescription? camera;
+//  final CameraDescription? camera;
 
   const MyApp({
     Key? key,
-    @required this.camera,
+//    @required this.camera,
   }) : super(key: key);
 
   // This widget is the root of your application.
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
           FocusManager.instance.primaryFocus!.unfocus();
         }
       },
-      child: DarkLightTheme(camera: camera),
+      //child: DarkLightTheme(camera: camera),
+      child: DarkLightTheme(),
     );
   }
 }
@@ -61,9 +63,10 @@ class MyApp extends StatelessWidget {
 class DarkLightTheme extends StatefulWidget {
   const DarkLightTheme({
     Key? key,
-    required this.camera,
+//    required this.camera,
   }) : super(key: key);
-  final CameraDescription? camera;
+
+  // final CameraDescription? camera;
 
   @override
   State<DarkLightTheme> createState() => _DarkLightThemeState();
@@ -120,7 +123,7 @@ class _DarkLightThemeState extends State<DarkLightTheme> {
       theme: _light ? _darkTheme : _lightTheme,
       home: MyHomePage(
         title: 'Home',
-        camera: widget.camera,
+        //camera: widget.camera,
         theme: _light,
         onchangeTheme: (bool state) {
           setState(() {
@@ -935,7 +938,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 eventName: eventName,
                 eventKey: selectedLocalEvent!.key,
                 eventTeams: teams,
-                camera: widget.camera,
+                //camera: widget.camera,
                 deviceName: _txtDeviceName.text,
                 styleFontSize: this.styleFontSize,
                 darkMode: (value) {

@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:projectb/googleinterface.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {

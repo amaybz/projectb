@@ -37,6 +37,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   bool isSignedInToGoogle = false;
   int _selectedTab = 0;
   double styleQRSize = 320;
+  int styleFontSize = 13;
   bool sort = false;
 
   showAlertOKDialog(BuildContext context, String heading, String text) {
@@ -840,7 +841,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         styleQRSize = 325;
       });
     }
-    if (width < 393) {
+    if (width < 395) {
       setState(() {
         styleQRSize = 320;
       });

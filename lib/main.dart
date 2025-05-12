@@ -544,7 +544,7 @@ class _MyHomePageState extends State<MyHomePage> {
         styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
       });
     }
-    if (width < 393) {
+    if (width < 394) {
       setState(() {
         styleFontSize = 11;
         styleTitleText = Theme.of(context).textTheme.bodySmall;

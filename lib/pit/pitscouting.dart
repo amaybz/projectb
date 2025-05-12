@@ -455,7 +455,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
     }
     if (width < 395) {
-      styleFontSizeHeadings = 16;
+      styleFontSizeHeadings = 13;
       styleFieldScoutNameMaxWidth = 200;
       styleFieldTxShootingMaxWidth = 198;
       styleFieldTxPitNotesMaxWidth = 250;

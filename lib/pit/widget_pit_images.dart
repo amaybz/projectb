@@ -35,7 +35,7 @@ class _PitImagesState extends State<PitImages> {
         styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
       });
     }
-    if (width < 393) {
+    if (width < 395) {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;
@@ -70,7 +70,7 @@ class _PitImagesState extends State<PitImages> {
 
   Widget loadImage(File? image) {
     if (image == null) {
-      return Text("no image captured");
+      return Text("no image");
     } else {
       return Image.file(
         image,

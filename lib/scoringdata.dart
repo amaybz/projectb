@@ -142,9 +142,17 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Future<String?> get _externalPath async {
-    final directory =
-        await Directory("/storage/emulated/0/Download/RobotMatchScouting/")
-            .create(recursive: true);
+    var directory;
+    if(Platform.isAndroid){
+      directory =
+      await Directory("/storage/emulated/0/Download/RobotMatchScouting/")
+          .create(recursive: true);
+    }
+    if(Platform.isIOS){
+      directory =
+      await getApplicationDocumentsDirectory();
+    }
+
     return directory.path;
   }
 
@@ -378,7 +386,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         styleTitleTextTheme = Theme.of(context).textTheme.titleMedium;
       });
     }
-    if (width < 393) {
+    if (width < 394) {
       setState(() {
         styleBodyTextTheme = Theme.of(context).textTheme.bodySmall;
         styleTitleTextTheme = Theme.of(context).textTheme.titleSmall;

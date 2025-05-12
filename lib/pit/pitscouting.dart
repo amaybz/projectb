@@ -24,7 +24,6 @@ class PitScoutingScreen extends StatefulWidget {
     @required this.eventKey,
     this.eventTeams,
     this.deviceName,
-    this.camera,
     required this.darkMode,
     this.styleFontSize = 14,
   }) : super(key: key);
@@ -35,7 +34,7 @@ class PitScoutingScreen extends StatefulWidget {
   final List<LocalTeam>? eventTeams;
   final Function(bool) darkMode;
   final double? styleFontSize;
-  final CameraDescription? camera;
+
 
   @override
   _PitScoutingScreenState createState() => _PitScoutingScreenState();
@@ -46,8 +45,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
   LocalDB localDB = LocalDB.instance;
   MySharedPrefs mySharedPrefs = new MySharedPrefs();
   PitData pitData = PitData();
-  CameraDescription? camera;
-
+  CameraDescription camera = CameraDescription(name: 'Back', lensDirection: CameraLensDirection.back, sensorOrientation: 0);
   //manage save record
   bool recordSaved = false;
 
@@ -107,6 +105,9 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       camera = cameras.first;
     } on CameraException catch (e) {
       print("no cameras:" + e.toString());
+    }
+    on Exception catch (e) {
+      print("e no cameras" + e.toString());
     }
   }
 
@@ -700,7 +701,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                           children: [
                             PitImages(
                               title: "Team Shirt",
-                              camera: camera!,
+                              camera: camera,
                               onCapture: (newImage) {
                                 setState(() {
                                   pitData.imgTeamUniform = newImage;
@@ -710,7 +711,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             ),
                             PitImages(
                               title: "Robot Side",
-                              camera: camera!,
+                              camera: camera,
                               onCapture: (newImage) {
                                 setState(() {
                                   pitData.imgRobotSide = newImage;
@@ -720,7 +721,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                             ),
                             PitImages(
                               title: "Robot Front",
-                              camera: camera!,
+                              camera: camera,
                               onCapture: (newImage) {
                                 setState(() {
                                   pitData.imgRobotFront = newImage;

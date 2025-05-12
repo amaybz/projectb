@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
-  final CameraDescription? camera;
+  final CameraDescription camera;
   final ValueChanged<File>? onCaptureImage;
 
   const TakePictureScreen({
     Key? key,
-    @required this.camera,
+    required this.camera,
     this.onCaptureImage,
   }) : super(key: key);
 
@@ -33,7 +33,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // create a CameraController.
     _controller = CameraController(
       // Get a specific camera from the list of available cameras.
-      widget.camera!,
+      widget.camera,
       // Define the resolution to use.
       ResolutionPreset.high,
     );

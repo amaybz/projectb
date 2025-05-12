@@ -48,6 +48,21 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-    <string>Used to Scan QR Codes and take Pictures for in Pit Scouting</string>
+    <string>Used to Scan QR Codes and take Pictures in Pit Scouting</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Used to Scan QR Codes and take Pictures in Pit Scouting</string>
+	<key>GIDClientID</key>
+	<string>1019600754633-8auosnvj80bril5ch00g609rcev76m31.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1019600754633-8auosnvj80bril5ch00g609rcev76m31</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

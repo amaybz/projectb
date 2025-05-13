@@ -144,14 +144,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Future<String?> get _externalPath async {
     var directory;
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       directory =
-      await Directory("/storage/emulated/0/Download/RobotMatchScouting/")
-          .create(recursive: true);
+          await Directory("/storage/emulated/0/Download/RobotMatchScouting/")
+              .create(recursive: true);
     }
-    if(Platform.isIOS){
-      directory =
-      await getApplicationDocumentsDirectory();
+    if (Platform.isIOS) {
+      directory = await getApplicationDocumentsDirectory();
     }
 
     return directory.path;
@@ -371,9 +370,6 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       googleEmail = googleEmail;
     });
   }
-
-  //style
-  double styleFontSizeHeadings = 18;
 
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;

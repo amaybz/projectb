@@ -52,9 +52,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     AlertDialog alert = AlertDialog(
       title: Text(heading),
       content: Text(text),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
 
     // show the dialog
@@ -142,9 +140,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Future<String?> get _externalPath async {
-    final directory =
-        await Directory("/storage/emulated/0/Download/RobotMatchScouting/")
-            .create(recursive: true);
+    final directory = await Directory(
+      "/storage/emulated/0/Download/RobotMatchScouting/",
+    ).create(recursive: true);
     return directory.path;
   }
 
@@ -154,7 +152,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Future<File> writeMatchFileToDownloads(
-      MatchScoutingData matchScoutingData) async {
+    MatchScoutingData matchScoutingData,
+  ) async {
     Permission.manageExternalStorage.request();
     DialogBuilder(context).showLoadingIndicator('Saving Match JSON');
     print("get file Path");
@@ -166,12 +165,14 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     var dataToWrite = json.encode(matchScoutingData.toMap());
     File newFile = await file.writeAsString(dataToWrite.toString());
 
-    newFile.copy(exFilepath +
-        "/MATCH " +
-        matchScoutingData.numMatch.toString() +
-        " " +
-        matchScoutingData.idTeam.toString() +
-        ".json");
+    newFile.copy(
+      exFilepath +
+          "/MATCH " +
+          matchScoutingData.numMatch.toString() +
+          " " +
+          matchScoutingData.idTeam.toString() +
+          ".json",
+    );
 
     print("JSON: " + dataToWrite);
     print("Save Complete");
@@ -181,7 +182,8 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   }
 
   Future<File> writeMatchFileAndUploadToGoogle(
-      MatchScoutingData matchScoutingData) async {
+    MatchScoutingData matchScoutingData,
+  ) async {
     Permission.manageExternalStorage.request();
     DialogBuilder(context).showLoadingIndicator('Uploading Match JSON');
     print("get file Path");
@@ -193,23 +195,26 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     var dataToWrite = json.encode(matchScoutingData.toMap());
     File newFile = await file.writeAsString(dataToWrite.toString());
 
-    newFile.copy(exFilepath! +
-        "/MATCH " +
-        matchScoutingData.numMatch.toString() +
-        " " +
-        matchScoutingData.idTeam.toString() +
-        ".json");
+    newFile.copy(
+      exFilepath! +
+          "/MATCH " +
+          matchScoutingData.numMatch.toString() +
+          " " +
+          matchScoutingData.idTeam.toString() +
+          ".json",
+    );
 
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
-        newFile,
-        "MATCH_" +
-            matchScoutingData.numMatch.toString() +
-            " " +
-            matchScoutingData.idTeam.toString() +
-            " - " +
-            DateTime.now().toString(),
-        ".json");
+      newFile,
+      "MATCH_" +
+          matchScoutingData.numMatch.toString() +
+          " " +
+          matchScoutingData.idTeam.toString() +
+          " - " +
+          DateTime.now().toString(),
+      ".json",
+    );
     print("Upload Complete");
     setState(() {
       matchScoutingData.flUploaded = true;
@@ -244,11 +249,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       fileExists = false;
     }
     if (fileExists == true) {
-      pitData.imgTeamUniform!.copy(exFilepath +
-          pitData.idTeam.toString() +
-          " PIT_TeamUniform" +
-          pitData.idTeam.toString() +
-          ".jpg");
+      pitData.imgTeamUniform!.copy(
+        exFilepath +
+            pitData.idTeam.toString() +
+            " PIT_TeamUniform" +
+            pitData.idTeam.toString() +
+            ".jpg",
+      );
     }
 
     if (pitData.imgRobotSide != null) {
@@ -257,11 +264,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       fileExists = false;
     }
     if (fileExists == true) {
-      pitData.imgRobotSide!.copy(exFilepath +
-          pitData.idTeam.toString() +
-          " PIT_RobotSide" +
-          pitData.idTeam.toString() +
-          ".jpg");
+      pitData.imgRobotSide!.copy(
+        exFilepath +
+            pitData.idTeam.toString() +
+            " PIT_RobotSide" +
+            pitData.idTeam.toString() +
+            ".jpg",
+      );
     }
 
     if (pitData.imgRobotFront != null) {
@@ -270,11 +279,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       fileExists = false;
     }
     if (fileExists == true) {
-      pitData.imgRobotFront!.copy(exFilepath +
-          pitData.idTeam.toString() +
-          " PIT_RobotFront" +
-          pitData.idTeam.toString() +
-          ".jpg");
+      pitData.imgRobotFront!.copy(
+        exFilepath +
+            pitData.idTeam.toString() +
+            " PIT_RobotFront" +
+            pitData.idTeam.toString() +
+            ".jpg",
+      );
     }
 
     DialogBuilder(context).hideOpenDialog();
@@ -294,17 +305,21 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     File newFile = await file.writeAsString(dataToWrite.toString());
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
-        newFile,
-        "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
-        "json");
+      newFile,
+      "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
+      "json",
+    );
     print("Upload Complete: JSON");
     setState(() {
       pitData.uploaded = true;
     });
     localDB.insertPitData(pitData);
     DialogBuilder(context).hideOpenDialog();
-    showAlertOKDialog(context, "Upload",
-        "Result uploaded to Google, images are still uploading");
+    showAlertOKDialog(
+      context,
+      "Upload",
+      "Result uploaded to Google, images are still uploading",
+    );
     checkIsSignedInToGoogle();
 
     if (pitData.imgTeamUniform != null) {
@@ -314,12 +329,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     }
     if (fileExists == true) {
       googleInterface.uploadFile(
-          pitData.imgTeamUniform!,
-          pitData.idTeam.toString() +
-              " PIT_TeamUniform" +
-              pitData.idTeam.toString() +
-              DateTime.now().toString(),
-          "jpg");
+        pitData.imgTeamUniform!,
+        pitData.idTeam.toString() +
+            " PIT_TeamUniform" +
+            pitData.idTeam.toString() +
+            DateTime.now().toString(),
+        "jpg",
+      );
     }
 
     if (pitData.imgRobotSide != null) {
@@ -329,12 +345,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     }
     if (fileExists == true) {
       googleInterface.uploadFile(
-          pitData.imgRobotSide!,
-          pitData.idTeam.toString() +
-              " PIT_RobotSide" +
-              pitData.idTeam.toString() +
-              DateTime.now().toString(),
-          "jpg");
+        pitData.imgRobotSide!,
+        pitData.idTeam.toString() +
+            " PIT_RobotSide" +
+            pitData.idTeam.toString() +
+            DateTime.now().toString(),
+        "jpg",
+      );
     }
 
     if (pitData.imgRobotFront != null) {
@@ -344,12 +361,13 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     }
     if (fileExists == true) {
       googleInterface.uploadFile(
-          pitData.imgRobotFront!,
-          pitData.idTeam.toString() +
-              " PIT_RobotFront" +
-              pitData.idTeam.toString() +
-              DateTime.now().toString(),
-          "jpg");
+        pitData.imgRobotFront!,
+        pitData.idTeam.toString() +
+            " PIT_RobotFront" +
+            pitData.idTeam.toString() +
+            DateTime.now().toString(),
+        "jpg",
+      );
     }
 
     return newFile;
@@ -395,191 +413,200 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
       appBar: AppBar(
         foregroundColor: Theme.of(context).splashColor,
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          'Saved Match Scouting',
-          style: styleTitleTextTheme,
-        ),
+        title: Text('Saved Match Scouting', style: styleTitleTextTheme),
       ),
-      body: Column(children: <Widget>[
-        FractionallySizedBox(
-          widthFactor: 0.9,
-          child: Container(
-            margin: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-              //border: Border.all(color: Colors.blueAccent),
-              borderRadius: BorderRadius.only(
+      body: Column(
+        children: <Widget>[
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: Container(
+              margin: const EdgeInsets.all(15.0),
+              decoration: BoxDecoration(
+                //border: Border.all(color: Colors.blueAccent),
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-            ),
-            padding: EdgeInsets.all(4.0),
-            child: Column(
-              children: [
-                Text(
-                  "Google Account: " + googleEmail,
-                  style: styleBodyTextTheme,
+                  bottomRight: Radius.circular(10),
                 ),
-                GoogleLoginButton(
-                  googleLoginState: isSignedInToGoogle,
-                  onLoginPressed: (bool value) {
-                    if (value == true) {
-                      _signInToGoogle();
-                    } else {
-                      _signOutOfGoogle();
-                    }
-                  },
-                ),
-              ],
+              ),
+              padding: EdgeInsets.all(4.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Google Account: " + googleEmail,
+                    style: styleBodyTextTheme,
+                  ),
+                  GoogleLoginButton(
+                    googleLoginState: isSignedInToGoogle,
+                    onLoginPressed: (bool value) {
+                      if (value == true) {
+                        _signInToGoogle();
+                      } else {
+                        _signOutOfGoogle();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          HeadingMain(
-            styleFontSize: styleTitleTextTheme!.fontSize!,
-            headingText: "Saved Records",
-            backGroundColor: Theme.of(context).primaryColor,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              HeadingMain(
+                styleFontSize: styleTitleTextTheme!.fontSize!,
+                headingText: "Saved Records",
+                backGroundColor: Theme.of(context).primaryColor,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _sortList();
+                },
+                child: Image.asset('assets/imgs/sort.png', scale: 20),
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              _sortList();
-            },
-            child: Image.asset(
-              'assets/imgs/sort.png',
-              scale: 20,
-            ),
-          ),
-        ]),
 
-        _showTab(_selectedTab)
-        //Expanded(
-        //   child: _buildListViewMatchData(),
-        // ),
-        //Text("Saved Pits"),
-        //Expanded(
-        //  child: _buildListViewPitData(),
-        //),
-      ]),
+          _showTab(_selectedTab),
+          //Expanded(
+          //   child: _buildListViewMatchData(),
+          // ),
+          //Text("Saved Pits"),
+          //Expanded(
+          //  child: _buildListViewPitData(),
+          //),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.blue,
-          selectedItemColor: Colors.white,
-          currentIndex: _selectedTab,
-          // th
-          onTap: (value) {
-            setState(() => _selectedTab = value);
-          },
-          // is will be set when a new tab is tapped
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.settings_remote_outlined),
-              label: 'Match Scouting',
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.car_repair),
-              label: 'Pits',
-            ),
-          ]),
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        currentIndex: _selectedTab,
+        // th
+        onTap: (value) {
+          setState(() => _selectedTab = value);
+        },
+        // is will be set when a new tab is tapped
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.settings_remote_outlined),
+            label: 'Match Scouting',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.car_repair),
+            label: 'Pits',
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildListViewMatchData() {
     return ListView.builder(
-        padding: const EdgeInsets.all(5.0),
-        itemCount: dataList == null ? 0 : dataList!.length,
-        itemBuilder: (context, index) {
-          return _buildRowMatchData(dataList![index]);
-        });
+      padding: const EdgeInsets.all(5.0),
+      itemCount: dataList == null ? 0 : dataList!.length,
+      itemBuilder: (context, index) {
+        return _buildRowMatchData(dataList![index]);
+      },
+    );
   }
 
   Widget _buildRowMatchData(MatchScoutingData item) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              children: [
-                Text(
-                  item.id.toString() + ". Match: " + item.numMatch.toString(),
-                  style: styleBodyTextTheme,
-                ),
-                Text(
-                  "Team: " + item.idTeam.toString(),
-                  style: styleBodyTextTheme,
-                )
-              ],
-            ),
-            Column(children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 2.5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).primaryColorDark, // background
-                      foregroundColor:
-                          Theme.of(context).splashColor, // foreground
-                    ),
-                    onPressed: () {
-                      _showDialogMatchQRCode(context, item.id.toString());
-                    },
-                    child: Text('QR'),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 2.5),
-                  child: ElevatedButton(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            children: [
+              Text(
+                item.id.toString() + ". Match: " + item.numMatch.toString(),
+                style: styleBodyTextTheme,
+              ),
+              Text(
+                "Team: " + item.idTeam.toString(),
+                style: styleBodyTextTheme,
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).primaryColorDark, // background
-                        foregroundColor:
-                            Theme.of(context).splashColor, // foreground
+                        backgroundColor: Theme.of(
+                          context,
+                        ).primaryColorDark, // background
+                        foregroundColor: Theme.of(
+                          context,
+                        ).splashColor, // foreground
+                      ),
+                      onPressed: () {
+                        _showDialogMatchQRCode(context, item.id.toString());
+                      },
+                      child: Text('QR'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(
+                          context,
+                        ).primaryColorDark, // background
+                        foregroundColor: Theme.of(
+                          context,
+                        ).splashColor, // foreground
                       ),
                       onPressed: () {
                         writeMatchFileAndUploadToGoogle(item);
                       },
-                      child: UploadedImg(state: item.flUploaded!)),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 2.5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).primaryColorDark, // background
-                      foregroundColor:
-                          Theme.of(context).splashColor, // foreground
-                    ),
-                    onPressed: () {
-                      writeMatchFileToDownloads(item);
-                    },
-                    child: Image.asset(
-                      'assets/imgs/download.png',
-                      scale: 2,
+                      child: UploadedImg(state: item.flUploaded!),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 2.5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red, // background
-                      foregroundColor: Colors.white, // foreground
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(
+                          context,
+                        ).primaryColorDark, // background
+                        foregroundColor: Theme.of(
+                          context,
+                        ).splashColor, // foreground
+                      ),
+                      onPressed: () {
+                        writeMatchFileToDownloads(item);
+                      },
+                      child: Image.asset('assets/imgs/download.png', scale: 2),
                     ),
-                    onPressed: () {
-                      deleteMatchRecord(context, item.id!);
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // background
+                        foregroundColor: Colors.white, // foreground
+                      ),
+                      onPressed: () {
+                        deleteMatchRecord(context, item.id!);
 
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'assets/imgs/delete.png',
-                      scale: 2,
+                        setState(() {});
+                      },
+                      child: Image.asset('assets/imgs/delete.png', scale: 2),
                     ),
                   ),
-                ),
-              ]),
-            ]),
-          ]),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
 
     //print(item.defenceRating);
@@ -627,10 +654,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     AlertDialog alert = AlertDialog(
       title: Text("WARNING"),
       content: Text("Are you sure you want to delete this record?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog
@@ -644,105 +668,106 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
   Widget _buildListViewPitData() {
     return ListView.builder(
-        padding: const EdgeInsets.all(5.0),
-        itemCount: listPitData == null ? 0 : listPitData!.length,
-        itemBuilder: (context, index) {
-          return _buildRowPitData(listPitData![index]);
-        });
+      padding: const EdgeInsets.all(5.0),
+      itemCount: listPitData == null ? 0 : listPitData!.length,
+      itemBuilder: (context, index) {
+        return _buildRowPitData(listPitData![index]);
+      },
+    );
   }
 
   Widget _buildRowPitData(PitData item) {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              children: [
-                Text(
-                  item.id.toString() + ". PIT: " + item.idTeam.toString(),
-                  style: styleBodyTextTheme,
-                ),
-                Text(
-                  "Scout: " + item.txScoutName!,
-                  style: styleBodyTextTheme,
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2.5),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context)
-                                .primaryColorDark, // background
-                            foregroundColor:
-                                Theme.of(context).splashColor, // foreground
-                          ),
-                          onPressed: () {
-                            _showDialogPitQRCode(context, item.id.toString());
-                          },
-                          child: Text('QR'),
-                        ),
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            children: [
+              Text(
+                item.id.toString() + ". PIT: " + item.idTeam.toString(),
+                style: styleBodyTextTheme,
+              ),
+              Text("Scout: " + item.txScoutName!, style: styleBodyTextTheme),
+            ],
+          ),
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(
+                          context,
+                        ).primaryColorDark, // background
+                        foregroundColor: Theme.of(
+                          context,
+                        ).splashColor, // foreground
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2.5),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Theme.of(context)
-                                  .primaryColorDark, // background
-                              foregroundColor:
-                                  Theme.of(context).splashColor, // foreground
-                            ),
-                            onPressed: () {
-                              writePitFileAndUploadToGoogle(item);
-                            },
-                            child: UploadedImg(state: item.uploaded!)),
+                      onPressed: () {
+                        _showDialogPitQRCode(context, item.id.toString());
+                      },
+                      child: Text('QR'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(
+                          context,
+                        ).primaryColorDark, // background
+                        foregroundColor: Theme.of(
+                          context,
+                        ).splashColor, // foreground
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2.5),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context)
-                                .primaryColorDark, // background
-                            foregroundColor:
-                                Theme.of(context).splashColor, // foreground
-                          ),
-                          onPressed: () {
-                            writePitFileToDownloads(item);
-                          },
-                          child: Image.asset(
-                            'assets/imgs/download.png',
-                            scale: 2,
-                          ),
-                        ),
+                      onPressed: () {
+                        writePitFileAndUploadToGoogle(item);
+                      },
+                      child: UploadedImg(state: item.uploaded!),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(
+                          context,
+                        ).primaryColorDark, // background
+                        foregroundColor: Theme.of(
+                          context,
+                        ).splashColor, // foreground
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 2.5),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red, // background
-                            foregroundColor: Colors.white, // foreground
-                          ),
-                          onPressed: () {
-                            deletePitRecord(context, item.id!);
+                      onPressed: () {
+                        writePitFileToDownloads(item);
+                      },
+                      child: Image.asset('assets/imgs/download.png', scale: 2),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 2.5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // background
+                        foregroundColor: Colors.white, // foreground
+                      ),
+                      onPressed: () {
+                        deletePitRecord(context, item.id!);
 
-                            setState(() {});
-                          },
-                          child: Image.asset(
-                            'assets/imgs/delete.png',
-                            scale: 2,
-                          ),
-                        ),
-                      ),
-                    ]),
-              ],
-            ),
-          ]),
+                        setState(() {});
+                      },
+                      child: Image.asset('assets/imgs/delete.png', scale: 2),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -775,10 +800,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     AlertDialog alert = AlertDialog(
       title: Text("WARNING"),
       content: Text("Are you sure you want to delete this record?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog
@@ -793,14 +815,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
   Widget _showTab(int index) {
     if (index == 0) {
       setState(() {});
-      return Expanded(
-        child: _buildListViewMatchData(),
-      );
+      return Expanded(child: _buildListViewMatchData());
     } else if (index == 1) {
       setState(() {});
-      return Expanded(
-        child: _buildListViewPitData(),
-      );
+      return Expanded(child: _buildListViewPitData());
     } else {
       return Container(
         child: Text(
@@ -845,8 +863,9 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
 
     print("QR Size: " + styleQRSize.toString());
 
-    MatchScoutingData match =
-        await localDB.getScoringDataRecord(int.parse(matchID));
+    MatchScoutingData match = await localDB.getScoringDataRecord(
+      int.parse(matchID),
+    );
     var barcodeData = json.encode(match.toMap());
     // set up the AlertDialog
     Dialog dialogQRCodeImage = Dialog(

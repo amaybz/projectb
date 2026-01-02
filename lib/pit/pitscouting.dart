@@ -100,25 +100,28 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     if (widget.eventTeams == null) {
       //show no teams
       setState(() {
-        ddsEventTeams.add(new DropdownMenuItem(
+        ddsEventTeams.add(
+          new DropdownMenuItem(
             value: "0",
-            child: Text(
-              "NO TEAMS for this EVENT",
-              style: styleBodyTextTheme,
-            )));
+            child: Text("NO TEAMS for this EVENT", style: styleBodyTextTheme),
+          ),
+        );
       });
     }
 
     //update dropdown box with Teams
     for (LocalTeam team in widget.eventTeams!) {
       setState(() {
-        ddsEventTeams.add(new DropdownMenuItem(
+        ddsEventTeams.add(
+          new DropdownMenuItem(
             value: team.key,
             child: Text(
               team.teamNumber.toString() + " - " + team.nickName!,
               style: styleBodyTextTheme,
               overflow: TextOverflow.ellipsis,
-            )));
+            ),
+          ),
+        );
       });
     }
   }
@@ -128,23 +131,26 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     if (widget.eventTeams == null) {
       //show no teams
       setState(() {
-        ddsEventTeams.add(new DropdownMenuItem(
+        ddsEventTeams.add(
+          new DropdownMenuItem(
             value: "0",
-            child: Text(
-              "NO TEAMS for this EVENT",
-              style: textStyle,
-            )));
+            child: Text("NO TEAMS for this EVENT", style: textStyle),
+          ),
+        );
       });
     } else {
       for (LocalTeam team in widget.eventTeams!) {
         setState(() {
-          ddsEventTeams.add(new DropdownMenuItem(
+          ddsEventTeams.add(
+            new DropdownMenuItem(
               value: team.key,
               child: Text(
                 team.teamNumber.toString() + " - " + team.nickName!,
                 style: textStyle,
                 overflow: TextOverflow.ellipsis,
-              )));
+              ),
+            ),
+          );
         });
       }
     }
@@ -170,10 +176,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     AlertDialog alert = AlertDialog(
       title: Text("WARNING"),
       content: Text("This will clear all data?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog
@@ -189,12 +192,13 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     // After 1 second, it takes you to the bottom of the ListView
     double newPos = _scrollController.offset + amount;
     Timer(
-        Duration(milliseconds: 75),
-        () => _scrollController.animateTo(
-              newPos,
-              duration: Duration(seconds: 1),
-              curve: Curves.fastOutSlowIn,
-            ));
+      Duration(milliseconds: 75),
+      () => _scrollController.animateTo(
+        newPos,
+        duration: Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
     print(_scrollController.position);
   }
 
@@ -251,9 +255,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     AlertDialog alert = AlertDialog(
       title: Text(heading),
       content: Text(text, style: styleBodyTextTheme),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
 
     // show the dialog
@@ -270,8 +272,10 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('Would you like to save the record?',
-                style: styleBodyTextTheme),
+            content: new Text(
+              'Would you like to save the record?',
+              style: styleBodyTextTheme,
+            ),
             actions: <Widget>[
               new TextButton(
                 onPressed: () async {
@@ -308,9 +312,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
         false;
   }
 
-  Future<bool> savePitData({
-    int recordID = 0,
-  }) async {
+  Future<bool> savePitData({int recordID = 0}) async {
     print("saving record");
     pitData.id = null;
     DateTime now = new DateTime.now();
@@ -464,123 +466,125 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-            foregroundColor: Theme.of(context).splashColor,
-            backgroundColor: Theme.of(context).primaryColor,
-            title: Text(
-              'Pit Scouting',
-              style: styleTitleTextTheme,
+          foregroundColor: Theme.of(context).splashColor,
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text('Pit Scouting', style: styleTitleTextTheme),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: handleMenuClick,
+              itemBuilder: (BuildContext context) {
+                return {'Clear Pit', 'Settings'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
             ),
-            actions: <Widget>[
-              PopupMenuButton<String>(
-                  onSelected: handleMenuClick,
-                  itemBuilder: (BuildContext context) {
-                    return {'Clear Pit', 'Settings'}.map((String choice) {
-                      return PopupMenuItem<String>(
-                        value: choice,
-                        child: Text(choice),
-                      );
-                    }).toList();
-                  }),
-            ]),
+          ],
+        ),
         body: ListView(
-            controller: _scrollController,
-            reverse: false,
-            shrinkWrap: true,
-            children: <Widget>[
-              FractionallySizedBox(
-                widthFactor: 0.99,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 800.0),
-                    child: Container(
-                      margin: const EdgeInsets.all(5.0),
-                      decoration: BoxDecoration(
-                        //border: Border.all(color: Colors.blueAccent),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
+          controller: _scrollController,
+          reverse: false,
+          shrinkWrap: true,
+          children: <Widget>[
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 800.0),
+                  child: Container(
+                    margin: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                      //border: Border.all(color: Colors.blueAccent),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
                       ),
-                      padding: EdgeInsets.all(4.0),
-                      child: Column(
+                    ),
+                    padding: EdgeInsets.all(4.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        HeadingMain(
+                          styleFontSize: styleTitleTextTheme!.fontSize!,
+                          textColor: styleTitleTextTheme!.color!,
+                          backGroundColor: Theme.of(context).primaryColor,
+                          headingText: "Event: " + widget.eventName!,
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text("Scout: ", style: styleBodyTextTheme),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: styleFieldScoutNameMaxWidth,
+                              ),
+                              child: TextField(
+                                controller: _txtScoutName,
+                                style: styleBodyTextTheme,
+                                decoration: InputDecoration(
+                                  hintText: 'Scout Name',
+                                  hintStyle: styleBodyTextTheme,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            HeadingMain(
-                              styleFontSize: styleTitleTextTheme!.fontSize!,
-                              textColor: styleTitleTextTheme!.color!,
-                              backGroundColor: Theme.of(context).primaryColor,
-                              headingText: "Event: " + widget.eventName!,
+                            Text(
+                              "Team ",
+                              style: TextStyle(
+                                fontSize: styleBodyTextTheme!.fontSize!,
+                              ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Scout: ",
-                                  style: styleBodyTextTheme,
-                                ),
-                                ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      maxWidth: styleFieldScoutNameMaxWidth),
-                                  child: TextField(
-                                    controller: _txtScoutName,
-                                    style: styleBodyTextTheme,
-                                    decoration: InputDecoration(
-                                        hintText: 'Scout Name',
-                                        hintStyle: styleBodyTextTheme),
-                                  ),
-                                ),
-                              ],
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: styleFieldTeamMaxWidth,
+                              ),
+                              child: DropdownButton(
+                                isExpanded: true,
+                                value: selectedTeam == null
+                                    ? null
+                                    : selectedTeam?.key,
+                                //title: "Team",
+                                items: ddsEventTeams,
+                                onChanged: (item) {
+                                  setState(() {
+                                    selectedTeam = widget.eventTeams
+                                        ?.firstWhere(
+                                          (team) => team.key == item,
+                                          orElse: () =>
+                                              widget.eventTeams!.first,
+                                        );
+                                  });
+                                  print("Team Key: " + selectedTeam!.key!);
+                                },
+                              ),
                             ),
-                            Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    "Team ",
-                                    style: TextStyle(
-                                        fontSize:
-                                            styleBodyTextTheme!.fontSize!),
-                                  ),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                        maxWidth: styleFieldTeamMaxWidth),
-                                    child: DropdownButton(
-                                      isExpanded: true,
-                                      value: selectedTeam == null
-                                          ? null
-                                          : selectedTeam?.key,
-                                      //title: "Team",
-                                      items: ddsEventTeams,
-                                      onChanged: (item) {
-                                        setState(() {
-                                          selectedTeam = widget.eventTeams
-                                              ?.firstWhere(
-                                                  (team) => team.key == item,
-                                                  orElse: () =>
-                                                      widget.eventTeams!.first);
-                                        });
-                                        print(
-                                            "Team Key: " + selectedTeam!.key!);
-                                      },
-                                    ),
-                                  ),
-                                ]),
-                          ]),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              FractionallySizedBox(
-                widthFactor: 0.99,
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Container(
+                margin: const EdgeInsets.all(5.0),
                 child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(children: <Widget>[
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    children: <Widget>[
                       HeadingMain(
                         styleFontSize: styleTitleTextTheme!.fontSize!,
                         textColor: styleTitleTextTheme!.color!,
@@ -589,258 +593,272 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                         //backGroundColor: Colors.green,
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: 105,
-                              height: 58,
-                              child: TextField(
-                                style: styleBodyTextTheme,
-                                controller: txWeight,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                  labelText: "Weight (" + strWeight + ")",
-                                  labelStyle: styleBodyTextTheme,
-                                  //border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides,
+                            ),
+                            width: 105,
+                            height: 58,
+                            child: TextField(
+                              style: styleBodyTextTheme,
+                              controller: txWeight,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              decoration: InputDecoration(
+                                labelText: "Weight (" + strWeight + ")",
+                                labelStyle: styleBodyTextTheme,
+                                //border: InputBorder.none,
+                                isDense: true,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: 105,
-                              height: 58,
-                              child: TextField(
-                                style: styleBodyTextTheme,
-                                controller: txHeight,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                  labelText: "Height(" + strDistance + ")",
-                                  labelStyle: styleBodyTextTheme,
-                                  //border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides,
+                            ),
+                            width: 105,
+                            height: 58,
+                            child: TextField(
+                              style: styleBodyTextTheme,
+                              controller: txHeight,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              decoration: InputDecoration(
+                                labelText: "Height(" + strDistance + ")",
+                                labelStyle: styleBodyTextTheme,
+                                //border: InputBorder.none,
+                                isDense: true,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: styleFieldPadding,
-                                  horizontal: styleFieldPaddingSides),
-                              width: 105,
-                              height: 58,
-                              child: TextField(
-                                style: styleBodyTextTheme,
-                                controller: txWidth,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                decoration: InputDecoration(
-                                  labelText: "Width (" + strDistance + ")",
-                                  labelStyle: styleBodyTextTheme,
-                                  //border: InputBorder.none,
-                                  isDense: true,
-                                ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: styleFieldPadding,
+                              horizontal: styleFieldPaddingSides,
+                            ),
+                            width: 105,
+                            height: 58,
+                            child: TextField(
+                              style: styleBodyTextTheme,
+                              controller: txWidth,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              decoration: InputDecoration(
+                                labelText: "Width (" + strDistance + ")",
+                                labelStyle: styleBodyTextTheme,
+                                //border: InputBorder.none,
+                                isDense: true,
                               ),
                             ),
-                          ]),
-                    ]),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-              FractionallySizedBox(
-                widthFactor: 0.99,
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Container(
+                margin: const EdgeInsets.all(5.0),
                 child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(children: <Widget>[
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    children: <Widget>[
                       HeadingMain(
                         headingText: "Pictures",
                         styleFontSize: styleTitleTextTheme!.fontSize!,
-                        textColor:
-                            Theme.of(context).textTheme.titleLarge!.color!,
+                        textColor: Theme.of(
+                          context,
+                        ).textTheme.titleLarge!.color!,
                         backGroundColor: Theme.of(context).primaryColor,
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            PitImages(
-                              title: "Team Shirt",
-                              camera: widget.camera!,
-                              onCapture: (newImage) {
-                                setState(() {
-                                  pitData.imgTeamUniform = newImage;
-                                });
-                              },
-                              image: pitData.imgTeamUniform,
-                            ),
-                            PitImages(
-                              title: "Robot Side",
-                              camera: widget.camera!,
-                              onCapture: (newImage) {
-                                setState(() {
-                                  pitData.imgRobotSide = newImage;
-                                });
-                              },
-                              image: pitData.imgRobotSide,
-                            ),
-                            PitImages(
-                              title: "Robot Front",
-                              camera: widget.camera!,
-                              onCapture: (newImage) {
-                                setState(() {
-                                  pitData.imgRobotFront = newImage;
-                                });
-                              },
-                              image: pitData.imgRobotFront,
-                            ),
-                          ]),
-                    ]),
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          PitImages(
+                            title: "Team Shirt",
+                            camera: widget.camera!,
+                            onCapture: (newImage) {
+                              setState(() {
+                                pitData.imgTeamUniform = newImage;
+                              });
+                            },
+                            image: pitData.imgTeamUniform,
+                          ),
+                          PitImages(
+                            title: "Robot Side",
+                            camera: widget.camera!,
+                            onCapture: (newImage) {
+                              setState(() {
+                                pitData.imgRobotSide = newImage;
+                              });
+                            },
+                            image: pitData.imgRobotSide,
+                          ),
+                          PitImages(
+                            title: "Robot Front",
+                            camera: widget.camera!,
+                            onCapture: (newImage) {
+                              setState(() {
+                                pitData.imgRobotFront = newImage;
+                              });
+                            },
+                            image: pitData.imgRobotFront,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-              PitDriveBase(
-                pitData: pitData,
-                txDriveNotes: txDriveNotes,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(50) : scrollDown(0);
-                },
-              ),
-              PitIntake(
-                pitData: pitData,
-                txNotes: txObjectNotes,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-              ),
-              PitScoring(
-                pitData: pitData,
-                txScoringNotes: txScoringNotes,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-              ),
-              PitClimb(
-                pitData: pitData,
-                txNotes: txChargeNotes,
-                styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
-                onChanged: (PitData updates) {
-                  if (pitData.flClimb == false) {
-                    pitData.idClimbPos = "1";
-                  }
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(180) : scrollDown(0);
-                },
-              ),
-              PitAuto(
-                pitData: pitData,
-                strDistance: strDistance,
-                strWeight: strWeight,
-                txAutoNotes: txAutoNotes,
-                onChanged: (PitData updates) {
-                  setState(() {
-                    pitData = updates;
-                  });
-                },
-                onExpanded: (value) {
-                  (value == true) ? scrollDown(100) : scrollDown(0);
-                },
-              ),
-              FractionallySizedBox(
-                widthFactor: 0.99,
+            ),
+            PitDriveBase(
+              pitData: pitData,
+              txDriveNotes: txDriveNotes,
+              onChanged: (PitData updates) {
+                setState(() {
+                  pitData = updates;
+                });
+              },
+              onExpanded: (value) {
+                (value == true) ? scrollDown(50) : scrollDown(0);
+              },
+            ),
+            PitIntake(
+              pitData: pitData,
+              txNotes: txObjectNotes,
+              onChanged: (PitData updates) {
+                setState(() {
+                  pitData = updates;
+                });
+              },
+            ),
+            PitScoring(
+              pitData: pitData,
+              txScoringNotes: txScoringNotes,
+              onChanged: (PitData updates) {
+                setState(() {
+                  pitData = updates;
+                });
+              },
+            ),
+            PitClimb(
+              pitData: pitData,
+              txNotes: txChargeNotes,
+              styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
+              onChanged: (PitData updates) {
+                if (pitData.flClimb == false) {
+                  pitData.idClimbPos = "1";
+                }
+                setState(() {
+                  pitData = updates;
+                });
+              },
+              onExpanded: (value) {
+                (value == true) ? scrollDown(180) : scrollDown(0);
+              },
+            ),
+            PitAuto(
+              pitData: pitData,
+              strDistance: strDistance,
+              strWeight: strWeight,
+              txAutoNotes: txAutoNotes,
+              onChanged: (PitData updates) {
+                setState(() {
+                  pitData = updates;
+                });
+              },
+              onExpanded: (value) {
+                (value == true) ? scrollDown(100) : scrollDown(0);
+              },
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Container(
+                margin: const EdgeInsets.all(5.0),
                 child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(children: <Widget>[
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    children: <Widget>[
                       HeadingMain(
                         styleFontSize: styleTitleTextTheme!.fontSize!,
-                        textColor:
-                            Theme.of(context).textTheme.titleLarge!.color!,
+                        textColor: Theme.of(
+                          context,
+                        ).textTheme.titleLarge!.color!,
                         backGroundColor: Theme.of(context).primaryColor,
                         headingText: "Comments",
                         //backGroundColor: Colors.green,
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Notes: ",
-                              style: styleBodyTextTheme,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("Notes: ", style: styleBodyTextTheme),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: styleFieldTxPitNotesMaxWidth,
                             ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  maxWidth: styleFieldTxPitNotesMaxWidth),
-                              child: TextField(
-                                controller: txPitNotes,
-                                decoration: InputDecoration(
-                                    hintText: 'General Notes',
-                                    hintStyle: styleBodyTextTheme?.copyWith(
-                                        color: Colors.grey)),
+                            child: TextField(
+                              controller: txPitNotes,
+                              decoration: InputDecoration(
+                                hintText: 'General Notes',
+                                hintStyle: styleBodyTextTheme?.copyWith(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
-                          ]),
-                    ]),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-              FinishTab(
-                onSavePressed: (bool value) async {
-                  if (recordSaved == true) {
-                    await savePitData(recordID: pitData.id!);
-                  } else {
-                    await savePitData();
-                  }
-                  String alertMsg;
-                  alertMsg = (recordSaved == true)
-                      ? "Pit has been saved to Local Database"
-                      : "FAILED to Save Record: The following fields must be filled in: Team";
-                  showAlertOKDialog(context, "Saved", alertMsg);
-                },
-                googleUploadStatus: googleUploadStatus,
-                onUploadToGoogle: (bool value) async {
-                  if (recordSaved == true) {
-                    await savePitData(recordID: pitData.id!);
-                  } else {
-                    await savePitData();
-                  }
-                  if (recordSaved == true) {
-                    _uploadDataToGoogleDrive(pitData);
-                  }
-                  String alertMsg = (recordSaved == true)
-                      ? "Pit has been saved to Local Database."
-                      : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
-                  showAlertOKDialog(context, "Save", alertMsg);
-                },
-              ),
-            ]),
+            ),
+            FinishTab(
+              onSavePressed: (bool value) async {
+                if (recordSaved == true) {
+                  await savePitData(recordID: pitData.id!);
+                } else {
+                  await savePitData();
+                }
+                String alertMsg;
+                alertMsg = (recordSaved == true)
+                    ? "Pit has been saved to Local Database"
+                    : "FAILED to Save Record: The following fields must be filled in: Team";
+                showAlertOKDialog(context, "Saved", alertMsg);
+              },
+              googleUploadStatus: googleUploadStatus,
+              onUploadToGoogle: (bool value) async {
+                if (recordSaved == true) {
+                  await savePitData(recordID: pitData.id!);
+                } else {
+                  await savePitData();
+                }
+                if (recordSaved == true) {
+                  _uploadDataToGoogleDrive(pitData);
+                }
+                String alertMsg = (recordSaved == true)
+                    ? "Pit has been saved to Local Database."
+                    : "FAILED to Save Record: The following fields must be filled in: Team, Team Shirt, Robot Pictures";
+                showAlertOKDialog(context, "Save", alertMsg);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

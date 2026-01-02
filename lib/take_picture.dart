@@ -53,99 +53,94 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Take a picture')),
-        // Wait until the controller is initialized before displaying the
-        // camera preview. Use a FutureBuilder to display a loading spinner
-        // until the controller has finished initializing.
-        body: FutureBuilder<void>(
-          future: _initializeControllerFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              // If the Future is complete, display the preview.
-              return CameraPreview(_controller!);
-            } else {
-              // Otherwise, display a loading indicator.
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              heroTag: null,
-              child: Icon(Icons.flash_auto),
-              // Provide an onPressed callback.
-              onPressed: () async {
-                try {
-                  await _initializeControllerFuture;
-                  await _controller!.setFlashMode(FlashMode.auto);
-                  //await _controller
-                  //?.lockCaptureOrientation(DeviceOrientation.portraitUp);
-                } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                }
-              },
-            ),
-            SizedBox(
-              height: 10,
-              width: 10,
-            ),
-            FloatingActionButton(
-              heroTag: null,
-              child: Icon(Icons.flash_off),
-              // Provide an onPressed callback.
-              onPressed: () async {
-                try {
-                  await _initializeControllerFuture;
-                  await _controller!.setFlashMode(FlashMode.off);
-                } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                }
-              },
-            ),
-            SizedBox(
-              height: 10,
-              width: 10,
-            ),
-            FloatingActionButton(
-              heroTag: null,
-              child: Icon(Icons.camera_alt),
-              // Provide an onPressed callback.
-              onPressed: () async {
-                // Take the Picture in a try / catch block. If anything goes wrong,
-                // catch the error.
-                try {
-                  // Ensure that the camera is initialized.
-                  await _initializeControllerFuture;
+      appBar: AppBar(title: Text('Take a picture')),
+      // Wait until the controller is initialized before displaying the
+      // camera preview. Use a FutureBuilder to display a loading spinner
+      // until the controller has finished initializing.
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // If the Future is complete, display the preview.
+            return CameraPreview(_controller!);
+          } else {
+            // Otherwise, display a loading indicator.
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: null,
+            child: Icon(Icons.flash_auto),
+            // Provide an onPressed callback.
+            onPressed: () async {
+              try {
+                await _initializeControllerFuture;
+                await _controller!.setFlashMode(FlashMode.auto);
+                //await _controller
+                //?.lockCaptureOrientation(DeviceOrientation.portraitUp);
+              } catch (e) {
+                // If an error occurs, log the error to the console.
+                print(e);
+              }
+            },
+          ),
+          SizedBox(height: 10, width: 10),
+          FloatingActionButton(
+            heroTag: null,
+            child: Icon(Icons.flash_off),
+            // Provide an onPressed callback.
+            onPressed: () async {
+              try {
+                await _initializeControllerFuture;
+                await _controller!.setFlashMode(FlashMode.off);
+              } catch (e) {
+                // If an error occurs, log the error to the console.
+                print(e);
+              }
+            },
+          ),
+          SizedBox(height: 10, width: 10),
+          FloatingActionButton(
+            heroTag: null,
+            child: Icon(Icons.camera_alt),
+            // Provide an onPressed callback.
+            onPressed: () async {
+              // Take the Picture in a try / catch block. If anything goes wrong,
+              // catch the error.
+              try {
+                // Ensure that the camera is initialized.
+                await _initializeControllerFuture;
 
-                  // Attempt to take a picture and get the file `image`
-                  // where it was saved.
-                  final image = await _controller!.takePicture();
+                // Attempt to take a picture and get the file `image`
+                // where it was saved.
+                final image = await _controller!.takePicture();
 
-                  // If the picture was taken, display it on a new screen.
-                  widget.onCaptureImage!(File(image.path));
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DisplayPictureScreen(
-                        // Pass the automatically generated path to
-                        // the DisplayPictureScreen widget.
-                        imagePath: image.path,
-                      ),
+                // If the picture was taken, display it on a new screen.
+                widget.onCaptureImage!(File(image.path));
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DisplayPictureScreen(
+                      // Pass the automatically generated path to
+                      // the DisplayPictureScreen widget.
+                      imagePath: image.path,
                     ),
-                  );
-                } catch (e) {
-                  // If an error occurs, log the error to the console.
-                  print(e);
-                }
-              },
-            )
-          ],
-        ));
+                  ),
+                );
+              } catch (e) {
+                // If an error occurs, log the error to the console.
+                print(e);
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -173,7 +168,9 @@ class DisplayPictureScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               saveToDevice(
-                  File(imagePath!), "PitPicture" + DateTime.now().toString());
+                File(imagePath!),
+                "PitPicture" + DateTime.now().toString(),
+              );
               Navigator.pop(context);
             },
             child: Text("Save to Device"),
@@ -202,7 +199,10 @@ class DisplayPictureScreen extends StatelessWidget {
   Future<File> uploadToGoogle(File file) async {
     GoogleInterface googleInterface = GoogleInterface.instance;
     await googleInterface.uploadFile(
-        file, "PitPicture" + DateTime.now().toString(), "jpg");
+      file,
+      "PitPicture" + DateTime.now().toString(),
+      "jpg",
+    );
     print("Upload Complete");
     return file;
   }

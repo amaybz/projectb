@@ -62,7 +62,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   //final List<String> _listAlliance = ['Red', 'Blue'];
   final List<DropDownValue> _listAlliance = [
     DropDownValue(id: "1", value: "Red"),
-    DropDownValue(id: "2", value: "Blue")
+    DropDownValue(id: "2", value: "Blue"),
   ];
 
   List<DropdownMenuItem<String>> listAlliance = [
@@ -112,13 +112,16 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     if (widget.eventTeams == null) {
       //show no teams
       setState(() {
-        eventTeamsListDropDown.add(new DropdownMenuItem(
+        eventTeamsListDropDown.add(
+          new DropdownMenuItem(
             value: "0",
             child: Text(
               "NO TEAMS for this EVENT",
               style: TextStyle(fontSize: styleFontSize),
               overflow: TextOverflow.ellipsis,
-            )));
+            ),
+          ),
+        );
       });
     }
 
@@ -133,9 +136,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       print("LocalDB");
       print(matchTeams);
       List<MatchTeam> matchTeamsFiltered = matchTeams
-          .where((i) =>
-              i.matchNum.toString() == _txtMatchNumber.text &&
-              i.alliance.toString() == matchScoutingData.idAlliance)
+          .where(
+            (i) =>
+                i.matchNum.toString() == _txtMatchNumber.text &&
+                i.alliance.toString() == matchScoutingData.idAlliance,
+          )
           .toList();
       print("Filtered");
       print(matchTeamsFiltered);
@@ -145,11 +150,14 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             .toList();
         if (team.length > 0) {
           //print(team[0].key);
-          listMatchTeams.add(LocalTeam(
+          listMatchTeams.add(
+            LocalTeam(
               key: team[0].key,
               teamNumber: team[0].teamNumber,
               name: team[0].name,
-              nickName: team[0].nickName));
+              nickName: team[0].nickName,
+            ),
+          );
         }
       }
     }
@@ -173,12 +181,15 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
 
     for (LocalTeam team in listDropDownTeams) {
       setState(() {
-        eventTeamsListDropDown.add(new DropdownMenuItem(
+        eventTeamsListDropDown.add(
+          new DropdownMenuItem(
             value: team.key,
             child: Text(
               team.teamNumber.toString() + " - " + team.nickName!,
               style: TextStyle(fontSize: styleFontSize),
-            )));
+            ),
+          ),
+        );
       });
     }
   }
@@ -242,10 +253,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     AlertDialog alert = AlertDialog(
       title: Text("WARNING"),
       content: Text("This will clear all data?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog
@@ -277,10 +285,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     AlertDialog alert = AlertDialog(
       title: Text("EXIT"),
       content: Text("This will clear the current Match?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog
@@ -305,9 +310,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     AlertDialog alert = AlertDialog(
       title: Text(heading),
       content: Text(text),
-      actions: [
-        okButton,
-      ],
+      actions: [okButton],
     );
 
     // show the dialog
@@ -324,8 +327,10 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text('EXIT?'),
-            content: new Text('This will clear the current Match?',
-                style: styleBodyTextTheme),
+            content: new Text(
+              'This will clear the current Match?',
+              style: styleBodyTextTheme,
+            ),
             actions: <Widget>[
               new TextButton(
                 onPressed: () async {
@@ -377,9 +382,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     });
   }
 
-  Future<bool> saveMatchScout({
-    int recordID = 0,
-  }) async {
+  Future<bool> saveMatchScout({int recordID = 0}) async {
     matchScoutingData.id = null;
     print("saving record");
     if (recordID > 0) {
@@ -427,9 +430,11 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       context,
       // Create the SelectionScreen in the next step.
       MaterialPageRoute(
-        builder: (context) => SettingsScreen(darkMode: (value) {
-          widget.darkMode(value);
-        }),
+        builder: (context) => SettingsScreen(
+          darkMode: (value) {
+            widget.darkMode(value);
+          },
+        ),
       ),
     );
     getMetricSystemValue();
@@ -508,60 +513,59 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-            foregroundColor: Theme.of(context).splashColor,
-            backgroundColor: Theme.of(context).primaryColor,
-            title: Text(
-              'Match Scouting',
-              style: styleTitleTextTheme,
+          foregroundColor: Theme.of(context).splashColor,
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text('Match Scouting', style: styleTitleTextTheme),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: handleMenuClick,
+              itemBuilder: (BuildContext context) {
+                return {'Clear Match', 'Settings'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice, style: styleBodyTextTheme),
+                  );
+                }).toList();
+              },
             ),
-            actions: <Widget>[
-              PopupMenuButton<String>(
-                  onSelected: handleMenuClick,
-                  itemBuilder: (BuildContext context) {
-                    return {'Clear Match', 'Settings'}.map((String choice) {
-                      return PopupMenuItem<String>(
-                        value: choice,
-                        child: Text(
-                          choice,
-                          style: styleBodyTextTheme,
-                        ),
-                      );
-                    }).toList();
-                  }),
-            ]),
-        body: ListView(controller: _scrollController, children: <Widget>[
-          FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Center(
-              child: ConstrainedBox(
+          ],
+        ),
+        body: ListView(
+          controller: _scrollController,
+          children: <Widget>[
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Center(
+                child: ConstrainedBox(
                   constraints: BoxConstraints(maxWidth: 800.0),
                   child: Container(
                     margin: const EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       //border: Border.all(color: Colors.blueAccent),
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10)),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
                     ),
                     padding: EdgeInsets.all(4.0),
                     child: Column(
                       children: [
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              HeadingMain(
-                                headingText: "Event: " + widget.eventName!,
-                                styleFontSize: styleTitleTextTheme!.fontSize!,
-                                textColor: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .color!,
-                                backGroundColor: Theme.of(context).primaryColor,
-                              ),
-                            ]),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            HeadingMain(
+                              headingText: "Event: " + widget.eventName!,
+                              styleFontSize: styleTitleTextTheme!.fontSize!,
+                              textColor: Theme.of(
+                                context,
+                              ).textTheme.titleLarge!.color!,
+                              backGroundColor: Theme.of(context).primaryColor,
+                            ),
+                          ],
+                        ),
                         Container(
                           //  padding: EdgeInsets.symmetric(
                           //      vertical: styleFieldPadding,
@@ -569,347 +573,373 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
                           //width: styleFieldScoutName,
                           height: 50,
                           child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "Scout Name: ",
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Scout Name: ", style: styleBodyTextTheme),
+                              Expanded(
+                                child: TextField(
+                                  controller: _txtScoutName,
                                   style: styleBodyTextTheme,
-                                ),
-                                Expanded(
-                                  child: TextField(
-                                    controller: _txtScoutName,
-                                    style: styleBodyTextTheme,
-                                    decoration: InputDecoration(
-                                        hintText: 'Scout Name',
-                                        hintStyle: styleBodyTextTheme?.copyWith(
-                                            color: Colors.grey)),
+                                  decoration: InputDecoration(
+                                    hintText: 'Scout Name',
+                                    hintStyle: styleBodyTextTheme?.copyWith(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
-                              ]),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                //border: Border.all(color: Colors.blueAccent),
-                borderRadius: BorderRadius.only(
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Container(
+                margin: const EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                  //border: Border.all(color: Colors.blueAccent),
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              padding: EdgeInsets.all(styleFieldPadding),
-              child: Column(
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                padding: EdgeInsets.all(styleFieldPadding),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: styleFieldPadding,
-                                horizontal: styleFieldPaddingSides),
-                            width: styleFieldMatchNumber,
-                            //height: 65,
-                            child: TextFormField(
-                              style: styleBodyTextTheme,
-                              controller: _txtMatchNumber,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              onEditingComplete: () {
-                                if (filterTeams == true) {
-                                  setEventTeams(styleBodyTextTheme!.fontSize!);
-                                }
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
-                              decoration: InputDecoration(
-                                labelText: "Match #:",
-                                labelStyle: styleBodyTextTheme,
-                                contentPadding: EdgeInsets.all(0.0),
-                                //border: InputBorder.none,
-                                isDense: false,
-                              ),
-                            ),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: styleFieldPadding,
+                            horizontal: styleFieldPaddingSides,
                           ),
-                          //Expanded(
-                          //child:
-
-                          DropDownIndexedWidget(
-                              value: matchScoutingData.idAlliance,
-                              title: "Alliance:",
-                              dropDownValues: _listAlliance,
-                              styleFontSize: styleBodyTextTheme!.fontSize!,
-                              styleFieldWidth: styleFieldAlliance,
-                              styleFieldPadding: styleFieldPadding,
-                              styleFieldPaddingSides: styleFieldPaddingSides,
-                              onStateChanged: (String newValue) {
-                                setState(() {
-                                  matchScoutingData.idAlliance = newValue;
-                                  filterTeams = true;
-                                });
-                                getDriveStationsByTeam(
-                                    newValue, styleBodyTextTheme!.fontSize!);
-                                print(matchScoutingData.idAlliance);
-                                if (filterTeams == true) {
-                                  setEventTeams(styleBodyTextTheme!.fontSize!);
-                                }
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              }),
-
-                          DropDownIndexedWidget(
-                              value: matchScoutingData.idDriveStation,
-                              title: "Drive Station:",
-                              dropDownValues: listDriveStations,
-                              styleFontSize: styleBodyTextTheme!.fontSize!,
-                              styleFieldWidth: styleFieldWidth,
-                              styleFieldPadding: styleFieldPadding,
-                              styleFieldPaddingSides: styleFieldPaddingSides,
-                              onStateChanged: (String newValue) {
-                                setState(() {
-                                  matchScoutingData.idDriveStation = newValue;
-                                  print(matchScoutingData.idDriveStation);
-                                });
-                              }),
-                          DropDownIndexedWidget(
-                              value: matchScoutingData.idStartPosition,
-                              title: "Robot Position:",
-                              dropDownValues: _listRobotPosition,
-                              styleFontSize: styleBodyTextTheme!.fontSize!,
-                              styleFieldWidth: styleFieldWidth,
-                              styleFieldPadding: styleFieldPadding,
-                              styleFieldPaddingSides: styleFieldPaddingSides,
-                              onStateChanged: (String newValue) {
-                                setState(() {
-                                  matchScoutingData.idStartPosition = newValue;
-                                });
-                              }),
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            "Team:",
-                            style: TextStyle(
-                                fontSize: styleBodyTextTheme!.fontSize!),
-                          ),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: 200,
-                                maxWidth: styleFieldTeamMaxWidth),
-                            child: DropdownButton(
-                              isExpanded: true,
+                          width: styleFieldMatchNumber,
+                          //height: 65,
+                          child: TextFormField(
+                            style: styleBodyTextTheme,
+                            controller: _txtMatchNumber,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            onEditingComplete: () {
+                              if (filterTeams == true) {
+                                setEventTeams(styleBodyTextTheme!.fontSize!);
+                              }
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            decoration: InputDecoration(
+                              labelText: "Match #:",
+                              labelStyle: styleBodyTextTheme,
+                              contentPadding: EdgeInsets.all(0.0),
+                              //border: InputBorder.none,
                               isDense: false,
-                              style: styleBodyTextTheme,
-                              value: selectedTeam == null
-                                  ? null
-                                  : selectedTeam!.key,
-                              //title: "Team",
-                              items: eventTeamsListDropDown,
-                              onChanged: (item) {
-                                setState(() {
-                                  selectedTeam = widget.eventTeams!.firstWhere(
-                                      (team) => team.key == item,
-                                      orElse: () => widget.eventTeams!.first);
-                                });
-                                print("Key: " + selectedTeam!.key!);
-                              },
                             ),
                           ),
-                          SizedBox.fromSize(
-                            size: Size(30, 30),
-                            child: ClipOval(
-                              child: Material(
-                                color: colorFilterActive,
-                                child: InkWell(
-                                  splashColor: Colors.green,
-                                  onTap: () {
-                                    filterTeams == true
-                                        ? filterTeams = false
-                                        : filterTeams = true;
-                                    setEventTeams(
-                                        styleBodyTextTheme!.fontSize!);
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.filter_alt,
-                                        color: colorFilter,
-                                      ), // <-- Icon// <-- Text
-                                    ],
-                                  ),
+                        ),
+
+                        //Expanded(
+                        //child:
+                        DropDownIndexedWidget(
+                          value: matchScoutingData.idAlliance,
+                          title: "Alliance:",
+                          dropDownValues: _listAlliance,
+                          styleFontSize: styleBodyTextTheme!.fontSize!,
+                          styleFieldWidth: styleFieldAlliance,
+                          styleFieldPadding: styleFieldPadding,
+                          styleFieldPaddingSides: styleFieldPaddingSides,
+                          onStateChanged: (String newValue) {
+                            setState(() {
+                              matchScoutingData.idAlliance = newValue;
+                              filterTeams = true;
+                            });
+                            getDriveStationsByTeam(
+                              newValue,
+                              styleBodyTextTheme!.fontSize!,
+                            );
+                            print(matchScoutingData.idAlliance);
+                            if (filterTeams == true) {
+                              setEventTeams(styleBodyTextTheme!.fontSize!);
+                            }
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                        ),
+
+                        DropDownIndexedWidget(
+                          value: matchScoutingData.idDriveStation,
+                          title: "Drive Station:",
+                          dropDownValues: listDriveStations,
+                          styleFontSize: styleBodyTextTheme!.fontSize!,
+                          styleFieldWidth: styleFieldWidth,
+                          styleFieldPadding: styleFieldPadding,
+                          styleFieldPaddingSides: styleFieldPaddingSides,
+                          onStateChanged: (String newValue) {
+                            setState(() {
+                              matchScoutingData.idDriveStation = newValue;
+                              print(matchScoutingData.idDriveStation);
+                            });
+                          },
+                        ),
+                        DropDownIndexedWidget(
+                          value: matchScoutingData.idStartPosition,
+                          title: "Robot Position:",
+                          dropDownValues: _listRobotPosition,
+                          styleFontSize: styleBodyTextTheme!.fontSize!,
+                          styleFieldWidth: styleFieldWidth,
+                          styleFieldPadding: styleFieldPadding,
+                          styleFieldPaddingSides: styleFieldPaddingSides,
+                          onStateChanged: (String newValue) {
+                            setState(() {
+                              matchScoutingData.idStartPosition = newValue;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Team:",
+                          style: TextStyle(
+                            fontSize: styleBodyTextTheme!.fontSize!,
+                          ),
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: 200,
+                            maxWidth: styleFieldTeamMaxWidth,
+                          ),
+                          child: DropdownButton(
+                            isExpanded: true,
+                            isDense: false,
+                            style: styleBodyTextTheme,
+                            value: selectedTeam == null
+                                ? null
+                                : selectedTeam!.key,
+                            //title: "Team",
+                            items: eventTeamsListDropDown,
+                            onChanged: (item) {
+                              setState(() {
+                                selectedTeam = widget.eventTeams!.firstWhere(
+                                  (team) => team.key == item,
+                                  orElse: () => widget.eventTeams!.first,
+                                );
+                              });
+                              print("Key: " + selectedTeam!.key!);
+                            },
+                          ),
+                        ),
+                        SizedBox.fromSize(
+                          size: Size(30, 30),
+                          child: ClipOval(
+                            child: Material(
+                              color: colorFilterActive,
+                              child: InkWell(
+                                splashColor: Colors.green,
+                                onTap: () {
+                                  filterTeams == true
+                                      ? filterTeams = false
+                                      : filterTeams = true;
+                                  setEventTeams(styleBodyTextTheme!.fontSize!);
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.filter_alt,
+                                      color: colorFilter,
+                                    ), // <-- Icon// <-- Text
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                        ]),
+                        ),
+                      ],
+                    ),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[]),
-                  ]),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[],
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.99,
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.red),
-                color: Colors.red,
-                borderRadius: BorderRadius.only(
+            FractionallySizedBox(
+              widthFactor: 0.99,
+              child: Container(
+                margin: const EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.red),
+                  color: Colors.red,
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-              ),
-              padding: EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(
-                      left: 0.0,
-                    ),
-                    //decoration: BoxDecoration(
-                    // border: Border.all(color: Colors.red),
-                    //color: Colors.red,
-                    //borderRadius: BorderRadius.only(
-                    //    topLeft: Radius.circular(10),
-                    //   topRight: Radius.circular(10),
-                    //   bottomLeft: Radius.circular(10),
-                    //  bottomRight: Radius.circular(10)),
-                    //),
-                    constraints: BoxConstraints.expand(
-                        width: styleRedBoxSize, height: 140.0),
-                    padding: EdgeInsets.all(4.0),
-                    child: Column(
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                padding: EdgeInsets.all(0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 0.0),
+                      //decoration: BoxDecoration(
+                      // border: Border.all(color: Colors.red),
+                      //color: Colors.red,
+                      //borderRadius: BorderRadius.only(
+                      //    topLeft: Radius.circular(10),
+                      //   topRight: Radius.circular(10),
+                      //   bottomLeft: Radius.circular(10),
+                      //  bottomRight: Radius.circular(10)),
+                      //),
+                      constraints: BoxConstraints.expand(
+                        width: styleRedBoxSize,
+                        height: 140.0,
+                      ),
+                      padding: EdgeInsets.all(4.0),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Yellow Card ",
-                                  style: TextStyle(
-                                      fontSize: widget.styleFontSize,
-                                      fontWeight: FontWeight.bold),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Yellow Card ",
+                                style: TextStyle(
+                                  fontSize: widget.styleFontSize,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Switch(
-                                  value: matchScoutingData.flYellow!,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      matchScoutingData.flYellow = value;
-                                    });
-                                  },
-                                ),
-                              ]),
+                              ),
+                              Switch(
+                                value: matchScoutingData.flYellow!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    matchScoutingData.flYellow = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Red Card ",
-                                  style: TextStyle(
-                                      fontSize: widget.styleFontSize,
-                                      fontWeight: FontWeight.bold),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Red Card ",
+                                style: TextStyle(
+                                  fontSize: widget.styleFontSize,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Switch(
-                                  value: matchScoutingData.flRed!,
-                                  onChanged: (bool value) {
-                                    setState(() {
-                                      matchScoutingData.flRed = value;
-                                    });
-                                  },
-                                ),
-                              ]),
-                        ]),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                      left: 0.0,
+                              ),
+                              Switch(
+                                value: matchScoutingData.flRed!,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    matchScoutingData.flRed = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    //decoration: BoxDecoration(
-                    // border: Border.all(color: Colors.red),
-                    //color: Colors.red,
-                    //borderRadius: BorderRadius.only(
-                    //    topLeft: Radius.circular(10),
-                    //   topRight: Radius.circular(10),
-                    //   bottomLeft: Radius.circular(10),
-                    //  bottomRight: Radius.circular(10)),
-                    //),
-                    constraints: BoxConstraints.expand(
-                        width: styleRedBoxSize, height: 140.0),
-                    padding: EdgeInsets.all(4.0),
-                    child: Column(
+                    Container(
+                      margin: const EdgeInsets.only(left: 0.0),
+                      //decoration: BoxDecoration(
+                      // border: Border.all(color: Colors.red),
+                      //color: Colors.red,
+                      //borderRadius: BorderRadius.only(
+                      //    topLeft: Radius.circular(10),
+                      //   topRight: Radius.circular(10),
+                      //   bottomLeft: Radius.circular(10),
+                      //  bottomRight: Radius.circular(10)),
+                      //),
+                      constraints: BoxConstraints.expand(
+                        width: styleRedBoxSize,
+                        height: 140.0,
+                      ),
+                      padding: EdgeInsets.all(4.0),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
                             child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    "Total Failure ",
-                                    style: TextStyle(
-                                        fontSize: widget.styleFontSize,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Switch(
-                                    value: matchScoutingData.flCrash!,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        matchScoutingData.flCrash = value;
-                                      });
-                                    },
-                                  ),
-                                ]),
-                          ),
-                          Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  "A-Stop",
+                                  "Total Failure ",
                                   style: TextStyle(
-                                      fontSize: widget.styleFontSize,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  child: Switch(
-                                    value: matchScoutingData.flAutoStop!,
-                                    onChanged: (bool value) {
-                                      setState(() {
-                                        matchScoutingData.flAutoStop = value;
-                                      });
-                                    },
+                                    fontSize: widget.styleFontSize,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ]),
-                        ]),
-                  ),
-                ],
+                                Switch(
+                                  value: matchScoutingData.flCrash!,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      matchScoutingData.flCrash = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "A-Stop",
+                                style: TextStyle(
+                                  fontSize: widget.styleFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                child: Switch(
+                                  value: matchScoutingData.flAutoStop!,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      matchScoutingData.flAutoStop = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
+            Container(
               margin: const EdgeInsets.all(0.0),
               padding: EdgeInsets.all(0.0),
-              child: _showTab(_selectedTab)),
-        ]),
+              child: _showTab(_selectedTab),
+            ),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           //backgroundColor: Colors.blue,
@@ -932,14 +962,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
               icon: new Icon(Icons.engineering),
               label: 'TeleOp',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: 'Ratings',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.save),
-              label: 'Finish',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Ratings'),
+            BottomNavigationBarItem(icon: Icon(Icons.save), label: 'Finish'),
           ],
         ),
       ),
@@ -1053,8 +1077,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
     setState(() {
       googleUploadStatus = 1;
     });
-    File file =
-        await googleInterface.uploadMatchScoutingData(matchScoutingData);
+    File file = await googleInterface.uploadMatchScoutingData(
+      matchScoutingData,
+    );
     await file.length();
     setState(() {
       googleUploadStatus = 2;

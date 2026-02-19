@@ -2,50 +2,44 @@ import 'dart:io';
 
 class PitData {
   int? id;
-  String? txEvent;
-  String? txScoutName;
-  int? idTeam;
-  int? numWeight;
-  int? numHeight;
-  int? numWidth;
-  File? imgTeamUniform;
-  File? imgRobotFront;
-  File? imgRobotSide;
-  String? idDriveType;
-  String? txDriveNotes;
-  bool? flObjectCoral;
-  bool? flObjectAlgae;
-  bool? flObjectCatch;
-  bool? flObjectAlgaeFloor;
-  bool? flObjectCoralFloor;
-  String? txObjectNotes;
-  bool? flScoreCoralL1;
-  bool? flScoreCoralL2;
-  bool? flScoreCoralL3;
-  bool? flScoreCoralL4;
-  bool? flScoreAlgaeBarge;
-  bool? flScoreAlgaeProcess;
-  bool? flRemoveAlgaeL2;
-  bool? flRemoveAlgaeL3;
-  String? txScoringNotes;
-  bool? flClimb;
-  String? idClimbPos;
-  String? txClimbNotes;
-  bool? flAuto;
-  bool? flAutoLine;
-  bool? flAutoScoreCoral;
-  int? numAutoScoreCoralL1;
-  int? numAutoScoreCoralL2;
-  int? numAutoScoreCoralL3;
-  int? numAutoScoreCoralL4;
-  bool? flAutoScoreAlgae;
-  int? numAutoScoreAlgaeL2;
-  int? numAutoScoreAlgaeL3;
-  int? numAutoScoreAlgaeGround;
-  int? numAutoScoreAlgaeBarge;
-  int? numAutoScoreAlgaeProcess;
-  String? txAutoNotes;
-  String? txPitNotes;
+  String? pitTxEvent;
+  String? pitTxScoutName;
+  int? pitIdTeam;
+  int? pitNumWeight;
+  int? pitNumHeight;
+  int? pitNumWidth;
+  File? pitImgTeamUniform;
+  File? pitImgRobotFront;
+  File? pitImgRobotSide;
+  String? pitIdDriveType;
+  String? pitIdFieldAccess;
+  String? pitTxDriveNotes;
+  bool? pitFlObject;
+  bool? pitFlObjectCatch;
+  bool? pitFlObjectFloor;
+  String? pitTxObjectNotes;
+  String? pitIdCapacity;
+  String? pitIdThrough;
+  bool? pitFlScoreFuel;
+  bool? pitFlDeliverFuel;
+  int? pitNumLauncher;
+  String? pitIdShooterHeight;
+  String? pitIdShooterType;
+  String? pitTxScoringNotes;
+  bool? pitFlClimb;
+  String? pitIdClimbPos;
+  String? pitIdClimbHeightMax;
+  String? pitIdClimbHeightPref;
+  bool? pitFlClimbRelease;
+  String? pitTxClimbNotes;
+  bool? pitFlAuto;
+  bool? pitFlAutoScoreFuel;
+  int? pitNumAutoScore;
+  int? pitNumAutoFuel;
+  String? pitIdAutoReloadPoints;
+  bool? pitFlAutoClimb;
+  String? pitTxAutoNotes;
+  String? pitTxPitNotes;
   String? dtCreation;
   String? dtModified;
   String? txComputerName;
@@ -53,50 +47,44 @@ class PitData {
 
   PitData({
     this.id = 0,
-    this.txEvent,
-    this.txScoutName,
-    this.idTeam = 0,
-    this.numWeight = 0,
-    this.numHeight = 0,
-    this.numWidth = 0,
-    this.imgTeamUniform,
-    this.imgRobotFront,
-    this.imgRobotSide,
-    this.idDriveType = "1",
-    this.txDriveNotes,
-    this.flObjectCoral = false,
-    this.flObjectAlgae = false,
-    this.flObjectCatch = false,
-    this.flObjectAlgaeFloor = false,
-    this.flObjectCoralFloor = false,
-    this.txObjectNotes,
-    this.flScoreCoralL1 = false,
-    this.flScoreCoralL2 = false,
-    this.flScoreCoralL3 = false,
-    this.flScoreCoralL4 = false,
-    this.flScoreAlgaeBarge = false,
-    this.flScoreAlgaeProcess = false,
-    this.flRemoveAlgaeL2 = false,
-    this.flRemoveAlgaeL3 = false,
-    this.txScoringNotes,
-    this.flClimb = false,
-    this.idClimbPos = "1",
-    this.txClimbNotes,
-    this.flAuto = false,
-    this.flAutoLine = false,
-    this.flAutoScoreCoral = false,
-    this.numAutoScoreCoralL1 = 0,
-    this.numAutoScoreCoralL2 = 0,
-    this.numAutoScoreCoralL3 = 0,
-    this.numAutoScoreCoralL4 = 0,
-    this.flAutoScoreAlgae = false,
-    this.numAutoScoreAlgaeL2 = 0,
-    this.numAutoScoreAlgaeL3 = 0,
-    this.numAutoScoreAlgaeGround = 0,
-    this.numAutoScoreAlgaeBarge = 0,
-    this.numAutoScoreAlgaeProcess = 0,
-    this.txAutoNotes,
-    this.txPitNotes,
+    this.pitTxEvent,
+    this.pitTxScoutName,
+    this.pitIdTeam = 0,
+    this.pitNumWeight = 0,
+    this.pitNumHeight = 0,
+    this.pitNumWidth = 0,
+    this.pitImgTeamUniform,
+    this.pitImgRobotFront,
+    this.pitImgRobotSide,
+    this.pitIdDriveType = "1",
+    this.pitIdFieldAccess = "1",
+    this.pitTxDriveNotes,
+    this.pitFlObject = false,
+    this.pitFlObjectCatch = false,
+    this.pitFlObjectFloor = false,
+    this.pitTxObjectNotes,
+    this.pitIdCapacity = "1",
+    this.pitIdThrough = "1",
+    this.pitFlScoreFuel = false,
+    this.pitFlDeliverFuel = false,
+    this.pitNumLauncher = 0,
+    this.pitIdShooterHeight,
+    this.pitIdShooterType,
+    this.pitTxScoringNotes,
+    this.pitFlClimb = false,
+    this.pitIdClimbPos = "1",
+    this.pitIdClimbHeightMax = "1",
+    this.pitIdClimbHeightPref = "1",
+    this.pitFlClimbRelease = false,
+    this.pitTxClimbNotes,
+    this.pitFlAuto = false,
+    this.pitFlAutoScoreFuel = false,
+    this.pitNumAutoScore = 0,
+    this.pitNumAutoFuel = 0,
+    this.pitIdAutoReloadPoints = "1",
+    this.pitFlAutoClimb = false,
+    this.pitTxAutoNotes,
+    this.pitTxPitNotes,
     this.dtCreation,
     this.dtModified,
     this.txComputerName,
@@ -105,64 +93,61 @@ class PitData {
 
   Map<String, dynamic> toLocalDB() {
     String? fileRobotFront;
-    if (imgRobotFront != null) {
-      fileRobotFront = imgRobotFront?.path;
+    if (pitImgRobotFront != null) {
+      fileRobotFront = pitImgRobotFront?.path;
     }
     String? fileImgRobotSide;
-    if (imgRobotSide != null) {
-      fileImgRobotSide = imgRobotSide?.path;
+    if (pitImgRobotSide != null) {
+      fileImgRobotSide = pitImgRobotSide?.path;
     }
     String? fileImgTeamUniform;
-    if (imgTeamUniform != null) {
-      fileImgTeamUniform = imgTeamUniform?.path;
+    if (pitImgTeamUniform != null) {
+      fileImgTeamUniform = pitImgTeamUniform?.path;
     }
 
     return {
+      'pitImgTeamUniform': fileImgTeamUniform,
+      'pitImgRobotFront': fileRobotFront,
+      'pitImgRobotSide': fileImgRobotSide,
       'id': id,
-      'txEvent': txEvent,
-      'txScoutName': txScoutName,
-      'idTeam': idTeam,
-      'numWeight': numWeight,
-      'numHeight': numHeight,
-      'numWidth': numWidth,
-      'imgTeamUniform': fileImgTeamUniform,
-      'imgRobotFront': fileRobotFront,
-      'imgRobotSide': fileImgRobotSide,
-      'idDriveType': idDriveType,
-      'txDriveNotes': txDriveNotes,
-      'flObjectCoral': flObjectCoral.toString(),
-      'flObjectAlgae': flObjectAlgae.toString(),
-      'flObjectCatch': flObjectCatch.toString(),
-      'flObjectAlgaeFloor': flObjectAlgaeFloor.toString(),
-      'flObjectCoralFloor': flObjectCoralFloor.toString(),
-      'txObjectNotes': txObjectNotes,
-      'flScoreCoralL1': flScoreCoralL1.toString(),
-      'flScoreCoralL2': flScoreCoralL2.toString(),
-      'flScoreCoralL3': flScoreCoralL3.toString(),
-      'flScoreCoralL4': flScoreCoralL4.toString(),
-      'flScoreAlgaeBarge': flScoreAlgaeBarge.toString(),
-      'flScoreAlgaeProcess': flScoreAlgaeProcess.toString(),
-      'flRemoveAlgaeL2': flRemoveAlgaeL2.toString(),
-      'flRemoveAlgaeL3': flRemoveAlgaeL3.toString(),
-      'txScoringNotes': txScoringNotes,
-      'flClimb': flClimb.toString(),
-      'idClimbPos': idClimbPos,
-      'txClimbNotes': txClimbNotes,
-      'flAuto': flAuto.toString(),
-      'flAutoLine': flAutoLine.toString(),
-      'flAutoScoreCoral': flAutoScoreCoral.toString(),
-      'numAutoScoreCoralL1': numAutoScoreCoralL1,
-      'numAutoScoreCoralL2': numAutoScoreCoralL2,
-      'numAutoScoreCoralL3': numAutoScoreCoralL3,
-      'numAutoScoreCoralL4': numAutoScoreCoralL4,
-      'flAutoScoreAlgae': flAutoScoreAlgae.toString(),
-      'numAutoScoreAlgaeL2': numAutoScoreAlgaeL2,
-      'numAutoScoreAlgaeL3': numAutoScoreAlgaeL3,
-      'numAutoScoreAlgaeGround': numAutoScoreAlgaeGround,
-      'numAutoScoreAlgaeBarge': numAutoScoreAlgaeBarge,
-      'numAutoScoreAlgaeProcess': numAutoScoreAlgaeProcess,
-      'txAutoNotes': txAutoNotes,
-      'txPitNotes': txPitNotes,
+      'pitTxEvent': pitTxEvent,
+      'pitTxScoutName': pitTxScoutName,
+      'pitIdTeam': pitIdTeam,
+      'pitNumWeight': pitNumWeight,
+      'pitNumHeight': pitNumHeight,
+      'pitNumWidth': pitNumWidth,
+      //'pitImgTeamUniform': pitImgTeamUniform,
+      //'pitImgRobotFront': pitImgRobotFront,
+      //'pitImgRobotSide': pitImgRobotSide,
+      'pitIdDriveType': pitIdDriveType,
+      'pitIdFieldAccess': pitIdFieldAccess,
+      'pitTxDriveNotes': pitTxDriveNotes,
+      'pitFlObject': pitFlObject.toString(),
+      'pitFlObjectCatch': pitFlObjectCatch.toString(),
+      'pitFlObjectFloor': pitFlObjectFloor.toString(),
+      'pitTxObjectNotes': pitTxObjectNotes,
+      'pitIdCapacity': pitIdCapacity,
+      'pitIdThrough': pitIdThrough,
+      'pitFlScoreFuel': pitFlScoreFuel.toString(),
+      'pitFlDeliverFuel': pitFlDeliverFuel.toString(),
+      'pitNumLauncher': pitNumLauncher,
+      'pitIdShooterHeight': pitIdShooterHeight,
+      'pitIdShooterType': pitIdShooterType,
+      'pitTxScoringNotes': pitTxScoringNotes,
+      'pitFlClimb': pitFlClimb.toString(),
+      'pitIdClimbPos': pitIdClimbPos,
+      'pitIdClimbHeightMax': pitIdClimbHeightMax,
+      'pitIdClimbHeightPref': pitIdClimbHeightPref,
+      'pitFlClimbRelease': pitFlClimbRelease.toString(),
+      'pitTxClimbNotes': pitTxClimbNotes,
+      'pitFlAuto': pitFlAuto.toString(),
+      'pitFlAutoScoreFuel': pitFlAutoScoreFuel.toString(),
+      'pitNumAutoScore': pitNumAutoScore,
+      'pitNumAutoFuel': pitNumAutoFuel,
+      'pitIdAutoReloadPoints': pitIdAutoReloadPoints,
+      'pitFlAutoClimb': pitFlAutoClimb.toString(),
+      'pitTxAutoNotes': pitTxAutoNotes,
+      'pitTxPitNotes': pitTxPitNotes,
       'dtCreation': dtCreation,
       'dtModified': dtModified,
       'txComputerName': txComputerName,
@@ -172,139 +157,122 @@ class PitData {
 
   PitData.fromLocalDB(Map<dynamic, dynamic> map) {
     this.id = map['id'];
-    this.txEvent = map['txEvent'];
-    this.txScoutName = map['txScoutName'];
-    this.idTeam = map['idTeam'];
-    this.numWeight = map['numWeight'];
-    this.numHeight = map['numHeight'];
-    this.numWidth = map['numWidth'];
-    //this.imgTeamUniform = map['imgTeamUniform'];
-    //this.imgRobotFront = map['imgRobotFront'];
-    //this.imgRobotSide = map['imgRobotSide'];
-    this.idDriveType = map['idDriveType'];
-    this.txDriveNotes = map['txDriveNotes'];
-    this.flObjectCoral =
-        map['flObjectCoral'].toString().toLowerCase() == 'true';
-    this.flObjectAlgae =
-        map['flObjectAlgae'].toString().toLowerCase() == 'true';
-    this.flObjectCatch =
-        map['flObjectCatch'].toString().toLowerCase() == 'true';
-    this.flObjectAlgaeFloor =
-        map['flObjectAlgaeFloor'].toString().toLowerCase() == 'true';
-    this.flObjectCoralFloor =
-        map['flObjectCoralFloor'].toString().toLowerCase() == 'true';
-    this.txObjectNotes = map['txObjectNotes'];
-    this.flScoreCoralL1 =
-        map['flScoreCoralL1'].toString().toLowerCase() == 'true';
-    this.flScoreCoralL2 =
-        map['flScoreCoralL2'].toString().toLowerCase() == 'true';
-    this.flScoreCoralL3 =
-        map['flScoreCoralL3'].toString().toLowerCase() == 'true';
-    this.flScoreCoralL4 =
-        map['flScoreCoralL4'].toString().toLowerCase() == 'true';
-    this.flScoreAlgaeBarge =
-        map['flScoreAlgaeBarge'].toString().toLowerCase() == 'true';
-    this.flScoreAlgaeProcess =
-        map['flScoreAlgaeProcess'].toString().toLowerCase() == 'true';
-    this.flRemoveAlgaeL2 =
-        map['flRemoveAlgaeL2'].toString().toLowerCase() == 'true';
-    this.flRemoveAlgaeL3 =
-        map['flRemoveAlgaeL3'].toString().toLowerCase() == 'true';
-    this.txScoringNotes = map['txScoringNotes'];
-    this.flClimb = map['flClimb'].toString().toLowerCase() == 'true';
-    this.idClimbPos = map['idClimbPos'];
-    this.txClimbNotes = map['txClimbNotes'];
-    this.flAuto = map['flAuto'].toString().toLowerCase() == 'true';
-    this.flAutoLine = map['flAutoLine'].toString().toLowerCase() == 'true';
-    this.flAutoScoreCoral =
-        map['flAutoScoreCoral'].toString().toLowerCase() == 'true';
-    this.numAutoScoreCoralL1 = map['numAutoScoreCoralL1'];
-    this.numAutoScoreCoralL2 = map['numAutoScoreCoralL2'];
-    this.numAutoScoreCoralL3 = map['numAutoScoreCoralL3'];
-    this.numAutoScoreCoralL4 = map['numAutoScoreCoralL4'];
-    this.flAutoScoreAlgae =
-        map['flAutoScoreAlgae'].toString().toLowerCase() == 'true';
-    this.numAutoScoreAlgaeL2 = map['numAutoScoreAlgaeL2'];
-    this.numAutoScoreAlgaeL3 = map['numAutoScoreAlgaeL3'];
-    this.numAutoScoreAlgaeGround = map['numAutoScoreAlgaeGround'];
-    this.numAutoScoreAlgaeBarge = map['numAutoScoreAlgaeBarge'];
-    this.numAutoScoreAlgaeProcess = map['numAutoScoreAlgaeProcess'];
-    this.txAutoNotes = map['txAutoNotes'];
-    this.txPitNotes = map['txPitNotes'];
+    this.pitTxEvent = map['pitTxEvent'];
+    this.pitTxScoutName = map['pitTxScoutName'];
+    this.pitIdTeam = map['pitIdTeam'];
+    this.pitNumWeight = map['pitNumWeight'];
+    this.pitNumHeight = map['pitNumHeight'];
+    this.pitNumWidth = map['pitNumWidth'];
+    //this.pitImgTeamUniform = map['pitImgTeamUniform'];
+    //this.pitImgRobotFront = map['pitImgRobotFront'];
+    //this.pitImgRobotSide = map['pitImgRobotSide'];
+    this.pitIdDriveType = map['pitIdDriveType'];
+    this.pitIdFieldAccess = map['pitIdFieldAccess'];
+    this.pitTxDriveNotes = map['pitTxDriveNotes'];
+    this.pitFlObject = map['pitFlObject'].toString().toLowerCase() == 'true';
+    this.pitFlObjectCatch =
+        map['pitFlObjectCatch'].toString().toLowerCase() == 'true';
+    this.pitFlObjectFloor =
+        map['pitFlObjectFloor'].toString().toLowerCase() == 'true';
+    this.pitTxObjectNotes = map['pitTxObjectNotes'];
+    this.pitIdCapacity = map['pitIdCapacity'];
+    this.pitIdThrough = map['pitIdThrough'];
+    this.pitFlScoreFuel =
+        map['pitFlScoreFuel'].toString().toLowerCase() == 'true';
+    this.pitFlDeliverFuel =
+        map['pitFlDeliverFuel'].toString().toLowerCase() == 'true';
+    this.pitNumLauncher = map['pitNumLauncher'];
+    this.pitIdShooterHeight = map['pitIdShooterHeight'];
+    this.pitIdShooterType = map['pitIdShooterType'];
+    this.pitTxScoringNotes = map['pitTxScoringNotes'];
+    this.pitFlClimb = map['pitFlClimb'].toString().toLowerCase() == 'true';
+    this.pitIdClimbPos = map['pitIdClimbPos'];
+    this.pitIdClimbHeightMax = map['pitIdClimbHeightMax'];
+    this.pitIdClimbHeightPref = map['pitIdClimbHeightPref'];
+    this.pitFlClimbRelease =
+        map['pitFlClimbRelease'].toString().toLowerCase() == 'true';
+    this.pitTxClimbNotes = map['pitTxClimbNotes'];
+    this.pitFlAuto = map['pitFlAuto'].toString().toLowerCase() == 'true';
+    this.pitFlAutoScoreFuel =
+        map['pitFlAutoScoreFuel'].toString().toLowerCase() == 'true';
+    this.pitNumAutoScore = map['pitNumAutoScore'];
+    this.pitNumAutoFuel = map['pitNumAutoFuel'];
+    this.pitIdAutoReloadPoints = map['pitIdAutoReloadPoints'];
+    this.pitFlAutoClimb =
+        map['pitFlAutoClimb'].toString().toLowerCase() == 'true';
+    this.pitTxAutoNotes = map['pitTxAutoNotes'];
+    this.pitTxPitNotes = map['pitTxPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
     this.uploaded = map['uploaded'].toString().toLowerCase() == 'true';
-    if (map['imgRobotFront'] != null) {
-      this.imgRobotFront = File(map['imgRobotFront']);
+    if (map['pitImgRobotFront'] != null) {
+      this.pitImgRobotFront = File(map['pitImgRobotFront']);
     }
-    if (map['imgRobotSide'] != null) {
-      this.imgRobotSide = File(map['imgRobotSide']);
+    if (map['pitImgRobotSide'] != null) {
+      this.pitImgRobotSide = File(map['pitImgRobotSide']);
     }
-    if (map['imgTeamUniform'] != null) {
-      this.imgTeamUniform = File(map['imgTeamUniform']);
+    if (map['pitImgTeamUniform'] != null) {
+      this.pitImgTeamUniform = File(map['pitImgTeamUniform']);
     }
   }
 
   Map<String, dynamic> toMap() {
     String? fileImgRobotFront;
-    if (this.imgRobotFront != null) {
-      fileImgRobotFront = this.imgRobotFront?.path;
+    if (this.pitImgRobotFront != null) {
+      fileImgRobotFront = this.pitImgRobotFront?.path;
     }
     String? fileImgRobotSide;
-    if (this.imgRobotSide != null) {
-      fileImgRobotSide = this.imgRobotSide?.path;
+    if (this.pitImgRobotSide != null) {
+      fileImgRobotSide = this.pitImgRobotSide?.path;
     }
     String? fileImgTeamUniform;
-    if (this.imgTeamUniform != null) {
-      fileImgTeamUniform = this.imgTeamUniform?.path;
+    if (this.pitImgTeamUniform != null) {
+      fileImgTeamUniform = this.pitImgTeamUniform?.path;
     }
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['pitImgTeamUniform'] = fileImgTeamUniform;
+    data['pitImgRobotFront'] = fileImgRobotFront;
+    data['pitImgRobotSide'] = fileImgRobotSide;
     data['id'] = this.id;
-    data['txEvent'] = this.txEvent;
-    data['txScoutName'] = this.txScoutName;
-    data['idTeam'] = this.idTeam;
-    data['numWeight'] = this.numWeight;
-    data['numHeight'] = this.numHeight;
-    data['numWidth'] = this.numWidth;
-    data['imgTeamUniform'] = fileImgTeamUniform;
-    data['imgRobotFront'] = fileImgRobotFront;
-    data['imgRobotSide'] = fileImgRobotSide;
-    data['idDriveType'] = this.idDriveType;
-    data['txDriveNotes'] = this.txDriveNotes;
-    data['flObjectCoral'] = this.flObjectCoral;
-    data['flObjectAlgae'] = this.flObjectAlgae;
-    data['flObjectCatch'] = this.flObjectCatch;
-    data['flObjectAlgaeFloor'] = this.flObjectAlgaeFloor;
-    data['flObjectCoralFloor'] = this.flObjectCoralFloor;
-    data['txObjectNotes'] = this.txObjectNotes;
-    data['flScoreCoralL1'] = this.flScoreCoralL1;
-    data['flScoreCoralL2'] = this.flScoreCoralL2;
-    data['flScoreCoralL3'] = this.flScoreCoralL3;
-    data['flScoreCoralL4'] = this.flScoreCoralL4;
-    data['flScoreAlgaeBarge'] = this.flScoreAlgaeBarge;
-    data['flScoreAlgaeProcess'] = this.flScoreAlgaeProcess;
-    data['flRemoveAlgaeL2'] = this.flRemoveAlgaeL2;
-    data['flRemoveAlgaeL3'] = this.flRemoveAlgaeL3;
-    data['txScoringNotes'] = this.txScoringNotes;
-    data['flClimb'] = this.flClimb;
-    data['idClimbPos'] = this.idClimbPos;
-    data['txClimbNotes'] = this.txClimbNotes;
-    data['flAuto'] = this.flAuto;
-    data['flAutoLine'] = this.flAutoLine;
-    data['flAutoScoreCoral'] = this.flAutoScoreCoral;
-    data['numAutoScoreCoralL1'] = this.numAutoScoreCoralL1;
-    data['numAutoScoreCoralL2'] = this.numAutoScoreCoralL2;
-    data['numAutoScoreCoralL3'] = this.numAutoScoreCoralL3;
-    data['numAutoScoreCoralL4'] = this.numAutoScoreCoralL4;
-    data['flAutoScoreAlgae'] = this.flAutoScoreAlgae;
-    data['numAutoScoreAlgaeL2'] = this.numAutoScoreAlgaeL2;
-    data['numAutoScoreAlgaeL3'] = this.numAutoScoreAlgaeL3;
-    data['numAutoScoreAlgaeGround'] = this.numAutoScoreAlgaeGround;
-    data['numAutoScoreAlgaeBarge'] = this.numAutoScoreAlgaeBarge;
-    data['numAutoScoreAlgaeProcess'] = this.numAutoScoreAlgaeProcess;
-    data['txAutoNotes'] = this.txAutoNotes;
-    data['txPitNotes'] = this.txPitNotes;
+    data['pitTxEvent'] = this.pitTxEvent;
+    data['pitTxScoutName'] = this.pitTxScoutName;
+    data['pitIdTeam'] = this.pitIdTeam;
+    data['pitNumWeight'] = this.pitNumWeight;
+    data['pitNumHeight'] = this.pitNumHeight;
+    data['pitNumWidth'] = this.pitNumWidth;
+    //data['pitImgTeamUniform'] = this.pitImgTeamUniform;
+    //data['pitImgRobotFront'] = this.pitImgRobotFront;
+    //data['pitImgRobotSide'] = this.pitImgRobotSide;
+    data['pitIdDriveType'] = this.pitIdDriveType;
+    data['pitIdFieldAccess'] = this.pitIdFieldAccess;
+    data['pitTxDriveNotes'] = this.pitTxDriveNotes;
+    data['pitFlObject'] = this.pitFlObject;
+    data['pitFlObjectCatch'] = this.pitFlObjectCatch;
+    data['pitFlObjectFloor'] = this.pitFlObjectFloor;
+    data['pitTxObjectNotes'] = this.pitTxObjectNotes;
+    data['pitIdCapacity'] = this.pitIdCapacity;
+    data['pitIdThrough'] = this.pitIdThrough;
+    data['pitFlScoreFuel'] = this.pitFlScoreFuel;
+    data['pitFlDeliverFuel'] = this.pitFlDeliverFuel;
+    data['pitNumLauncher'] = this.pitNumLauncher;
+    data['pitIdShooterHeight'] = this.pitIdShooterHeight;
+    data['pitIdShooterType'] = this.pitIdShooterType;
+    data['pitTxScoringNotes'] = this.pitTxScoringNotes;
+    data['pitFlClimb'] = this.pitFlClimb;
+    data['pitIdClimbPos'] = this.pitIdClimbPos;
+    data['pitIdClimbHeightMax'] = this.pitIdClimbHeightMax;
+    data['pitIdClimbHeightPref'] = this.pitIdClimbHeightPref;
+    data['pitFlClimbRelease'] = this.pitFlClimbRelease;
+    data['pitTxClimbNotes'] = this.pitTxClimbNotes;
+    data['pitFlAuto'] = this.pitFlAuto;
+    data['pitFlAutoScoreFuel'] = this.pitFlAutoScoreFuel;
+    data['pitNumAutoScore'] = this.pitNumAutoScore;
+    data['pitNumAutoFuel'] = this.pitNumAutoFuel;
+    data['pitIdAutoReloadPoints'] = this.pitIdAutoReloadPoints;
+    data['pitFlAutoClimb'] = this.pitFlAutoClimb;
+    data['pitTxAutoNotes'] = this.pitTxAutoNotes;
+    data['pitTxPitNotes'] = this.pitTxPitNotes;
     data['dtCreation'] = this.dtCreation;
     data['dtModified'] = this.dtModified;
     data['txComputerName'] = this.txComputerName;
@@ -314,59 +282,56 @@ class PitData {
 
   PitData.fromMap(Map<String, dynamic> map) {
     this.id = map['id'];
-    this.txEvent = map['txEvent'];
-    this.txScoutName = map['txScoutName'];
-    this.idTeam = map['idTeam'];
-    this.numWeight = map['numWeight'];
-    this.numHeight = map['numHeight'];
-    this.numWidth = map['numWidth'];
-    this.idDriveType = map['idDriveType'];
-    this.txDriveNotes = map['txDriveNotes'];
-    this.flObjectCoral = map['flObjectCoral'];
-    this.flObjectAlgae = map['flObjectAlgae'];
-    this.flObjectCatch = map['flObjectCatch'];
-    this.flObjectAlgaeFloor = map['flObjectAlgaeFloor'];
-    this.flObjectCoralFloor = map['flObjectCoralFloor'];
-    this.txObjectNotes = map['txObjectNotes'];
-    this.flScoreCoralL1 = map['flScoreCoralL1'];
-    this.flScoreCoralL2 = map['flScoreCoralL2'];
-    this.flScoreCoralL3 = map['flScoreCoralL3'];
-    this.flScoreCoralL4 = map['flScoreCoralL4'];
-    this.flScoreAlgaeBarge = map['flScoreAlgaeBarge'];
-    this.flScoreAlgaeProcess = map['flScoreAlgaeProcess'];
-    this.flRemoveAlgaeL2 = map['flRemoveAlgaeL2'];
-    this.flRemoveAlgaeL3 = map['flRemoveAlgaeL3'];
-    this.txScoringNotes = map['txScoringNotes'];
-    this.flClimb = map['flClimb'];
-    this.idClimbPos = map['idClimbPos'];
-    this.txClimbNotes = map['txClimbNotes'];
-    this.flAuto = map['flAuto'];
-    this.flAutoLine = map['flAutoLine'];
-    this.flAutoScoreCoral = map['flAutoScoreCoral'];
-    this.numAutoScoreCoralL1 = map['numAutoScoreCoralL1'];
-    this.numAutoScoreCoralL2 = map['numAutoScoreCoralL2'];
-    this.numAutoScoreCoralL3 = map['numAutoScoreCoralL3'];
-    this.numAutoScoreCoralL4 = map['numAutoScoreCoralL4'];
-    this.flAutoScoreAlgae = map['flAutoScoreAlgae'];
-    this.numAutoScoreAlgaeL2 = map['numAutoScoreAlgaeL2'];
-    this.numAutoScoreAlgaeL3 = map['numAutoScoreAlgaeL3'];
-    this.numAutoScoreAlgaeGround = map['numAutoScoreAlgaeGround'];
-    this.numAutoScoreAlgaeBarge = map['numAutoScoreAlgaeBarge'];
-    this.numAutoScoreAlgaeProcess = map['numAutoScoreAlgaeProcess'];
-    this.txAutoNotes = map['txAutoNotes'];
-    this.txPitNotes = map['txPitNotes'];
+    this.pitTxEvent = map['pitTxEvent'];
+    this.pitTxScoutName = map['pitTxScoutName'];
+    this.pitIdTeam = map['pitIdTeam'];
+    this.pitNumWeight = map['pitNumWeight'];
+    this.pitNumHeight = map['pitNumHeight'];
+    this.pitNumWidth = map['pitNumWidth'];
+    //this.pitImgTeamUniform = map['pitImgTeamUniform'];
+    //this.pitImgRobotFront = map['pitImgRobotFront'];
+    //this.pitImgRobotSide = map['pitImgRobotSide'];
+    this.pitIdDriveType = map['pitIdDriveType'];
+    this.pitIdFieldAccess = map['pitIdFieldAccess'];
+    this.pitTxDriveNotes = map['pitTxDriveNotes'];
+    this.pitFlObject = map['pitFlObject'];
+    this.pitFlObjectCatch = map['pitFlObjectCatch'];
+    this.pitFlObjectFloor = map['pitFlObjectFloor'];
+    this.pitTxObjectNotes = map['pitTxObjectNotes'];
+    this.pitIdCapacity = map['pitIdCapacity'];
+    this.pitIdThrough = map['pitIdThrough'];
+    this.pitFlScoreFuel = map['pitFlScoreFuel'];
+    this.pitFlDeliverFuel = map['pitFlDeliverFuel'];
+    this.pitNumLauncher = map['pitNumLauncher'];
+    this.pitIdShooterHeight = map['pitIdShooterHeight'];
+    this.pitIdShooterType = map['pitIdShooterType'];
+    this.pitTxScoringNotes = map['pitTxScoringNotes'];
+    this.pitFlClimb = map['pitFlClimb'];
+    this.pitIdClimbPos = map['pitIdClimbPos'];
+    this.pitIdClimbHeightMax = map['pitIdClimbHeightMax'];
+    this.pitIdClimbHeightPref = map['pitIdClimbHeightPref'];
+    this.pitFlClimbRelease = map['pitFlClimbRelease'];
+    this.pitTxClimbNotes = map['pitTxClimbNotes'];
+    this.pitFlAuto = map['pitFlAuto'];
+    this.pitFlAutoScoreFuel = map['pitFlAutoScoreFuel'];
+    this.pitNumAutoScore = map['pitNumAutoScore'];
+    this.pitNumAutoFuel = map['pitNumAutoFuel'];
+    this.pitIdAutoReloadPoints = map['pitIdAutoReloadPoints'];
+    this.pitFlAutoClimb = map['pitFlAutoClimb'];
+    this.pitTxAutoNotes = map['pitTxAutoNotes'];
+    this.pitTxPitNotes = map['pitTxPitNotes'];
     this.dtCreation = map['dtCreation'];
     this.dtModified = map['dtModified'];
     this.txComputerName = map['txComputerName'];
     this.uploaded = map['uploaded'];
-    if (map['imgRobotFront'] != null) {
-      this.imgRobotFront = File(map['imgRobotFront']);
+    if (map['pitImgRobotFront'] != null) {
+      this.pitImgRobotFront = File(map['pitImgRobotFront']);
     }
-    if (map['imgRobotSide'] != null) {
-      this.imgRobotSide = File(map['imgRobotSide']);
+    if (map['pitImgRobotSide'] != null) {
+      this.pitImgRobotSide = File(map['pitImgRobotSide']);
     }
-    if (map['imgTeamUniform'] != null) {
-      this.imgTeamUniform = File(map['imgTeamUniform']);
+    if (map['pitImgTeamUniform'] != null) {
+      this.pitImgTeamUniform = File(map['pitImgTeamUniform']);
     }
   }
 }

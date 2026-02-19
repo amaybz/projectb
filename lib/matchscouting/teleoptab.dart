@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_endgame.dart';
-import 'package:projectb/matchscouting/widget_matchscouting_human.dart';
 import 'package:projectb/sharedprefs.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
 
@@ -11,6 +10,7 @@ class TeleOpScreen extends StatefulWidget {
   const TeleOpScreen({
     Key? key,
     required this.matchScoutingData,
+    required this.listShootingTime,
     this.styleCounterButtonHeight = 25,
     this.styleCounterButtonWidth = 30,
     //onchange
@@ -26,9 +26,11 @@ class TeleOpScreen extends StatefulWidget {
     this.onCPPanelAttemptsChanged,
     this.onCPPanelSuccessChanged,
     this.onChange,
+    required this.onRecordTime,
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
+  final List<int> listShootingTime;
 
   //onchange
   final ValueChanged<bool>? onPowerPortLowerChanged;
@@ -43,6 +45,7 @@ class TeleOpScreen extends StatefulWidget {
   final ValueChanged<int>? onCPPanelAttemptsChanged;
   final ValueChanged<int>? onCPPanelSuccessChanged;
   final ValueChanged<MatchScoutingData>? onChange;
+  final ValueChanged<List<int>>? onRecordTime;
   final double styleCounterButtonHeight;
   final double styleCounterButtonWidth;
 
@@ -114,6 +117,7 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
   double styleMarginLeftTrap = 90;
   double styleMarginLeftSpeaker = 82;
   double styleMarginTopAmp = 5;
+  List<int> listShootingTime = [0];
 
   @override
   Widget build(BuildContext context) {
@@ -153,158 +157,44 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
       styleMarginTopAmp = 5;
     }
 
-    return Column(children: [
-      FractionallySizedBox(
-        widthFactor: 0.99,
-        child: Container(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(children: <Widget>[
-            ScoreWidget(
-              styleCounterButtonHeight: widget.styleCounterButtonHeight,
-              styleCounterButtonWidth: widget.styleCounterButtonWidth,
-              styleMarginLeftTrap: styleMarginLeftTrap,
-              styleMarginLeftSpeaker: styleMarginLeftSpeaker,
-              styleMarginTopAmp: styleMarginTopAmp,
-              styleFontSizeBody: styleBodyTextTheme!.fontSize!,
-              matchScoutingData: widget.matchScoutingData,
-              numAlgaeAttempt: widget.matchScoutingData.teleNumAlgaeAttempt,
-              numAlgaeL2Success: widget.matchScoutingData.teleNumAlgaeL2Success,
-              numAlgaeL3Success: widget.matchScoutingData.teleNumAlgaeL3Success,
-              numCoralAttempt: widget.matchScoutingData.teleNumCoralAttempt,
-              numCoralL1Success: widget.matchScoutingData.teleNumCoralL1Success,
-              numCoralL2Success: widget.matchScoutingData.teleNumCoralL2Success,
-              numCoralL3Success: widget.matchScoutingData.teleNumCoralL3Success,
-              numCoralL4Success: widget.matchScoutingData.teleNumCoralL4Success,
-              numAlgaeProcessAttempt:
-                  widget.matchScoutingData.teleNumAlgaeProcessAttempt,
-              numAlgaeProcessSuccess:
-                  widget.matchScoutingData.teleNumAlgaeProcessSuccess,
-              numAlgaeNetAttempt:
-                  widget.matchScoutingData.teleNumAlgaeNetAttempt,
-              numAlgaeNetSuccess:
-                  widget.matchScoutingData.teleNumAlgaeNetSuccess,
-              onChange: (MatchScoutingData newData) {
-                setState(() {
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeProcessAttempt: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeProcessAttempt = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeProcessSuccess: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeProcessSuccess = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeNetAttempt: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeNetAttempt = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeNetSuccess: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeNetSuccess = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeAttempt: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeAttempt = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeL3Success: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeL3Success = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumAlgaeL2Success: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumAlgaeL2Success = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumCoralL2Success: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumCoralL2Success = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumCoralL1Success: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumCoralL1Success = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumCoralAttempt: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumCoralAttempt = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumCoralL3Success: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumCoralL3Success = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
-              onNumCoralL4Success: (int value) {
-                setState(() {
-                  if (value < 0) {
-                    value = 0;
-                  }
-                  widget.matchScoutingData.teleNumCoralL4Success = value;
-                  widget.onChange!(widget.matchScoutingData);
-                });
-              },
+    return Column(
+      children: [
+        FractionallySizedBox(
+          widthFactor: 0.99,
+          child: Container(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              children: <Widget>[
+                ScoreWidget(
+                  styleCounterButtonHeight: widget.styleCounterButtonHeight,
+                  styleCounterButtonWidth: widget.styleCounterButtonWidth,
+                  styleMarginLeftTrap: styleMarginLeftTrap,
+                  styleMarginLeftSpeaker: styleMarginLeftSpeaker,
+                  styleMarginTopAmp: styleMarginTopAmp,
+                  styleFontSizeBody: styleBodyTextTheme!.fontSize!,
+                  matchScoutingData: widget.matchScoutingData,
+                  intScoringType: 2,
+                  listShootingTime: widget.listShootingTime,
+                  onRecordTime: (List<int> updatedList) {
+                    setState(() {
+                      widget.onRecordTime!(updatedList);
+                    });
+                  },
+                  onChange: (MatchScoutingData newData) {
+                    setState(() {
+                      widget.onChange!(widget.matchScoutingData);
+                    });
+                  },
+                ),
+              ],
             ),
-          ]),
+          ),
         ),
-      ),
-      FractionallySizedBox(
-        widthFactor: 0.99,
-        child: Container(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
+        FractionallySizedBox(
+          widthFactor: 0.99,
+          child: Container(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -320,9 +210,11 @@ class _TeleOpScreenState extends State<TeleOpScreen> {
                   },
                   onExpanded: (value) {},
                 ),
-              ]),
+              ],
+            ),
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }

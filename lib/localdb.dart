@@ -10,7 +10,7 @@ class LocalDB {
 
   // Increment this version when you need to change the schema.
 
-  static final _databaseVersion = 55;
+  static final _databaseVersion = 59;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -19,19 +19,22 @@ class LocalDB {
   final String tblPitData = "PitData";
   final String tblMatchTeams = "MatchTeams";
 
-  final String createTblMatches = "CREATE TABLE IF NOT EXISTS MatchTeams("
+  final String createTblMatches =
+      "CREATE TABLE IF NOT EXISTS MatchTeams("
       "id INTEGER PRIMARY KEY, "
       "matchNum INTEGER, "
       "teamKey TEXT,"
       "alliance INTEGER)";
 
-  final String createTblEventTeams = "CREATE TABLE IF NOT EXISTS EventTeams("
+  final String createTblEventTeams =
+      "CREATE TABLE IF NOT EXISTS EventTeams("
       "key TEXT PRIMARY KEY, "
       "name TEXT, "
       "nickName TEXT, "
       "teamNumber TEXT)";
 
-  final String createTblEvents = "CREATE TABLE IF NOT EXISTS events("
+  final String createTblEvents =
+      "CREATE TABLE IF NOT EXISTS events("
       "key TEXT PRIMARY KEY, "
       "name TEXT, "
       "shortName TEXT, "
@@ -41,7 +44,8 @@ class LocalDB {
       "name TEXT, "
       "location TEXT"
       ")";
-  final String createTblScoringData = "CREATE TABLE IF NOT EXISTS ScoringData("
+  final String createTblScoringData =
+      "CREATE TABLE IF NOT EXISTS ScoringData("
       'id INTEGER PRIMARY KEY,'
       'flUploaded TEXT,'
       'txEvent TEXT,'
@@ -57,103 +61,96 @@ class LocalDB {
       'flCrash TEXT,'
       'flAutoStop TEXT,'
       'autoFlStart TEXT,'
-      'autoFlBaseLine TEXT,'
-      'autoNumCellLoad INTEGER,'
+      'autoNumReload INTEGER,'
       'autoFlFoul TEXT,'
       'autoFlRobotContact TEXT,'
       'autoFlLoseStartObject TEXT,'
       'autoFlFail TEXT,'
-      'autoNumCoralAttempt INTEGER,'
-      'autoNumCoralL1Success INTEGER,'
-      'autoNumCoralL2Success INTEGER,'
-      'autoNumCoralL3Success INTEGER,'
-      'autoNumCoralL4Success INTEGER,'
-      'autoNumAlgaeAttempt INTEGER,'
-      'autoNumAlgaeL2Success INTEGER,'
-      'autoNumAlgaeL3Success INTEGER,'
-      'autoNumAlgaeNetAttempt INTEGER,'
-      'autoNumAlgaeNetSuccess INTEGER,'
-      'autoNumAlgaeProcessAttempt INTEGER,'
-      'autoNumAlgaeProcessSuccess INTEGER,'
-      'teleNumCoralAttempt INTEGER,'
-      'teleNumCoralL1Success INTEGER,'
-      'teleNumCoralL2Success INTEGER,'
-      'teleNumCoralL3Success INTEGER,'
-      'teleNumCoralL4Success INTEGER,'
-      'teleNumAlgaeAttempt INTEGER,'
-      'teleNumAlgaeL2Success INTEGER,'
-      'teleNumAlgaeL3Success INTEGER,'
-      'teleNumAlgaeNetAttempt INTEGER,'
-      'teleNumAlgaeNetSuccess INTEGER,'
-      'teleNumAlgaeProcessAttempt INTEGER,'
-      'teleNumAlgaeProcessSuccess INTEGER,'
-      'teleFlPark TEXT,'
+      'autoNumFuelShots INTEGER,'
+      'autoNumFuelSalvos INTEGER,'
+      'autoNumFuelAccLow INTEGER,'
+      'autoNumFuelAccMid INTEGER,'
+      'autoNumFuelAccHigh INTEGER,'
+      'autoNumTimer INTEGER,'
+      'autoFlClimb TEXT,'
+      'autoFLClimbRelease INTEGER,'
+      'autoIdClimbOutcome TEXT,'
+      'autoIdClimbPos TEXT,'
+      'autoIdStageClimbSpeed TEXT,'
+      'teleFlClimbRelease TEXT,'
+      'teleNumFuelShots INTEGER,'
+      'teleNumFuelSalvo INTEGER,'
+      'teleNumFuelAccLow INTEGER,'
+      'teleNumFuelAccMid INTEGER,'
+      'teleNumFuelAccHigh INTEGER,'
+      'teleNumTimer INTEGER,'
+      'teleNumFuelShuttle INTEGER,'
+      'teleNumShuttleFuelAccLow INTEGER,'
+      'teleNumShuttleFuelAccMid INTEGER,'
+      'teleNumShuttleFuelAccHigh INTEGER,'
       'teleIdClimbOutcome TEXT,'
-      'teleIdClimbType TEXT,'
-      'teleIdStageClimbSpeed TEXT,'
-      'teleHumanIdTeam TEXT,'
-      'teleIntAlgaeBarge INTEGER,'
-      'teleIntAlgaeProcess INTEGER,'
+      'teleIdClimbPos TEXT,'
+      'teleIdClimbHeight TEXT,'
+      'teleIdClimbSpeed TEXT,'
+      'teleFlFed TEXT,'
+      'IdThrough TEXT,'
+      'commFLHuman TEXT,'
       'commIdDriveRating TEXT,'
+      'commIdFieldAccess TEXT,'
       'commIdDefenceRating TEXT,'
       'commIdDefenceType TEXT,'
       'commFlStrategy TEXT,'
       'commFlShuttle TEXT,'
       'commFlRecovery TEXT,'
       'commFlFailure TEXT,'
+      'commFlInactiveScore TEXT,'
       'commFlWarning TEXT,'
       'commFlHighlight TEXT,'
-      'commFlIntakeGroundCoral TEXT,'
+      'commFlIntakeGround TEXT,'
       'commFlIntakeStation TEXT,'
-      'commFlIntakeGroundAlgae TEXT,'
       'commTxNotes TEXT'
-      ")";
-  final String createTblPitData = 'CREATE TABLE IF NOT EXISTS PitData('
+      ')';
+  final String createTblPitData =
+      'CREATE TABLE IF NOT EXISTS PitData('
       'id INTEGER PRIMARY KEY,'
-      'txEvent TEXT,'
-      'txScoutName TEXT,'
-      'idTeam INTEGER,'
-      'numWeight INTEGER,'
-      'numHeight INTEGER,'
-      'numWidth INTEGER,'
-      'imgTeamUniform TEXT,'
-      'imgRobotFront TEXT,'
-      'imgRobotSide TEXT,'
-      'idDriveType TEXT,'
-      'txDriveNotes TEXT,'
-      'flObjectCoral TEXT,'
-      'flObjectAlgae TEXT,'
-      'flObjectCatch TEXT,'
-      'flObjectAlgaeFloor TEXT,'
-      'flObjectCoralFloor TEXT,'
-      'txObjectNotes TEXT,'
-      'flScoreCoralL1 TEXT,'
-      'flScoreCoralL2 TEXT,'
-      'flScoreCoralL3 TEXT,'
-      'flScoreCoralL4 TEXT,'
-      'flScoreAlgaeBarge TEXT,'
-      'flScoreAlgaeProcess TEXT,'
-      'flRemoveAlgaeL2 TEXT,'
-      'flRemoveAlgaeL3 TEXT,'
-      'txScoringNotes TEXT,'
-      'flClimb TEXT,'
-      'idClimbPos TEXT,'
-      'txClimbNotes TEXT,'
-      'flAuto TEXT,'
-      'flAutoLine TEXT,'
-      'flAutoScoreCoral TEXT,'
-      'numAutoScoreCoralL1 INTEGER,'
-      'numAutoScoreCoralL2 INTEGER,'
-      'numAutoScoreCoralL3 INTEGER,'
-      'numAutoScoreCoralL4 INTEGER,'
-      'flAutoScoreAlgae TEXT,'
-      'numAutoScoreAlgaeL2 INTEGER,'
-      'numAutoScoreAlgaeL3 INTEGER,'
-      'numAutoScoreAlgaeGround INTEGER,'
-      'numAutoScoreAlgaeBarge INTEGER,'
-      'numAutoScoreAlgaeProcess INTEGER,'
-      'txAutoNotes TEXT,'
-      'txPitNotes TEXT,'
+      'pitTxEvent TEXT,'
+      'pitTxScoutName TEXT,'
+      'pitIdTeam INTEGER,'
+      'pitNumWeight INTEGER,'
+      'pitNumHeight INTEGER,'
+      'pitNumWidth INTEGER,'
+      'pitImgTeamUniform TEXT,'
+      'pitImgRobotFront TEXT,'
+      'pitImgRobotSide TEXT,'
+      'pitIdDriveType TEXT,'
+      'pitIdFieldAccess TEXT,'
+      'pitTxDriveNotes TEXT,'
+      'pitFlObject TEXT,'
+      'pitFlObjectCatch TEXT,'
+      'pitFlObjectFloor TEXT,'
+      'pitTxObjectNotes TEXT,'
+      'pitIdCapacity TEXT,'
+      'pitIdThrough TEXT,'
+      'pitFlScoreFuel TEXT,'
+      'pitFlDeliverFuel TEXT,'
+      'pitNumLauncher INTEGER,'
+      'pitIdShooterHeight TEXT,'
+      'pitIdShooterType TEXT,'
+      'pitTxScoringNotes TEXT,'
+      'pitFlClimb TEXT,'
+      'pitIdClimbPos TEXT,'
+      'pitIdClimbHeightMax TEXT,'
+      'pitIdClimbHeightPref TEXT,'
+      'pitFlClimbRelease TEXT,'
+      'pitTxClimbNotes TEXT,'
+      'pitFlAuto TEXT,'
+      'pitFlAutoScoreFuel TEXT,'
+      'pitNumAutoScore INTEGER,'
+      'pitNumAutoFuel INTEGER,'
+      'pitIdAutoReloadPoints TEXT,'
+      'pitFlAutoClimb TEXT,'
+      'pitTxAutoNotes TEXT,'
+      'pitTxPitNotes TEXT,'
       'dtCreation TEXT,'
       'dtModified TEXT,'
       'txComputerName TEXT,'
@@ -244,9 +241,27 @@ class LocalDB {
     // Get a reference to the database.
     final Database? db = await database;
     //delete all teams in DB
-    int? rowCount =
-        await db?.delete(tblPitData, where: "id = ?", whereArgs: [id]);
+    int? rowCount = await db?.delete(
+      tblPitData,
+      where: "id = ?",
+      whereArgs: [id],
+    );
     print(rowCount);
+    return rowCount;
+  }
+
+  Future<int?> deleteAllData() async {
+    // Get a reference to the database.
+    final Database? db = await database;
+    //delete all teams in DB
+    int? rowCountTblPitData = await db?.delete(tblPitData, where: "id != -1");
+    print(rowCountTblPitData);
+    int? rowCounttblScoringData = await db?.delete(
+      tblScoringData,
+      where: "id != -1",
+    );
+    print(tblScoringData);
+    int rowCount = rowCountTblPitData! + rowCounttblScoringData!;
     return rowCount;
   }
 
@@ -254,8 +269,11 @@ class LocalDB {
     // Get a reference to the database.
     final Database? db = await database;
     //delete all teams in DB
-    int? rowCount =
-        await db?.delete(tblScoringData, where: "id = ?", whereArgs: [id]);
+    int? rowCount = await db?.delete(
+      tblScoringData,
+      where: "id = ?",
+      whereArgs: [id],
+    );
     print(rowCount);
     return rowCount;
   }
@@ -311,8 +329,12 @@ class LocalDB {
 
   Future<DeviceName> getDeviceName() async {
     Database? db = await database;
-    List<Map>? maps = await db?.query(tblDevice,
-        columns: ['id', 'name', 'location'], where: 'id = ?', whereArgs: [1]);
+    List<Map>? maps = await db?.query(
+      tblDevice,
+      columns: ['id', 'name', 'location'],
+      where: 'id = ?',
+      whereArgs: [1],
+    );
     if (maps!.length > 0) {
       return DeviceName.fromMap(maps.first);
     }
@@ -323,8 +345,11 @@ class LocalDB {
 
   Future<MatchScoutingData> getScoringDataRecord(int id) async {
     Database? db = await database;
-    List<Map>? maps =
-        await db?.query(tblScoringData, where: 'id = ?', whereArgs: [id]);
+    List<Map>? maps = await db?.query(
+      tblScoringData,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
     if (maps!.length > 0) {
       return MatchScoutingData.fromLocalDB(maps.first);
     }
@@ -335,13 +360,16 @@ class LocalDB {
 
   Future<PitData> getPitDataRecord(int id) async {
     Database? db = await database;
-    List<Map>? maps =
-        await db?.query(tblPitData, where: 'id = ?', whereArgs: [id]);
+    List<Map>? maps = await db?.query(
+      tblPitData,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
     if (maps!.length > 0) {
       return PitData.fromLocalDB(maps.first);
     }
     PitData pitData = PitData();
-    pitData.idTeam = 0;
+    pitData.pitIdTeam = 0;
     return pitData;
   }
 
@@ -373,10 +401,11 @@ class LocalDB {
 
     return List.generate(maps!.length, (i) {
       return MatchTeam(
-          id: maps[i]['id'],
-          teamKey: maps[i]['teamKey'],
-          matchNum: maps[i]['matchNum'],
-          alliance: maps[i]['alliance']);
+        id: maps[i]['id'],
+        teamKey: maps[i]['teamKey'],
+        matchNum: maps[i]['matchNum'],
+        alliance: maps[i]['alliance'],
+      );
     });
   }
 
@@ -402,8 +431,11 @@ class LocalDB {
     // Get a reference to the database.
     final Database? db = await database;
     // Query the table for all records.
-    final List<Map<String, dynamic>>? maps =
-        await db?.query(tblEvents, where: 'key=?', whereArgs: [key]);
+    final List<Map<String, dynamic>>? maps = await db?.query(
+      tblEvents,
+      where: 'key=?',
+      whereArgs: [key],
+    );
 
     // Convert the List<Map<String, dynamic> into a List
     return List.generate(maps!.length, (i) {
@@ -449,12 +481,7 @@ class LocalTeam {
   int? teamNumber;
   String? nickName;
 
-  LocalTeam({
-    @required this.key,
-    this.name,
-    this.nickName,
-    this.teamNumber,
-  });
+  LocalTeam({@required this.key, this.name, this.nickName, this.teamNumber});
 
   Map<String, dynamic> toMap() {
     return {
@@ -479,12 +506,7 @@ class MatchTeam {
   String? teamKey;
   int? alliance;
 
-  MatchTeam({
-    this.id,
-    this.matchNum,
-    this.teamKey,
-    this.alliance,
-  });
+  MatchTeam({this.id, this.matchNum, this.teamKey, this.alliance});
 
   Map<String, dynamic> toMap() {
     return {
@@ -536,11 +558,7 @@ class DeviceName {
   DeviceName({this.id, this.name, this.location});
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'location': location,
-    };
+    return {'id': id, 'name': name, 'location': location};
   }
 
   DeviceName.fromMap(Map<dynamic, dynamic> map) {

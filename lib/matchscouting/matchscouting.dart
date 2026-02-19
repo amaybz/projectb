@@ -101,6 +101,9 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
   List<DropdownMenuItem<String>> eventTeamsListDropDown = [];
   List<DropDownValue> listDriveStations = [];
 
+  List<int> autoListShootingTime = [0];
+  List<int> teleListShootingTime = [0];
+
   setEventTeams(double styleFontSize) async {
     //clear current selected event and dropdown box
     setState(() {
@@ -978,6 +981,7 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
         styleCounterButtonHeight: styleCounterButtonHeight,
         matchScoutingData: matchScoutingData,
         styleImgFieldMapWidth: styleImgFieldMapWidth,
+        listShootingTime: autoListShootingTime,
         onChanged: (MatchScoutingData updates) {
           setState(() {
             matchScoutingData = updates;
@@ -1001,16 +1005,27 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
             matchScoutingData.autoFlFoul = value;
           });
         },
+        onRecordTime: (List<int> updatedList) {
+          setState(() {
+            autoListShootingTime = updatedList;
+          });
+        },
       );
     }
     if (index == 1) {
       return TeleOpScreen(
         matchScoutingData: matchScoutingData,
+        listShootingTime: teleListShootingTime,
         styleCounterButtonWidth: styleCounterButtonWidth,
         styleCounterButtonHeight: styleCounterButtonHeight,
         onChange: (MatchScoutingData updatedData) {
           setState(() {
             matchScoutingData = updatedData;
+          });
+        },
+        onRecordTime: (List<int> updatedList) {
+          setState(() {
+            teleListShootingTime = updatedList;
           });
         },
       );

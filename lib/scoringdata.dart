@@ -241,49 +241,49 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     File newFile = await file.writeAsString(dataToWrite.toString());
     print("JSON: " + dataToWrite);
 
-    newFile.copy(exFilepath + "PIT_" + pitData.idTeam.toString() + ".json");
+    newFile.copy(exFilepath + "PIT_" + pitData.pitIdTeam.toString() + ".json");
 
-    if (pitData.imgTeamUniform != null) {
-      fileExists = await File(pitData.imgTeamUniform!.path).exists();
+    if (pitData.pitImgTeamUniform != null) {
+      fileExists = await File(pitData.pitImgTeamUniform!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
-      pitData.imgTeamUniform!.copy(
+      pitData.pitImgTeamUniform!.copy(
         exFilepath +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             " PIT_TeamUniform" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             ".jpg",
       );
     }
 
-    if (pitData.imgRobotSide != null) {
-      fileExists = await File(pitData.imgRobotSide!.path).exists();
+    if (pitData.pitImgRobotSide != null) {
+      fileExists = await File(pitData.pitImgRobotSide!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
-      pitData.imgRobotSide!.copy(
+      pitData.pitImgRobotSide!.copy(
         exFilepath +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             " PIT_RobotSide" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             ".jpg",
       );
     }
 
-    if (pitData.imgRobotFront != null) {
-      fileExists = await File(pitData.imgRobotFront!.path).exists();
+    if (pitData.pitImgRobotFront != null) {
+      fileExists = await File(pitData.pitImgRobotFront!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
-      pitData.imgRobotFront!.copy(
+      pitData.pitImgRobotFront!.copy(
         exFilepath +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             " PIT_RobotFront" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             ".jpg",
       );
     }
@@ -306,7 +306,7 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     print("JSON: " + dataToWrite);
     await googleInterface.uploadFile(
       newFile,
-      "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
+      "PIT_" + pitData.pitIdTeam.toString() + " - " + DateTime.now().toString(),
       "json",
     );
     print("Upload Complete: JSON");
@@ -322,55 +322,70 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
     );
     checkIsSignedInToGoogle();
 
-    if (pitData.imgTeamUniform != null) {
-      fileExists = await File(pitData.imgTeamUniform!.path).exists();
+    if (pitData.pitImgTeamUniform != null) {
+      fileExists = await File(pitData.pitImgTeamUniform!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       googleInterface.uploadFile(
-        pitData.imgTeamUniform!,
-        pitData.idTeam.toString() +
+        pitData.pitImgTeamUniform!,
+        pitData.pitIdTeam.toString() +
             " PIT_TeamUniform" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             DateTime.now().toString(),
         "jpg",
       );
     }
 
-    if (pitData.imgRobotSide != null) {
-      fileExists = await File(pitData.imgRobotSide!.path).exists();
+    if (pitData.pitImgRobotSide != null) {
+      fileExists = await File(pitData.pitImgRobotSide!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       googleInterface.uploadFile(
-        pitData.imgRobotSide!,
-        pitData.idTeam.toString() +
+        pitData.pitImgRobotSide!,
+        pitData.pitIdTeam.toString() +
             " PIT_RobotSide" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             DateTime.now().toString(),
         "jpg",
       );
     }
 
-    if (pitData.imgRobotFront != null) {
-      fileExists = await File(pitData.imgRobotFront!.path).exists();
+    if (pitData.pitImgRobotFront != null) {
+      fileExists = await File(pitData.pitImgRobotFront!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       googleInterface.uploadFile(
-        pitData.imgRobotFront!,
-        pitData.idTeam.toString() +
+        pitData.pitImgRobotFront!,
+        pitData.pitIdTeam.toString() +
             " PIT_RobotFront" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             DateTime.now().toString(),
         "jpg",
       );
     }
 
     return newFile;
+  }
+
+  void handleMenuClick(String value) async {
+    switch (value) {
+      case 'Delete All Records':
+        print("Delete All Records Selected");
+        localDB.deleteAllData();
+        _getPitData();
+        _getScoringData(); //showAlertDialogClearMatch(context);
+        break;
+      case 'Settings':
+        print("Settings Selected");
+        //_navigateToSettings(context);
+        break;
+    }
   }
 
   checkIsSignedInToGoogle() async {
@@ -414,6 +429,19 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
         foregroundColor: Theme.of(context).splashColor,
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Saved Match Scouting', style: styleTitleTextTheme),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleMenuClick,
+            itemBuilder: (BuildContext context) {
+              return {'Delete All Records'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -685,10 +713,10 @@ class _ScoringDataScreenState extends State<ScoringDataScreen> {
           Column(
             children: [
               Text(
-                item.id.toString() + ". PIT: " + item.idTeam.toString(),
+                item.id.toString() + ". PIT: " + item.pitIdTeam.toString(),
                 style: styleBodyTextTheme,
               ),
-              Text("Scout: " + item.txScoutName!, style: styleBodyTextTheme),
+              Text("Scout: " + item.pitTxScoutName!, style: styleBodyTextTheme),
             ],
           ),
           Column(

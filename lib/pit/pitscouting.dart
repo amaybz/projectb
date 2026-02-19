@@ -93,7 +93,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
     //clear current selected event and dropdown box
     setState(() {
       selectedTeam = null;
-      pitData.idTeam = null;
+      pitData.pitIdTeam = null;
       ddsEventTeams.clear();
     });
 
@@ -325,38 +325,38 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
       pitData.dtModified = now.toString();
     }
     if (selectedTeam == null) return false;
-    pitData.idTeam = selectedTeam?.teamNumber;
-    pitData.txEvent = widget.eventKey;
-    pitData.txScoutName = _txtScoutName.text;
-    pitData.txPitNotes = txPitNotes.text;
-    pitData.txScoringNotes = txScoringNotes.text;
-    pitData.txDriveNotes = txDriveNotes.text;
-    pitData.txAutoNotes = txAutoNotes.text;
+    pitData.pitIdTeam = selectedTeam?.teamNumber;
+    pitData.pitTxEvent = widget.eventKey;
+    pitData.pitTxScoutName = _txtScoutName.text;
+    pitData.pitTxPitNotes = txPitNotes.text;
+    pitData.pitTxScoringNotes = txScoringNotes.text;
+    pitData.pitTxDriveNotes = txDriveNotes.text;
+    pitData.pitTxAutoNotes = txAutoNotes.text;
     pitData.txComputerName = widget.deviceName;
-    pitData.txObjectNotes = txObjectNotes.text;
+    pitData.pitTxObjectNotes = txObjectNotes.text;
 
     //if (pitData.imgTeamUniform == null) return false;
     //if (pitData.imgRobotSide == null) return false;
     //if (pitData.imgRobotFront == null) return false;
 
     try {
-      pitData.numWeight = int.parse(txWeight.text);
+      pitData.pitNumWeight = int.parse(txWeight.text);
     } catch (e) {
-      pitData.numWeight = 0;
+      pitData.pitNumWeight = 0;
       print("Error Converting txWeight: " + e.toString());
     }
 
     try {
-      pitData.numHeight = int.parse(txHeight.text);
+      pitData.pitNumHeight = int.parse(txHeight.text);
     } catch (e) {
-      pitData.numHeight = 0;
+      pitData.pitNumHeight = 0;
       print("Error Converting txHeight: " + e.toString());
     }
 
     try {
-      pitData.numWidth = int.parse(txWidth.text);
+      pitData.pitNumWidth = int.parse(txWidth.text);
     } catch (e) {
-      pitData.numWidth = 0;
+      pitData.pitNumWidth = 0;
       print("Error Converting txWidth: " + e.toString());
     }
 
@@ -689,34 +689,34 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           PitImages(
-                            title: "Team Shirt",
+                            title: "Team Uniform",
                             camera: widget.camera!,
                             onCapture: (newImage) {
                               setState(() {
-                                pitData.imgTeamUniform = newImage;
+                                pitData.pitImgTeamUniform = newImage;
                               });
                             },
-                            image: pitData.imgTeamUniform,
+                            image: pitData.pitImgTeamUniform,
                           ),
                           PitImages(
                             title: "Robot Side",
                             camera: widget.camera!,
                             onCapture: (newImage) {
                               setState(() {
-                                pitData.imgRobotSide = newImage;
+                                pitData.pitImgRobotSide = newImage;
                               });
                             },
-                            image: pitData.imgRobotSide,
+                            image: pitData.pitImgRobotSide,
                           ),
                           PitImages(
                             title: "Robot Front",
                             camera: widget.camera!,
                             onCapture: (newImage) {
                               setState(() {
-                                pitData.imgRobotFront = newImage;
+                                pitData.pitImgRobotFront = newImage;
                               });
                             },
-                            image: pitData.imgRobotFront,
+                            image: pitData.pitImgRobotFront,
                           ),
                         ],
                       ),
@@ -760,8 +760,8 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               txNotes: txChargeNotes,
               styleFieldTxShootingMaxWidth: styleFieldTxShootingMaxWidth,
               onChanged: (PitData updates) {
-                if (pitData.flClimb == false) {
-                  pitData.idClimbPos = "1";
+                if (pitData.pitFlClimb == false) {
+                  pitData.pitIdClimbPos = "1";
                 }
                 setState(() {
                   pitData = updates;
@@ -775,7 +775,7 @@ class _PitScoutingScreenState extends State<PitScoutingScreen> {
               pitData: pitData,
               strDistance: strDistance,
               strWeight: strWeight,
-              txAutoNotes: txAutoNotes,
+              pitTxAutoNotes: txAutoNotes,
               onChanged: (PitData updates) {
                 setState(() {
                   pitData = updates;

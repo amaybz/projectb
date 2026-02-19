@@ -63,89 +63,60 @@ class _MatchAutoState extends State<MatchAuto> {
         decoration: BoxDecoration(),
         child: Container(
           padding: EdgeInsets.all(5.0),
-          child: Column(children: <Widget>[
-            HeadingMain(
-              styleFontSize: styleTitleTextTheme!.fontSize!,
-              textColor: Theme.of(context).textTheme.titleLarge!.color!,
-              backGroundColor: Theme.of(context).primaryColor,
-              headingText: "Auto",
-              //backGroundColor: Colors.green,
-            ),
-            RowHeading(
-              styleFontSize: styleBodyTextTheme!.fontSize!,
-              text: "Does Auto?",
-              value: widget.matchScoutingData.autoFlStart,
-              styleBackGroundColor: Colors.yellow,
-              onChange: (bool value) {
-                setState(() {
-                  widget.matchScoutingData.autoFlStart = value;
-                  flAutoSelected = value;
-                  widget.matchScoutingData.autoFlBaseLine = false;
-                  widget.matchScoutingData.autoNumCellLoad = 0;
-                  widget.onChanged!(widget.matchScoutingData);
-                });
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Leave?",
-                  style: styleBodyTextTheme,
-                ),
-                Switch(
-                  value: widget.matchScoutingData.autoFlBaseLine!,
-                  onChanged: (bool value) {
-                    if (flAutoSelected == true) {
-                      setState(() {
-                        widget.matchScoutingData.autoFlBaseLine = value;
-                        widget.onChanged!(widget.matchScoutingData);
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                "#Pickup new Objects?:",
-                style: styleBodyTextTheme,
+          child: Column(
+            children: <Widget>[
+              HeadingMain(
+                styleFontSize: styleTitleTextTheme!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
+                headingText: "Auto",
+                //backGroundColor: Colors.green,
               ),
-              CounterWidget(
-                styleButtonHeight: widget.styleCounterButtonHeight,
-                styleButtonWidth: widget.styleCounterButtonWidth,
-                title: "",
-                value: widget.matchScoutingData.autoNumCellLoad,
-                onIncreaseStateChanged: (int value) {
-                  if (flAutoSelected == true) {
-                    setState(() {
-                      widget.matchScoutingData.autoNumCellLoad =
-                          widget.matchScoutingData.autoNumCellLoad! + 1;
-                      widget.onChanged!(widget.matchScoutingData);
-                    });
-                  }
-                },
-                onDecreaseStateChanged: (int value) {
-                  if (flAutoSelected == true) {
-                    setState(() {
-                      widget.matchScoutingData.autoNumCellLoad =
-                          widget.matchScoutingData.autoNumCellLoad! - 1;
-                      if (widget.matchScoutingData.autoNumCellLoad! < 0) {
-                        widget.matchScoutingData.autoNumCellLoad = 0;
-                      }
-                      widget.onChanged!(widget.matchScoutingData);
-                    });
-                  }
-                },
-                onSetValue: (int value) {
+              RowHeading(
+                styleFontSize: styleBodyTextTheme!.fontSize!,
+                text: "Does Auto?",
+                value: widget.matchScoutingData.autoFlStart,
+                styleBackGroundColor: Colors.yellow,
+                onChange: (bool value) {
                   setState(() {
-                    widget.matchScoutingData.autoNumCellLoad = value;
+                    widget.matchScoutingData.autoFlStart = value;
+                    flAutoSelected = value;
+                    //widget.matchScoutingData.autoFlBaseLine = false;
+                    //widget.matchScoutingData.autoNumReload = 0;
                     widget.onChanged!(widget.matchScoutingData);
                   });
                 },
               ),
-            ]),
-          ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("#Reload Fuel", style: styleBodyTextTheme),
+                  CounterWidget(
+                    value: widget.matchScoutingData.autoNumReload!,
+
+                    onIncreaseStateChanged: (int value) {
+                      setState(() {
+                        widget.matchScoutingData.autoNumReload =
+                            widget.matchScoutingData.autoNumReload! + value;
+                        widget.onChanged!(widget.matchScoutingData);
+                      });
+                    },
+                    onDecreaseStateChanged: (int value) {
+                      setState(() {
+                        widget.matchScoutingData.autoNumReload =
+                            widget.matchScoutingData.autoNumReload! + value;
+                        if (widget.matchScoutingData.autoNumReload! < 0) {
+                          widget.matchScoutingData.autoNumReload = 0;
+                        }
+                        widget.onChanged!(widget.matchScoutingData);
+                      });
+                    },
+                    title: '',
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

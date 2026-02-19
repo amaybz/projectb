@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
+import 'package:projectb/matchscouting/widget_matchscouting_auto_climb.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_auto_errors.dart';
 import 'package:projectb/matchscouting/widget_matchscouting_score.dart';
 import 'package:projectb/widgets/widget_driver_positions.dart';
@@ -12,6 +13,7 @@ class AutoTab extends StatefulWidget {
     Key? key,
     required this.styleImgFieldMapWidth,
     required this.matchScoutingData,
+    required this.listShootingTime,
     this.styleImgFieldPerformanceWidth = 150,
     this.onLoseStartObjectChange,
     this.onContactWithRobotChange,
@@ -20,6 +22,7 @@ class AutoTab extends StatefulWidget {
     this.styleCounterButtonWidth = 30,
     this.styleFontSizeHeadings = 18,
     this.onChanged,
+    required this.onRecordTime,
   }) : super(key: key);
 
   final MatchScoutingData matchScoutingData;
@@ -31,8 +34,10 @@ class AutoTab extends StatefulWidget {
   final ValueChanged<bool>? onLoseStartObjectChange;
   final ValueChanged<bool>? onContactWithRobotChange;
   final ValueChanged<bool>? onFoulChange;
+  final List<int> listShootingTime;
 
   final ValueChanged<MatchScoutingData>? onChanged;
+  final ValueChanged<List<int>>? onRecordTime;
 
   @override
   _AutoTabState createState() => _AutoTabState();
@@ -175,8 +180,9 @@ class _AutoTabState extends State<AutoTab> {
           widthFactor: 0.99,
           child: Container(
             margin: const EdgeInsets.all(5.0),
-            child: Column(children: <Widget>[
-              Row(
+            child: Column(
+              children: <Widget>[
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     HeadingMain(
@@ -194,9 +200,10 @@ class _AutoTabState extends State<AutoTab> {
                         scale: 25,
                       ),
                     ),
-                  ]),
-              Container(
-                child: Row(
+                  ],
+                ),
+                Container(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -208,19 +215,20 @@ class _AutoTabState extends State<AutoTab> {
                         highLight3: highLightLeft3,
                       ),
                       Column(
-                          //mainAxisAlignment: MainAxisAlignment.start,
-                          //crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(
-                              width: widget.styleImgFieldMapWidth + 80,
-                              height: (widget.styleImgFieldMapWidth),
-                              child: Transform(
-                                alignment: Alignment.center,
-                                transform: Matrix4.rotationY(0),
-                                child: imgFieldMap,
-                              ),
+                        //mainAxisAlignment: MainAxisAlignment.start,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            width: widget.styleImgFieldMapWidth + 80,
+                            height: (widget.styleImgFieldMapWidth),
+                            child: Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationY(0),
+                              child: imgFieldMap,
                             ),
-                          ]),
+                          ),
+                        ],
+                      ),
                       DriverPositions(
                         LeftSide: false,
                         color: colorRightSide,
@@ -228,9 +236,11 @@ class _AutoTabState extends State<AutoTab> {
                         highLight2: highLightRight2,
                         highLight3: highLightRight3,
                       ),
-                    ]),
-              ),
-            ]),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         MatchAuto(
@@ -263,133 +273,28 @@ class _AutoTabState extends State<AutoTab> {
           styleMarginLeftSpeaker: styleMarginLeftSpeaker,
           styleMarginTopAmp: styleMarginTopAmp,
           matchScoutingData: widget.matchScoutingData,
-          numCoralAttempt: widget.matchScoutingData.autoNumCoralAttempt,
-          numCoralL1Success: widget.matchScoutingData.autoNumCoralL1Success,
-          numCoralL2Success: widget.matchScoutingData.autoNumCoralL2Success,
-          numCoralL3Success: widget.matchScoutingData.autoNumCoralL3Success,
-          numCoralL4Success: widget.matchScoutingData.autoNumCoralL4Success,
-          numAlgaeAttempt: widget.matchScoutingData.autoNumAlgaeAttempt,
-          numAlgaeL2Success: widget.matchScoutingData.autoNumAlgaeL2Success,
-          numAlgaeL3Success: widget.matchScoutingData.autoNumAlgaeL3Success,
-          numAlgaeNetAttempt: widget.matchScoutingData.autoNumAlgaeNetAttempt,
-          numAlgaeNetSuccess: widget.matchScoutingData.autoNumAlgaeNetSuccess,
-          numAlgaeProcessAttempt:
-              widget.matchScoutingData.autoNumAlgaeProcessAttempt,
-          numAlgaeProcessSuccess:
-              widget.matchScoutingData.autoNumAlgaeProcessSuccess,
+          intScoringType: 1,
+          listShootingTime: widget.listShootingTime,
+          onRecordTime: (List<int> updatedList) {
+            setState(() {
+              widget.onRecordTime!(updatedList);
+            });
+          },
           onChange: (MatchScoutingData newData) {
             setState(() {
-              widget.onChanged!(widget.matchScoutingData);
+              widget.onChanged!(newData);
             });
           },
-          onNumAlgaeNetAttempt: (int value) {
+        ),
+        AutoClimb(
+          styleCounterButtonHeight: widget.styleCounterButtonHeight,
+          styleCounterButtonWidth: widget.styleCounterButtonWidth,
+          onChanged: (MatchScoutingData newData) {
             setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeNetAttempt = value;
-              widget.onChanged!(widget.matchScoutingData);
+              widget.onChanged!(newData);
             });
           },
-          onNumAlgaeNetSuccess: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeNetSuccess = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumAlgaeProcessAttempt: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeProcessAttempt = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumAlgaeProcessSuccess: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeProcessSuccess = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumAlgaeAttempt: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeAttempt = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumAlgaeL3Success: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeL3Success = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumAlgaeL2Success: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumAlgaeL2Success = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumCoralL2Success: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCoralL2Success = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumCoralL1Success: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCoralL1Success = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumCoralAttempt: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCoralAttempt = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumCoralL3Success: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCoralL3Success = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
-          onNumCoralL4Success: (int value) {
-            setState(() {
-              if (value < 0) {
-                value = 0;
-              }
-              widget.matchScoutingData.autoNumCoralL4Success = value;
-              widget.onChanged!(widget.matchScoutingData);
-            });
-          },
+          matchScoutingData: widget.matchScoutingData,
         ),
       ],
     );

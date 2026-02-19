@@ -30,48 +30,72 @@ class _PitDriveBaseState extends State<PitDriveBase> {
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
 
+  List<DropdownMenuItem<String>> listIdFieldAccess = [
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("Trench")),
+    DropdownMenuItem(value: "3", child: Text("Bump")),
+    DropdownMenuItem(value: "4", child: Text("Both")),
+  ];
+
+  getFieldAccessDropDownMenu(TextStyle textStyle) {
+    listIdFieldAccess.clear();
+    listIdFieldAccess.addAll([
+      DropdownMenuItem(
+        value: "1",
+        child: Text("N/A", style: textStyle),
+      ),
+      DropdownMenuItem(
+        value: "2",
+        child: Text("Trench", style: textStyle),
+      ),
+      DropdownMenuItem(
+        value: "3",
+        child: Text("Bump", style: textStyle),
+      ),
+      DropdownMenuItem(
+        value: "4",
+        child: Text("Both", style: textStyle),
+      ),
+    ]);
+  }
+
   List<DropdownMenuItem<String>> listIdDriveType = [
-    DropdownMenuItem(value: "1", child: Text("N/A"))
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("KOP")),
+    DropdownMenuItem(value: "3", child: Text("Custom Tank")),
+    DropdownMenuItem(value: "4", child: Text("Meccanum")),
+    DropdownMenuItem(value: "5", child: Text("Swerve")),
+    DropdownMenuItem(value: "6", child: Text("Other")),
   ];
 
   getDriveBaseDropDownMenu(TextStyle textStyle) {
     listIdDriveType.clear();
-    listIdDriveType.add(DropdownMenuItem(
+    listIdDriveType.addAll([
+      DropdownMenuItem(
         value: "1",
-        child: Text(
-          "N/A",
-          style: textStyle,
-        )));
-    listIdDriveType.add(DropdownMenuItem(
+        child: Text("N/A", style: textStyle),
+      ),
+      DropdownMenuItem(
         value: "2",
-        child: Text(
-          "KOP",
-          style: textStyle,
-        )));
-    listIdDriveType.add(DropdownMenuItem(
+        child: Text("KOP", style: textStyle),
+      ),
+      DropdownMenuItem(
         value: "3",
-        child: Text(
-          "Custom Tank",
-          style: textStyle,
-        )));
-    listIdDriveType.add(DropdownMenuItem(
+        child: Text("Custom Tank", style: textStyle),
+      ),
+      DropdownMenuItem(
         value: "4",
-        child: Text(
-          "Meccanum",
-          style: textStyle,
-        )));
-    listIdDriveType.add(DropdownMenuItem(
+        child: Text("Meccanum", style: textStyle),
+      ),
+      DropdownMenuItem(
         value: "5",
-        child: Text(
-          "Swerve",
-          style: textStyle,
-        )));
-    listIdDriveType.add(DropdownMenuItem(
+        child: Text("Swerve", style: textStyle),
+      ),
+      DropdownMenuItem(
         value: "6",
-        child: Text(
-          "Other",
-          style: textStyle,
-        )));
+        child: Text("Other", style: textStyle),
+      ),
+    ]);
   }
 
   @override
@@ -96,7 +120,8 @@ class _PitDriveBaseState extends State<PitDriveBase> {
       });
     }
 
-    getDriveBaseDropDownMenu(styleBodyTextTheme!);
+    //getDriveBaseDropDownMenu(styleBodyTextTheme!);
+    //getFieldAccessDropDownMenu(styleBodyTextTheme!);
 
     return FractionallySizedBox(
       widthFactor: 0.99,
@@ -104,59 +129,82 @@ class _PitDriveBaseState extends State<PitDriveBase> {
         margin: const EdgeInsets.all(5.0),
         child: Container(
           padding: EdgeInsets.all(5.0),
-          child: Column(children: <Widget>[
-            HeadingMain(
-              styleFontSize: styleTitleTextTheme!.fontSize!,
-              textColor: Theme.of(context).textTheme.titleLarge!.color!,
-              backGroundColor: Theme.of(context).primaryColor,
-              headingText: "Drivebase",
-              //backGroundColor: Colors.green,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Driving Type:",
-                  style: styleBodyTextTheme,
-                ),
-                DropdownButton(
-                  value: widget.pitData.idDriveType == null
-                      ? null
-                      : widget.pitData.idDriveType,
-                  items: listIdDriveType,
-                  onChanged: (item) {
-                    setState(() {
-                      widget.pitData.idDriveType = item as String?;
-                      widget.onChanged(widget.pitData);
-                    });
-                    print("idDriveType: " + widget.pitData.idDriveType!);
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Notes: ",
-                  style: styleBodyTextTheme,
-                ),
-                ConstrainedBox(
-                  constraints:
-                      BoxConstraints(maxWidth: widget.styleFieldCommentWidth),
-                  child: TextField(
-                    controller: widget.txDriveNotes,
-                    decoration: InputDecoration(
-                        hintText: 'Notes on drive and control system',
-                        hintStyle:
-                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
+          child: Column(
+            children: <Widget>[
+              HeadingMain(
+                styleFontSize: styleTitleTextTheme!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
+                headingText: "Drivebase",
+                //backGroundColor: Colors.green,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Driving Type:", style: styleBodyTextTheme),
+                  DropdownButton(
+                    value: widget.pitData.pitIdDriveType == null
+                        ? null
+                        : widget.pitData.pitIdDriveType,
+                    items: listIdDriveType,
+                    style: styleBodyTextTheme,
+                    onChanged: (item) {
+                      setState(() {
+                        widget.pitData.pitIdDriveType = item as String?;
+                        widget.onChanged(widget.pitData);
+                      });
+                      print("idDriveType: " + widget.pitData.pitIdDriveType!);
+                    },
                   ),
-                ),
-              ],
-            ),
-          ]),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Field Access:", style: styleBodyTextTheme),
+                  DropdownButton(
+                    value: widget.pitData.pitIdFieldAccess == null
+                        ? null
+                        : widget.pitData.pitIdFieldAccess,
+                    items: listIdFieldAccess,
+                    style: styleBodyTextTheme,
+                    onChanged: (item) {
+                      setState(() {
+                        widget.pitData.pitIdFieldAccess = item as String?;
+                        widget.onChanged(widget.pitData);
+                      });
+                      print(
+                        "pitIdFieldAccess: " + widget.pitData.pitIdFieldAccess!,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Notes: ", style: styleBodyTextTheme),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: widget.styleFieldCommentWidth,
+                    ),
+                    child: TextField(
+                      controller: widget.txDriveNotes,
+                      decoration: InputDecoration(
+                        hintText: 'Notes on drive and control system',
+                        hintStyle: styleBodyTextTheme?.copyWith(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -226,52 +226,52 @@ class GoogleInterface {
     print("JSON: " + dataToWrite);
     await uploadFile(
       newFile,
-      "PIT_" + pitData.idTeam.toString() + " - " + DateTime.now().toString(),
+      "PIT_" + pitData.pitIdTeam.toString() + " - " + DateTime.now().toString(),
       "json",
     );
     print("Upload Complete: JSON");
-    if (pitData.imgTeamUniform != null) {
-      fileExists = await File(pitData.imgTeamUniform!.path).exists();
+    if (pitData.pitImgTeamUniform != null) {
+      fileExists = await File(pitData.pitImgTeamUniform!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await uploadFile(
-        pitData.imgTeamUniform!,
-        pitData.idTeam.toString() +
+        pitData.pitImgTeamUniform!,
+        pitData.pitIdTeam.toString() +
             " PIT_TeamUniform" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             DateTime.now().toString(),
         "jpg",
       );
     }
-    if (pitData.imgRobotSide != null) {
-      fileExists = await File(pitData.imgRobotSide!.path).exists();
+    if (pitData.pitImgRobotSide != null) {
+      fileExists = await File(pitData.pitImgRobotSide!.path).exists();
     } else {
       fileExists = false;
     }
     if (fileExists == true) {
       await uploadFile(
-        pitData.imgRobotSide!,
-        pitData.idTeam.toString() +
+        pitData.pitImgRobotSide!,
+        pitData.pitIdTeam.toString() +
             " PIT_RobotSide" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             DateTime.now().toString(),
         "jpg",
       );
     }
-    if (pitData.imgRobotFront != null) {
-      fileExists = await File(pitData.imgRobotFront!.path).exists();
+    if (pitData.pitImgRobotFront != null) {
+      fileExists = await File(pitData.pitImgRobotFront!.path).exists();
     } else {
       fileExists = false;
     }
 
     if (fileExists == true) {
       await uploadFile(
-        pitData.imgRobotFront!,
-        pitData.idTeam.toString() +
+        pitData.pitImgRobotFront!,
+        pitData.pitIdTeam.toString() +
             " PIT_RobotFront" +
-            pitData.idTeam.toString() +
+            pitData.pitIdTeam.toString() +
             DateTime.now().toString(),
         "jpg",
       );

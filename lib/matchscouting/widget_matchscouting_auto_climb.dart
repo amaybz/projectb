@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projectb/class/class_macthscoutingdata.dart';
 import '../widgets/widget_headingmain.dart';
+import '../widgets/widget_row_heading.dart';
 
-class EndGame extends StatefulWidget {
-  EndGame({
+class AutoClimb extends StatefulWidget {
+  AutoClimb({
     Key? key,
     required this.matchScoutingData,
     this.styleFontSize = 16,
@@ -27,10 +28,10 @@ class EndGame extends StatefulWidget {
   final TextEditingController? txClimb;
 
   @override
-  _EndGameState createState() => _EndGameState();
+  _AutoClimbState createState() => _AutoClimbState();
 }
 
-class _EndGameState extends State<EndGame> {
+class _AutoClimbState extends State<AutoClimb> {
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
 
@@ -52,13 +53,6 @@ class _EndGameState extends State<EndGame> {
     DropdownMenuItem(value: "2", child: Text("Left")),
     DropdownMenuItem(value: "3", child: Text("Center")),
     DropdownMenuItem(value: "4", child: Text("Right")),
-  ];
-
-  List<DropdownMenuItem<String>> listHeight = [
-    DropdownMenuItem(value: "1", child: Text("N/A")),
-    DropdownMenuItem(value: "2", child: Text("Lvl 1")),
-    DropdownMenuItem(value: "3", child: Text("Lvl 2")),
-    DropdownMenuItem(value: "4", child: Text("Lvl 3")),
   ];
 
   @override
@@ -93,29 +87,49 @@ class _EndGameState extends State<EndGame> {
               styleFontSize: styleTitleTextTheme!.fontSize!,
               textColor: Theme.of(context).textTheme.titleLarge!.color!,
               backGroundColor: Theme.of(context).primaryColor,
-              headingText: "End Game",
+              headingText: "Climb",
               //backGroundColor: Colors.green,
             ),
+            RowHeading(
+              styleFontSize: styleBodyTextTheme!.fontSize!,
+              text: "Auto Climb?",
+              value: widget.matchScoutingData.autoFlClimb,
+              styleBackGroundColor: Colors.yellow,
+              onChange: (bool value) {
+                setState(() {
+                  widget.matchScoutingData.autoFlClimb = value;
+                });
 
+                if (widget.matchScoutingData.autoFlClimb! == false) ;
+                {
+                  setState(() {
+                    widget.matchScoutingData.autoIdClimbOutcome = "1";
+                    widget.matchScoutingData.autoIdClimbPos = "1";
+                    widget.matchScoutingData.autoIdStageClimbSpeed = "1";
+                  });
+                }
+                widget.onChanged!(widget.matchScoutingData);
+              },
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text("Climb Outcome:", style: styleBodyTextTheme),
                 DropdownButton(
-                  value: widget.matchScoutingData.teleIdClimbOutcome == null
+                  value: widget.matchScoutingData.autoIdClimbOutcome == null
                       ? null
-                      : widget.matchScoutingData.teleIdClimbOutcome,
+                      : widget.matchScoutingData.autoIdClimbOutcome,
                   items: listFailedSuccess,
                   style: styleBodyTextTheme,
                   onChanged: (item) {
                     setState(() {
-                      widget.matchScoutingData.teleIdClimbOutcome = item;
+                      widget.matchScoutingData.autoIdClimbOutcome = item;
                       widget.onChanged!(widget.matchScoutingData);
                     });
                     print(
-                      "teleIdClimbOutcome: " +
-                          widget.matchScoutingData.teleIdClimbOutcome!,
+                      "autoIdClimbOutcome: " +
+                          widget.matchScoutingData.autoIdClimbOutcome!,
                     );
                   },
                 ),
@@ -127,43 +141,19 @@ class _EndGameState extends State<EndGame> {
               children: <Widget>[
                 Text("Climb Position:", style: styleBodyTextTheme),
                 DropdownButton(
-                  value: widget.matchScoutingData.teleIdClimbPos == null
+                  value: widget.matchScoutingData.autoIdClimbPos == null
                       ? null
-                      : widget.matchScoutingData.teleIdClimbPos,
+                      : widget.matchScoutingData.autoIdClimbPos,
                   items: listClimbType,
                   style: styleBodyTextTheme,
                   onChanged: (item) {
                     setState(() {
-                      widget.matchScoutingData.teleIdClimbPos = item;
+                      widget.matchScoutingData.autoIdClimbPos = item;
                       widget.onChanged!(widget.matchScoutingData);
                     });
                     print(
-                      "teleIdClimbType: " +
-                          widget.matchScoutingData.teleIdClimbPos!,
-                    );
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text("Climb Height:", style: styleBodyTextTheme),
-                DropdownButton(
-                  value: widget.matchScoutingData.teleIdClimbHeight == null
-                      ? null
-                      : widget.matchScoutingData.teleIdClimbHeight,
-                  items: listHeight,
-                  style: styleBodyTextTheme,
-                  onChanged: (item) {
-                    setState(() {
-                      widget.matchScoutingData.teleIdClimbHeight = item;
-                      widget.onChanged!(widget.matchScoutingData);
-                    });
-                    print(
-                      "teleIdClimbType: " +
-                          widget.matchScoutingData.teleIdClimbHeight!,
+                      "autoIdClimbPos: " +
+                          widget.matchScoutingData.autoIdClimbPos!,
                     );
                   },
                 ),
@@ -175,19 +165,19 @@ class _EndGameState extends State<EndGame> {
               children: <Widget>[
                 Text("Speed:", style: styleBodyTextTheme),
                 DropdownButton(
-                  value: widget.matchScoutingData.teleIdClimbSpeed == null
+                  value: widget.matchScoutingData.autoIdStageClimbSpeed == null
                       ? null
-                      : widget.matchScoutingData.teleIdClimbSpeed,
+                      : widget.matchScoutingData.autoIdStageClimbSpeed,
                   items: ddsSpeed,
                   style: styleBodyTextTheme,
                   onChanged: (item) {
                     setState(() {
-                      widget.matchScoutingData.teleIdClimbSpeed = item;
+                      widget.matchScoutingData.autoIdStageClimbSpeed = item;
                       widget.onChanged!(widget.matchScoutingData);
                     });
                     print(
-                      "teleIdClimbSpeed: " +
-                          widget.matchScoutingData.teleIdClimbSpeed!,
+                      "autoIdStageClimbSpeed: " +
+                          widget.matchScoutingData.autoIdStageClimbSpeed!,
                     );
                   },
                 ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:projectb/class/class_pitdata.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
+import '../widgets/widget_counter.dart';
+
 class PitScoring extends StatefulWidget {
   PitScoring({
     Key? key,
@@ -25,49 +27,20 @@ class PitScoring extends StatefulWidget {
 }
 
 class _PitScoringState extends State<PitScoring> {
-  List<DropdownMenuItem<String>> listNodeType = [
+  List<DropdownMenuItem<String>> listShooterHeight = [
     DropdownMenuItem(value: "1", child: Text("N/A")),
-    DropdownMenuItem(value: "2", child: Text("Subwoofer")),
-    DropdownMenuItem(value: "3", child: Text("Podium")),
-    DropdownMenuItem(value: "4", child: Text("Long")),
-    DropdownMenuItem(value: "5", child: Text("All")),
+    DropdownMenuItem(value: "2", child: Text("Bumper")),
+    DropdownMenuItem(value: "3", child: Text("Trench ")),
+    DropdownMenuItem(value: "4", child: Text("High")),
   ];
 
-  getNodeTypeDropDownMenu(TextStyle textStyle) {
-    listNodeType.clear();
-    listNodeType.addAll([
-      DropdownMenuItem(
-          value: "1",
-          child: Text(
-            "N/A",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "2",
-          child: Text(
-            "Subwoofer",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "3",
-          child: Text(
-            "Podium",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "4",
-          child: Text(
-            "Long",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "5",
-          child: Text(
-            "All",
-            style: textStyle,
-          )),
-    ]);
-  }
+  List<DropdownMenuItem<String>> listShooterType = [
+    DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("Fixed")),
+    DropdownMenuItem(value: "3", child: Text("Hood ")),
+    DropdownMenuItem(value: "4", child: Text("Turret")),
+    DropdownMenuItem(value: "5", child: Text("Both")),
+  ];
 
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
@@ -94,222 +67,155 @@ class _PitScoringState extends State<PitScoring> {
       });
     }
 
-    getNodeTypeDropDownMenu(styleBodyTextTheme!);
-
     return FractionallySizedBox(
       widthFactor: 0.99,
       child: Container(
         margin: const EdgeInsets.all(5.0),
         child: Container(
           padding: EdgeInsets.all(5.0),
-          child: Column(children: <Widget>[
-            HeadingMain(
-              styleFontSize: styleTitleTextTheme!.fontSize!,
-              textColor: Theme.of(context).textTheme.titleLarge!.color!,
-              backGroundColor: Theme.of(context).primaryColor,
-              headingText: "Scoring",
-              //backGroundColor: Colors.green,
-            ),
-            Row(
+          child: Column(
+            children: <Widget>[
+              HeadingMain(
+                styleFontSize: styleTitleTextTheme!.fontSize!,
+                textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                backGroundColor: Theme.of(context).primaryColor,
+                headingText: "Scoring",
+                //backGroundColor: Colors.green,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(flex: 1, child: Column()),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          HeadingMain(
-                            styleFontSize: styleTitleTextTheme!.fontSize!,
-                            textColor:
-                                Theme.of(context).textTheme.labelLarge!.color!,
-                            backGroundColor:
-                                Theme.of(context).colorScheme.surface,
-                            headingText: "Coral",
-                            //backGroundColor: Colors.green,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "L1:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flScoreCoralL1!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flScoreCoralL1 = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "L2:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flScoreCoralL2!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flScoreCoralL2 = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "L3:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flScoreCoralL3!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flScoreCoralL3 = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "L4:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flScoreCoralL4!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flScoreCoralL4 = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ]),
+                  Text("Score Fuel?:", style: styleBodyTextTheme),
+                  Switch(
+                    value: widget.pitData.pitFlScoreFuel!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.pitFlScoreFuel = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
                   ),
-                  Expanded(flex: 1, child: Column()),
-                  Expanded(
-                    flex: 4,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          HeadingMain(
-                            styleFontSize: styleTitleTextTheme!.fontSize!,
-                            textColor:
-                                Theme.of(context).textTheme.labelLarge!.color!,
-                            backGroundColor:
-                                Theme.of(context).colorScheme.surface,
-                            headingText: "Algae",
-                            //backGroundColor: Colors.green,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Barge:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flScoreAlgaeBarge!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flScoreAlgaeBarge = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Processor:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flScoreAlgaeProcess!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flScoreAlgaeProcess = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Remove L2:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flRemoveAlgaeL2!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flRemoveAlgaeL2 = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Remove L3:",
-                                style: styleBodyTextTheme,
-                              ),
-                              Switch(
-                                value: widget.pitData.flRemoveAlgaeL3!,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    widget.pitData.flRemoveAlgaeL3 = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ]),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Deliver Fuel?:", style: styleBodyTextTheme),
+                  Switch(
+                    value: widget.pitData.pitFlDeliverFuel!,
+                    onChanged: (bool value) {
+                      setState(() {
+                        widget.pitData.pitFlDeliverFuel = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
                   ),
-                  Expanded(flex: 1, child: Column()),
-                ]),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Notes: ",
-                  style: styleBodyTextTheme,
-                ),
-                ConstrainedBox(
-                  constraints:
-                      BoxConstraints(maxWidth: widget.styleFieldTextWidth),
-                  child: TextField(
-                    controller: widget.txScoringNotes,
-                    decoration: InputDecoration(
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("#Shooters:", style: styleBodyTextTheme),
+                  CounterWidget(
+                    title: "",
+                    styleFontSize: widget.styleFontSize,
+                    value: widget.pitData.pitNumLauncher,
+                    onIncreaseStateChanged: (int value) {
+                      setState(() {
+                        widget.pitData.pitNumLauncher =
+                            widget.pitData.pitNumLauncher! + 1;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                    onDecreaseStateChanged: (int value) {
+                      setState(() {
+                        widget.pitData.pitNumLauncher =
+                            widget.pitData.pitNumLauncher! - 1;
+                        if (widget.pitData.pitNumLauncher! < 0) {
+                          widget.pitData.pitNumLauncher = 0;
+                        }
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                    onSetValue: (int value) {
+                      setState(() {
+                        widget.pitData.pitNumLauncher = value;
+                        widget.onChanged!(widget.pitData);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Shooter Height:", style: styleBodyTextTheme),
+                  DropdownButton(
+                    value: widget.pitData.pitIdShooterHeight == null
+                        ? null
+                        : widget.pitData.pitIdShooterHeight,
+                    items: listShooterHeight,
+                    style: styleBodyTextTheme,
+                    onChanged: (item) {
+                      setState(() {
+                        widget.pitData.pitIdShooterHeight = item;
+                        widget.onChanged!(widget.pitData);
+                      });
+                      print(
+                        "pitIdShooterHeight: " +
+                            widget.pitData.pitIdShooterHeight!,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("Shooter Type :", style: styleBodyTextTheme),
+                  DropdownButton(
+                    value: widget.pitData.pitIdShooterType == null
+                        ? null
+                        : widget.pitData.pitIdShooterType,
+                    items: listShooterType,
+                    style: styleBodyTextTheme,
+                    onChanged: (item) {
+                      setState(() {
+                        widget.pitData.pitIdShooterType = item;
+                        widget.onChanged!(widget.pitData);
+                      });
+                      print(
+                        "pitIdShooterType: " + widget.pitData.pitIdShooterType!,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Notes: ", style: styleBodyTextTheme),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: widget.styleFieldTextWidth,
+                    ),
+                    child: TextField(
+                      controller: widget.txScoringNotes,
+                      decoration: InputDecoration(
                         hintText: 'Notes on Scoring',
-                        hintStyle:
-                            styleBodyTextTheme?.copyWith(color: Colors.grey)),
+                        hintStyle: styleBodyTextTheme?.copyWith(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ]),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

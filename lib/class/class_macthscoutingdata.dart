@@ -14,55 +14,53 @@ class MatchScoutingData {
   bool? flCrash;
   bool? flAutoStop;
   bool? autoFlStart;
-  bool? autoFlBaseLine;
-  int? autoNumCellLoad;
+  int? autoNumReload;
   bool? autoFlFoul;
   bool? autoFlRobotContact;
   bool? autoFlLoseStartObject;
   bool? autoFlFail;
-  int? autoNumCoralAttempt;
-  int? autoNumCoralL1Success;
-  int? autoNumCoralL2Success;
-  int? autoNumCoralL3Success;
-  int? autoNumCoralL4Success;
-  int? autoNumAlgaeAttempt;
-  int? autoNumAlgaeL2Success;
-  int? autoNumAlgaeL3Success;
-  int? autoNumAlgaeNetAttempt;
-  int? autoNumAlgaeNetSuccess;
-  int? autoNumAlgaeProcessAttempt;
-  int? autoNumAlgaeProcessSuccess;
-  int? teleNumCoralAttempt;
-  int? teleNumCoralL1Success;
-  int? teleNumCoralL2Success;
-  int? teleNumCoralL3Success;
-  int? teleNumCoralL4Success;
-  int? teleNumAlgaeAttempt;
-  int? teleNumAlgaeL2Success;
-  int? teleNumAlgaeL3Success;
-  int? teleNumAlgaeNetAttempt;
-  int? teleNumAlgaeNetSuccess;
-  int? teleNumAlgaeProcessAttempt;
-  int? teleNumAlgaeProcessSuccess;
-  bool? teleFlPark;
+  int? autoNumFuelShots;
+  int? autoNumFuelSalvos;
+  int? autoNumFuelAccLow;
+  int? autoNumFuelAccMid;
+  int? autoNumFuelAccHigh;
+  int? autoNumTimer;
+  bool? autoFlClimb;
+  int? autoFLClimbRelease;
+  String? autoIdClimbOutcome;
+  String? autoIdClimbPos;
+  String? autoIdStageClimbSpeed;
+  bool? teleFlClimbRelease;
+  int? teleNumFuelShots;
+  int? teleNumFuelSalvo;
+  int? teleNumFuelAccLow;
+  int? teleNumFuelAccMid;
+  int? teleNumFuelAccHigh;
+  int? teleNumTimer;
+  int? teleNumFuelShuttle;
+  int? teleNumShuttleFuelAccLow;
+  int? teleNumShuttleFuelAccMid;
+  int? teleNumShuttleFuelAccHigh;
   String? teleIdClimbOutcome;
-  String? teleIdClimbType;
-  String? teleIdStageClimbSpeed;
-  String? teleHumanIdTeam;
-  int? teleIntAlgaeBarge;
-  int? teleIntAlgaeProcess;
+  String? teleIdClimbPos;
+  String? teleIdClimbHeight;
+  String? teleIdClimbSpeed;
+  bool? teleFlFed;
+  String? IdThrough;
+  bool? commFLHuman;
   String? commIdDriveRating;
+  String? commIdFieldAccess;
   String? commIdDefenceRating;
   String? commIdDefenceType;
   bool? commFlStrategy;
   bool? commFlShuttle;
   bool? commFlRecovery;
   bool? commFlFailure;
+  bool? commFlInactiveScore;
   bool? commFlWarning;
   bool? commFlHighlight;
-  bool? commFlIntakeGroundCoral;
+  bool? commFlIntakeGround;
   bool? commFlIntakeStation;
-  bool? commFlIntakeGroundAlgae;
   String? commTxNotes;
 
   MatchScoutingData({
@@ -75,61 +73,59 @@ class MatchScoutingData {
     this.idDriveStation,
     this.idTeam,
     this.txScoutName,
-    this.idStartPosition,
+    this.idStartPosition = "1",
     this.flRed = false,
     this.flYellow = false,
     this.flCrash = false,
     this.flAutoStop = false,
     this.autoFlStart = false,
-    this.autoFlBaseLine = false,
-    this.autoNumCellLoad = 0,
+    this.autoNumReload = 0,
     this.autoFlFoul = false,
     this.autoFlRobotContact = false,
     this.autoFlLoseStartObject = false,
     this.autoFlFail = false,
-    this.autoNumCoralAttempt = 0,
-    this.autoNumCoralL1Success = 0,
-    this.autoNumCoralL2Success = 0,
-    this.autoNumCoralL3Success = 0,
-    this.autoNumCoralL4Success = 0,
-    this.autoNumAlgaeAttempt = 0,
-    this.autoNumAlgaeL2Success = 0,
-    this.autoNumAlgaeL3Success = 0,
-    this.autoNumAlgaeNetAttempt = 0,
-    this.autoNumAlgaeNetSuccess = 0,
-    this.autoNumAlgaeProcessAttempt = 0,
-    this.autoNumAlgaeProcessSuccess = 0,
-    this.teleNumCoralAttempt = 0,
-    this.teleNumCoralL1Success = 0,
-    this.teleNumCoralL2Success = 0,
-    this.teleNumCoralL3Success = 0,
-    this.teleNumCoralL4Success = 0,
-    this.teleNumAlgaeAttempt = 0,
-    this.teleNumAlgaeL2Success = 0,
-    this.teleNumAlgaeL3Success = 0,
-    this.teleNumAlgaeNetAttempt = 0,
-    this.teleNumAlgaeNetSuccess = 0,
-    this.teleNumAlgaeProcessAttempt = 0,
-    this.teleNumAlgaeProcessSuccess = 0,
-    this.teleFlPark = false,
+    this.autoNumFuelShots = 0,
+    this.autoNumFuelSalvos = 0,
+    this.autoNumFuelAccLow = 0,
+    this.autoNumFuelAccMid = 0,
+    this.autoNumFuelAccHigh = 0,
+    this.autoNumTimer = 0,
+    this.autoFlClimb = false,
+    this.autoFLClimbRelease = 0,
+    this.autoIdClimbOutcome = "1",
+    this.autoIdClimbPos = "1",
+    this.autoIdStageClimbSpeed = "1",
+    this.teleFlClimbRelease = true,
+    this.teleNumFuelShots = 0,
+    this.teleNumFuelSalvo = 0,
+    this.teleNumFuelAccLow = 0,
+    this.teleNumFuelAccMid = 0,
+    this.teleNumFuelAccHigh = 0,
+    this.teleNumTimer = 0,
+    this.teleNumFuelShuttle = 0,
+    this.teleNumShuttleFuelAccLow = 0,
+    this.teleNumShuttleFuelAccMid = 0,
+    this.teleNumShuttleFuelAccHigh = 0,
     this.teleIdClimbOutcome = "1",
-    this.teleIdClimbType = "1",
-    this.teleIdStageClimbSpeed = "1",
-    this.teleHumanIdTeam,
-    this.teleIntAlgaeBarge = 0,
-    this.teleIntAlgaeProcess = 0,
+    this.teleIdClimbPos = "1",
+    this.teleIdClimbHeight = "1",
+    this.teleIdClimbSpeed = "1",
+    this.teleFlFed = false,
+    this.IdThrough = "1",
+    this.commFLHuman = false,
     this.commIdDriveRating = "1",
+    this.commIdFieldAccess = "1",
     this.commIdDefenceRating = "1",
     this.commIdDefenceType = "1",
     this.commFlStrategy = false,
     this.commFlShuttle = false,
     this.commFlRecovery = false,
     this.commFlFailure = false,
+    this.commFlInactiveScore = false,
     this.commFlWarning = false,
     this.commFlHighlight = false,
-    this.commFlIntakeGroundCoral = false,
+    this.commFlIntakeGround = false,
     this.commFlIntakeStation = false,
-    this.commFlIntakeGroundAlgae = false,
     this.commTxNotes,
   });
 
@@ -150,55 +146,53 @@ class MatchScoutingData {
       'flCrash': flCrash,
       'flAutoStop': flAutoStop,
       'autoFlStart': autoFlStart,
-      'autoFlBaseLine': autoFlBaseLine,
-      'autoNumCellLoad': autoNumCellLoad,
+      'autoNumReload': autoNumReload,
       'autoFlFoul': autoFlFoul,
       'autoFlRobotContact': autoFlRobotContact,
       'autoFlLoseStartObject': autoFlLoseStartObject,
       'autoFlFail': autoFlFail,
-      'autoNumCoralAttempt': autoNumCoralAttempt,
-      'autoNumCoralL1Success': autoNumCoralL1Success,
-      'autoNumCoralL2Success': autoNumCoralL2Success,
-      'autoNumCoralL3Success': autoNumCoralL3Success,
-      'autoNumCoralL4Success': autoNumCoralL4Success,
-      'autoNumAlgaeAttempt': autoNumAlgaeAttempt,
-      'autoNumAlgaeL2Success': autoNumAlgaeL2Success,
-      'autoNumAlgaeL3Success': autoNumAlgaeL3Success,
-      'autoNumAlgaeNetAttempt': autoNumAlgaeNetAttempt,
-      'autoNumAlgaeNetSuccess': autoNumAlgaeNetSuccess,
-      'autoNumAlgaeProcessAttempt': autoNumAlgaeProcessAttempt,
-      'autoNumAlgaeProcessSuccess': autoNumAlgaeProcessSuccess,
-      'teleNumCoralAttempt': teleNumCoralAttempt,
-      'teleNumCoralL1Success': teleNumCoralL1Success,
-      'teleNumCoralL2Success': teleNumCoralL2Success,
-      'teleNumCoralL3Success': teleNumCoralL3Success,
-      'teleNumCoralL4Success': teleNumCoralL4Success,
-      'teleNumAlgaeAttempt': teleNumAlgaeAttempt,
-      'teleNumAlgaeL2Success': teleNumAlgaeL2Success,
-      'teleNumAlgaeL3Success': teleNumAlgaeL3Success,
-      'teleNumAlgaeNetAttempt': teleNumAlgaeNetAttempt,
-      'teleNumAlgaeNetSuccess': teleNumAlgaeNetSuccess,
-      'teleNumAlgaeProcessAttempt': teleNumAlgaeProcessAttempt,
-      'teleNumAlgaeProcessSuccess': teleNumAlgaeProcessSuccess,
-      'teleFlPark': teleFlPark,
+      'autoNumFuelShots': autoNumFuelShots,
+      'autoNumFuelSalvos': autoNumFuelSalvos,
+      'autoNumFuelAccLow': autoNumFuelAccLow,
+      'autoNumFuelAccMid': autoNumFuelAccMid,
+      'autoNumFuelAccHigh': autoNumFuelAccHigh,
+      'autoNumTimer': autoNumTimer,
+      'autoFlClimb': autoFlClimb,
+      'autoFLClimbRelease': autoFLClimbRelease,
+      'autoIdClimbOutcome': autoIdClimbOutcome,
+      'autoIdClimbPos': autoIdClimbPos,
+      'autoIdStageClimbSpeed': autoIdStageClimbSpeed,
+      'teleFlClimbRelease': teleFlClimbRelease,
+      'teleNumFuelShots': teleNumFuelShots,
+      'teleNumFuelSalvo': teleNumFuelSalvo,
+      'teleNumFuelAccLow': teleNumFuelAccLow,
+      'teleNumFuelAccMid': teleNumFuelAccMid,
+      'teleNumFuelAccHigh': teleNumFuelAccHigh,
+      'teleNumTimer': teleNumTimer,
+      'teleNumFuelShuttle': teleNumFuelShuttle,
+      'teleNumShuttleFuelAccLow': teleNumShuttleFuelAccLow,
+      'teleNumShuttleFuelAccMid': teleNumShuttleFuelAccMid,
+      'teleNumShuttleFuelAccHigh': teleNumShuttleFuelAccHigh,
       'teleIdClimbOutcome': teleIdClimbOutcome,
-      'teleIdClimbType': teleIdClimbType,
-      'teleIdStageClimbSpeed': teleIdStageClimbSpeed,
-      'teleHumanIdTeam': teleHumanIdTeam,
-      'teleIntAlgaeBarge': teleIntAlgaeBarge,
-      'teleIntAlgaeProcess': teleIntAlgaeProcess,
+      'teleIdClimbPos': teleIdClimbPos,
+      'teleIdClimbHeight': teleIdClimbHeight,
+      'teleIdClimbSpeed': teleIdClimbSpeed,
+      'teleFlFed': teleFlFed,
+      'IdThrough': IdThrough,
+      'commFLHuman': commFLHuman,
       'commIdDriveRating': commIdDriveRating,
+      'commIdFieldAccess': commIdFieldAccess,
       'commIdDefenceRating': commIdDefenceRating,
       'commIdDefenceType': commIdDefenceType,
       'commFlStrategy': commFlStrategy,
       'commFlShuttle': commFlShuttle,
       'commFlRecovery': commFlRecovery,
       'commFlFailure': commFlFailure,
+      'commFlInactiveScore': commFlInactiveScore,
       'commFlWarning': commFlWarning,
       'commFlHighlight': commFlHighlight,
-      'commFlIntakeGroundCoral': commFlIntakeGroundCoral,
+      'commFlIntakeGround': commFlIntakeGround,
       'commFlIntakeStation': commFlIntakeStation,
-      'commFlIntakeGroundAlgae': commFlIntakeGroundAlgae,
       'commTxNotes': commTxNotes,
     };
   }
@@ -220,55 +214,53 @@ class MatchScoutingData {
       'flCrash': flCrash.toString(),
       'flAutoStop': flAutoStop.toString(),
       'autoFlStart': autoFlStart.toString(),
-      'autoFlBaseLine': autoFlBaseLine.toString(),
-      'autoNumCellLoad': autoNumCellLoad,
+      'autoNumReload': autoNumReload,
       'autoFlFoul': autoFlFoul.toString(),
       'autoFlRobotContact': autoFlRobotContact.toString(),
       'autoFlLoseStartObject': autoFlLoseStartObject.toString(),
       'autoFlFail': autoFlFail.toString(),
-      'autoNumCoralAttempt': autoNumCoralAttempt,
-      'autoNumCoralL1Success': autoNumCoralL1Success,
-      'autoNumCoralL2Success': autoNumCoralL2Success,
-      'autoNumCoralL3Success': autoNumCoralL3Success,
-      'autoNumCoralL4Success': autoNumCoralL4Success,
-      'autoNumAlgaeAttempt': autoNumAlgaeAttempt,
-      'autoNumAlgaeL2Success': autoNumAlgaeL2Success,
-      'autoNumAlgaeL3Success': autoNumAlgaeL3Success,
-      'autoNumAlgaeNetAttempt': autoNumAlgaeNetAttempt,
-      'autoNumAlgaeNetSuccess': autoNumAlgaeNetSuccess,
-      'autoNumAlgaeProcessAttempt': autoNumAlgaeProcessAttempt,
-      'autoNumAlgaeProcessSuccess': autoNumAlgaeProcessSuccess,
-      'teleNumCoralAttempt': teleNumCoralAttempt,
-      'teleNumCoralL1Success': teleNumCoralL1Success,
-      'teleNumCoralL2Success': teleNumCoralL2Success,
-      'teleNumCoralL3Success': teleNumCoralL3Success,
-      'teleNumCoralL4Success': teleNumCoralL4Success,
-      'teleNumAlgaeAttempt': teleNumAlgaeAttempt,
-      'teleNumAlgaeL2Success': teleNumAlgaeL2Success,
-      'teleNumAlgaeL3Success': teleNumAlgaeL3Success,
-      'teleNumAlgaeNetAttempt': teleNumAlgaeNetAttempt,
-      'teleNumAlgaeNetSuccess': teleNumAlgaeNetSuccess,
-      'teleNumAlgaeProcessAttempt': teleNumAlgaeProcessAttempt,
-      'teleNumAlgaeProcessSuccess': teleNumAlgaeProcessSuccess,
-      'teleFlPark': teleFlPark.toString(),
+      'autoNumFuelShots': autoNumFuelShots,
+      'autoNumFuelSalvos': autoNumFuelSalvos,
+      'autoNumFuelAccLow': autoNumFuelAccLow,
+      'autoNumFuelAccMid': autoNumFuelAccMid,
+      'autoNumFuelAccHigh': autoNumFuelAccHigh,
+      'autoNumTimer': autoNumTimer,
+      'autoFlClimb': autoFlClimb.toString(),
+      'autoFLClimbRelease': autoFLClimbRelease,
+      'autoIdClimbOutcome': autoIdClimbOutcome,
+      'autoIdClimbPos': autoIdClimbPos,
+      'autoIdStageClimbSpeed': autoIdStageClimbSpeed,
+      'teleFlClimbRelease': teleFlClimbRelease.toString(),
+      'teleNumFuelShots': teleNumFuelShots,
+      'teleNumFuelSalvo': teleNumFuelSalvo,
+      'teleNumFuelAccLow': teleNumFuelAccLow,
+      'teleNumFuelAccMid': teleNumFuelAccMid,
+      'teleNumFuelAccHigh': teleNumFuelAccHigh,
+      'teleNumTimer': teleNumTimer,
+      'teleNumFuelShuttle': teleNumFuelShuttle,
+      'teleNumShuttleFuelAccLow': teleNumShuttleFuelAccLow,
+      'teleNumShuttleFuelAccMid': teleNumShuttleFuelAccMid,
+      'teleNumShuttleFuelAccHigh': teleNumShuttleFuelAccHigh,
       'teleIdClimbOutcome': teleIdClimbOutcome,
-      'teleIdClimbType': teleIdClimbType,
-      'teleIdStageClimbSpeed': teleIdStageClimbSpeed,
-      'teleHumanIdTeam': teleHumanIdTeam,
-      'teleIntAlgaeBarge': teleIntAlgaeBarge,
-      'teleIntAlgaeProcess': teleIntAlgaeProcess,
+      'teleIdClimbPos': teleIdClimbPos,
+      'teleIdClimbHeight': teleIdClimbHeight,
+      'teleIdClimbSpeed': teleIdClimbSpeed,
+      'teleFlFed': teleFlFed.toString(),
+      'IdThrough': IdThrough,
+      'commFLHuman': commFLHuman.toString(),
       'commIdDriveRating': commIdDriveRating,
+      'commIdFieldAccess': commIdFieldAccess,
       'commIdDefenceRating': commIdDefenceRating,
       'commIdDefenceType': commIdDefenceType,
       'commFlStrategy': commFlStrategy.toString(),
       'commFlShuttle': commFlShuttle.toString(),
       'commFlRecovery': commFlRecovery.toString(),
       'commFlFailure': commFlFailure.toString(),
+      'commFlInactiveScore': commFlInactiveScore.toString(),
       'commFlWarning': commFlWarning.toString(),
       'commFlHighlight': commFlHighlight.toString(),
-      'commFlIntakeGroundCoral': commFlIntakeGroundCoral.toString(),
+      'commFlIntakeGround': commFlIntakeGround.toString(),
       'commFlIntakeStation': commFlIntakeStation.toString(),
-      'commFlIntakeGroundAlgae': commFlIntakeGroundAlgae.toString(),
       'commTxNotes': commTxNotes,
     };
   }
@@ -289,47 +281,45 @@ class MatchScoutingData {
     this.flCrash = map['flCrash'].toString().toLowerCase() == 'true';
     this.flAutoStop = map['flAutoStop'].toString().toLowerCase() == 'true';
     this.autoFlStart = map['autoFlStart'].toString().toLowerCase() == 'true';
-    this.autoFlBaseLine =
-        map['autoFlBaseLine'].toString().toLowerCase() == 'true';
-    this.autoNumCellLoad = map['autoNumCellLoad'];
+    this.autoNumReload = map['autoNumReload'];
     this.autoFlFoul = map['autoFlFoul'].toString().toLowerCase() == 'true';
     this.autoFlRobotContact =
         map['autoFlRobotContact'].toString().toLowerCase() == 'true';
     this.autoFlLoseStartObject =
         map['autoFlLoseStartObject'].toString().toLowerCase() == 'true';
     this.autoFlFail = map['autoFlFail'].toString().toLowerCase() == 'true';
-    this.autoNumCoralAttempt = map['autoNumCoralAttempt'];
-    this.autoNumCoralL1Success = map['autoNumCoralL1Success'];
-    this.autoNumCoralL2Success = map['autoNumCoralL2Success'];
-    this.autoNumCoralL3Success = map['autoNumCoralL3Success'];
-    this.autoNumCoralL4Success = map['autoNumCoralL4Success'];
-    this.autoNumAlgaeAttempt = map['autoNumAlgaeAttempt'];
-    this.autoNumAlgaeL2Success = map['autoNumAlgaeL2Success'];
-    this.autoNumAlgaeL3Success = map['autoNumAlgaeL3Success'];
-    this.autoNumAlgaeNetAttempt = map['autoNumAlgaeNetAttempt'];
-    this.autoNumAlgaeNetSuccess = map['autoNumAlgaeNetSuccess'];
-    this.autoNumAlgaeProcessAttempt = map['autoNumAlgaeProcessAttempt'];
-    this.autoNumAlgaeProcessSuccess = map['autoNumAlgaeProcessSuccess'];
-    this.teleNumCoralAttempt = map['teleNumCoralAttempt'];
-    this.teleNumCoralL1Success = map['teleNumCoralL1Success'];
-    this.teleNumCoralL2Success = map['teleNumCoralL2Success'];
-    this.teleNumCoralL3Success = map['teleNumCoralL3Success'];
-    this.teleNumCoralL4Success = map['teleNumCoralL4Success'];
-    this.teleNumAlgaeAttempt = map['teleNumAlgaeAttempt'];
-    this.teleNumAlgaeL2Success = map['teleNumAlgaeL2Success'];
-    this.teleNumAlgaeL3Success = map['teleNumAlgaeL3Success'];
-    this.teleNumAlgaeNetAttempt = map['teleNumAlgaeNetAttempt'];
-    this.teleNumAlgaeNetSuccess = map['teleNumAlgaeNetSuccess'];
-    this.teleNumAlgaeProcessAttempt = map['teleNumAlgaeProcessAttempt'];
-    this.teleNumAlgaeProcessSuccess = map['teleNumAlgaeProcessSuccess'];
-    this.teleFlPark = map['teleFlPark'].toString().toLowerCase() == 'true';
+    this.autoNumFuelShots = map['autoNumFuelShots'];
+    this.autoNumFuelSalvos = map['autoNumFuelSalvos'];
+    this.autoNumFuelAccLow = map['autoNumFuelAccLow'];
+    this.autoNumFuelAccMid = map['autoNumFuelAccMid'];
+    this.autoNumFuelAccHigh = map['autoNumFuelAccHigh'];
+    this.autoNumTimer = map['autoNumTimer'];
+    this.autoFlClimb = map['autoFlClimb'].toString().toLowerCase() == 'true';
+    this.autoFLClimbRelease = map['autoFLClimbRelease'];
+    this.autoIdClimbOutcome = map['autoIdClimbOutcome'];
+    this.autoIdClimbPos = map['autoIdClimbPos'];
+    this.autoIdStageClimbSpeed = map['autoIdStageClimbSpeed'];
+    this.teleFlClimbRelease =
+        map['teleFlClimbRelease'].toString().toLowerCase() == 'true';
+    this.teleNumFuelShots = map['teleNumFuelShots'];
+    this.teleNumFuelSalvo = map['teleNumFuelSalvo'];
+    this.teleNumFuelAccLow = map['teleNumFuelAccLow'];
+    this.teleNumFuelAccMid = map['teleNumFuelAccMid'];
+    this.teleNumFuelAccHigh = map['teleNumFuelAccHigh'];
+    this.teleNumTimer = map['teleNumTimer'];
+    this.teleNumFuelShuttle = map['teleNumFuelShuttle'];
+    this.teleNumShuttleFuelAccLow = map['teleNumShuttleFuelAccLow'];
+    this.teleNumShuttleFuelAccMid = map['teleNumShuttleFuelAccMid'];
+    this.teleNumShuttleFuelAccHigh = map['teleNumShuttleFuelAccHigh'];
     this.teleIdClimbOutcome = map['teleIdClimbOutcome'];
-    this.teleIdClimbType = map['teleIdClimbType'];
-    this.teleIdStageClimbSpeed = map['teleIdStageClimbSpeed'];
-    this.teleHumanIdTeam = map['teleHumanIdTeam'];
-    this.teleIntAlgaeBarge = map['teleIntAlgaeBarge'];
-    this.teleIntAlgaeProcess = map['teleIntAlgaeProcess'];
+    this.teleIdClimbPos = map['teleIdClimbPos'];
+    this.teleIdClimbHeight = map['teleIdClimbHeight'];
+    this.teleIdClimbSpeed = map['teleIdClimbSpeed'];
+    this.teleFlFed = map['teleFlFed'].toString().toLowerCase() == 'true';
+    this.IdThrough = map['IdThrough'];
+    this.commFLHuman = map['commFLHuman'].toString().toLowerCase() == 'true';
     this.commIdDriveRating = map['commIdDriveRating'];
+    this.commIdFieldAccess = map['commIdFieldAccess'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
     this.commIdDefenceType = map['commIdDefenceType'];
     this.commFlStrategy =
@@ -340,16 +330,16 @@ class MatchScoutingData {
         map['commFlRecovery'].toString().toLowerCase() == 'true';
     this.commFlFailure =
         map['commFlFailure'].toString().toLowerCase() == 'true';
+    this.commFlInactiveScore =
+        map['commFlInactiveScore'].toString().toLowerCase() == 'true';
     this.commFlWarning =
         map['commFlWarning'].toString().toLowerCase() == 'true';
     this.commFlHighlight =
         map['commFlHighlight'].toString().toLowerCase() == 'true';
-    this.commFlIntakeGroundCoral =
-        map['commFlIntakeGroundCoral'].toString().toLowerCase() == 'true';
+    this.commFlIntakeGround =
+        map['commFlIntakeGround'].toString().toLowerCase() == 'true';
     this.commFlIntakeStation =
         map['commFlIntakeStation'].toString().toLowerCase() == 'true';
-    this.commFlIntakeGroundAlgae =
-        map['commFlIntakeGroundAlgae'].toString().toLowerCase() == 'true';
     this.commTxNotes = map['commTxNotes'];
   }
 
@@ -369,55 +359,53 @@ class MatchScoutingData {
     this.flCrash = map['flCrash'];
     this.flAutoStop = map['flAutoStop'];
     this.autoFlStart = map['autoFlStart'];
-    this.autoFlBaseLine = map['autoFlBaseLine'];
-    this.autoNumCellLoad = map['autoNumCellLoad'];
+    this.autoNumReload = map['autoNumReload'];
     this.autoFlFoul = map['autoFlFoul'];
     this.autoFlRobotContact = map['autoFlRobotContact'];
     this.autoFlLoseStartObject = map['autoFlLoseStartObject'];
     this.autoFlFail = map['autoFlFail'];
-    this.autoNumCoralAttempt = map['autoNumCoralAttempt'];
-    this.autoNumCoralL1Success = map['autoNumCoralL1Success'];
-    this.autoNumCoralL2Success = map['autoNumCoralL2Success'];
-    this.autoNumCoralL3Success = map['autoNumCoralL3Success'];
-    this.autoNumCoralL4Success = map['autoNumCoralL4Success'];
-    this.autoNumAlgaeAttempt = map['autoNumAlgaeAttempt'];
-    this.autoNumAlgaeL2Success = map['autoNumAlgaeL2Success'];
-    this.autoNumAlgaeL3Success = map['autoNumAlgaeL3Success'];
-    this.autoNumAlgaeNetAttempt = map['autoNumAlgaeNetAttempt'];
-    this.autoNumAlgaeNetSuccess = map['autoNumAlgaeNetSuccess'];
-    this.autoNumAlgaeProcessAttempt = map['autoNumAlgaeProcessAttempt'];
-    this.autoNumAlgaeProcessSuccess = map['autoNumAlgaeProcessSuccess'];
-    this.teleNumCoralAttempt = map['teleNumCoralAttempt'];
-    this.teleNumCoralL1Success = map['teleNumCoralL1Success'];
-    this.teleNumCoralL2Success = map['teleNumCoralL2Success'];
-    this.teleNumCoralL3Success = map['teleNumCoralL3Success'];
-    this.teleNumCoralL4Success = map['teleNumCoralL4Success'];
-    this.teleNumAlgaeAttempt = map['teleNumAlgaeAttempt'];
-    this.teleNumAlgaeL2Success = map['teleNumAlgaeL2Success'];
-    this.teleNumAlgaeL3Success = map['teleNumAlgaeL3Success'];
-    this.teleNumAlgaeNetAttempt = map['teleNumAlgaeNetAttempt'];
-    this.teleNumAlgaeNetSuccess = map['teleNumAlgaeNetSuccess'];
-    this.teleNumAlgaeProcessAttempt = map['teleNumAlgaeProcessAttempt'];
-    this.teleNumAlgaeProcessSuccess = map['teleNumAlgaeProcessSuccess'];
-    this.teleFlPark = map['teleFlPark'];
+    this.autoNumFuelShots = map['autoNumFuelShots'];
+    this.autoNumFuelSalvos = map['autoNumFuelSalvos'];
+    this.autoNumFuelAccLow = map['autoNumFuelAccLow'];
+    this.autoNumFuelAccMid = map['autoNumFuelAccMid'];
+    this.autoNumFuelAccHigh = map['autoNumFuelAccHigh'];
+    this.autoNumTimer = map['autoNumTimer'];
+    this.autoFlClimb = map['autoFlClimb'];
+    this.autoFLClimbRelease = map['autoFLClimbRelease'];
+    this.autoIdClimbOutcome = map['autoIdClimbOutcome'];
+    this.autoIdClimbPos = map['autoIdClimbPos'];
+    this.autoIdStageClimbSpeed = map['autoIdStageClimbSpeed'];
+    this.teleFlClimbRelease = map['teleFlClimbRelease'];
+    this.teleNumFuelShots = map['teleNumFuelShots'];
+    this.teleNumFuelSalvo = map['teleNumFuelSalvo'];
+    this.teleNumFuelAccLow = map['teleNumFuelAccLow'];
+    this.teleNumFuelAccMid = map['teleNumFuelAccMid'];
+    this.teleNumFuelAccHigh = map['teleNumFuelAccHigh'];
+    this.teleNumTimer = map['teleNumTimer'];
+    this.teleNumFuelShuttle = map['teleNumFuelShuttle'];
+    this.teleNumShuttleFuelAccLow = map['teleNumShuttleFuelAccLow'];
+    this.teleNumShuttleFuelAccMid = map['teleNumShuttleFuelAccMid'];
+    this.teleNumShuttleFuelAccHigh = map['teleNumShuttleFuelAccHigh'];
     this.teleIdClimbOutcome = map['teleIdClimbOutcome'];
-    this.teleIdClimbType = map['teleIdClimbType'];
-    this.teleIdStageClimbSpeed = map['teleIdStageClimbSpeed'];
-    this.teleHumanIdTeam = map['teleHumanIdTeam'];
-    this.teleIntAlgaeBarge = map['teleIntAlgaeBarge'];
-    this.teleIntAlgaeProcess = map['teleIntAlgaeProcess'];
+    this.teleIdClimbPos = map['teleIdClimbPos'];
+    this.teleIdClimbHeight = map['teleIdClimbHeight'];
+    this.teleIdClimbSpeed = map['teleIdClimbSpeed'];
+    this.teleFlFed = map['teleFlFed'];
+    this.IdThrough = map['IdThrough'];
+    this.commFLHuman = map['commFLHuman'];
     this.commIdDriveRating = map['commIdDriveRating'];
+    this.commIdFieldAccess = map['commIdFieldAccess'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
     this.commIdDefenceType = map['commIdDefenceType'];
     this.commFlStrategy = map['commFlStrategy'];
     this.commFlShuttle = map['commFlShuttle'];
     this.commFlRecovery = map['commFlRecovery'];
     this.commFlFailure = map['commFlFailure'];
+    this.commFlInactiveScore = map['commFlInactiveScore'];
     this.commFlWarning = map['commFlWarning'];
     this.commFlHighlight = map['commFlHighlight'];
-    this.commFlIntakeGroundCoral = map['commFlIntakeGroundCoral'];
+    this.commFlIntakeGround = map['commFlIntakeGroundCoral'];
     this.commFlIntakeStation = map['commFlIntakeStation'];
-    this.commFlIntakeGroundAlgae = map['commFlIntakeGroundAlgae'];
     this.commTxNotes = map['commTxNotes'];
   }
 
@@ -440,55 +428,53 @@ class MatchScoutingData {
         'flCrash: $flCrash,'
         'flAutoStop: $flAutoStop,'
         'autoFlStart: $autoFlStart,'
-        'autoFlBaseLine: $autoFlBaseLine,'
-        'autoNumCellLoad: $autoNumCellLoad,'
+        'autoNumReload: $autoNumReload,'
         'autoFlFoul: $autoFlFoul,'
         'autoFlRobotContact: $autoFlRobotContact,'
         'autoFlLoseStartObject: $autoFlLoseStartObject,'
         'autoFlFail: $autoFlFail,'
-        'autoNumCoralAttempt: $autoNumCoralAttempt,'
-        'autoNumCoralL1Success: $autoNumCoralL1Success,'
-        'autoNumCoralL2Success: $autoNumCoralL2Success,'
-        'autoNumCoralL3Success: $autoNumCoralL3Success,'
-        'autoNumCoralL4Success: $autoNumCoralL4Success,'
-        'autoNumAlgaeAttempt: $autoNumAlgaeAttempt,'
-        'autoNumAlgaeL2Success: $autoNumAlgaeL2Success,'
-        'autoNumAlgaeL3Success: $autoNumAlgaeL3Success,'
-        'autoNumAlgaeNetAttempt: $autoNumAlgaeNetAttempt,'
-        'autoNumAlgaeNetSuccess: $autoNumAlgaeNetSuccess,'
-        'autoNumAlgaeProcessAttempt: $autoNumAlgaeProcessAttempt,'
-        'autoNumAlgaeProcessSuccess: $autoNumAlgaeProcessSuccess,'
-        'teleNumCoralAttempt: $teleNumCoralAttempt,'
-        'teleNumCoralL1Success: $teleNumCoralL1Success,'
-        'teleNumCoralL2Success: $teleNumCoralL2Success,'
-        'teleNumCoralL3Success: $teleNumCoralL3Success,'
-        'teleNumCoralL4Success: $teleNumCoralL4Success,'
-        'teleNumAlgaeAttempt: $teleNumAlgaeAttempt,'
-        'teleNumAlgaeL2Success: $teleNumAlgaeL2Success,'
-        'teleNumAlgaeL3Success: $teleNumAlgaeL3Success,'
-        'teleNumAlgaeNetAttempt: $teleNumAlgaeNetAttempt,'
-        'teleNumAlgaeNetSuccess: $teleNumAlgaeNetSuccess,'
-        'teleNumAlgaeProcessAttempt: $teleNumAlgaeProcessAttempt,'
-        'teleNumAlgaeProcessSuccess: $teleNumAlgaeProcessSuccess,'
-        'teleFlPark: $teleFlPark,'
+        'autoNumFuelShots: $autoNumFuelShots,'
+        'autoNumFuelSalvos: $autoNumFuelSalvos,'
+        'autoNumFuelAccLow: $autoNumFuelAccLow,'
+        'autoNumFuelAccMid: $autoNumFuelAccMid,'
+        'autoNumFuelAccHigh: $autoNumFuelAccHigh,'
+        'autoNumTimer: $autoNumTimer,'
+        'autoFlClimb: $autoFlClimb,'
+        'autoFLClimbRelease: $autoFLClimbRelease,'
+        'autoIdClimbOutcome: $autoIdClimbOutcome,'
+        'autoIdClimbPos: $autoIdClimbPos,'
+        'autoIdStageClimbSpeed: $autoIdStageClimbSpeed,'
+        'teleFlClimbRelease: $teleFlClimbRelease,'
+        'teleNumFuelShots: $teleNumFuelShots,'
+        'teleNumFuelSalvo: $teleNumFuelSalvo,'
+        'teleNumFuelAccLow: $teleNumFuelAccLow,'
+        'teleNumFuelAccMid: $teleNumFuelAccMid,'
+        'teleNumFuelAccHigh: $teleNumFuelAccHigh,'
+        'teleNumTimer: $teleNumTimer,'
+        'teleNumFuelShuttle: $teleNumFuelShuttle,'
+        'teleNumShuttleFuelAccLow: $teleNumShuttleFuelAccLow,'
+        'teleNumShuttleFuelAccMid: $teleNumShuttleFuelAccMid,'
+        'teleNumShuttleFuelAccHigh: $teleNumShuttleFuelAccHigh,'
         'teleIdClimbOutcome: $teleIdClimbOutcome,'
-        'teleIdClimbType: $teleIdClimbType,'
-        'teleIdStageClimbSpeed: $teleIdStageClimbSpeed,'
-        'teleHumanIdTeam: $teleHumanIdTeam,'
-        'teleIntAlgaeBarge: $teleIntAlgaeBarge,'
-        'teleIntAlgaeProcess: $teleIntAlgaeProcess,'
+        'teleIdClimbPos: $teleIdClimbPos,'
+        'teleIdClimbHeight: $teleIdClimbHeight,'
+        'teleIdClimbSpeed: $teleIdClimbSpeed,'
+        'teleFlFed: $teleFlFed,'
+        'IdThrough: $IdThrough,'
+        'commFLHuman: $commFLHuman,'
         'commIdDriveRating: $commIdDriveRating,'
+        'commIdFieldAccess: $commIdFieldAccess,'
         'commIdDefenceRating: $commIdDefenceRating,'
         'commIdDefenceType: $commIdDefenceType,'
         'commFlStrategy: $commFlStrategy,'
         'commFlShuttle: $commFlShuttle,'
         'commFlRecovery: $commFlRecovery,'
         'commFlFailure: $commFlFailure,'
+        'commFlInactiveScore: $commFlInactiveScore,'
         'commFlWarning: $commFlWarning,'
         'commFlHighlight: $commFlHighlight,'
-        'commFlIntakeGroundCoral: $commFlIntakeGroundCoral,'
+        'commFlIntakeGround: $commFlIntakeGround,'
         'commFlIntakeStation: $commFlIntakeStation,'
-        'commFlIntakeGroundAlgae: $commFlIntakeGroundAlgae,'
         'commTxNotes: $commTxNotes,'
         '}';
   }

@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.7.7+97
+version: 1.8.0+100
 
 
 environment:
@@ -46,6 +46,8 @@ dependencies:
   camera_platform_interface:
   gal: ^2.2.2
   image_picker: ^1.1.2
+  collection: ^1.19.1
+  stats: ^3.0.0
 
 
 dev_dependencies:

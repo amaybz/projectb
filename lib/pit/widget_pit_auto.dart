@@ -6,17 +6,17 @@ import 'package:projectb/widgets/widget_counter.dart';
 import '../widgets/widget_row_heading.dart';
 
 class PitAuto extends StatefulWidget {
-  PitAuto(
-      {Key? key,
-      required this.pitData,
-      this.styleFontSize = 16,
-      this.styleFontSizeHeadings = 18,
-      this.onChanged,
-      this.onExpanded,
-      this.txAutoNotes,
-      this.strWeight = "lbs",
-      this.strDistance = "inches"})
-      : super(key: key);
+  PitAuto({
+    Key? key,
+    required this.pitData,
+    this.styleFontSize = 16,
+    this.styleFontSizeHeadings = 18,
+    this.onChanged,
+    this.onExpanded,
+    this.pitTxAutoNotes,
+    this.strWeight = "lbs",
+    this.strDistance = "inches",
+  }) : super(key: key);
 
   final PitData pitData;
   final double styleFontSize;
@@ -25,46 +25,19 @@ class PitAuto extends StatefulWidget {
   final ValueChanged<bool>? onExpanded;
   final String strWeight;
   final String strDistance;
-  final TextEditingController? txAutoNotes;
+  final TextEditingController? pitTxAutoNotes;
 
   @override
   _PitAutoState createState() => _PitAutoState();
 }
 
 class _PitAutoState extends State<PitAuto> {
-  List<DropdownMenuItem<String>> listAutoScore = [
+  List<DropdownMenuItem<String>> listReloadPoints = [
     DropdownMenuItem(value: "1", child: Text("N/A")),
+    DropdownMenuItem(value: "2", child: Text("Depot")),
+    DropdownMenuItem(value: "3", child: Text("Outpost")),
+    DropdownMenuItem(value: "4", child: Text("Middle")),
   ];
-
-  getAutoScoreDropDownMenu(TextStyle textStyle) {
-    listAutoScore.clear();
-    listAutoScore.addAll([
-      DropdownMenuItem(
-          value: "1",
-          child: Text(
-            "N/A",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "2",
-          child: Text(
-            "Amp",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "3",
-          child: Text(
-            "Speaker",
-            style: textStyle,
-          )),
-      DropdownMenuItem(
-          value: "4",
-          child: Text(
-            "All",
-            style: textStyle,
-          )),
-    ]);
-  }
 
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
   TextStyle? styleTitleTextTheme = ThemeData().textTheme.titleMedium;
@@ -91,36 +64,38 @@ class _PitAutoState extends State<PitAuto> {
       });
     }
 
-    getAutoScoreDropDownMenu(styleBodyTextTheme!);
+    //getAutoScoreDropDownMenu(styleBodyTextTheme!);
 
-    if (widget.pitData.flAuto == false) {
+    if (widget.pitData.pitFlAuto == false) {
       return FractionallySizedBox(
         widthFactor: 0.99,
         child: Container(
           margin: const EdgeInsets.all(5.0),
           child: Container(
             padding: EdgeInsets.all(5.0),
-            child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: styleTitleTextTheme!.fontSize!,
-                textColor: Theme.of(context).textTheme.titleLarge!.color!,
-                backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Auto",
-                //backGroundColor: Colors.green,
-              ),
-              RowHeading(
-                styleFontSize: styleBodyTextTheme!.fontSize!,
-                text: "Does Auto?",
-                value: widget.pitData.flAuto,
-                onChange: (bool value) {
-                  setState(() {
-                    widget.pitData.flAuto = value;
-                    widget.onChanged!(widget.pitData);
-                    widget.onExpanded!(true);
-                  });
-                },
-              ),
-            ]),
+            child: Column(
+              children: <Widget>[
+                HeadingMain(
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
+                  headingText: "Auto",
+                  //backGroundColor: Colors.green,
+                ),
+                RowHeading(
+                  styleFontSize: styleBodyTextTheme!.fontSize!,
+                  text: "Does Auto?",
+                  value: widget.pitData.pitFlAuto,
+                  onChange: (bool value) {
+                    setState(() {
+                      widget.pitData.pitFlAuto = value;
+                      widget.onChanged!(widget.pitData);
+                      widget.onExpanded!(true);
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -131,407 +106,170 @@ class _PitAutoState extends State<PitAuto> {
           margin: const EdgeInsets.all(5.0),
           child: Container(
             padding: EdgeInsets.all(5.0),
-            child: Column(children: <Widget>[
-              HeadingMain(
-                styleFontSize: styleTitleTextTheme!.fontSize!,
-                textColor: Theme.of(context).textTheme.titleLarge!.color!,
-                backGroundColor: Theme.of(context).primaryColor,
-                headingText: "Auto",
-                //backGroundColor: Colors.green,
-              ),
-              RowHeading(
-                styleFontSize: styleBodyTextTheme!.fontSize!,
-                text: "Does Auto?",
-                value: widget.pitData.flAuto,
-                styleBackGroundColor: Colors.green,
-                onChange: (bool value) {
-                  setState(() {
-                    widget.pitData.flAuto = value;
-                    widget.onChanged!(widget.pitData);
-                  });
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Leaves Line:",
-                    style: styleBodyTextTheme,
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoLine!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoLine = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Score Coral:",
-                    style: styleBodyTextTheme,
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoScoreCoral!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoScoreCoral = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Coral L1:",
-                  style: styleBodyTextTheme,
+            child: Column(
+              children: <Widget>[
+                HeadingMain(
+                  styleFontSize: styleTitleTextTheme!.fontSize!,
+                  textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                  backGroundColor: Theme.of(context).primaryColor,
+                  headingText: "Auto",
+                  //backGroundColor: Colors.green,
                 ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreCoralL1,
-                  onIncreaseStateChanged: (int value) {
+                RowHeading(
+                  styleFontSize: styleBodyTextTheme!.fontSize!,
+                  text: "Does Auto?",
+                  value: widget.pitData.pitFlAuto,
+                  styleBackGroundColor: Colors.green,
+                  onChange: (bool value) {
                     setState(() {
-                      widget.pitData.numAutoScoreCoralL1 =
-                          widget.pitData.numAutoScoreCoralL1! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL1 =
-                          widget.pitData.numAutoScoreCoralL1! - 1;
-                      if (widget.pitData.numAutoScoreCoralL1! < 0) {
-                        widget.pitData.numAutoScoreCoralL1 = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL1 = value;
+                      widget.pitData.pitFlAuto = value;
                       widget.onChanged!(widget.pitData);
                     });
                   },
                 ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Coral L2:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreCoralL2,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL2 =
-                          widget.pitData.numAutoScoreCoralL2! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL2 =
-                          widget.pitData.numAutoScoreCoralL2! - 1;
-                      if (widget.pitData.numAutoScoreCoralL2! < 0) {
-                        widget.pitData.numAutoScoreCoralL2 = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL2 = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Coral L3:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreCoralL3,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL3 =
-                          widget.pitData.numAutoScoreCoralL3! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL3 =
-                          widget.pitData.numAutoScoreCoralL3! - 1;
-                      if (widget.pitData.numAutoScoreCoralL3! < 0) {
-                        widget.pitData.numAutoScoreCoralL3 = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL3 = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Coral L4:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreCoralL4,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL4 =
-                          widget.pitData.numAutoScoreCoralL4! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL4 =
-                          widget.pitData.numAutoScoreCoralL4! - 1;
-                      if (widget.pitData.numAutoScoreCoralL4! < 0) {
-                        widget.pitData.numAutoScoreCoralL4 = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreCoralL4 = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Score Algae:",
-                    style: styleBodyTextTheme,
-                  ),
-                  Switch(
-                    value: widget.pitData.flAutoScoreAlgae!,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.pitData.flAutoScoreAlgae = value;
-                        widget.onChanged!(widget.pitData);
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Remove L2:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreAlgaeL2,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeL2 =
-                          widget.pitData.numAutoScoreAlgaeL2! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeL2 =
-                          widget.pitData.numAutoScoreAlgaeL2! - 1;
-                      if (widget.pitData.numAutoScoreAlgaeL2! < 0) {
-                        widget.pitData.numAutoScoreAlgaeL2 = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeL2 = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Remove L3:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreAlgaeL3,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeL3 =
-                          widget.pitData.numAutoScoreAlgaeL3! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeL3 =
-                          widget.pitData.numAutoScoreAlgaeL3! - 1;
-                      if (widget.pitData.numAutoScoreAlgaeL3! < 0) {
-                        widget.pitData.numAutoScoreAlgaeL3 = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeL3 = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Ground Pickup:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreAlgaeGround,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeGround =
-                          widget.pitData.numAutoScoreAlgaeGround! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeGround =
-                          widget.pitData.numAutoScoreAlgaeGround! - 1;
-                      if (widget.pitData.numAutoScoreAlgaeGround! < 0) {
-                        widget.pitData.numAutoScoreAlgaeGround = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeGround = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Barge:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreAlgaeBarge,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeBarge =
-                          widget.pitData.numAutoScoreAlgaeBarge! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeBarge =
-                          widget.pitData.numAutoScoreAlgaeBarge! - 1;
-                      if (widget.pitData.numAutoScoreAlgaeBarge! < 0) {
-                        widget.pitData.numAutoScoreAlgaeBarge = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeBarge = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(
-                  "#Processor:",
-                  style: styleBodyTextTheme,
-                ),
-                CounterWidget(
-                  title: "",
-                  styleFontSize: widget.styleFontSize,
-                  value: widget.pitData.numAutoScoreAlgaeProcess,
-                  onIncreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeProcess =
-                          widget.pitData.numAutoScoreAlgaeProcess! + 1;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onDecreaseStateChanged: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeProcess =
-                          widget.pitData.numAutoScoreAlgaeProcess! - 1;
-                      if (widget.pitData.numAutoScoreAlgaeProcess! < 0) {
-                        widget.pitData.numAutoScoreAlgaeProcess = 0;
-                      }
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                  onSetValue: (int value) {
-                    setState(() {
-                      widget.pitData.numAutoScoreAlgaeProcess = value;
-                      widget.onChanged!(widget.pitData);
-                    });
-                  },
-                ),
-              ]),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Notes: ",
-                    style: styleBodyTextTheme,
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 300),
-                    child: TextField(
-                      controller: widget.txAutoNotes,
-                      decoration: InputDecoration(
-                          hintText: 'Auto Notes',
-                          hintStyle:
-                              styleBodyTextTheme?.copyWith(color: Colors.grey)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Score?", style: styleBodyTextTheme),
+                    Switch(
+                      value: widget.pitData.pitFlAutoScoreFuel!,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.pitData.pitFlAutoScoreFuel = value;
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
                     ),
-                  ),
-                ],
-              ),
-            ]),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("#Fuel Scored:", style: styleBodyTextTheme),
+                    CounterWidget(
+                      title: "",
+                      styleFontSize: widget.styleFontSize,
+                      value: widget.pitData.pitNumAutoScore,
+                      onIncreaseStateChanged: (int value) {
+                        setState(() {
+                          widget.pitData.pitNumAutoScore =
+                              widget.pitData.pitNumAutoScore! + 1;
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                      onDecreaseStateChanged: (int value) {
+                        setState(() {
+                          widget.pitData.pitNumAutoScore =
+                              widget.pitData.pitNumAutoScore! - 1;
+                          if (widget.pitData.pitNumAutoScore! < 0) {
+                            widget.pitData.pitNumAutoScore = 0;
+                          }
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        setState(() {
+                          widget.pitData.pitNumAutoScore = value;
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("#Extra Fuel:", style: styleBodyTextTheme),
+                    CounterWidget(
+                      title: "",
+                      styleFontSize: widget.styleFontSize,
+                      value: widget.pitData.pitNumAutoFuel,
+                      onIncreaseStateChanged: (int value) {
+                        setState(() {
+                          widget.pitData.pitNumAutoFuel =
+                              widget.pitData.pitNumAutoFuel! + 1;
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                      onDecreaseStateChanged: (int value) {
+                        setState(() {
+                          widget.pitData.pitNumAutoFuel =
+                              widget.pitData.pitNumAutoFuel! - 1;
+                          if (widget.pitData.pitNumAutoFuel! < 0) {
+                            widget.pitData.pitNumAutoFuel = 0;
+                          }
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                      onSetValue: (int value) {
+                        setState(() {
+                          widget.pitData.pitNumAutoFuel = value;
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Reload Points:", style: styleBodyTextTheme),
+                    DropdownButton(
+                      value: widget.pitData.pitIdAutoReloadPoints == null
+                          ? null
+                          : widget.pitData.pitIdAutoReloadPoints,
+                      items: listReloadPoints,
+                      style: styleBodyTextTheme,
+                      onChanged: (item) {
+                        setState(() {
+                          widget.pitData.pitIdAutoReloadPoints = item;
+                          widget.onChanged!(widget.pitData);
+                        });
+                        print(
+                          "pitIdAutoReloadPoints: " +
+                              widget.pitData.pitIdAutoReloadPoints!,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Auto Climb?", style: styleBodyTextTheme),
+                    Switch(
+                      value: widget.pitData.pitFlAutoClimb!,
+                      onChanged: (bool value) {
+                        setState(() {
+                          widget.pitData.pitFlAutoClimb = value;
+                          widget.onChanged!(widget.pitData);
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Notes: ", style: styleBodyTextTheme),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 300),
+                      child: TextField(
+                        controller: widget.pitTxAutoNotes,
+                        decoration: InputDecoration(
+                          hintText: 'Auto Notes',
+                          hintStyle: styleBodyTextTheme?.copyWith(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );

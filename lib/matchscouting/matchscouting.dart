@@ -382,6 +382,8 @@ class _MatchScoutingScreenState extends State<MatchScoutingScreen> {
       //_txtStartingCells.text = '0';
       _txtMatchNumber.text = '0';
       selectedTeam = null;
+      teleListShootingTime = [0];
+      autoListShootingTime = [0];
     });
   }
 

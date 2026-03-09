@@ -5,6 +5,7 @@ import 'package:projectb/widgets/widget_dropdown_indexed.dart';
 import 'package:projectb/widgets/widget_headingmain.dart';
 
 import '../localdb.dart';
+import '../widgets/widget_row_heading.dart';
 
 class RatingsTab extends StatefulWidget {
   const RatingsTab({
@@ -66,6 +67,14 @@ class _RatingsTabState extends State<RatingsTab> {
     DropDownValue(id: "4", value: "Both"),
   ];
 
+  final List<DropDownValue> listTime = [
+    DropDownValue(id: "1", value: "N/A"),
+    DropDownValue(id: "2", value: "<1 Sec"),
+    DropDownValue(id: "3", value: "1 Sec"),
+    DropDownValue(id: "4", value: "2-5 Sec"),
+    DropDownValue(id: "5", value: "5+ Sec"),
+  ];
+
   final TextEditingController? _txtComments = TextEditingController();
 
   @override
@@ -119,6 +128,62 @@ class _RatingsTabState extends State<RatingsTab> {
               padding: EdgeInsets.all(5.0),
               child: Column(
                 children: <Widget>[
+                  HeadingMain(
+                    styleFontSize: styleTitleTextTheme!.fontSize!,
+                    textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                    backGroundColor: Theme.of(context).primaryColor,
+                    headingText: "Timer",
+                  ),
+                  RowHeading(
+                    styleFontSize: styleBodyTextTheme!.fontSize!,
+                    text: "Accurate Timer?",
+                    value: widget.matchScoutingData.commFlTimer,
+                    styleBackGroundColor: Colors.yellow,
+                    onChange: (bool value) {
+                      setState(() {
+                        widget.matchScoutingData.commFlTimer = value;
+                        widget.onChange!(widget.matchScoutingData);
+                      });
+                    },
+                  ),
+                  HeadingMain(
+                    styleFontSize: styleTitleTextTheme!.fontSize!,
+                    textColor: Theme.of(context).textTheme.titleLarge!.color!,
+                    backGroundColor: Theme.of(context).primaryColor,
+                    headingText: "Scoring",
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Fed?:", style: styleBodyTextTheme),
+                      Switch(
+                        value: widget.matchScoutingData.teleFlFed!,
+                        onChanged: (bool value) {
+                          setState(() {
+                            widget.matchScoutingData.teleFlFed = value;
+                            widget.onChange!(widget.matchScoutingData);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Throughput:", style: styleBodyTextTheme),
+                      DropDownIndexedWidget(
+                        value: widget.matchScoutingData.IdThrough,
+                        title: null,
+                        dropDownValues: listTime,
+                        onStateChanged: (String value) {
+                          setState(() {
+                            widget.matchScoutingData.IdThrough = value;
+                            widget.onChange!(widget.matchScoutingData);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                   HeadingMain(
                     styleFontSize: styleTitleTextTheme!.fontSize!,
                     textColor: Theme.of(context).textTheme.titleLarge!.color!,

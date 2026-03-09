@@ -26,7 +26,7 @@ class MatchScoutingData {
   int? autoNumFuelAccHigh;
   int? autoNumTimer;
   bool? autoFlClimb;
-  int? autoFLClimbRelease;
+  bool? autoFLClimbRelease;
   String? autoIdClimbOutcome;
   String? autoIdClimbPos;
   String? autoIdStageClimbSpeed;
@@ -48,6 +48,9 @@ class MatchScoutingData {
   bool? teleFlFed;
   String? IdThrough;
   bool? commFLHuman;
+  bool? commFlTimer;
+  int? commNumAvgTime;
+  int? commNumStDev;
   String? commIdDriveRating;
   String? commIdFieldAccess;
   String? commIdDefenceRating;
@@ -91,7 +94,7 @@ class MatchScoutingData {
     this.autoNumFuelAccHigh = 0,
     this.autoNumTimer = 0,
     this.autoFlClimb = false,
-    this.autoFLClimbRelease = 0,
+    this.autoFLClimbRelease = false,
     this.autoIdClimbOutcome = "1",
     this.autoIdClimbPos = "1",
     this.autoIdStageClimbSpeed = "1",
@@ -113,6 +116,9 @@ class MatchScoutingData {
     this.teleFlFed = false,
     this.IdThrough = "1",
     this.commFLHuman = false,
+    this.commFlTimer = false,
+    this.commNumAvgTime = 0,
+    this.commNumStDev = 0,
     this.commIdDriveRating = "1",
     this.commIdFieldAccess = "1",
     this.commIdDefenceRating = "1",
@@ -180,6 +186,9 @@ class MatchScoutingData {
       'teleFlFed': teleFlFed,
       'IdThrough': IdThrough,
       'commFLHuman': commFLHuman,
+      'commFlTimer': commFlTimer,
+      'commNumAvgTime': commNumAvgTime,
+      'commNumStDev': commNumStDev,
       'commIdDriveRating': commIdDriveRating,
       'commIdFieldAccess': commIdFieldAccess,
       'commIdDefenceRating': commIdDefenceRating,
@@ -226,7 +235,7 @@ class MatchScoutingData {
       'autoNumFuelAccHigh': autoNumFuelAccHigh,
       'autoNumTimer': autoNumTimer,
       'autoFlClimb': autoFlClimb.toString(),
-      'autoFLClimbRelease': autoFLClimbRelease,
+      'autoFLClimbRelease': autoFLClimbRelease.toString(),
       'autoIdClimbOutcome': autoIdClimbOutcome,
       'autoIdClimbPos': autoIdClimbPos,
       'autoIdStageClimbSpeed': autoIdStageClimbSpeed,
@@ -248,6 +257,9 @@ class MatchScoutingData {
       'teleFlFed': teleFlFed.toString(),
       'IdThrough': IdThrough,
       'commFLHuman': commFLHuman.toString(),
+      'commFlTimer': commFlTimer.toString(),
+      'commNumAvgTime': commNumAvgTime,
+      'commNumStDev': commNumStDev,
       'commIdDriveRating': commIdDriveRating,
       'commIdFieldAccess': commIdFieldAccess,
       'commIdDefenceRating': commIdDefenceRating,
@@ -295,7 +307,8 @@ class MatchScoutingData {
     this.autoNumFuelAccHigh = map['autoNumFuelAccHigh'];
     this.autoNumTimer = map['autoNumTimer'];
     this.autoFlClimb = map['autoFlClimb'].toString().toLowerCase() == 'true';
-    this.autoFLClimbRelease = map['autoFLClimbRelease'];
+    this.autoFLClimbRelease =
+        map['autoFLClimbRelease'].toString().toLowerCase() == 'true';
     this.autoIdClimbOutcome = map['autoIdClimbOutcome'];
     this.autoIdClimbPos = map['autoIdClimbPos'];
     this.autoIdStageClimbSpeed = map['autoIdStageClimbSpeed'];
@@ -318,6 +331,9 @@ class MatchScoutingData {
     this.teleFlFed = map['teleFlFed'].toString().toLowerCase() == 'true';
     this.IdThrough = map['IdThrough'];
     this.commFLHuman = map['commFLHuman'].toString().toLowerCase() == 'true';
+    this.commFlTimer = map['commFlTimer'].toString().toLowerCase() == 'true';
+    this.commNumAvgTime = map['commNumAvgTime'];
+    this.commNumStDev = map['commNumStDev'];
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdFieldAccess = map['commIdFieldAccess'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
@@ -393,6 +409,9 @@ class MatchScoutingData {
     this.teleFlFed = map['teleFlFed'];
     this.IdThrough = map['IdThrough'];
     this.commFLHuman = map['commFLHuman'];
+    this.commFlTimer = map['commFlTimer'];
+    this.commNumAvgTime = map['commNumAvgTime'];
+    this.commNumStDev = map['commNumStDev'];
     this.commIdDriveRating = map['commIdDriveRating'];
     this.commIdFieldAccess = map['commIdFieldAccess'];
     this.commIdDefenceRating = map['commIdDefenceRating'];
@@ -404,7 +423,7 @@ class MatchScoutingData {
     this.commFlInactiveScore = map['commFlInactiveScore'];
     this.commFlWarning = map['commFlWarning'];
     this.commFlHighlight = map['commFlHighlight'];
-    this.commFlIntakeGround = map['commFlIntakeGroundCoral'];
+    this.commFlIntakeGround = map['commFlIntakeGround'];
     this.commFlIntakeStation = map['commFlIntakeStation'];
     this.commTxNotes = map['commTxNotes'];
   }

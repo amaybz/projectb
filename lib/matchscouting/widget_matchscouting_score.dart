@@ -54,6 +54,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
 
   Timer? _timer;
   int _start = 0;
+  double standardDeviation = 0;
 
   void startTimer() {
     _timer?.cancel();
@@ -74,13 +75,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
   void stopTimer() {
     _timer?.cancel();
     List<int> listShootingTime = widget.listShootingTime;
-    if (listShootingTime[0] == 0) {
-      listShootingTime.clear();
+    if (_start > 0) {
+      if (listShootingTime[0] == 0) {
+        listShootingTime.clear();
+      }
+      setState(() {
+        listShootingTime.add(_start);
+        widget.onRecordTime!(listShootingTime);
+      });
     }
-    setState(() {
-      listShootingTime.add(_start);
-      widget.onRecordTime!(listShootingTime);
-    });
 
     final double? average = listShootingTime.average;
     final stats = Stats.fromData(listShootingTime);
@@ -90,11 +93,13 @@ class _ScoreWidgetState extends State<ScoreWidget> {
       print(stddev);
       print('The average is: $average'); //
       setState(() {
+        standardDeviation = stddev;
         widget.matchScoutingData.autoNumTimer = average.toInt();
       }); // Output: The average is: 30.0
     } else {
       print('The list is empty, cannot calculate average.');
     }
+    _start = 0;
   }
 
   @override
@@ -447,6 +452,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           styleFontSize:
                                               widget.styleFontSizeBody,
                                           onIncreaseStateChanged: (int increase) {
+                                            stopTimer();
                                             setState(() {
                                               if (widget.intScoringType == 1) {
                                                 widget
@@ -482,6 +488,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                         .matchScoutingData
                                                         .autoNumFuelAccLow! +
                                                     decrease;
+                                                if (widget
+                                                        .matchScoutingData
+                                                        .autoNumFuelAccLow! <
+                                                    0) {
+                                                  widget
+                                                          .matchScoutingData
+                                                          .autoNumFuelAccLow =
+                                                      0;
+                                                }
                                               } else if (widget
                                                       .intScoringType ==
                                                   2) {
@@ -492,6 +507,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                         .matchScoutingData
                                                         .teleNumFuelAccLow! +
                                                     decrease;
+                                                if (widget
+                                                        .matchScoutingData
+                                                        .teleNumFuelAccLow! <
+                                                    0) {
+                                                  widget
+                                                          .matchScoutingData
+                                                          .teleNumFuelAccLow =
+                                                      0;
+                                                }
                                               }
                                               widget.onChange!(
                                                 widget.matchScoutingData,
@@ -526,6 +550,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           styleFontSize:
                                               widget.styleFontSizeBody,
                                           onIncreaseStateChanged: (int increase) {
+                                            stopTimer();
                                             setState(() {
                                               if (widget.intScoringType == 1) {
                                                 widget
@@ -561,6 +586,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                         .matchScoutingData
                                                         .autoNumFuelAccMid! +
                                                     decrease;
+                                                if (widget
+                                                        .matchScoutingData
+                                                        .autoNumFuelAccMid! <
+                                                    0) {
+                                                  widget
+                                                          .matchScoutingData
+                                                          .autoNumFuelAccMid =
+                                                      0;
+                                                }
                                               } else if (widget
                                                       .intScoringType ==
                                                   2) {
@@ -571,6 +605,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                         .matchScoutingData
                                                         .teleNumFuelAccMid! +
                                                     decrease;
+                                                if (widget
+                                                        .matchScoutingData
+                                                        .teleNumFuelAccMid! <
+                                                    0) {
+                                                  widget
+                                                          .matchScoutingData
+                                                          .teleNumFuelAccMid =
+                                                      0;
+                                                }
                                               }
                                               widget.onChange!(
                                                 widget.matchScoutingData,
@@ -604,6 +647,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                           styleFontSize:
                                               widget.styleFontSizeBody,
                                           onIncreaseStateChanged: (int increase) {
+                                            stopTimer();
                                             setState(() {
                                               if (widget.intScoringType == 1) {
                                                 widget
@@ -639,6 +683,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                         .matchScoutingData
                                                         .autoNumFuelAccHigh! +
                                                     decrease;
+                                                if (widget
+                                                        .matchScoutingData
+                                                        .autoNumFuelAccHigh! <
+                                                    0) {
+                                                  widget
+                                                          .matchScoutingData
+                                                          .autoNumFuelAccHigh =
+                                                      0;
+                                                }
                                               } else if (widget
                                                       .intScoringType ==
                                                   2) {
@@ -649,6 +702,15 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                                         .matchScoutingData
                                                         .teleNumFuelAccHigh! +
                                                     decrease;
+                                                if (widget
+                                                        .matchScoutingData
+                                                        .teleNumFuelAccHigh! <
+                                                    0) {
+                                                  widget
+                                                          .matchScoutingData
+                                                          .teleNumFuelAccHigh =
+                                                      0;
+                                                }
                                               }
                                               widget.onChange!(
                                                 widget.matchScoutingData,
@@ -712,41 +774,6 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 0.0,
-                                  horizontal: 10,
-                                ),
-                              ),
-                              child: Text(
-                                "Start Timer",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _start = 0;
-                                });
-                                startTimer();
-                              },
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 5.0,
-                                  horizontal: 15,
-                                ),
-                              ),
-                              child: Text(
-                                "Save Time",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              onPressed: () {
-                                stopTimer();
-                              },
-                            ),
                             Container(
                               margin: EdgeInsets.only(
                                 left: 0,
@@ -782,6 +809,23 @@ class _ScoreWidgetState extends State<ScoreWidget> {
                                 "Avg: " +
                                     widget.matchScoutingData.autoNumTimer
                                         .toString(),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 0,
+                                right: 0.0,
+                                bottom: 3,
+                                top: 3,
+                              ),
+                              padding: const EdgeInsets.only(
+                                left: 20.0,
+                                right: 20.0,
+                                top: 5.0,
+                                bottom: 5.0,
+                              ),
+                              child: Text(
+                                "SD: " + standardDeviation.toString(),
                               ),
                             ),
                             Container(

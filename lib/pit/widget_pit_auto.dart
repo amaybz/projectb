@@ -37,6 +37,7 @@ class _PitAutoState extends State<PitAuto> {
     DropdownMenuItem(value: "2", child: Text("Depot")),
     DropdownMenuItem(value: "3", child: Text("Outpost")),
     DropdownMenuItem(value: "4", child: Text("Middle")),
+    DropdownMenuItem(value: "5", child: Text("Any")),
   ];
 
   TextStyle? styleBodyTextTheme = ThemeData().textTheme.bodyMedium;
@@ -153,14 +154,14 @@ class _PitAutoState extends State<PitAuto> {
                       onIncreaseStateChanged: (int value) {
                         setState(() {
                           widget.pitData.pitNumAutoScore =
-                              widget.pitData.pitNumAutoScore! + 1;
+                              widget.pitData.pitNumAutoScore! + 5;
                           widget.onChanged!(widget.pitData);
                         });
                       },
                       onDecreaseStateChanged: (int value) {
                         setState(() {
                           widget.pitData.pitNumAutoScore =
-                              widget.pitData.pitNumAutoScore! - 1;
+                              widget.pitData.pitNumAutoScore! - 5;
                           if (widget.pitData.pitNumAutoScore! < 0) {
                             widget.pitData.pitNumAutoScore = 0;
                           }

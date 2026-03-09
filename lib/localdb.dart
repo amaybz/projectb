@@ -10,7 +10,7 @@ class LocalDB {
 
   // Increment this version when you need to change the schema.
 
-  static final _databaseVersion = 59;
+  static final _databaseVersion = 60;
 
   final String tblEvents = "events";
   final String tblDevice = "Device";
@@ -95,6 +95,9 @@ class LocalDB {
       'teleFlFed TEXT,'
       'IdThrough TEXT,'
       'commFLHuman TEXT,'
+      'commFlTimer TEXT,'
+      'commNumAvgTime INTEGER,'
+      'commNumStDev INTEGER,'
       'commIdDriveRating TEXT,'
       'commIdFieldAccess TEXT,'
       'commIdDefenceRating TEXT,'
